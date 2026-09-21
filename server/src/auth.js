@@ -1,0 +1,12 @@
+'use strict';
+const {random,sha256}=require('./crypto');
+const config=require('./config');
+const db=require('./db');
+const {audit}=require('./audit');
+function cookieOptions(){return {httpOnly:true,secure:config.production,sameSite:'lax',path:'/',maxAge:config.sessionAbsoluteHours*3600*1000};}
+async function issueSession(userId,req){const raw=random(32),csrf=random(24),now=new Date(),abs=new Date(now.getTime()+config.sessionAbsoluteHours*3600*1000),idle=new Date(now.getTime()+config.sessionIdleMinutes*60000);await db.query(`INSERT INTO sessions(user_id,token_hash,csrf_token,idle_expires_at,absolute_expires_at,ip_address,user_agent) VALUES($1,$2,$3,$4,$5,$6,$7)`,[userId,sha256(raw),csrf,idle,abs,req.ip,String(req.get('user-agent')||'').slice(0,500)]);return {raw,csrf,absoluteExpiresAt:abs};}
+async function destroySession(raw,actorUserId){if(!raw)return;await db.query(`DELETE FROM sessions WHERE token_hash=$1`,[sha256(raw)]);if(actorUserId)await audit(db,{actorUserId,eventType:'auth.logout',objectType:'session'});}
+async function authMiddleware(req,res,next){const raw=req.cookies?.[config.cookieName];if(!raw)return next();try{const q=await db.query(`SELECT s.id session_id,s.csrf_token,s.idle_expires_at,s.absolute_expires_at,u.id,u.email,u.display_name,u.is_active,r.name role FROM sessions s JOIN users u ON u.id=s.user_id JOIN roles r ON r.id=u.role_id WHERE s.token_hash=$1`,[sha256(raw)]);const row=q.rows[0];if(!row||!row.is_active)return next();const now=Date.now();if(new Date(row.idle_expires_at).getTime()<=now||new Date(row.absolute_expires_at).getTime()<=now){await db.query('DELETE FROM sessions WHERE id=$1',[row.session_id]);res.clearCookie(config.cookieName,{path:'/'});return next();}const idle=new Date(now+config.sessionIdleMinutes*60000);await db.query('UPDATE sessions SET idle_expires_at=$1,last_seen_at=now() WHERE id=$2',[idle,row.session_id]);req.user={id:row.id,email:row.email,name:row.display_name,role:row.role};req.session={id:row.session_id,csrf:row.csrf_token};next();}catch(e){next(e);}}
+function requireAuth(req,res,next){if(!req.user)return res.status(401).json({detail:'Authentication required.'});next();}
+function requireCsrf(req,res,next){if(['GET','HEAD','OPTIONS'].includes(req.method))return next();if(!req.session||req.get('X-SMG-CSRF')!==req.session.csrf)return res.status(403).json({detail:'CSRF validation failed.'});next();}
+module.exports={cookieOptions,issueSession,destroySession,authMiddleware,requireAuth,requireCsrf};

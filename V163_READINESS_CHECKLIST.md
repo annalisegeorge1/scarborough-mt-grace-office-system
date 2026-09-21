@@ -1,0 +1,24 @@
+# V163 Staging Readiness Checklist
+
+- [ ] Private Git repository created
+- [ ] Supabase Free project created
+- [ ] Supabase Session pooler URL copied
+- [ ] Database password stored securely
+- [ ] Render Blueprint created from `render.yaml`
+- [ ] `DATABASE_URL` entered only as a Render secret
+- [ ] First Manager bootstrap values entered
+- [ ] Initial deploy succeeds
+- [ ] Migrations complete
+- [ ] Manager login succeeds
+- [ ] Bootstrap password removed from Render
+- [ ] `/api/health/live` returns success
+- [ ] `/api/health/readiness` returns ready
+- [ ] Public enquiry staging submission returns central reference
+- [ ] Resident tracker returns public-safe status only
+- [ ] Manager can create a test staff account
+- [ ] Role restrictions tested
+- [ ] No confidential resident data entered
+- [ ] Uploads remain disabled
+- [ ] Smoke test passes
+- [ ] Backup export procedure tested manually
+- [ ] Custom staging domain added only after generated URL passes

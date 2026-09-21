@@ -1,0 +1,33 @@
+{
+  "name": "scarborough-mt-grace-office-server",
+  "version": "163.0.0",
+  "private": true,
+  "description": "Provider-ready staging backend for the Scarborough / Mt. Grace District Office service system.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "NODE_ENV=development node src/app.js",
+    "migrate": "node scripts/migrate.js",
+    "seed:admin": "node scripts/seed-admin.js",
+    "check": "node --check src/app.js && find src scripts -name '*.js' -print0 | xargs -0 -n1 node --check",
+    "test": "node --test test/*.test.js",
+    "maintenance": "node scripts/maintenance.js",
+    "reminders": "node scripts/run-reminders.js",
+    "preflight": "node scripts/preflight.js",
+    "smoke": "node scripts/smoke-test.js",
+    "qa": "npm run check && npm test && npm run preflight",
+    "provider:check": "node scripts/provider-check.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cookie-parser": "1.4.7",
+    "express": "5.1.0",
+    "express-rate-limit": "8.0.1",
+    "helmet": "8.1.0",
+    "multer": "2.0.2",
+    "pg": "8.16.3",
+    "@aws-sdk/client-s3": "3.0.0"
+  }
+}

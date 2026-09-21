@@ -1,0 +1,2 @@
+'use strict';const test=require('node:test');const assert=require('node:assert/strict');const {hashPassword,verifyPassword}=require('../src/crypto');
+test('password hash verifies correct password only',async()=>{const h=await hashPassword('A-long-test-password-123!');assert.equal(await verifyPassword('A-long-test-password-123!',h),true);assert.equal(await verifyPassword('wrong',h),false);assert.equal(h.includes('A-long-test-password'),false);});

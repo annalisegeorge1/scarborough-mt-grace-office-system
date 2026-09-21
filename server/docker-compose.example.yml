@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: smg_office
+      POSTGRES_USER: smg_app
+      POSTGRES_PASSWORD: CHANGE_ME
+    volumes:
+      - smg_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smg_app -d smg_office"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    env_file: .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  smg_pg:

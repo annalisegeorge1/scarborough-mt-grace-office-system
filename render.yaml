@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: scarborough-mt-grace-staging
+    runtime: node
+    plan: free
+    buildCommand: cd server && npm install --omit=dev
+    preDeployCommand: cd server && npm run migrate
+    startCommand: cd server && npm start
+    initialDeployHook: cd server && npm run seed:admin
+    healthCheckPath: /api/health/live
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: require
+      - key: DB_POOL_MAX
+        value: "5"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SESSION_COOKIE_NAME
+        value: smg_staging_session
+      - key: SESSION_IDLE_MINUTES
+        value: "30"
+      - key: SESSION_ABSOLUTE_HOURS
+        value: "8"
+      - key: LOGIN_MAX_ATTEMPTS
+        value: "10"
+      - key: LOGIN_WINDOW_MINUTES
+        value: "15"
+      - key: UPLOADS_ENABLED
+        value: "false"
+      - key: PRIVATE_STORAGE_DRIVER
+        value: local
+      - key: ALLOW_LOCAL_PRIVATE_STORAGE
+        value: "false"
+      - key: MALWARE_SCAN_REQUIRED
+        value: "false"
+      - key: BOOTSTRAP_ADMIN_EMAIL
+        sync: false
+      - key: BOOTSTRAP_ADMIN_NAME
+        sync: false
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
