@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Case Management — Scarborough / Mt. Grace District Office</title>
+<style>
+:root{
+  --navy:#08263d;--navy2:#0d3554;--blue:#174f74;--paper:#f4f8fb;--line:rgba(10,47,73,.12);
+  --gold:#c9a34a;--muted:#6f8491;--green:#3e8162;--red:#aa4a44;--amber:#9a792d;--purple:#765486;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#e8f0f4;color:#193447}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.demo-banner{position:sticky;top:0;z-index:1100;background:#f3ead1;border-bottom:1px solid #d5c28a;color:#61511f;padding:9px 16px;text-align:center;font-size:12px;font-weight:700}
+.login-shell{min-height:calc(100vh - 37px);display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 84% 12%,rgba(67,128,161,.19),transparent 25rem),linear-gradient(145deg,#0b3553,#061f33 72%)}
+.login-card{width:min(500px,94vw);padding:34px;border-radius:22px;background:#fff;box-shadow:0 28px 70px rgba(0,0,0,.26)}
+.login-mark{width:58px;height:58px;border-radius:17px;background:linear-gradient(145deg,#164f74,#08263d);border:1px solid rgba(201,163,74,.6);box-shadow:0 0 0 4px rgba(201,163,74,.10);display:grid;place-items:center;color:#d7c07a;font:700 18px Georgia,serif;margin-bottom:18px}
+.login-card h1{font:500 30px/1.06 Georgia,serif;color:var(--navy);margin:0 0 8px}.login-card p{font-size:13px;line-height:1.55;color:var(--muted)}
+.login-note{background:#edf4f7;border-left:3px solid var(--gold);padding:12px;border-radius:8px;font-size:12px!important}
+.login-card label{display:block;font-size:11px;font-weight:800;color:#456274;margin:18px 0 6px}.login-card select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#f8fbfc;color:#17394e}
+.login-button{width:100%;margin-top:20px;border:0;border-radius:10px;background:linear-gradient(145deg,#d5bd7b,#c9a34a);color:#092b45;font-weight:900;padding:13px}
+.portal{min-height:100vh}.topbar{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 22px;background:linear-gradient(90deg,#061f33,#0b3553);color:#fff;box-shadow:0 6px 25px rgba(3,24,39,.14)}
+.brand{display:flex;gap:11px;align-items:center}.brand-mark{width:38px;height:38px;border-radius:10px;border:1px solid rgba(201,163,74,.6);display:grid;place-items:center;color:#d7c07a;font:700 12px Georgia,serif}.brand strong{display:block;font-size:12px}.brand small{display:block;font-size:9px;color:#9db5c1;margin-top:2px}
+.top-actions{display:flex;gap:8px;align-items:center}.top-actions button{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.06);color:#fff;border-radius:9px;padding:9px 11px;font-size:11px}
+.layout{display:grid;grid-template-columns:238px 1fr;min-height:calc(100vh - 68px)}.sidebar{background:#0a2f49;color:#fff;padding:20px 12px}
+.user-card{padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);margin-bottom:18px}.user-card small{font-size:9px;color:#89a8b8}.user-card strong{display:block;font-size:12px;margin-top:4px}
+.nav-label{font-size:7px;letter-spacing:.12em;color:#7798a9;font-weight:900;padding:11px 12px 5px}.nav-btn{width:100%;border:0;background:transparent;color:#b6cbd6;text-align:left;padding:10px 12px;border-radius:9px;font-size:11px;margin:2px 0}.nav-btn.active{background:#fff;color:#0b3553;font-weight:800}
+.nav-btn .count{float:right;min-width:22px;text-align:center;border-radius:999px;padding:2px 6px;background:rgba(201,163,74,.16);color:#d9c486;font-size:9px}.nav-btn.active .count{background:#edf3f6;color:#365d72}
+.sidebar-foot{font-size:9px;color:#88a2b0;line-height:1.5;padding:16px 10px;margin-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.main{padding:24px;min-width:0}.page-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}.page-head span{font-size:9px;letter-spacing:.12em;color:#6c8491;font-weight:900}.page-head h2{font:500 29px Georgia,serif;color:#0b2f49;margin:4px 0 0}.page-head p{font-size:11px;color:#718793;margin:5px 0 0}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap}.head-actions button{border:1px solid var(--line);border-radius:9px;background:#fff;color:#31586e;padding:9px 11px;font-size:10px;font-weight:800}.head-actions .primary{background:#0b3553;color:#fff}
+.notice{background:#fff6dd;border:1px solid #e4d49d;border-radius:10px;padding:11px;font-size:10px;color:#6d5a25;line-height:1.5;margin-bottom:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;position:relative;overflow:hidden}.metric::after{content:"";position:absolute;top:0;left:16px;width:42px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}.metric small{font-size:9px;color:#738894}.metric strong{display:block;font:600 26px Georgia,serif;color:#0b3553;margin-top:5px}.metric i{display:block;width:25px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px}
+.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 160px 160px 140px;gap:8px;background:#fff;padding:11px;border:1px solid var(--line);border-radius:13px 13px 0 0}.toolbar input,.toolbar select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:#f9fbfc;color:#17394e;font-size:10px}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px}table{width:100%;border-collapse:collapse;min-width:1080px}th{text-align:left;padding:11px 12px;background:#edf4f7;color:#587181;font-size:9px;letter-spacing:.07em}td{padding:12px;border-top:1px solid #edf2f4;font-size:10px;color:#365363;vertical-align:middle}tr[data-id]{cursor:pointer}tr[data-id]:hover{background:#f8fbfc}
+.ref{font-weight:900;color:#0b3553}.resident strong{display:block;color:#17394e;font-size:11px}.resident small{font-size:9px;color:#7e919b}
+.badge{display:inline-block;border-radius:999px;padding:5px 7px;font-size:8px;font-weight:900;white-space:nowrap}.s-new{background:#e3eef5;color:#285b75}.s-unassigned{background:#f4eedb;color:#7c682b}.s-assigned{background:#e7edf5;color:#4c5e87}.s-in-progress{background:#e5f0ea;color:#397058}.s-awaiting-documents{background:#f5e9db;color:#8c622e}.s-referred{background:#eee6f3;color:#705381}.s-completed{background:#dff0e6;color:#337054}.s-closed{background:#e9edef;color:#65747b}
+.priority{display:inline-flex;align-items:center;gap:5px;font-size:8px;font-weight:900}.priority::before{content:"";width:8px;height:8px;border-radius:50%;background:#8296a1}.p-urgent::before{background:#b54640;box-shadow:0 0 0 3px rgba(181,70,64,.10)}.p-high::before{background:#c68435}.p-standard::before{background:#4f809a}.p-low::before{background:#6c9177}
+.due{font-size:9px;white-space:nowrap}.due strong{display:block;font-size:9px;color:#355a6e}.due small{font-size:8px;color:#8798a1}.due.overdue strong,.due.overdue small{color:#a54842}.overdue-tag{display:inline-block;margin-top:3px;font-size:7px;font-weight:900;background:#f6e2df;color:#9b403a;padding:3px 5px;border-radius:999px}
+.demo-tag{font-size:7px;font-weight:900;letter-spacing:.08em;color:#94752a;margin-left:4px}.empty{padding:45px;text-align:center;color:#748a96;font-size:12px}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(4,24,38,.44);z-index:500;display:none}.drawer-backdrop.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;width:min(700px,96vw);overflow:auto;background:#f4f8fb;box-shadow:-20px 0 50px rgba(0,0,0,.20)}
+.drawer-head{position:sticky;top:0;z-index:2;background:#0b3553;color:#fff;padding:20px;display:flex;justify-content:space-between;gap:14px}.drawer-head small{font-size:8px;letter-spacing:.12em;color:#9cb5c2}.drawer-head h3{font:500 23px Georgia,serif;margin:5px 0 0}.drawer-head-actions{display:flex;gap:7px}.drawer-head button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:9px;min-width:38px;height:38px;padding:0 10px;font-size:10px}.drawer-head .close{font-size:20px;width:38px;padding:0}
+.drawer-body{padding:18px}.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.case-card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px}.case-card small{display:block;font-size:8px;color:#7c919c;letter-spacing:.06em}.case-card strong{display:block;font-size:11px;color:#21485f;margin-top:4px;word-break:break-word}
+.section-card{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}.section-card h4{font:500 17px Georgia,serif;color:#0b3553;margin:0 0 10px}.section-card>p{font-size:11px;line-height:1.55;color:#617986}
+.management-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.management-grid label,.section-card label{font-size:9px;color:#597383;font-weight:800}.management-grid input,.management-grid select,.management-grid textarea,.section-card textarea,.section-card input{width:100%;margin-top:5px;border:1px solid var(--line);border-radius:8px;padding:9px;background:#f9fbfc;color:#17394e;font-size:10px}.management-grid .wide{grid-column:1/-1}.management-grid textarea{min-height:68px;resize:vertical}.section-card textarea{min-height:80px;resize:vertical}
+.followup-alert{grid-column:1/-1;padding:9px 10px;border-radius:8px;background:#eef4f7;color:#547080;font-size:9px;line-height:1.45}.followup-alert.overdue{background:#f8e6e3;color:#8d433e;border-left:3px solid #b64a43}.followup-alert.due-soon{background:#f8f0dc;color:#7b652b;border-left:3px solid #c49d3e}
+.save-btn{margin-top:9px;border:0;border-radius:8px;background:#0b3553;color:#fff;padding:9px 11px;font-size:9px;font-weight:900}.save-btn.gold{background:linear-gradient(145deg,#d4bb78,#c9a34a);color:#0b2f49}
+.note{padding:10px 0;border-top:1px solid #edf1f3}.note:first-of-type{border-top:0}.note strong{font-size:9px;color:#244b62}.note small{display:block;font-size:8px;color:#8a9aa3;margin-top:2px}.note p{margin:5px 0 0;font-size:10px;color:#637985}
+.doc{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #edf1f3}.doc:first-of-type{border-top:0}.doc strong{font-size:10px;color:#284f65}.doc small{font-size:8px;color:#8798a1}
+.timeline{position:relative;margin-top:2px}.timeline::before{content:"";position:absolute;left:7px;top:9px;bottom:9px;width:1px;background:#d8e2e7}.activity{display:grid;grid-template-columns:18px 96px 1fr;gap:8px;padding:8px 0;position:relative}.activity-dot{width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #4d7d97;z-index:1;margin-top:1px}.activity time{font-size:8px;color:#8a9ba4}.activity div{font-size:10px;color:#5e7480}.activity.latest .activity-dot{border-color:#c9a34a;box-shadow:0 0 0 3px rgba(201,163,74,.12)}
+.referral-summary{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.referral-summary div{padding:9px;border-radius:8px;background:#edf4f7}.referral-summary small{display:block;font-size:7px;color:#7c909a}.referral-summary strong{display:block;font-size:9px;color:#31596f;margin-top:3px}
+@media print{
+  .demo-banner,.topbar,.sidebar,.head-actions,.toolbar,.metrics,.notice,.drawer-head-actions,.save-btn,#staff-doc,#new-note{display:none!important}
+  body,.drawer-backdrop,.drawer{background:#fff!important}.drawer-backdrop{position:static!important;display:block!important}.drawer{position:static!important;width:100%!important;height:auto!important;box-shadow:none!important}.drawer-head{position:static!important;background:#fff!important;color:#0b3553!important;border-bottom:2px solid #c9a34a}.drawer-head small{color:#6d8491!important}
+}
+@media(max-width:1050px){.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr 1fr}.layout{grid-template-columns:195px 1fr}}
+@media(max-width:760px){.layout{display:block}.sidebar{position:static}.sidebar nav{display:flex;gap:4px;overflow:auto}.nav-label{display:none}.nav-btn{min-width:max-content;width:auto}.sidebar-foot,.user-card{display:none}.page-head{align-items:flex-start;flex-direction:column}.metrics{grid-template-columns:1fr 1fr}.case-grid,.management-grid,.referral-summary{grid-template-columns:1fr}.management-grid .wide{grid-column:auto}}
+@media(max-width:460px){.metrics{grid-template-columns:1fr}.main{padding:14px}}
+
+/* V135 Website & Case Management Foundation */
+.v135-training-btn{width:100%;margin-top:9px;border:1px solid rgba(10,47,73,.16);border-radius:10px;background:#edf4f7;color:#17394e;font-weight:900;padding:12px}.v135-training-note{margin-top:8px;color:#6e8490;font-size:9px;line-height:1.45}
+.v135-site-nav{width:100%;border:0;background:transparent;color:#b6cbd6;text-align:left;padding:10px 12px;border-radius:9px;font-size:11px;margin:2px 0}.v135-site-nav:hover,.v135-site-nav.active{background:#fff;color:#0b3553;font-weight:800}
+.v135-webmanager{margin-top:22px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(6,31,49,.06)}.v135-webmanager-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.v135-webmanager-head small{font-size:8px;letter-spacing:.12em;color:#8b733c;font-weight:900}.v135-webmanager-head h3{font:500 23px Georgia,serif;color:#0b3553;margin:4px 0 6px}.v135-webmanager-head p{margin:0;color:#677f8c;font-size:10px;line-height:1.5}.v135-webmanager-state{padding:7px 10px;border-radius:999px;background:#edf4f7;color:#365d72;font-size:8px;font-weight:900;white-space:nowrap}
+.v135-cms-layout{display:grid;grid-template-columns:minmax(290px,.8fr) minmax(0,1.2fr);gap:14px;margin-top:15px}.v135-cms-editor,.v135-cms-list{padding:14px;border:1px solid var(--line);border-radius:12px;background:#f9fbfc}.v135-cms-editor h4,.v135-cms-list h4{margin:0 0 10px;color:#174f74;font-size:14px}.v135-cms-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.v135-cms-grid label{font-size:8px;font-weight:900;color:#587181}.v135-cms-grid input,.v135-cms-grid select,.v135-cms-grid textarea{width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#17394e;font-size:10px}.v135-cms-grid textarea{min-height:88px;resize:vertical}.v135-cms-grid .wide{grid-column:1/-1}.v135-cms-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.v135-cms-actions button{border:0;border-radius:8px;padding:9px 11px;font-size:8px;font-weight:900;background:#0b3553;color:#fff}.v135-cms-actions button.secondary{background:#e7eff3;color:#174f74}.v135-cms-actions button.gold{background:#c9a34a;color:#08263d}.v135-cms-msg{margin-top:9px;font-size:9px;color:#5f7683;min-height:14px}
+.v135-cms-table{display:grid;gap:7px;max-height:460px;overflow:auto}.v135-cms-item{padding:10px;border-radius:9px;background:#fff;border:1px solid var(--line)}.v135-cms-item-top{display:flex;justify-content:space-between;gap:8px}.v135-cms-item small{font-size:7px;color:#866d34;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.v135-cms-item strong{display:block;color:#163e58;font-size:11px;margin-top:4px}.v135-cms-item p{margin:4px 0;color:#6a7f8b;font-size:9px;line-height:1.4}.v135-cms-item-actions{display:flex;gap:5px;margin-top:7px}.v135-cms-item-actions button{border:1px solid var(--line);background:#edf4f7;color:#174f74;border-radius:7px;padding:6px 8px;font-size:7px;font-weight:900}.v135-cms-item-actions .danger{background:#f7ecea;color:#8a4a42}.v135-cms-rule{margin-top:12px;padding:10px;border-left:3px solid #c9a34a;background:#f7f2e4;color:#5f6f76;border-radius:7px;font-size:9px;line-height:1.5}
+body.v112-dark .v135-webmanager,body.v112-dark .v135-cms-editor,body.v112-dark .v135-cms-list,body.v112-dark .v135-cms-item{background:#17384f!important;border-color:rgba(255,255,255,.10)!important}body.v112-dark .v135-webmanager h3,body.v112-dark .v135-cms-editor h4,body.v112-dark .v135-cms-list h4,body.v112-dark .v135-cms-item strong{color:#fff!important}body.v112-dark .v135-webmanager p,body.v112-dark .v135-cms-item p{color:#c9d8df!important}
+@media(max-width:900px){.v135-cms-layout{grid-template-columns:1fr}.v135-webmanager-head{flex-direction:column}}@media(max-width:620px){.v135-cms-grid{grid-template-columns:1fr}.v135-cms-grid .wide{grid-column:auto}}
+</style>
+<style id="v35-resident-tracking-staff">
+#resident-facing-update{border-top:2px solid rgba(201,163,74,.45)}
+#resident-facing-update h4::after{content:" PUBLIC";font:900 7px Segoe UI,Arial,sans-serif;letter-spacing:.08em;margin-left:8px;padding:4px 6px;border-radius:999px;background:#f3ecd8;color:#806928;vertical-align:middle}
+.v35-tracker-button{border-color:rgba(201,163,74,.30)!important;color:#f1dfaa!important}
+</style>
+<style id="v36-notifications-css">
+/* V36 — Notifications & Reminders */
+.v36-bell{position:relative!important}
+.v36-bell-count{position:absolute;right:-6px;top:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#c9a34a;color:#08263d;font-size:8px;font-weight:900;display:grid;place-items:center;border:2px solid #0b3553}
+.v36-notification-panel{display:none;position:fixed;right:18px;top:78px;width:min(430px,92vw);max-height:70vh;overflow:auto;z-index:1200;background:#fff;border:1px solid rgba(10,47,73,.12);border-radius:16px;box-shadow:0 25px 60px rgba(3,25,40,.24);color:#17394e}
+.v36-notification-panel.open{display:block}
+.v36-panel-head{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:15px 16px;background:linear-gradient(145deg,#0b3553,#08263d);color:#fff;border-radius:15px 15px 0 0}
+.v36-panel-head strong{font:500 17px Georgia,serif}.v36-panel-head small{display:block;font-size:8px;color:#9fb8c4;margin-top:2px}.v36-panel-head button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:6px 8px;font-size:9px}
+.v36-alert-list{padding:8px}.v36-alert{display:grid;grid-template-columns:10px 1fr auto;gap:9px;padding:11px 9px;border-bottom:1px solid #edf2f4;align-items:start}.v36-alert:last-child{border-bottom:0}.v36-alert-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;background:#4f809a}.v36-alert.overdue .v36-alert-dot{background:#b54842}.v36-alert.today .v36-alert-dot{background:#c49a35}.v36-alert.high .v36-alert-dot{background:#ba6937}.v36-alert strong{display:block;font-size:10px;color:#204a61}.v36-alert span{display:block;font-size:9px;line-height:1.45;color:#71858f;margin-top:2px}.v36-alert button{border:1px solid rgba(10,47,73,.10);background:#f5f9fb;color:#31586d;border-radius:7px;padding:6px 7px;font-size:8px}
+.v36-no-alerts{padding:24px;text-align:center;color:#748a96;font-size:10px}
+.v36-reminder-card{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;position:relative}
+.v36-reminder-card::before{content:"";position:absolute;top:0;left:15px;width:44px;height:1px;background:linear-gradient(90deg,#c9a34a,transparent)}
+.v36-reminder-card h4{font:500 17px Georgia,serif;color:#0b3553;margin:0 0 8px}
+.v36-reminder-card p{font-size:10px;line-height:1.5;color:#6b808b}
+.v36-reminder-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.v36-reminder-card label{font-size:9px;font-weight:800;color:#587181}.v36-reminder-card select,.v36-reminder-card textarea{width:100%;margin-top:5px;border:1px solid var(--line);border-radius:8px;padding:9px;background:#f9fbfc;color:#17394e;font-size:10px}.v36-reminder-card textarea{min-height:84px;resize:vertical}
+.v36-template-preview{margin-top:10px;padding:11px;border-radius:9px;background:#edf4f7;color:#536f7d;font-size:10px;line-height:1.55;white-space:pre-wrap}
+.v36-template-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.v36-template-actions button,.v36-template-actions a{border:0;border-radius:8px;padding:8px 9px;font-size:8px;font-weight:900;text-decoration:none}.v36-copy{background:#0b3553;color:#fff}.v36-email{background:#e8eff3;color:#31566c}.v36-wa{background:#25D366;color:#fff}
+.v36-browser-alert{display:flex;gap:8px;align-items:center;margin-top:10px;padding:9px 10px;border-radius:8px;background:#f6f0df;color:#705e29;font-size:9px;line-height:1.45}.v36-browser-alert button{margin-left:auto;border:1px solid #d5c28b;background:#fffaf0;color:#6b5929;border-radius:7px;padding:6px 8px;font-size:8px;font-weight:900}
+.v36-flash{animation:v36flash .9s ease-out 1}
+@keyframes v36flash{0%{box-shadow:0 0 0 0 rgba(201,163,74,.45)}100%{box-shadow:0 0 0 14px rgba(201,163,74,0)}}
+@media(max-width:640px){.v36-reminder-row{grid-template-columns:1fr}.v36-notification-panel{right:8px;left:8px;width:auto;top:74px}}
+@media(prefers-reduced-motion:reduce){.v36-flash{animation:none!important}}
+</style>
+<style id="v38-document-governance-css">
+.v38-records-button{color:#f2dfa8!important;border-color:rgba(201,163,74,.28)!important}
+.v38-resident-summary{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}
+.v38-resident-summary h4{font:500 17px Georgia,serif;color:#0b3553;margin:0 0 9px}
+.v38-profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.v38-profile-grid div{padding:9px;border-radius:8px;background:#edf4f7}.v38-profile-grid small{display:block;font-size:7px;color:#7c909a}.v38-profile-grid strong{display:block;font-size:9px;color:#31586d;margin-top:3px}
+.v38-linked-case{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #edf1f3;font-size:9px}.v38-linked-case:first-child{border-top:0}.v38-linked-case strong{color:#2b556d}.v38-linked-case span{color:#81949e}
+.v38-doc-builder{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}.v38-doc-builder label{font-size:8px;font-weight:800;color:#587181}.v38-doc-builder select{width:100%;margin-top:5px;border:1px solid var(--line);border-radius:8px;padding:8px;background:#f9fbfc;color:#17394e;font-size:9px}
+.v38-doc-list{margin-top:10px}.v38-doc-row{display:grid;grid-template-columns:1fr 120px 110px 100px;gap:9px;align-items:center;padding:9px 0;border-top:1px solid #edf1f3}.v38-doc-row:first-child{border-top:0}.v38-doc-row strong{display:block;font-size:9px;color:#2b5368}.v38-doc-row small{display:block;font-size:7px;color:#84969f;margin-top:2px}.v38-doc-row span{font-size:8px;color:#536e7c}.v38-doc-row .restricted{color:#974942;font-weight:900}.v38-doc-row .standard{color:#3f745d;font-weight:900}
+.v38-doc-warning{padding:9px;border-radius:8px;background:#f7eedb;color:#79642c;font-size:8px;line-height:1.45;margin-top:8px}
+@media(max-width:760px){.v38-profile-grid{grid-template-columns:1fr 1fr}.v38-doc-builder,.v38-doc-row{grid-template-columns:1fr}}
+</style>
+<style id="v39-community-case-css">
+.v39-community-button{color:#f2dfa8!important;border-color:rgba(201,163,74,.30)!important}
+.v39-community-card{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;position:relative}.v39-community-card::before{content:"";position:absolute;top:0;left:15px;width:44px;height:1px;background:linear-gradient(90deg,#c9a34a,transparent)}
+.v39-community-card h4{font:500 17px Georgia,serif;color:#0b3553;margin:0 0 8px}.v39-community-card p{font-size:9px;line-height:1.5;color:#708591}
+.v39-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.v39-grid label{font-size:9px;font-weight:800;color:#587181}.v39-grid select,.v39-grid textarea{width:100%;margin-top:5px;border:1px solid var(--line);border-radius:8px;padding:9px;background:#f9fbfc;color:#17394e;font-size:10px}.v39-grid textarea{min-height:68px;resize:vertical}.v39-grid .wide{grid-column:1/-1}
+.v39-check{display:flex!important;align-items:flex-start;gap:7px!important;padding:9px;border-radius:8px;background:#edf4f7;font-size:9px!important;font-weight:700!important;color:#527080!important}.v39-check input{width:auto!important;margin:2px 0 0!important}
+.v39-status{margin-top:9px;padding:9px 10px;border-radius:8px;background:#f6f0df;color:#735f28;font-size:8px;line-height:1.45}
+@media(max-width:700px){.v39-grid{grid-template-columns:1fr}.v39-grid .wide{grid-column:auto}}
+</style>
+<style id="v40-connected-nav-css">
+.v40-app-nav{
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center
+}
+.v40-app-nav a,.v40-app-nav button{
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);color:#fff!important;
+  border-radius:8px;padding:8px 9px;font-size:9px;
+  text-decoration:none;font-weight:700
+}
+.v40-app-nav a.active{
+  border-color:rgba(201,163,74,.48);
+  color:#efdca2!important;background:rgba(201,163,74,.08)
+}
+.v40-system-strip{
+  max-width:1320px;margin:0 auto 12px;padding:10px 12px;
+  border:1px solid rgba(10,47,73,.10);border-radius:10px;
+  background:rgba(255,255,255,.82);color:#607885;
+  font-size:9px;line-height:1.45
+}
+.v40-system-strip strong{color:#2a5269}
+.v40-case-link{
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid rgba(10,47,73,.10);border-radius:7px;
+  padding:5px 7px;text-decoration:none!important;
+  background:#f4f8fa;color:#315a70!important;
+  font-size:8px;font-weight:900
+}
+.v40-case-link:hover{border-color:rgba(201,163,74,.45)}
+@media(max-width:720px){
+  .v40-app-nav{overflow:auto;flex-wrap:nowrap}
+  .v40-app-nav a,.v40-app-nav button{white-space:nowrap}
+}
+</style>
+<style id="v41-permission-css">
+.v41-access-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 7px;border-radius:999px;background:rgba(201,163,74,.12);color:#d9c486;font-size:8px;font-weight:900;margin-left:6px}
+.v41-locked{opacity:.48;pointer-events:none;filter:grayscale(.15)}
+.v41-readonly-note{display:none;margin:0 0 12px;padding:10px 11px;border-radius:9px;background:#f6f0df;color:#715e28;font-size:9px;line-height:1.45}
+.v41-readonly-note.show{display:block}
+.v41-hidden-by-role{display:none!important}
+</style>
+<style id="v43-staff-live-css">
+.v43-live{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;background:rgba(63,123,95,.14);color:#bde1ca;font-size:8px;font-weight:900}
+.v43-live::before{content:"";width:7px;height:7px;border-radius:50%;background:#6fc394}
+.v43-live.offline{background:rgba(180,72,65,.14);color:#efc2bd}.v43-live.offline::before{background:#c65c55}
+.v43-login-fields label{display:block;font-size:11px;font-weight:800;color:#456274;margin:14px 0 6px}
+.v43-login-fields input{width:100%;padding:12px;border:1px solid rgba(10,47,73,.12);border-radius:10px;background:#f8fbfc;color:#17394e}
+.v43-login-actions{display:flex;gap:8px;align-items:center;margin-top:18px}.v43-login-actions button{flex:1}
+.v43-login-status{margin-top:11px;padding:10px;border-radius:8px;background:#edf4f7;color:#5c7480;font-size:9px;line-height:1.45}
+</style>
+<style id="v60-staff-suite-css">
+.v60-staff-suite{background:linear-gradient(90deg,#f7f0df,#eef5f7);border-bottom:1px solid rgba(11,53,83,.10)}.v60-staff-suite-inner{max-width:1320px;margin:auto;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.v60-staff-suite-copy strong{display:block;color:#315a70;font-size:8px}.v60-staff-suite-copy span{display:block;margin-top:2px;color:#7b8d95;font-size:7px}.v60-staff-suite-links{display:flex;gap:5px;overflow:auto;scrollbar-width:none}.v60-staff-suite-links a{flex:0 0 auto;min-height:30px;display:inline-flex;align-items:center;padding:5px 7px;border:1px solid rgba(11,53,83,.09);border-radius:7px;background:#fff;color:#315a70;text-decoration:none;font-size:7px;font-weight:900}.v60-staff-suite-links a.active{border-color:rgba(201,163,74,.48);color:#8d7134}:focus-visible{outline:2px solid #c9a34a!important;outline-offset:3px!important}@media(max-width:720px){.v60-staff-suite-inner{align-items:flex-start;flex-direction:column}.v60-staff-suite-links{width:100%}}
+</style>
+<style id="v61-staff-module-css">
+.v60-staff-suite-copy strong{font-size:8px!important}
+.v61-module-hero{
+  margin:12px auto 0;
+  max-width:1320px;
+  padding:0 14px;
+}
+.v61-module-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid rgba(11,53,83,.09);
+  border-left:3px solid #c9a34a;
+  border-radius:10px;
+  background:linear-gradient(145deg,#fffdf8,#edf5f7);
+  box-shadow:0 8px 20px rgba(7,35,55,.04);
+}
+.v61-module-card small{
+  display:block;
+  color:#8a7441;
+  font-size:6px;
+  font-weight:900;
+  letter-spacing:.10em;
+}
+.v61-module-card strong{
+  display:block;
+  margin-top:3px;
+  color:#174f74;
+  font-size:11px;
+}
+.v61-module-card span{
+  display:block;
+  margin-top:3px;
+  color:#7a8c94;
+  font-size:7px;
+  line-height:1.35;
+}
+.v61-module-actions{
+  display:flex;
+  gap:5px;
+  overflow:auto;
+  scrollbar-width:none;
+}
+.v61-module-actions a{
+  flex:0 0 auto;
+  min-height:31px;
+  display:inline-flex;
+  align-items:center;
+  padding:5px 7px;
+  border:1px solid rgba(11,53,83,.09);
+  border-radius:7px;
+  background:#fff;
+  color:#315a70;
+  text-decoration:none;
+  font-size:6px;
+  font-weight:900;
+}
+.v61-module-actions a:first-child{background:#0b3553;color:#fff}
+.v61-test-guard{
+  max-width:1320px;
+  margin:7px auto 0;
+  padding:0 14px;
+}
+.v61-test-guard div{
+  padding:7px 9px;
+  border-radius:7px;
+  background:#fff8e6;
+  border:1px solid rgba(201,163,74,.24);
+  color:#75653a;
+  font-size:6px;
+  line-height:1.4;
+}
+.v61-test-guard strong{font-weight:900}
+@media(max-width:720px){
+  .v61-module-card{grid-template-columns:1fr}
+  .v61-module-actions{width:100%}
+}
+</style>
+<style id="v62-workflow-common-css">
+:root{
+  --v62-navy:#082f49;--v62-blue:#174f74;--v62-gold:#c9a34a;
+  --v62-paper:#f5f8f7;--v62-ivory:#fbfaf5;--v62-line:rgba(11,53,83,.10);
+  --v62-shadow:0 13px 31px rgba(6,31,49,.07);
+}
+.v62-state-note{
+  max-width:1320px;margin:7px auto 0;padding:0 14px;
+}
+.v62-state-note>div{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+  padding:8px 10px;border:1px solid rgba(201,163,74,.22);
+  border-left:3px solid #c9a34a;border-radius:8px;background:#fff9e8;
+  color:#6e623d;font-size:6px;line-height:1.45;
+}
+.v62-state-note strong{font-weight:900}
+.v62-state-chip{flex:0 0 auto;padding:4px 6px;border-radius:6px;background:#fff;color:#8b7138;font-weight:900}
+.v62-toast{
+  position:fixed;right:16px;bottom:16px;z-index:120000;
+  max-width:min(380px,calc(100vw - 32px));padding:10px 12px;
+  border:1px solid rgba(11,53,83,.10);border-radius:9px;background:#0b3553;color:#fff;
+  box-shadow:0 16px 38px rgba(0,0,0,.20);font-size:7px;line-height:1.45;
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity .15s ease,transform .15s ease;
+}
+.v62-toast.show{opacity:1;transform:none}
+.v62-toast.success{background:#265f47}.v62-toast.error{background:#81483f}
+:focus-visible{outline:2px solid #c9a34a!important;outline-offset:3px!important}
+@media(max-width:720px){
+  .v62-state-note>div{flex-direction:column}
+  .v62-state-chip{align-self:flex-start}
+}
+</style>
+<style id="v75-case-reports-polish-css">
+/* ==========================================================
+   V75 — CASE MANAGEMENT + MANAGEMENT REPORTS POLISH
+   ========================================================== */
+.v75-skip{
+  position:absolute!important;left:10px;top:-60px;z-index:99999;
+  padding:10px 12px;border-radius:7px;background:#0b3553;color:#fff;
+  text-decoration:none;font:800 12px/1.2 Segoe UI,Arial,sans-serif;
+}
+.v75-skip:focus{top:10px}
+:focus-visible{outline:2px solid #c9a34a!important;outline-offset:3px!important}
+
+.v75-case-state,
+.v75-report-state{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:10px 0 12px;
+}
+.v75-case-state article,
+.v75-report-state article{
+  padding:10px;
+  border:1px solid rgba(11,53,83,.08);
+  border-radius:8px;
+  background:#fbfcfa;
+}
+.v75-case-state small,
+.v75-report-state small{
+  display:block;color:#8d7540;font-size:5px;font-weight:900;letter-spacing:.07em;
+}
+.v75-case-state strong,
+.v75-report-state strong{
+  display:block;margin-top:4px;color:#315a70;font-size:8px;
+}
+.v75-case-state span,
+.v75-report-state span{
+  display:block;margin-top:4px;color:#7a8d95;font-size:6px;line-height:1.38;
+}
+.v75-note{
+  margin:8px 0 10px;
+  padding:9px 10px;
+  border-left:3px solid #c9a34a;
+  border-radius:7px;
+  background:#fff8e8;
+  color:#6e633f;
+  font-size:7px;
+  line-height:1.45;
+}
+.v75-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:8px 0 12px;
+}
+.v75-actions a{
+  min-height:32px;
+  display:inline-flex;
+  align-items:center;
+  padding:5px 7px;
+  border:1px solid rgba(11,53,83,.09);
+  border-radius:6px;
+  background:#fff;
+  color:#315a70;
+  text-decoration:none;
+  font-size:6px;
+  font-weight:900;
+}
+.v75-actions a.primary{background:#0b3553;color:#fff}
+.v75-field-help{
+  display:block;
+  margin-top:4px;
+  color:#7c8d95;
+  font-size:6px;
+  line-height:1.35;
+}
+.v75-filter-note{
+  margin:7px 0 0;
+  color:#748993;
+  font-size:6px;
+  line-height:1.4;
+}
+.v75-table-caption{
+  text-align:left;
+  padding:0 0 7px;
+  color:#6f8590;
+  font-size:6px;
+  line-height:1.4;
+}
+.v75-dialog-note{
+  margin:0 0 10px;
+  padding:8px 9px;
+  border-left:3px solid #c9a34a;
+  border-radius:7px;
+  background:#fff8e8;
+  color:#6e633f;
+  font-size:6px;
+  line-height:1.4;
+}
+.v75-report-source{
+  margin:0 0 12px;
+  padding:10px 11px;
+  border:1px solid rgba(11,53,83,.08);
+  border-left:3px solid #c9a34a;
+  border-radius:8px;
+  background:#fbfcfa;
+}
+.v75-report-source small{
+  display:block;color:#8c753f;font-size:5px;font-weight:900;letter-spacing:.07em;
+}
+.v75-report-source strong{
+  display:block;margin-top:3px;color:#315a70;font-size:8px;
+}
+.v75-report-source span{
+  display:block;margin-top:4px;color:#748993;font-size:6px;line-height:1.4;
+}
+.v75-readonly{
+  border-left-color:#7a94a2;
+  background:#f4f8f9;
+  color:#637984;
+}
+#case-rows tr[tabindex="0"]{cursor:pointer}
+#case-rows tr[tabindex="0"]:focus-visible{outline-offset:-2px!important}
+.drawer[role="dialog"]{outline:none}
+@media(max-width:900px){
+  .v75-case-state,.v75-report-state{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  .v75-case-state,.v75-report-state{
+    display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x mandatory;scrollbar-width:none;
+    overscroll-behavior-x:contain;touch-action:pan-x;
+  }
+  .v75-case-state::-webkit-scrollbar,.v75-report-state::-webkit-scrollbar{display:none}
+  .v75-case-state article,.v75-report-state article{flex:0 0 78vw;scroll-snap-align:start}
+  button,a,input,select,textarea{min-height:44px}
+  input,select,textarea{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+<style id="v85-staff-login-mobile-fix-css">
+@media(max-width:700px){
+  #login .login-card,
+  .login-card{
+    box-sizing:border-box!important;
+    width:calc(100% - 32px)!important;
+    max-width:500px!important;
+    min-width:0!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    padding:26px 20px!important;
+  }
+  .login-card h1,.login-card p,.login-card label,.login-card input,.login-card select,.login-card button{
+    min-width:0!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    overflow-wrap:anywhere!important;
+  }
+}
+</style>
+<style id="v101-procedure-controls-css">
+.v101-procedure-note{margin:8px 0 10px;padding:8px 9px;border-left:3px solid #c9a34a;border-radius:7px;background:#fff8e8;color:#6a6040;font-size:8px;line-height:1.45}.v101-procedure-note strong{color:#4d472f}@media(min-width:1024px){.v101-procedure-note{font-size:10px}}
+</style><style id="v108-staff-mailbox-css">
+/* V108 — shared staff mailbox, kept separate from public resident contact */
+.v108-staff-mailbox{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:min(1180px,calc(100% - 24px));
+  margin:8px auto 0;
+  padding:8px 10px;
+  border:1px solid rgba(11,53,83,.10);
+  border-left:3px solid #c9a34a;
+  border-radius:8px;
+  background:#f8fbfc;
+  color:#526b76;
+  font-size:8px;
+  line-height:1.4;
+}
+.v108-staff-mailbox strong{
+  color:#0b3553;
+  font-size:8px;
+}
+.v108-staff-mailbox a{
+  color:#315a70;
+  font-weight:900;
+  text-decoration:none;
+  overflow-wrap:anywhere;
+}
+.v108-staff-mailbox a:hover,
+.v108-staff-mailbox a:focus{text-decoration:underline}
+.v108-staff-mailbox small{
+  color:#7c8e96;
+  font-size:7px;
+}
+@media(max-width:720px){
+  .v108-staff-mailbox{
+    align-items:flex-start;
+    flex-direction:column;
+    width:calc(100% - 16px);
+    font-size:11px;
+  }
+  .v108-staff-mailbox strong{font-size:11px}
+  .v108-staff-mailbox small{font-size:10px}
+}
+</style><style id="v114-system-theme-css">
+/* V114 — system-wide navy/dark theme for portals, tracker, staff and 404 pages. */
+:root{
+  --v114-navy:#061d30;
+  --v114-navy2:#082b45;
+  --v114-surface:#0d314b;
+  --v114-surface2:#123b57;
+  --v114-line:rgba(184,217,234,.16);
+  --v114-heading:#e9f0f3;
+  --v114-strong:#d7e3e8;
+  --v114-text:#a9bdc8;
+  --v114-muted:#91a7b3;
+  --v114-gold:#cdb270;
+}
+.v114-theme-toggle{
+  position:fixed;left:14px;bottom:14px;z-index:9999;
+  min-width:92px;min-height:42px;padding:8px 12px;border-radius:12px;
+  border:1px solid rgba(11,53,83,.18);background:#f7fafc;color:#0b3553;
+  font:800 11px/1.1 'Segoe UI',Arial,sans-serif;letter-spacing:.03em;
+  box-shadow:0 10px 26px rgba(4,25,41,.18);cursor:pointer;
+}
+.v114-theme-toggle:focus-visible{outline:3px solid #c9a34a;outline-offset:3px}
+body.v112-dark .v114-theme-toggle{background:#c9a34a;color:#082238;border-color:#c9a34a;box-shadow:0 10px 28px rgba(0,0,0,.34)}
+
+body.v112-dark{
+  color-scheme:dark;
+  background:linear-gradient(180deg,#03131f 0%,var(--v114-navy) 48%,#020d16 100%)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail){
+  background:#041725!important;border-color:rgba(255,255,255,.09)!important;color:var(--v114-text)!important;
+}
+body.v112-dark footer{background:#020d16!important;border-color:rgba(205,178,112,.28)!important;color:var(--v114-muted)!important}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail,footer) :is(a,strong,b,h1,h2,h3,h4){color:var(--v114-heading)!important}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail,footer) :is(span,small,p){color:var(--v114-muted)!important}
+
+/* Public service portals */
+body.v112-dark main,
+body.v112-dark .hero,
+body.v112-dark .section,
+body.v112-dark .v65-hub-guide,
+body.v112-dark .v65-hub-shortcuts,
+body.v112-dark .v66-grant-paths,
+body.v112-dark .v65-student-paths,
+body.v112-dark .v66-choice-grid,
+body.v112-dark .v67-community-paths,
+body.v112-dark .v67-status-grid,
+body.v112-dark .v67-business-paths,
+body.v112-dark .v68-resident-paths,
+body.v112-dark .v68-contact-grid{
+  background:linear-gradient(145deg,#082b45,#0b3553)!important;
+  color:var(--v114-text)!important;
+  border-color:var(--v114-line)!important;
+}
+body.v112-dark :is(
+  .action-card,.step,.doc,.notice,.help-card,.v65-hub-shortcut,.v65-guide-card,
+  .v66-grant-path,.v65-student-path,.v66-choice,.v67-community-path,.v67-status-card,
+  .v67-business-path,.v68-resident-path,.v68-contact-card,.v98-source-note,
+  .v66-caution,.v66-note,.v67-note,.v67-business-note,.v68-note
+){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(.section-head,.hero-main,.action-card,.step,.doc,.notice,.help-card,.v65-guide-card,.v66-choice,.v67-status-card,.v68-contact-card) :is(h1,h2,h3,h4,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.section-head,.hero-main,.action-card,.step,.doc,.notice,.help-card,.v65-guide-card,.v66-choice,.v67-status-card,.v68-contact-card) :is(p,span,small,li){color:var(--v114-text)!important}
+body.v112-dark .eyebrow{color:var(--v114-gold)!important}
+body.v112-dark .pdf-modal{background:rgba(1,10,17,.86)!important}
+body.v112-dark .pdf-shell{background:#071f33!important;border-color:var(--v114-line)!important}
+body.v112-dark .pdf-head{background:#082b45!important;color:var(--v114-heading)!important;border-color:var(--v114-line)!important}
+
+/* Resident tracker */
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage) :is(h1,h2,h3,h4,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage) :is(p,span,small,label,li){color:var(--v114-text)!important}
+body.v112-dark .public-status{color:var(--v114-strong)!important}
+body.v112-dark .last-update,
+body.v112-dark .v68-privacy-note,
+body.v112-dark .v68-state-line{color:var(--v114-muted)!important}
+
+/* Staff suite */
+body.v112-dark :is(.v108-staff-mailbox,.v62-state-note,.v61-module-card,.v61-test-guard,.demo-banner,.login-card,
+  .panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,
+  .table-wrap,.drawer,.drawer-body,.v42-backend-callout,.v41-readonly-note,.v76-state,.v77-state,.v78-final-note){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  color:var(--v114-text)!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.18)!important;
+}
+body.v112-dark :is(.panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,.table-wrap,.drawer,.login-card) :is(h1,h2,h3,h4,h5,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,.table-wrap,.drawer,.login-card) :is(p,span,small,label,li){color:var(--v114-text)!important}
+body.v112-dark .v108-staff-mailbox a{color:#d7e3e8!important}
+body.v112-dark .v108-staff-mailbox small{color:var(--v114-muted)!important}
+body.v112-dark :is(.nav-btn,.tab,.suite-nav a,.v60-staff-suite-links a,.v40-app-nav a,.headlinks a){
+  background:#0a2942!important;color:#c7d6dd!important;border-color:rgba(255,255,255,.10)!important;
+}
+body.v112-dark :is(.nav-btn.active,.tab.active,.suite-nav a.active,.v60-staff-suite-links a.active,.v40-app-nav a.active,[aria-current="page"]){
+  background:#174f74!important;color:#fff!important;border-color:rgba(205,178,112,.36)!important;
+}
+body.v112-dark table{background:#0b2c45!important;color:var(--v114-text)!important;border-color:var(--v114-line)!important}
+body.v112-dark :is(th,td){border-color:rgba(184,217,234,.12)!important;color:var(--v114-text)!important}
+body.v112-dark th{background:#08263d!important;color:var(--v114-strong)!important}
+body.v112-dark tr:nth-child(even) td{background:rgba(255,255,255,.018)!important}
+
+/* Forms and controls everywhere */
+body.v112-dark :is(input,select,textarea){
+  background:#061d30!important;color:#d4e0e5!important;border-color:rgba(184,217,234,.24)!important;
+  box-shadow:none!important;
+}
+body.v112-dark :is(input,textarea)::placeholder{color:#819aa7!important;opacity:1!important}
+body.v112-dark select option{background:#061d30!important;color:#d4e0e5!important}
+body.v112-dark :is(button,.primary,.save-btn,.login-button,.v61-module-actions a,.hero-actions a){
+  border-color:rgba(255,255,255,.13)!important;
+}
+body.v112-dark :is(a,button,input,select,textarea):focus-visible{outline:3px solid var(--v114-gold)!important;outline-offset:3px!important}
+body.v112-dark a{color:#b9d3df}
+body.v112-dark .wa{color:#fff!important}
+
+/* Status tones should remain readable */
+body.v112-dark :is(.badge,.status,.count,.v62-state-chip){color:#d4e0e5!important}
+body.v112-dark .gold{color:var(--v114-gold)!important}
+body.v112-dark .error{color:#e7b0b0!important}
+body.v112-dark .empty{color:var(--v114-muted)!important}
+
+/* 404 / simple pages */
+body.v112-dark #main-content{color:var(--v114-text)!important}
+body.v112-dark #main-content :is(h1,h2,h3,strong){color:var(--v114-heading)!important}
+body.v112-dark #main-content :is(p,span,small){color:var(--v114-text)!important}
+
+/* Never alter supplied photography. */
+body.v112-dark img{filter:none!important}
+
+@media(max-width:720px){
+  .v114-theme-toggle{left:8px;bottom:8px;min-width:84px;min-height:40px;font-size:10px}
+}
+</style><style id="v115-final-cleanup-css">
+/* V115 — final system cleanup: navigation theme control, overflow guards, print polish. */
+.v114-theme-toggle.v115-theme-control{
+  position:static!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  z-index:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;min-height:32px!important;height:auto!important;padding:7px 10px!important;margin:0!important;
+  border-radius:8px!important;box-shadow:none!important;white-space:nowrap!important;
+  font-size:9px!important;line-height:1.1!important;letter-spacing:.025em!important;
+  vertical-align:middle!important;
+}
+.toplinks .v115-theme-control,.v40-tracker-nav .v115-theme-control,.v60-staff-suite-links .v115-theme-control{
+  flex:0 0 auto!important;
+}
+.v115-inline-theme{margin-top:14px!important}
+
+/* Collision/overflow protection for long names, references, badges, tables and 140% browser/text zoom. */
+html,body{max-width:100%}
+main,section,article,aside,header,footer,nav,div{min-width:0}
+table{max-width:100%!important}
+th,td{overflow-wrap:anywhere;word-break:normal;vertical-align:top}
+:is(.badge,.chip,.status,.pill,[class*="badge"],[class*="chip"],[class*="status"],[class*="reference"],[class*="ref-"]){
+  max-width:100%;overflow-wrap:anywhere;word-break:normal;
+}
+:is(input,select,textarea,button,a){box-sizing:border-box;max-width:100%}
+.v60-staff-suite-copy,.brand,.head-inner,.top,.toplinks,.v40-app-nav,.v40-tracker-nav,.v60-staff-suite-links{
+  min-width:0;
+}
+.v60-staff-suite-links,.v40-app-nav,.toplinks,.v40-tracker-nav{row-gap:6px!important}
+
+/* Theme control remains usable without becoming a floating obstruction on small screens. */
+@media(max-width:720px){
+  .v114-theme-toggle.v115-theme-control{min-height:36px!important;padding:8px 10px!important;font-size:10px!important}
+  .toplinks,.v40-tracker-nav,.v60-staff-suite-links{align-items:center!important}
+  th,td{overflow-wrap:anywhere!important}
+}
+@media(max-width:380px){
+  .v114-theme-toggle.v115-theme-control{white-space:normal!important;text-align:center!important}
+}
+
+/* Print views: no theme controls, no dark canvas, clean paper output. */
+@media print{
+  .v114-theme-toggle,.v115-theme-control,.v8-accessibility,.v3-contact-rail{display:none!important}
+  html,body{background:#fff!important;color:#111!important;filter:none!important;box-shadow:none!important}
+  body.v112-dark,body.v112-dark *{color:#111!important;text-shadow:none!important}
+  body.v112-dark :is(main,section,article,aside,header,footer,nav,div,table,thead,tbody,tr,td,th){
+    background:#fff!important;box-shadow:none!important;
+  }
+  a{color:#111!important;text-decoration:none!important}
+  article,.card,table,tr{break-inside:avoid-page}
+}
+</style>
+<style id="v136-workflow-css">
+.v136-attention{margin:0 0 16px;padding:17px;border:1px solid rgba(11,46,72,.12);border-radius:15px;background:linear-gradient(145deg,#fff,#f1f6f8);box-shadow:0 12px 30px rgba(11,46,72,.05)}
+.v136-attention-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}.v136-attention-head small{display:block;color:#9a782f;font-size:8px;font-weight:950;letter-spacing:.12em}.v136-attention-head h3{margin:4px 0;color:#0b2e48;font:600 20px Georgia,serif}.v136-attention-head p{margin:4px 0 0;color:#617988;font-size:10px;line-height:1.5}.v136-attention-badge{background:#0b2e48;color:#e3c77b;padding:7px 10px;border-radius:999px;font-size:7px;font-weight:950;letter-spacing:.08em;white-space:nowrap}
+.v136-attention-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.v136-attention-card{border:1px solid rgba(11,46,72,.10);background:#fff;border-radius:11px;padding:11px;min-height:78px}.v136-attention-card small{display:block;color:#687f8b;font-size:7px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.v136-attention-card strong{display:block;color:#0b2e48;font-size:20px;margin:4px 0}.v136-attention-card span{display:block;color:#6e818b;font-size:8px;line-height:1.4}.v136-attention-card.alert{border-left:3px solid #a94b42}.v136-attention-card.warn{border-left:3px solid #b48432}.v136-attention-card.ok{border-left:3px solid #3f7b5f}
+.v136-workflow-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 12px}.v136-workflow-step{padding:8px 9px;border-radius:9px;background:#edf4f7;border:1px solid rgba(11,46,72,.09);color:#17384e;font-size:8px;font-weight:900;text-align:center}.v136-workflow-step b{display:block;font-size:7px;color:#9a782f;margin-bottom:3px}.v136-schedule-note{grid-column:1/-1;padding:9px 10px;background:#f7f3e8;border-left:3px solid #c9a34a;border-radius:7px;color:#5d6f77;font-size:8px;line-height:1.45}.v136-cms-state{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:950;text-transform:uppercase;letter-spacing:.06em}.v136-state-draft{background:#edf1f3;color:#607582}.v136-state-review{background:#fff1d9;color:#85601f}.v136-state-approved{background:#e6f0f7;color:#355c78}.v136-state-published{background:#e3f1e8;color:#356b51}.v136-state-expired{background:#f3e4e2;color:#8e4a43}.v136-state-scheduled{background:#ece8f5;color:#625184}.v136-cms-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.v136-cms-meta span{font-size:7px;color:#6c808c;background:#f3f6f8;border-radius:999px;padding:3px 6px}.v136-cms-actions2{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.v136-cms-actions2 button{border:1px solid rgba(11,46,72,.13);background:#fff;color:#21445a;border-radius:7px;padding:6px 8px;font-size:7px;font-weight:900}.v136-cms-actions2 .review{background:#fff5e5}.v136-cms-actions2 .approve{background:#e8f1f7}.v136-cms-actions2 .publish{background:#0b2e48;color:#fff}.v136-cms-actions2 .danger{color:#8f403b}
+.v136-site-nav{width:100%;border:0;background:transparent;color:#b6cbd6;text-align:left;padding:10px 12px;border-radius:9px;font-size:11px;margin:2px 0}.v136-site-nav:hover{background:rgba(255,255,255,.06)}
+body.v112-dark .v136-attention{background:#14344b!important;border-color:rgba(255,255,255,.1)!important}body.v112-dark .v136-attention-head h3,body.v112-dark .v136-attention-card strong{color:#fff!important}body.v112-dark .v136-attention-head p,body.v112-dark .v136-attention-card span,body.v112-dark .v136-attention-card small{color:#c8d8df!important}body.v112-dark .v136-attention-card{background:#102e43!important;border-color:rgba(255,255,255,.1)!important}body.v112-dark .v136-workflow-step{background:#102e43!important;color:#d7e5eb!important;border-color:rgba(255,255,255,.1)!important}
+@media(max-width:900px){.v136-attention-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.v136-attention-head{flex-direction:column}.v136-attention-grid,.v136-workflow-strip{grid-template-columns:1fr 1fr}}
+
+/* V137 — Case Operations Control */
+.v137-ops-nav{width:100%;border:0;background:transparent;color:#d7e5eb;text-align:left;padding:9px 12px;font-size:10px;font-weight:800;display:flex;justify-content:space-between;gap:8px;align-items:center;cursor:pointer}
+.v137-ops-nav:hover,.v137-ops-nav:focus-visible{background:rgba(255,255,255,.08);outline:none}.v137-ops-nav .count{background:#c9a34a;color:#08263d;border-radius:999px;min-width:22px;padding:2px 6px;text-align:center;font-size:8px}
+.v137-ops{margin:18px 0;border:1px solid rgba(8,38,61,.12);border-radius:17px;background:linear-gradient(145deg,#fff,#f4f8fb);box-shadow:0 12px 30px rgba(8,38,61,.06);overflow:hidden}
+.v137-ops-head{padding:18px 20px;background:linear-gradient(135deg,#08263d,#0d3554);color:#fff;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.v137-ops-head small{display:block;color:#d9c77f;font-size:8px;font-weight:900;letter-spacing:.14em}.v137-ops-head h3{margin:5px 0 4px;font:500 23px Georgia,serif;color:#fff}.v137-ops-head p{margin:0;color:#c8d7df;font-size:10px;line-height:1.55;max-width:720px}.v137-ops-chip{border:1px solid rgba(201,163,74,.55);border-radius:999px;padding:7px 10px;color:#f3df9c;font-size:8px;font-weight:900;white-space:nowrap}
+.v137-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px}.v137-kpi{background:#fff;border:1px solid rgba(8,38,61,.1);border-radius:12px;padding:12px}.v137-kpi small{font-size:7px;font-weight:900;letter-spacing:.09em;color:#748a96}.v137-kpi strong{display:block;margin-top:5px;font:600 24px Georgia,serif;color:#0b3553}.v137-kpi span{display:block;margin-top:3px;font-size:8px;color:#738793}
+.v137-ops-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;padding:0 12px 12px}.v137-panel{background:#fff;border:1px solid rgba(8,38,61,.1);border-radius:13px;overflow:hidden}.v137-panel-head{padding:12px 14px;border-bottom:1px solid #e9eff2;display:flex;justify-content:space-between;gap:8px;align-items:center}.v137-panel-head strong{font-size:11px;color:#17394e}.v137-panel-head span{font-size:8px;color:#748a96}.v137-table{overflow:auto}.v137-table table{min-width:650px;border:0;border-radius:0}.v137-table th{font-size:7px}.v137-table td{font-size:9px;padding:10px}.v137-officer-link,.v137-case-link{border:0;background:transparent;color:#0b4f78;font-weight:900;padding:0;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.v137-risk{font-weight:900}.v137-risk.bad{color:#9b403a}.v137-risk.warn{color:#8b691f}.v137-risk.ok{color:#397058}.v137-empty{padding:20px;color:#7d909a;font-size:9px;text-align:center}
+.v137-referral-status{display:inline-block;border-radius:999px;padding:4px 7px;font-size:7px;font-weight:900;background:#edf3f6;color:#31576b}.v137-referral-status.awaiting-response,.v137-referral-status.no-acknowledgement{background:#f7ecd8;color:#825f20}.v137-referral-status.response-received{background:#e2f0e8;color:#356e53}.v137-referral-status.closed{background:#e9edef;color:#65747b}
+.v137-inline-note{grid-column:1/-1;padding:8px 10px;border-radius:9px;background:#eef4f7;color:#58717f;font-size:9px;line-height:1.5}.v137-doc-ref{font-size:8px;color:#6f8491}.v137-doc-builder-extra{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.v137-doc-builder-extra label{font-size:8px;color:#607a88}.v137-doc-builder-extra input{width:100%;margin-top:4px}
+@media(max-width:980px){.v137-kpis{grid-template-columns:repeat(2,1fr)}.v137-ops-grid{grid-template-columns:1fr}}@media(max-width:620px){.v137-kpis{grid-template-columns:1fr 1fr}.v137-ops-head{flex-direction:column}.v137-doc-builder-extra{grid-template-columns:1fr}}
+</style>
+
+<style id="v138-notifications-appointments-css">
+.v138-nav{width:100%;border:0;background:transparent;color:#b6cbd6;text-align:left;padding:10px 12px;border-radius:9px;font-size:11px;margin:2px 0}.v138-nav:hover{background:rgba(255,255,255,.06)}
+.v138-hub{margin:16px 0;background:#f8fbfc;border:1px solid rgba(8,38,61,.12);border-radius:16px;overflow:hidden}.v138-head{padding:16px 18px;background:linear-gradient(110deg,#092d49,#0d4265);color:#fff;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.v138-head small{display:block;color:#d9c77f;font-size:8px;font-weight:900;letter-spacing:.14em}.v138-head h3{font:500 23px Georgia,serif;margin:5px 0 4px}.v138-head p{margin:0;color:#c9d9e1;font-size:10px;line-height:1.55;max-width:760px}.v138-chip{border:1px solid rgba(201,163,74,.55);border-radius:999px;padding:7px 10px;color:#f1dc96;font-size:8px;font-weight:900}.v138-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px}.v138-kpi{background:#fff;border:1px solid #e3ebef;border-radius:12px;padding:12px}.v138-kpi small{font-size:7px;font-weight:900;color:#748a96;letter-spacing:.08em}.v138-kpi strong{display:block;font:600 23px Georgia,serif;color:#0b3553;margin-top:5px}.v138-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;padding:0 12px 12px}.v138-panel{background:#fff;border:1px solid #e3ebef;border-radius:13px;overflow:hidden}.v138-panel h4{margin:0;padding:12px 14px;border-bottom:1px solid #e8eff2;color:#17394e;font-size:11px}.v138-list{padding:8px 12px;max-height:320px;overflow:auto}.v138-row{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;padding:9px 2px;border-bottom:1px solid #edf2f4;font-size:9px}.v138-row:last-child{border-bottom:0}.v138-row strong{color:#17394e}.v138-row small{color:#718894;display:block;margin-top:2px}.v138-badge{border-radius:999px;padding:4px 7px;font-size:7px;font-weight:900;background:#edf3f6;color:#31576b;white-space:nowrap}.v138-badge.due{background:#f7ecd8;color:#825f20}.v138-badge.done{background:#e2f0e8;color:#356e53}.v138-empty{padding:18px;text-align:center;color:#7d909a;font-size:9px}
+.v138-case-tools{margin-top:14px;border-top:3px solid #c9a34a}.v138-pref-grid,.v138-appt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.v138-pref-grid label,.v138-appt-grid label{font-size:8px;color:#607a88}.v138-pref-grid input,.v138-pref-grid select,.v138-appt-grid input,.v138-appt-grid select,.v138-appt-grid textarea{width:100%;margin-top:4px}.v138-checks{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0}.v138-checks label{display:flex;align-items:center;gap:5px;font-size:9px;color:#536f7e}.v138-checks input{width:auto}.v138-comms{margin-top:10px}.v138-comm{padding:8px 0;border-bottom:1px solid #edf2f4;font-size:9px}.v138-comm strong{color:#17394e}.v138-comm small{display:block;color:#7d909a;margin-top:2px}.v138-comm p{margin:4px 0 0;line-height:1.45;color:#496776}.v138-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.v138-actions button{border:1px solid #c9d8df;border-radius:8px;padding:8px 10px;background:#fff;color:#224f67;font-size:8px;font-weight:900}.v138-actions .primary{background:#0b3553;color:#fff;border-color:#0b3553}
+@media(max-width:980px){.v138-kpis{grid-template-columns:1fr 1fr}.v138-grid{grid-template-columns:1fr}}@media(max-width:620px){.v138-pref-grid,.v138-appt-grid{grid-template-columns:1fr}.v138-head{flex-direction:column}.v138-row{grid-template-columns:1fr}.v138-kpis{grid-template-columns:1fr 1fr}}
+</style>
+
+<style id="v143-records-nav-style">#v143-records-nav{width:100%;border:0;background:transparent;color:#b6cbd6;text-align:left;padding:10px 12px;border-radius:9px;font-size:11px;margin:2px 0;cursor:pointer}#v143-records-nav:hover{background:rgba(255,255,255,.08);color:#fff}#v143-records-nav .count{float:right;color:#d9c486;font-size:9px}</style>
+<style id="v159-staff-ui-fix">
+html{scroll-behavior:smooth}body{min-width:0}.v159-global-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:rgba(255,255,255,.98);border-bottom:1px solid #d9e3e8;box-shadow:0 3px 12px rgba(6,31,51,.07);font-family:system-ui,-apple-system,Segoe UI,sans-serif}.v159-global-nav>a{text-decoration:none!important;color:#0b3553!important;background:#f3f7f9!important;border:1px solid #dbe5e9!important;border-radius:7px!important;padding:6px 8px!important;font-size:10px!important;line-height:1.2!important;font-weight:800!important;white-space:nowrap!important}.v159-global-nav>a:hover,.v159-global-nav>a[aria-current="page"]{background:#08263d!important;color:#fff!important;border-color:#08263d!important}.v159-global-nav .v159-brand{margin-right:auto;background:transparent!important;border-color:transparent!important;color:#87691f!important;letter-spacing:.08em!important}table{max-width:100%}.table-wrap,.table-scroll,[class*="table-wrap"],[class*="table-scroll"]{overflow-x:auto;max-width:100%}img,svg,canvas{max-width:100%}input,select,textarea,button{max-width:100%}@media(max-width:720px){.v159-global-nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:7px 8px}.v159-global-nav .v159-brand{display:none}.v159-global-nav>a{flex:0 0 auto}.wrap,.shell,.sheet,main{max-width:100%!important}.grid,.cards,.metrics,.management-grid{min-width:0}}
+</style></head>
+<body><nav class="v159-global-nav" aria-label="Staff system navigation"><a class="v159-brand" href="sections.html">SMG STAFF SYSTEM</a><a href="index.html" aria-current="page">Staff Home</a><a href="sections.html">All Sections</a><a href="workflow.html">Daily Work</a><a href="search.html">Search</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="events.html">Events</a><a href="records.html">Records</a><a href="reports.html">Reports</a><a href="roster.html">Roster</a><a href="production.html">Production</a></nav><a class="v75-skip" href="#main-content">Skip to main content</a><div class="v60-staff-suite">
+<div class="v60-staff-suite-inner">
+<div class="v60-staff-suite-copy"><strong>DISTRICT OFFICE STAFF SYSTEM</strong><span>Operations Centre • Pre-Launch modules</span></div>
+<nav aria-label="Staff system modules" class="v60-staff-suite-links"><a class="" href="command.html">Command</a><a class="" href="workflow.html">Workboard</a><a aria-current="page" class="active" href="index.html">Cases</a><a href="handover.html">Handover</a><a href="roster.html">Roster</a><a href="performance.html">Performance</a><a href="quality.html">Quality</a><a href="feedback.html">Feedback</a><a href="automation.html">Automation</a><a href="search.html">Search</a><a class="" href="reports.html">Reports</a><a class="" href="records.html">Records</a><a href="correspondence.html">Correspondence</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="events.html">Events</a><a href="meetings.html">Meetings</a><a class="" href="community.html">Community</a><a class="" href="access.html">Access</a><a class="" href="audit.html">Audit</a><a class="" href="system.html">System</a><a class="" href="readiness.html">Readiness</a><a class="" href="go-live.html">Go-Live</a><a class="" href="training.html">Training</a><a class="" href="uat.html">UAT</a><a href="pilot.html">Pilot</a><a class="" href="it-review.html">IT Review</a><a data-v108-staff-mailbox="1" href="mailto:smgofficestaff1@gmail.com">Staff Mail</a><button aria-label="Use dark mode" aria-pressed="false" class="v114-theme-toggle v115-theme-control" id="v114-theme-toggle" title="Use dark mode" type="button">☾ Dark</button></nav>
+</div>
+</div><div class="v108-staff-mailbox" role="note"><div><strong>INTERNAL STAFF MAILBOX</strong> <a href="mailto:smgofficestaff1@gmail.com">smgofficestaff1@gmail.com</a></div><small>For staff/internal office use • not the resident-facing public email</small></div><div class="v62-state-note"><div><span><strong>OPERATIONS SUITE:</strong> Daily Workboard, follow-up calendar, referral register, correspondence register, intake templates and printable management briefing are now available from <a href="workflow.html">Workboard</a>.</span><span class="v62-state-chip">PRE-LAUNCH</span></div></div>
+<div class="v61-module-hero">
+<div class="v61-module-card">
+<div><small>CASE OPERATIONS</small><strong>Case Management</strong><span>Intake • assignment • follow-up • referrals • resident updates</span></div>
+<div class="v61-module-actions"><a href="#portal">OPEN CASE WORKSPACE</a><a href="reports.html">MANAGEMENT REPORTS</a><a href="records.html">RESIDENT RECORDS</a></div>
+</div>
+</div>
+<div class="v61-test-guard"><div><strong>PRE-LAUNCH DATA GUARD:</strong> Keep confidential resident documents and production credentials out of this test environment until approved storage, access and retention controls are in place.</div></div>
+<div class="demo-banner">PRE-LAUNCH CASE MANAGEMENT — test authentication and central API support are available where configured. Production accounts, approved hosting, secure document storage and final authorization remain pending.</div>
+<style id="v146-security-css">.v146-security{margin:12px 18px;padding:14px;border:1px solid rgba(8,38,61,.12);border-left:4px solid #c9a34a;border-radius:12px;background:#fff;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}.v146-security small{display:block;font-size:8px;font-weight:900;letter-spacing:.12em;color:#87691f}.v146-security strong{display:block;color:#0b3553;font:600 18px Georgia,serif;margin:3px 0}.v146-security p{margin:0;color:#67808d;font-size:10px;line-height:1.5}.v146-security-links{display:flex;gap:6px;flex-wrap:wrap}.v146-security-links a{text-decoration:none;background:#08263d;color:#fff;border-radius:8px;padding:8px 10px;font-size:9px;font-weight:800}@media(max-width:720px){.v146-security{grid-template-columns:1fr}}</style><section class="v146-security" aria-label="Production security and readiness"><div><small>PRODUCTION SECURITY FOUNDATION</small><strong>Identity, audit, system health & launch readiness</strong><p>Use individual staff accounts and server-enforced permissions. Real resident data must not be placed in browser-only training storage.</p></div><div class="v146-security-links"><a href="access.html">Access</a><a href="audit.html">Audit</a><a href="system.html">System</a><a href="readiness.html">Readiness</a><a href="training.html">Training</a><a href="uat.html">UAT</a><a href="pilot.html">Pilot</a><a href="go-live.html">Go-Live</a></div></section><section class="v146-security" aria-label="Go-live and migration control"><div><small>GO-LIVE CONTROL</small><strong>Migration, validation & cutover readiness</strong><p>Stage CSV registers, identify duplicate/missing records and export a clean migration package before production import.</p></div><div class="v146-security-links"><a href="go-live.html">Open Go-Live Centre</a></div></section><section class="v146-security" aria-label="Staff training and acceptance testing"><div><small>STAFF TRAINING &amp; ACCEPTANCE TESTING</small><strong>Prepare staff, test workflows &amp; record sign-off evidence</strong><p>Complete role-based training and user acceptance testing before production access is granted or real resident information is migrated.</p></div><div class="v146-security-links"><a href="training.html">Training Centre</a><a href="uat.html">UAT Centre</a></div></section><section class="v146-security" aria-label="Pilot launch and support"><div><small>CONTROLLED PILOT OPERATIONS</small><strong>Pilot scope, incidents, changes & rollback</strong><p>Run a limited pilot, log operational incidents and change requests, and record the management decision before wider deployment.</p></div><div class="v146-security-links"><a href="pilot.html">Open Pilot Centre</a></div></section><section class="v146-security" aria-label="Service quality and continuous improvement"><div><small>SERVICE QUALITY &amp; CONTINUOUS IMPROVEMENT</small><strong>Standards, QA reviews &amp; corrective action</strong><p>Define service standards, sample completed work, assign corrective action and record recurring management reviews.</p></div><div class="v146-security-links"><a href="quality.html">Open Quality Centre</a><a href="feedback.html">Resident Feedback</a><a href="performance.html">Performance</a><a href="reports.html">Reports</a></div></section><section class="v146-security" aria-label="Automation and reminders"><div><small>AUTOMATION &amp; REMINDERS</small><strong>Controlled workflow rules &amp; attention scanning</strong><p>Use reminders and escalation rules to surface due work without silently changing official records or sending unapproved messages.</p></div><div class="v146-security-links"><a href="automation.html">Open Automation Centre</a></div></section><section class="v146-security" aria-label="Global search and data quality"><div><small>GLOBAL SEARCH &amp; DATA QUALITY</small><strong>Find records, detect duplicates &amp; improve data integrity</strong><p>Search across operational registers and review possible duplicate or incomplete records before production migration.</p></div><div class="v146-security-links"><a href="search.html">Open Search Centre</a><a href="go-live.html">Migration Centre</a><a href="records.html">Records</a></div></section><section class="v146-security" aria-label="Correspondence and templates"><div><small>CORRESPONDENCE &amp; DOCUMENT GENERATION</small><strong>Templates, drafts, review &amp; issued records</strong><p>Create consistent letters from controlled templates, link correspondence to operational records and register issued items in the Records Centre.</p></div><div class="v146-security-links"><a href="correspondence.html">Open Correspondence Centre</a><a href="records.html">Records</a></div></section><section class="v146-security" aria-label="Applications and referrals"><div><small>APPLICATIONS &amp; REFERRALS</small><strong>Assistance, submission, agency follow-up & outcomes</strong><p>Track application support from intake and document preparation through referral, agency acknowledgement, follow-up and outcome recording.</p></div><div class="v146-security-links"><a href="applications.html">Open Applications Centre</a><a href="correspondence.html">Correspondence</a><a href="records.html">Records</a></div></section><section class="v146-security" aria-label="Field visits and outreach operations"><div><small>FIELD VISITS &amp; OUTREACH</small><strong>Site visits, inspections &amp; field follow-up</strong><p>Plan and document field activity, link it to cases/applications/community matters, record outcomes and schedule the next action.</p></div><div class="v146-security-links"><a href="field.html">Open Field Operations</a><a href="applications.html">Applications</a><a href="community.html">Community</a><a href="records.html">Records</a></div></section><section class="v146-security" aria-label="Meetings events and attendance"><div><small>MEETINGS, EVENTS &amp; ATTENDANCE</small><strong>Agendas, attendance, decisions &amp; follow-up actions</strong><p>Manage Town Halls, community and stakeholder meetings, capture decisions, assign actions and prepare resident-safe outcome summaries.</p></div><div class="v146-security-links"><a href="meetings.html">Open Meetings Centre</a><a href="community.html">Community</a><a href="cms.html">CMS</a><a href="reports.html">Reports</a></div></section><section class="v146-security" aria-label="Staff duty roster and continuity"><div><small>STAFF DUTY ROSTER &amp; CONTINUITY</small><strong>Availability, coverage &amp; operational handover</strong><p>Coordinate weekly duties, record operational absences, assign temporary cover and prevent active resident work from becoming unowned.</p></div><div class="v146-security-links"><a href="roster.html">Open Roster Centre</a><a href="handover.html">Handover</a><a href="workflow.html">Workboard</a></div></section><section class="login-shell" id="login">
+<div class="login-card">
+<div class="login-mark">SMG</div>
+<span style="font-size:9px;letter-spacing:.13em;font-weight:900;color:#748995">SCARBOROUGH / MT. GRACE</span>
+<h1>District Office Staff Sign-In</h1>
+<p>Sign in to the pre-launch case-management system using an authorized staff account.</p>
+<p class="login-note"><strong>Pre-Launch authentication:</strong> Test-environment sign-in uses a backend staff account, hashed password and HttpOnly session cookie. Production still requires the approved HTTPS deployment, account controls and any MFA/password-recovery policy selected by IT.</p>
+<div class="v43-login-fields">
+<label for="v43-email">Individual Staff Account Email</label><input aria-label="Individual staff account email" autocomplete="username" id="v43-email" placeholder="Use your individual staff account email" required="" type="email"/>
+<label for="v43-password">Password</label><input aria-label="Staff password" autocomplete="current-password" id="v43-password" required="" type="password"/>
+</div>
+<p class="login-note v108-login-mail-note">The shared mailbox smgofficestaff1@gmail.com is for internal correspondence and workflow support. Do not use it as a shared system login; production users should have individual staff accounts.</p><div class="v43-login-actions"><button class="login-button" id="enter-demo" style="margin-top:0" type="button">SIGN IN →</button></div><button class="v135-training-btn" id="v135-training-preview" type="button">OPEN LOCAL TRAINING WORKSPACE</button><div class="v135-training-note">Training workspace uses browser-only test data and a Manager test profile. It is not a production login and must never be used for real confidential resident records.</div>
+<div class="v43-login-status" id="v43-login-status">Checking for an existing backend session…</div>
+</div>
+</section>
+<section class="portal hidden" id="portal">
+<header class="topbar">
+<div class="brand"><div class="brand-mark">SMG</div><div><strong>District Office Staff Portal</strong><small>Connected Case Management Suite • Local Training Workspace</small></div></div>
+<div class="v40-app-nav">
+<a aria-current="page" class="active" href="index.html">Cases</a>
+<a href="community.html">Community</a>
+<a href="records.html">Records</a><a href="cms.html">Website CMS</a>
+<a href="reports.html">Reports</a><a href="audit.html">Audit</a><a href="procedures.html">Procedures</a><a href="access.html">Access</a><a href="system.html">System</a>
+<a href="../track/index.html">Resident Tracker</a>
+<a class="v40-public-link" href="../index-self-contained.html">Public Website</a>
+<button id="v43-refresh" type="button">Refresh</button><button class="v36-bell" id="v36-notification-bell" type="button">Notifications
+            <span class="v36-bell-count" id="v36-bell-count">0</span>
+</button>
+<button id="switch-user" type="button">Switch User</button>
+<a href="readiness.html">Readiness</a><a href="training.html">Training</a><a href="uat.html">UAT</a><a href="pilot.html">Pilot</a><a href="go-live.html">Go-Live</a></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<div class="user-card"><small>TEST USER</small><strong id="active-user"></strong><span class="v43-live offline" id="v43-live-state">OFFLINE</span><span class="v41-access-chip" id="v41-access-chip">ACCESS</span></div>
+<nav aria-label="Case queues and statuses">
+<div class="nav-label">WORK QUEUES</div>
+<button aria-pressed="true" class="nav-btn active" data-view="All" type="button">All Cases <span class="count" id="count-all">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="My Cases" type="button">My Cases <span class="count" id="count-my-cases">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Overdue" type="button">Overdue <span class="count" id="count-overdue">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="High Priority" type="button">Urgent / High <span class="count" id="count-high-priority">0</span></button>
+<div class="nav-label">RECORDS</div><button class="v143-records-nav" id="v143-records-nav" type="button" onclick="location.href='records.html'">Document &amp; Records Centre <span class="count" id="v143-records-count">↗</span></button><button class="v143-records-nav" id="v154-correspondence-nav" type="button" onclick="location.href='correspondence.html'">Correspondence &amp; Templates <span class="count">↗</span></button><button class="v143-records-nav" id="v155-applications-nav" type="button" onclick="location.href='applications.html'">Applications &amp; Referrals <span class="count">↗</span></button><button class="v143-records-nav" id="v156-field-nav" type="button" onclick="location.href='field.html'">Field Visits &amp; Outreach <span class="count">↗</span></button><button class="v143-records-nav" id="v157-meetings-nav" type="button" onclick="location.href='meetings.html'">Meetings, Events &amp; Attendance <span class="count">↗</span></button><button class="v143-records-nav" id="v158-roster-nav" type="button" onclick="location.href='roster.html'">Duty Roster, Leave &amp; Coverage <span class="count">↗</span></button><button class="v143-records-nav" id="v144-reports-nav" type="button" onclick="location.href='reports.html'">Reports, Analytics &amp; Exports <span class="count">↗</span></button><button class="v143-records-nav" id="v151-feedback-nav" type="button" onclick="location.href='feedback.html'">Resident Feedback &amp; Service Recovery <span class="count">↗</span></button><button class="v143-records-nav" id="v152-automation-nav" type="button" onclick="location.href='automation.html'">Automation &amp; Reminders <span class="count">↗</span></button><button class="v143-records-nav" id="v153-search-nav" type="button" onclick="location.href='search.html'">Global Search &amp; Data Quality <span class="count">↗</span></button><div class="nav-label">WEBSITE</div><button class="v135-site-nav" type="button" onclick="location.href='cms.html'">Full Website CMS &amp; Service Directory <span class="count">↗</span></button><button class="v135-site-nav" id="v135-site-nav" type="button">Website Management <span class="count" id="v135-published-count">0</span></button><button class="v136-site-nav" id="v136-attention-nav" type="button">Attention Centre <span class="count" id="v136-attention-count">0</span></button><button class="v137-ops-nav" id="v137-ops-nav" type="button">Operations Control <span class="count" id="v137-ops-count">0</span></button><button class="v138-nav" id="v138-nav" type="button">Notifications &amp; Appointments <span class="count" id="v138-count">0</span></button><div class="nav-label">STATUS</div>
+<button aria-pressed="false" class="nav-btn" data-view="New" type="button">New <span class="count" id="count-new">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Unassigned" type="button">Unassigned <span class="count" id="count-unassigned">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Assigned" type="button">Assigned <span class="count" id="count-assigned">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="In Progress" type="button">In Progress <span class="count" id="count-in-progress">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Awaiting Documents" type="button">Awaiting Documents <span class="count" id="count-awaiting-documents">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Referred" type="button">Referred <span class="count" id="count-referred">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Completed" type="button">Completed <span class="count" id="count-completed">0</span></button>
+<button aria-pressed="false" class="nav-btn" data-view="Closed" type="button">Closed <span class="count" id="count-closed">0</span></button>
+</nav>
+<div class="sidebar-foot">Test fields are prepared for server-backed production records: case owner, priority, next action, due date, referral details and activity log.</div>
+</aside>
+<main class="main" id="main-content"><div class="v40-system-strip"><strong>Connected workflow:</strong> Public enquiry → Staff case → Community/project linkage → Resident-facing update → Records → Reports.</div><div class="v42-backend-callout" style="margin:0 0 12px;padding:10px 12px;border-radius:9px;background:#e8f2ec;border-left:3px solid #3f7b5f;color:#547263;font-size:9px;line-height:1.5"><strong>Test data source:</strong> signed-in staff can work against the central API. When the backend is unavailable, browser-side test data may remain available for test checks. Use <a href="system.html">System</a> for API, sync, backup and deployment-readiness tools.</div><div class="v41-readonly-note" id="v41-readonly-note">Your current test access profile is read-only for this case or module.</div>
+<div class="page-head">
+<div><span>CASE MANAGEMENT</span><h2>District Office Case Management</h2><p>Review, assign and follow each enquiry from intake through next action, referral, resident-facing update and completion.</p></div>
+<div class="head-actions"><button aria-label="Reset local offline test records" id="reset-demo" type="button">Reset Local Test Data</button><button aria-label="Export filtered case register as CSV" class="primary" id="export-csv" type="button">Export Case Register CSV</button></div>
+</div><div class="v37-report-callout" style="margin:0 0 14px;padding:11px 13px;border-radius:10px;background:#eef4f7;border-left:3px solid #c9a34a;font-size:10px;color:#5d7582;line-height:1.5">
+<strong style="color:#284f65">Management Reporting is now available.</strong>
+          Use <b>Reports</b> in the top bar to review workload, enquiry categories, community patterns, referrals, overdue trends and performance indicators.
+        </div>
+<div class="notice">Test/test environment only. Central API data is used when a staff session is available; browser-local test data may be used as fallback. Do not use unapproved storage for real ID numbers, financial information, medical records or confidential case documents.</div><section aria-label="Case management operating state" class="v75-case-state">
+<article><small>DATA SOURCE</small><strong>Central API + test fallback</strong><span>Authenticated central records are preferred; local browser data remains a test fallback.</span></article>
+<article><small>ACCESS</small><strong>Role-based staff workflow</strong><span>Server/API permissions remain authoritative; visible controls alone are not a security boundary.</span></article>
+<article><small>RESIDENT TRACKING</small><strong>Resident-facing updates only</strong><span>Internal notes, DOB, documents, priority and staff-only details must not appear in the resident tracker.</span></article>
+<article><small>PRODUCTION</small><strong>IT approval still required</strong><span>Hosting, account security, backups, document storage, retention and launch verification remain production gates.</span></article>
+</section><div class="v75-actions">
+<a class="primary" href="workflow.html">OPEN DAILY WORKBOARD →</a>
+<a href="reports.html">MANAGEMENT REPORTS</a>
+<a href="records.html">RECORDS</a>
+<a href="readiness.html">READINESS</a>
+</div>
+<div class="metrics">
+<article class="metric"><small>NEW / UNASSIGNED</small><strong id="metric-new">0</strong><i></i></article>
+<article class="metric"><small>DUE / OVERDUE</small><strong id="metric-due">0</strong><i></i></article>
+<article class="metric"><small>IN ACTIVE FOLLOW-UP</small><strong id="metric-active">0</strong><i></i></article>
+<article class="metric"><small>COMPLETED THIS MONTH</small><strong id="metric-completed">0</strong><i></i></article>
+</div>
+<div class="toolbar">
+<input aria-label="Search case register" id="search" placeholder="Search reference, resident, next action, agency, officer…" type="search"/>
+<select aria-label="Filter by case owner or assigned officer" id="officer-filter"><option value="All">All owners/officers</option></select>
+<select aria-label="Filter by enquiry type" id="type-filter"><option value="All">All enquiry types</option></select>
+<select aria-label="Filter by priority" id="priority-filter"><option value="All">All priorities</option><option>Urgent</option><option>High</option><option>Standard</option><option>Low</option></select>
+</div><p class="v75-filter-note">Filters affect the case register shown below and the CSV export. Queue buttons on the left further narrow the current view.</p>
+<div class="table-wrap">
+<span class="sr-only" id="v75-case-table-help" style="position:absolute;left:-9999px">Case rows can be opened with mouse, Enter or Space after current package accessibility enhancement.</span><table aria-describedby="v75-case-table-help"><caption class="v75-table-caption">Case register. Select a case row to open the full staff case record.</caption>
+<thead><tr><th>Reference</th><th>Resident</th><th>Priority</th><th>Status</th><th>Case Owner / Assigned</th><th>Next Follow-up</th><th>Received</th></tr></thead>
+<tbody id="case-rows"></tbody>
+</table>
+<div class="empty hidden" id="empty">No cases match the current queue and filters.</div>
+</div>
+<section class="v137-ops" id="v137-operations-control">
+<div class="v137-ops-head"><div><small>CASE OPERATIONS CONTROL</small><h3>Workload, deadlines &amp; external follow-up</h3><p>Manager-facing view of active case ownership, overdue work, target dates, agency referrals and document-review pressure. Training counts are calculated from the current case register.</p></div><span class="v137-ops-chip">CASE OPERATIONS</span></div>
+<div class="v137-kpis">
+<article class="v137-kpi"><small>ACTIVE CASES</small><strong id="v137-active-cases">0</strong><span>Not completed or closed</span></article>
+<article class="v137-kpi"><small>OVERDUE FOLLOW-UPS</small><strong id="v137-overdue-followups">0</strong><span>Follow-up date has passed</span></article>
+<article class="v137-kpi"><small>TARGET DATE AT RISK</small><strong id="v137-target-risk">0</strong><span>Open target date passed</span></article>
+<article class="v137-kpi"><small>PENDING REFERRALS</small><strong id="v137-pending-referrals">0</strong><span>Awaiting external response/action</span></article>
+<article class="v137-kpi"><small>DOCS NEED REVIEW</small><strong id="v137-doc-review">0</strong><span>Document metadata flagged</span></article>
+</div>
+<div class="v137-ops-grid">
+<div class="v137-panel"><div class="v137-panel-head"><strong>Staff workload</strong><span>Click an officer to filter the case register</span></div><div class="v137-table" id="v137-workload-table"></div></div>
+<div class="v137-panel"><div class="v137-panel-head"><strong>Agency referral queue</strong><span>External follow-ups requiring attention</span></div><div class="v137-table" id="v137-referral-queue"></div></div>
+</div>
+</section>
+<section class="v136-attention" id="v136-attention-centre">
+<div class="v136-attention-head"><div><small>STAFF ATTENTION CENTRE</small><h3>What needs attention now</h3><p>A working queue for case follow-up and public-content review. Counts in training mode come from browser test records.</p></div><span class="v136-attention-badge">WORK QUEUE</span></div>
+<div class="v136-attention-grid">
+<div class="v136-attention-card alert"><small>CASE FOLLOW-UP</small><strong id="v136-overdue-count">0</strong><span>Overdue case follow-ups</span></div>
+<div class="v136-attention-card warn"><small>CASE OWNERSHIP</small><strong id="v136-unassigned-count">0</strong><span>Open unassigned cases</span></div>
+<div class="v136-attention-card warn"><small>WEBSITE REVIEW</small><strong id="v136-review-count">0</strong><span>Items awaiting review</span></div>
+<div class="v136-attention-card ok"><small>SCHEDULED</small><strong id="v136-scheduled-count">0</strong><span>Approved/published items scheduled ahead</span></div>
+</div></section><section class="v135-webmanager" id="v135-webmanager">
+<div class="v135-webmanager-head"><div><small>WEBSITE CONTENT MANAGEMENT</small><h3>Public Website Manager</h3><p>Create public-safe announcements, events, meeting outcomes, project updates and progress items through a controlled Draft → Review → Approved → Published workflow.</p></div><span class="v135-webmanager-state" id="v135-cms-state">LOCAL TRAINING WORKSPACE</span></div>
+<div class="v135-cms-layout"><div class="v135-cms-editor"><h4>Create / edit public item</h4><input id="v135-content-id" type="hidden"><div class="v135-cms-grid">
+<label>Content type<select id="v135-content-type"><option>Announcement</option><option>Event</option><option>Meeting Outcome</option><option>Project Update</option><option>Public Progress</option></select></label>
+<label>Public status<select id="v135-content-status"><option>Information</option><option>Planned</option><option>Confirmed</option><option>In Progress</option><option>Referred</option><option>Awaiting Agency Update</option><option>Completed</option><option>Correction</option></select></label>
+<label class="wide">Title<input id="v135-content-title" maxlength="160" placeholder="Clear public title"></label>
+<label>Date<input id="v135-content-date" type="date"></label><label>Location / area<input id="v135-content-location" maxlength="120" placeholder="Optional"></label>
+<label class="wide">Public summary<textarea id="v135-content-summary" maxlength="1200" placeholder="Confirmed facts only. Do not include private resident details, staff-only notes or internal political/electoral strategy."></textarea></label>
+<label>Workflow state<select id="v135-content-publish"><option value="draft">Draft</option><option value="review">In Review</option><option value="approved">Approved</option><option value="published">Published</option></select></label><label>Last verified by<input id="v135-content-verified" maxlength="100" placeholder="Staff / office role"></label>
+<label>Publish on<input id="v136-content-publish-at" type="datetime-local"></label><label>Expire on<input id="v136-content-expire-at" type="datetime-local"></label>
+<label class="wide">Internal review note<textarea id="v136-content-review-note" maxlength="700" placeholder="Internal editorial note only. This never appears on the public website."></textarea></label>
+<div class="v136-schedule-note"><strong>Scheduling rule:</strong> a Published item appears publicly only when its Publish On time has arrived. If an Expire On time is set, it automatically drops out of the public feed after that time. Production hosting will enforce this server-side.</div>
+</div><div class="v136-workflow-strip"><div class="v136-workflow-step"><b>01</b>DRAFT</div><div class="v136-workflow-step"><b>02</b>IN REVIEW</div><div class="v136-workflow-step"><b>03</b>APPROVED</div><div class="v136-workflow-step"><b>04</b>PUBLISHED</div></div>
+<div class="v135-cms-actions"><button class="gold" id="v135-content-save" type="button">SAVE ITEM</button><button class="secondary" id="v136-submit-review" type="button">SUBMIT FOR REVIEW</button><button class="secondary" id="v136-approve" type="button">APPROVE</button><button class="secondary" id="v136-publish-now" type="button">PUBLISH NOW</button><button class="secondary" id="v135-content-clear" type="button">CLEAR</button><button class="secondary" id="v135-content-export" type="button">EXPORT JSON BACKUP</button></div><div class="v135-cms-msg" id="v135-cms-msg"></div></div>
+<div class="v135-cms-list"><h4>Website content register</h4><div class="v135-cms-table" id="v135-cms-table"></div></div></div>
+<div class="v135-cms-rule"><strong>Public / internal separation:</strong> this manager stores only information intended for publication. Internal case notes, resident DOB, uploaded-document metadata, voter information, political targeting, polling strategy and other restricted material belong outside the public content channel.</div>
+</section></main>
+</div>
+</section>
+<section class="v138-hub" id="v138-hub"><div class="v138-head"><div><small>RESIDENT COMMUNICATION &amp; SCHEDULING</small><h3>Notifications, appointments &amp; site visits</h3><p>Training view of communication preferences, messages recorded against cases, upcoming appointments and site-visit commitments. Delivery is simulated locally until approved production integrations are connected.</p></div><span class="v138-chip">COMMUNICATIONS &amp; SCHEDULING</span></div><div class="v138-kpis"><article class="v138-kpi"><small>UPCOMING 7 DAYS</small><strong id="v138-upcoming">0</strong></article><article class="v138-kpi"><small>APPOINTMENTS TODAY</small><strong id="v138-today">0</strong></article><article class="v138-kpi"><small>REMINDERS DUE</small><strong id="v138-reminders">0</strong></article><article class="v138-kpi"><small>COMMUNICATIONS LOGGED</small><strong id="v138-comms-count">0</strong></article></div><div class="v138-grid"><div class="v138-panel"><h4>Staff agenda</h4><div class="v138-list" id="v138-agenda"></div></div><div class="v138-panel"><h4>Resident communication queue</h4><div class="v138-list" id="v138-comm-queue"></div></div></div></section>
+<div aria-hidden="true" class="drawer-backdrop" id="drawer-backdrop">
+<aside aria-label="Case details" aria-labelledby="drawer-ref" aria-modal="true" class="drawer" role="dialog" tabindex="-1">
+<header class="drawer-head">
+<div><small>CASE RECORD</small><h3 id="drawer-ref"></h3></div>
+<div class="drawer-head-actions"><button aria-label="Print case sheet" id="print-case" type="button">PRINT CASE SHEET</button><button aria-label="Close case record" class="close" id="close-drawer" type="button">×</button></div>
+</header>
+<div class="drawer-body"><div class="v75-dialog-note"><strong>Staff-only case record:</strong> information in this drawer may include restricted internal details. Only fields explicitly published as resident-facing updates should flow to the public tracker.</div>
+<div class="case-grid" id="case-grid"></div>
+<section class="section-card">
+<h4>Resident Enquiry</h4>
+<p id="case-message"></p>
+</section>
+<section class="section-card">
+<h4>Case Management</h4><div class="v101-procedure-note"><strong>current package operating rule:</strong> once a case is active, record an owner, assigned officer, next action and follow-up date. Only Manager/Administrative staff may assign or close cases. Referred cases require agency, date and purpose.</div>
+<div class="management-grid">
+<label>Priority
+        <select id="case-priority"><option>Urgent</option><option>High</option><option>Standard</option><option>Low</option></select>
+</label>
+<label>Status<select id="case-status"></select></label>
+<label>Case owner<select id="case-owner"></select></label>
+<label>Assigned officer<select id="case-officer"></select></label>
+<label>Next follow-up date<input id="case-followup" type="date"/></label>
+<label>Target resolution / decision date<input id="case-due-date" type="date"/></label>
+<label>Escalation level<select id="case-escalation"><option>Normal</option><option>Manager Review</option><option>Critical / Immediate Review</option></select></label>
+<label>Last updated<input disabled="" id="case-updated" type="text"/></label><label>Closure reason<select id="closure-reason"><option value="">Select when closing</option><option>Resolved / Assistance Completed</option><option>Information / Guidance Provided</option><option>Referral Completed / Responsibility Transferred</option><option>Resident Withdrew</option><option>No Response / Information Not Provided</option><option>Duplicate Record</option><option>Outside District Office Scope</option><option>Other - See Internal Note</option></select></label>
+<label class="wide">Next action<textarea id="case-next-action" placeholder="What should happen next, and what is staff waiting on?"></textarea></label>
+<div class="followup-alert" id="followup-alert">No follow-up date has been set.</div>
+</div>
+<button class="save-btn gold" id="save-case" type="button">SAVE CASE MANAGEMENT UPDATE</button>
+</section>
+<section class="section-card v138-case-tools" id="v138-case-communications"><h4>Resident Notifications &amp; Appointments</h4><p>Record the resident's communication preference and schedule office meetings or site visits. In training mode, messages are logged only; no WhatsApp, SMS or email is actually sent.</p><div class="v138-pref-grid"><label>Preferred notification channel<select id="v138-pref-channel"><option>WhatsApp</option><option>SMS</option><option>Email</option><option>Phone Call</option><option>No automatic notifications</option></select></label><label>Notification contact<input id="v138-notify-contact" placeholder="Phone or email used for updates"/></label></div><div class="v138-checks"><label><input id="v138-consent-status" type="checkbox"/> Status-update consent recorded</label><label><input id="v138-consent-reminder" type="checkbox"/> Appointment-reminder consent recorded</label></div><div class="v138-actions"><button id="v138-save-preferences" type="button">SAVE NOTIFICATION PREFERENCES</button></div><hr style="border:0;border-top:1px solid #e7eef1;margin:14px 0"><div class="v138-appt-grid"><label>Appointment type<select id="v138-appt-type"><option>Office Appointment</option><option>Telephone Follow-up</option><option>Site Visit</option><option>Community / Field Meeting</option></select></label><label>Date<input id="v138-appt-date" type="date"/></label><label>Time<input id="v138-appt-time" type="time"/></label><label>Assigned staff<select id="v138-appt-officer"></select></label><label class="wide">Location / instructions<input id="v138-appt-location" placeholder="Office, site address, meeting point, or call details"/></label><label class="wide">Purpose / note<textarea id="v138-appt-note" placeholder="What is the appointment or visit for?"></textarea></label></div><div class="v138-actions"><button class="primary" id="v138-add-appointment" type="button">ADD APPOINTMENT / SITE VISIT</button><button id="v138-log-status-message" type="button">LOG STATUS UPDATE MESSAGE</button><button id="v138-log-reminder" type="button">LOG APPOINTMENT REMINDER</button></div><div class="v138-comms" id="v138-case-schedule"></div><div class="v138-comms" id="v138-case-comms"></div></section>
+<section class="section-card">
+<h4>Referral / External Agency</h4>
+<div class="management-grid">
+<label class="wide">Division / Agency / Organisation<input id="referral-agency" placeholder="Enter the organisation receiving the referral"/></label>
+<label>Referral reference<input id="referral-reference" placeholder="Agency or outgoing reference"/></label>
+<label>Referral date<input id="referral-date" type="date"/></label>
+<label>Agency contact / desk<input id="referral-contact" placeholder="Contact person, unit or desk (if known)"/></label>
+<label>Acknowledgement date<input id="referral-ack-date" type="date"/></label>
+<label>Response status<select id="referral-response-status"><option>No Acknowledgement</option><option>Acknowledged</option><option>Awaiting Response</option><option>Response Received</option><option>Closed</option></select></label>
+<label>Next agency follow-up<input id="referral-followup-date" type="date"/></label>
+<label class="wide">Referral purpose / action requested<textarea id="referral-purpose" placeholder="What was requested or referred?"></textarea></label>
+<label class="wide">Latest agency response / note<textarea id="referral-response-note" placeholder="Record the latest response or external update. Keep resident-facing wording separate."></textarea></label>
+</div>
+<button class="save-btn" id="save-referral" type="button">SAVE REFERRAL DETAILS</button>
+<div class="referral-summary" id="referral-summary"></div>
+</section>
+<section class="v39-community-card" id="v39-community-integration">
+<h4>Community &amp; Project Integration</h4>
+<p>Use these internal fields when an individual resident enquiry may also form part of a wider community issue, Focus Group discussion, Town Hall matter or District Office activity item.</p>
+<div class="v39-grid">
+<label>Focus Group Area <select id="v39-community-area">
+<option value="Calder Hall">Calder Hall</option>
+<option value="Darrel Spring">Darrel Spring</option>
+<option value="Mt. Grace">Mt. Grace</option>
+<option value="Government House Road">Government House Road</option>
+<option value="Friendsfield">Friendsfield</option>
+<option value="Rockly Vale">Rockly Vale</option><option value="Other / Not Sure">Other / Not Sure</option>
+</select>
+</label>
+<label>Issue Theme
+      <select id="v39-issue-theme">
+<option>General Community Concern</option>
+<option>Infrastructure / Public Works</option>
+<option>Road / Drainage / Access</option>
+<option>Street Lighting / Safety</option>
+<option>Housing / Home Conditions</option>
+<option>Community Project Idea</option>
+<option>Social / Resident Support</option>
+<option>Town Hall Discussion</option>
+<option>Other</option>
+</select>
+</label>
+<label class="wide">Linked District Activity / Project
+      <select id="v39-project-link">
+<option>Not linked</option>
+<option>Glenelg Road Street Lighting Advocacy</option>
+<option>Gru Gru Patch / Providence Road Tree Cutting &amp; Land Clearing Request</option>
+<option>NGO &amp; Community Project Initiative</option>
+</select>
+</label>
+<label class="v39-check"><input id="v39-townhall-flag" type="checkbox"/><span>Flag this matter for consideration in a future quarterly Town Hall discussion.</span></label>
+<label class="v39-check"><input id="v39-recurring-issue" type="checkbox"/><span>Mark as a recurring/community-wide issue pattern.</span></label>
+<label class="wide">Town Hall / Community Follow-up Reason
+      <textarea id="v39-townhall-reason" placeholder="Why should this matter be considered for wider community follow-up?"></textarea>
+</label>
+</div>
+<button class="save-btn gold" id="v39-save-community" type="button">SAVE COMMUNITY LINKAGE</button>
+<div class="v39-status">These fields support internal coordination only. They do not promise a Town Hall agenda slot, project approval, funding, agency action or completion.</div>
+</section><section class="section-card" id="resident-facing-update">
+<h4>Resident-Facing Update</h4>
+<p>Only the fields below are intended for the resident tracker. Internal notes, assignments and referral references remain private.</p>
+<div class="management-grid">
+<label>Public status
+      <select id="public-status">
+<option>Received</option>
+<option>Under Review</option>
+<option>Action / Referral in Progress</option>
+<option>Awaiting Resident Information</option>
+<option>Completed</option>
+<option>Closed</option>
+</select>
+</label>
+<label>Resident tracker visibility
+      <select id="resident-visible"><option value="true">Visible to resident</option><option value="false">Hide from tracker</option></select>
+</label>
+<label class="wide">Resident-facing update<textarea id="public-update" placeholder="Write a short, resident-facing status update. Do not include internal notes or confidential details."></textarea></label>
+<label class="wide">What happens next<textarea id="public-next-step" placeholder="Explain the next resident-facing step."></textarea></label>
+</div>
+<button class="save-btn gold" id="save-public-update" type="button">PUBLISH RESIDENT UPDATE</button>
+<div class="followup-alert" id="public-update-meta">No resident-facing update has been published yet.</div>
+</section><section class="section-card v36-reminder-card" id="resident-notification-tools">
+<h4>Resident Notification Draft</h4>
+<p>Create a resident-facing acknowledgement or update message from the case record. In this test environment, messages are only copied or opened in WhatsApp/email — they are not automatically sent.</p>
+<div class="v36-reminder-row">
+<label>Message type
+      <select id="v36-message-type">
+<option value="ack">Acknowledgement</option>
+<option value="status">Status Update</option>
+<option value="documents">Request Documents / Information</option>
+<option value="completed">Completion Notice</option>
+</select>
+</label>
+<label>Channel
+      <select id="v36-message-channel"><option>WhatsApp</option><option>Email</option><option>Phone / Manual</option></select>
+</label>
+</div>
+<div class="v36-template-preview" id="v36-template-preview"></div>
+<div class="v36-template-actions">
+<button class="v36-copy" id="v36-copy-message" type="button">COPY MESSAGE</button>
+<a class="v36-wa" href="#" id="v36-open-whatsapp" rel="noopener" target="_blank">OPEN WHATSAPP</a>
+<a class="v36-email" href="#" id="v36-open-email">OPEN EMAIL</a>
+</div>
+<p class="v108-staff-mail-link">Internal staff correspondence mailbox: <a href="mailto:smgofficestaff1@gmail.com">smgofficestaff1@gmail.com</a></p><div class="v36-browser-alert">
+<span>Optional test: enable browser notifications for due/overdue case reminders while this page is open.</span>
+<button id="v36-enable-browser" type="button">ENABLE</button>
+</div>
+</section><section class="section-card">
+<h4>Internal Notes</h4>
+<textarea id="new-note" placeholder="Add an internal follow-up or site-visit note…"></textarea>
+<button class="save-btn" id="add-note" type="button">ADD INTERNAL NOTE</button>
+<div id="notes-list"></div>
+</section>
+<section class="section-card" id="v38-documents">
+<h4>Documents &amp; Records</h4>
+<p>This test environment stores document names and metadata only. Actual file bytes are not uploaded or protected.</p>
+<input id="staff-doc" multiple="" type="file"/>
+<div class="v38-doc-builder">
+<label>Document Category
+      <select id="v38-doc-category">
+<option>Supporting Letter</option>
+<option>Identification</option>
+<option>Estimate / Quotation</option>
+<option>Application Form</option>
+<option>Proof of Income</option>
+<option>Site / Supporting Photo</option>
+<option>Agency Correspondence</option>
+<option>Other</option>
+</select>
+</label>
+<label>Access Label
+      <select id="v38-doc-sensitivity"><option>Standard</option><option>Restricted</option></select>
+</label>
+<label>Review Status
+      <select id="v38-doc-review"><option>Needs Review</option><option>Reviewed</option></select>
+</label>
+</div>
+<div class="v137-doc-builder-extra"><label>Document / correspondence reference<input id="v137-doc-reference" placeholder="e.g. OUT-2026-014 or agency ref"/></label><label>Document date<input id="v137-doc-date" type="date"/></label></div>
+<button class="save-btn" id="add-doc" type="button">ADD DOCUMENT METADATA</button>
+<div class="v38-doc-warning">“Restricted” is only a test label here. It does not create real access control in a static browser file.</div>
+<div class="v38-doc-list" id="docs-list"></div>
+</section>
+<section class="section-card">
+<h4>Case Timeline</h4>
+<div class="timeline" id="activity-list"></div>
+</section>
+</div><section class="v38-resident-summary" id="v38-resident-summary">
+<h4>Resident Record</h4>
+<div class="v38-profile-grid" id="v38-profile-grid"></div>
+<div id="v38-linked-cases"></div>
+</section>
+</aside>
+</div>
+<script>
+(function(){
+'use strict';
+const KEY='smg_v33_enquiries';
+const USER_KEY='smg_v33_demo_user';
+const ACCESS_KEY='smg_v41_access';
+const STATUSES=['New','Unassigned','Assigned','In Progress','Awaiting Documents','Referred','Completed','Closed'];
+const PRIORITIES=['Urgent','High','Standard','Low'];
+const V41_STAFF=[{"name": "Randell Nigel Patterson", "role": "District Manager", "profile": "Manager"}, {"name": "Kamarlia A. Pierre", "role": "Administrative Assistant", "profile": "Administrative"}, {"name": "Antonia Paul", "role": "Senior Officer / Field Officer", "profile": "Senior Officer"}, {"name": "Annisia Andrews", "role": "Senior Field Officer", "profile": "Senior Officer"}, {"name": "Kyethan Fredrick", "role": "Field Officer", "profile": "Field Officer"}, {"name": "Krystal Fordyce", "role": "Field Officer", "profile": "Field Officer"}, {"name": "Verlyn Caesa Moore", "role": "Senior Member of Staff", "profile": "Senior Staff"}];
+const V41_DEFAULTS={"Manager": {"viewAll": true, "editCases": true, "assignCases": true, "publishResident": true, "community": true, "records": true, "reports": true, "audit": true, "accessAdmin": true}, "Administrative": {"viewAll": true, "editCases": true, "assignCases": true, "publishResident": true, "community": true, "records": true, "reports": true, "audit": true, "accessAdmin": false}, "Senior Officer": {"viewAll": true, "editCases": true, "assignCases": false, "publishResident": true, "community": true, "records": false, "reports": false, "audit": false, "accessAdmin": false}, "Field Officer": {"viewAll": false, "editCases": true, "assignCases": false, "publishResident": false, "community": true, "records": false, "reports": false, "audit": false, "accessAdmin": false}, "Senior Staff": {"viewAll": true, "editCases": false, "assignCases": false, "publishResident": false, "community": true, "records": true, "reports": false, "audit": false, "accessAdmin": false}};
+const OFFICERS=['Unassigned','Randell Nigel Patterson','Kamarlia A. Pierre','Antonia Paul','Annisia Andrews','Kyethan Fredrick','Krystal Fordyce','Verlyn Caesa Moore'];
+const demoCases=[
+ {id:'demo-1',reference:'TEST-001',demo:true,fullName:'Alicia Thomas',phone:'(868) 555-0101',email:'alicia@example.test',dob:'',address:'Mt. Grace, Tobago',type:'Home Repair Assistance',preferred:'Phone',message:'Test enquiry requesting guidance on a home repair assistance matter.',status:'New',assigned:'Unassigned',caseOwner:'Kamarlia A. Pierre',priority:'High',followUpDate:'2026-09-10',nextAction:'Complete initial review and confirm what supporting information is needed.',referralAgency:'',referralReference:'',referralDate:'',referralPurpose:'',createdAt:'2026-09-08T09:20:00-04:00',updatedAt:'2026-09-08T09:20:00-04:00',documents:[],notes:[],activity:[{at:'2026-09-08T09:20:00-04:00',text:'Test enquiry received through public intake.'},{at:'2026-09-08T09:25:00-04:00',text:'Case owner set to Kamarlia A. Pierre. Priority set to High.'}]},
+ {id:'demo-2',reference:'TEST-002',demo:true,fullName:'Marcus Daniel',phone:'(868) 555-0102',email:'',dob:'',address:'Calder Hall, Tobago',type:'Community Matter',preferred:'WhatsApp',message:'Test community concern for discussion and follow-up.',status:'Assigned',assigned:'Antonia Paul',caseOwner:'Antonia Paul',priority:'Standard',followUpDate:'2026-09-12',nextAction:'Conduct field follow-up and record the recurring community concern.',referralAgency:'',referralReference:'',referralDate:'',referralPurpose:'',createdAt:'2026-09-07T14:15:00-04:00',updatedAt:'2026-09-08T11:05:00-04:00',documents:[],notes:[{at:'2026-09-08T11:05:00-04:00',by:'Antonia Paul',text:'Test note: contacted resident and confirmed location.'}],activity:[{at:'2026-09-07T14:15:00-04:00',text:'Test enquiry received.'},{at:'2026-09-08T11:05:00-04:00',text:'Assigned to Antonia Paul.'}]},
+ {id:'demo-3',reference:'TEST-003',demo:true,fullName:'Renee Charles',phone:'(868) 555-0103',email:'renee@example.test',dob:'',address:'Darrel Spring, Tobago',type:'Education Support',preferred:'Email',message:'Test enquiry seeking information about education assistance.',status:'In Progress',assigned:'Kamarlia A. Pierre',caseOwner:'Kamarlia A. Pierre',priority:'Standard',followUpDate:'2026-09-11',nextAction:'Review supporting document metadata and provide programme guidance.',referralAgency:'',referralReference:'',referralDate:'',referralPurpose:'',createdAt:'2026-09-05T10:30:00-04:00',updatedAt:'2026-09-08T15:40:00-04:00',documents:[{name:'supporting-letter-demo.pdf',size:245000,type:'application/pdf',demo:true}],notes:[],activity:[{at:'2026-09-05T10:30:00-04:00',text:'Test enquiry received.'},{at:'2026-09-08T15:40:00-04:00',text:'Status changed to In Progress.'}]},
+ {id:'demo-4',reference:'TEST-004',demo:true,fullName:'Joel Peters',phone:'(868) 555-0104',email:'',dob:'',address:'Government House Road, Tobago',type:'Infrastructure / Public Works',preferred:'Phone',message:'Test infrastructure-related concern referred for follow-up.',status:'Referred',assigned:'Kyethan Fredrick',caseOwner:'Kyethan Fredrick',priority:'High',followUpDate:'2026-09-08',nextAction:'Obtain an agency acknowledgement or update and record the response.',referralAgency:'Relevant executing agency (demo)',referralReference:'OUT-TEST-004',referralDate:'2026-09-06',referralPurpose:'Request assessment and response on the reported community infrastructure matter.',createdAt:'2026-09-03T08:45:00-04:00',updatedAt:'2026-09-06T13:10:00-04:00',documents:[],notes:[],activity:[{at:'2026-09-03T08:45:00-04:00',text:'Test enquiry received.'},{at:'2026-09-06T13:10:00-04:00',text:'Demo matter marked Referred.'},{at:'2026-09-06T13:12:00-04:00',text:'Referral details recorded with test reference OUT-TEST-004.'}]},
+ {id:'demo-5',reference:'TEST-005',demo:true,fullName:'Nadia James',phone:'(868) 555-0105',email:'nadia@example.test',dob:'',address:'Friendsfield, Tobago',type:'General Enquiry',preferred:'WhatsApp',message:'Test general enquiry completed after office follow-up.',status:'Completed',assigned:'Krystal Fordyce',caseOwner:'Krystal Fordyce',priority:'Low',followUpDate:'',nextAction:'No further action unless resident requests clarification.',referralAgency:'',referralReference:'',referralDate:'',referralPurpose:'',createdAt:'2026-09-01T13:25:00-04:00',updatedAt:'2026-09-09T10:15:00-04:00',documents:[],notes:[{at:'2026-09-09T10:15:00-04:00',by:'Krystal Fordyce',text:'Test note: response provided to resident.'}],activity:[{at:'2026-09-01T13:25:00-04:00',text:'Test enquiry received.'},{at:'2026-09-09T10:15:00-04:00',text:'Status changed to Completed.'}]}
+];
+
+let currentView='All', currentCaseId=null;
+const $=s=>document.querySelector(s);
+const login=$('#login'),portal=$('#portal'),activeUser=$('#active-user');
+let v43User=null;window.v43User=v43User;let v43Csrf=sessionStorage.getItem('smg_v43_csrf')||'';let v43Online=false;
+
+function normalize(r){
+  r.priority=r.priority||'Standard';
+  r.caseOwner=r.caseOwner||r.assigned||'Unassigned';
+  r.assigned=r.assigned||'Unassigned';
+  r.followUpDate=r.followUpDate||'';
+  r.dueDate=r.dueDate||'';
+  r.escalation=r.escalation||'Normal';
+  r.nextAction=r.nextAction||'Initial review and determine the next appropriate action.';
+  r.referralAgency=r.referralAgency||'';
+  r.referralReference=r.referralReference||'';
+  r.referralDate=r.referralDate||'';
+  r.referralPurpose=r.referralPurpose||'';
+  r.referralContact=r.referralContact||'';
+  r.referralAckDate=r.referralAckDate||'';
+  r.referralResponseStatus=r.referralResponseStatus||((r.referralAgency&&r.status==='Referred')?'Awaiting Response':'No Acknowledgement');
+  r.referralFollowUpDate=r.referralFollowUpDate||'';
+  r.referralResponseNote=r.referralResponseNote||'';
+  r.closureReason=r.closureReason||'';
+  r.communityArea=r.communityArea||'Other / Not Sure';
+  r.issueTheme=r.issueTheme||'General Community Concern';
+  r.townHallFlag=(r.townHallFlag===true);
+  r.townHallReason=r.townHallReason||'';
+  r.recurringIssue=(r.recurringIssue===true);
+  r.projectLink=r.projectLink||'Not linked';
+
+  r.publicStatus=r.publicStatus||({'New':'Received','Unassigned':'Received','Assigned':'Under Review','In Progress':'Under Review','Awaiting Documents':'Awaiting Resident Information','Referred':'Action / Referral in Progress','Completed':'Completed','Closed':'Closed'}[r.status]||'Received');
+  r.publicUpdate=r.publicUpdate||'';
+  r.publicNextStep=r.publicNextStep||'';
+  r.publicUpdatedAt=r.publicUpdatedAt||'';
+  r.residentVisible=(r.residentVisible!==false);
+
+  r.documents=Array.isArray(r.documents)?r.documents:[];
+  r.documents=r.documents.map(d=>{d.category=d.category||'Unclassified';d.sensitivity=d.sensitivity||'Standard';d.reviewStatus=d.reviewStatus||'Needs Review';d.source=d.source||'Staff / Resident';d.receivedAt=d.receivedAt||r.createdAt;d.reference=d.reference||'';d.documentDate=d.documentDate||'';return d});
+
+  r.notes=Array.isArray(r.notes)?r.notes:[];
+  r.activity=Array.isArray(r.activity)?r.activity:[];
+  return r;
+}
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x.map(normalize):[]}catch(e){return[]}}
+function save(rows){localStorage.setItem(KEY,JSON.stringify(rows.map(normalize)))}
+function ensureData(){const rows=load();if(!rows.length)save(JSON.parse(JSON.stringify(demoCases)));else save(rows)}
+function now(){return new Date().toISOString()}
+function todayISO(){const d=new Date();const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
+function dateOnly(s){return s?new Date(s+'T12:00:00'):null}
+function fmt(dt){if(!dt)return '—';try{return new Intl.DateTimeFormat('en-TT',{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(new Date(dt))}catch(e){return dt}}
+function fmtDate(s){if(!s)return 'Not set';try{return new Intl.DateTimeFormat('en-TT',{year:'numeric',month:'short',day:'numeric'}).format(dateOnly(s))}catch(e){return s}}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function activeName(){return (v43User&&v43User.name)||'Staff'}
+function isClosed(r){return r.status==='Completed'||r.status==='Closed'}
+function isOverdue(r){return !!r.followUpDate&&!isClosed(r)&&r.followUpDate<todayISO()}
+function daysUntil(s){if(!s)return null;const a=dateOnly(todayISO()),b=dateOnly(s);return Math.round((b-a)/86400000)}
+function followupState(r){
+  if(!r.followUpDate)return {cls:'',text:'No follow-up date set.'};
+  if(isClosed(r))return {cls:'',text:'Case is completed/closed. Follow-up date is retained for history.'};
+  const days=daysUntil(r.followUpDate);
+  if(days<0)return {cls:'overdue',text:`Overdue by ${Math.abs(days)} day${Math.abs(days)===1?'':'s'}. The next action should be reviewed.`};
+  if(days===0)return {cls:'due-soon',text:'Follow-up is due today.'};
+  if(days<=2)return {cls:'due-soon',text:`Follow-up is due in ${days} day${days===1?'':'s'}.`};
+  return {cls:'',text:`Next follow-up: ${fmtDate(r.followUpDate)}.`};
+}
+
+
+
+
+async function v43Api(path,opts={}){
+  opts.credentials='same-origin';opts.headers=Object.assign({'Content-Type':'application/json'},opts.headers||{});
+  if(v43Csrf&&opts.method&&opts.method!=='GET')opts.headers['X-SMG-CSRF']=v43Csrf;
+  const r=await fetch(path,opts),text=await r.text();let data={};
+  try{data=text?JSON.parse(text):{}}catch(e){data={detail:text||r.statusText}}
+  if(!r.ok)throw new Error(data.detail||`HTTP ${r.status}`);return data;
+}
+function v43SetLive(ok,label){
+  v43Online=!!ok;const el=$('#v43-live-state');if(el){el.classList.toggle('offline',!ok);el.textContent=ok?(label||'CENTRAL'):'OFFLINE'}
+}
+function v43RawCache(rows){localStorage.setItem(KEY,JSON.stringify((rows||[]).map(normalize)))}
+async function v43PullCases(){
+  const data=await v43Api('/api/cases',{method:'GET'});v43RawCache(data.cases||[]);v43SetLive(true,'CENTRAL');return data.cases||[];
+}
+async function v43SaveCase(caseRecord){
+  if(!v43User)return;
+  const data=await v43Api('/api/cases/'+encodeURIComponent(caseRecord.id),{method:'PUT',body:JSON.stringify({case:caseRecord})});
+  const rows=load(),i=rows.findIndex(x=>x.id===caseRecord.id);if(i>=0){rows[i]=normalize(data.case);v43RawCache(rows)}
+  v43SetLive(true,'SAVED');
+}
+async function v43Login(){
+  const status=$('#v43-login-status');
+  try{
+    const data=await v43Api('/api/auth/login',{method:'POST',body:JSON.stringify({email:$('#v43-email').value.trim(),password:$('#v43-password').value})});
+    v43User=data.user;window.v43User=v43User;v43Csrf=data.csrf||'';sessionStorage.setItem('smg_v43_csrf',v43Csrf);$('#v43-password').value='';
+    await v43PullCases();
+    activeUser.textContent=v43User.name+' — '+v43User.role;
+    login.classList.add('hidden');portal.classList.remove('hidden');v41ApplyModuleAccess();render();v40OpenRequestedCase();
+    if(status)status.textContent='Signed in.';
+  }catch(e){if(status)status.textContent=e.message;v43SetLive(false)}
+}
+async function v43RestoreSession(){
+  const status=$('#v43-login-status');
+  try{
+    const data=await v43Api('/api/auth/me',{method:'GET'});v43User=data.user;window.v43User=v43User;v43Csrf=data.csrf||'';sessionStorage.setItem('smg_v43_csrf',v43Csrf);
+    await v43PullCases();activeUser.textContent=v43User.name+' — '+v43User.role;
+    login.classList.add('hidden');portal.classList.remove('hidden');v41ApplyModuleAccess();render();v40OpenRequestedCase();
+  }catch(e){if(status)status.textContent='Backend sign-in required.';v43SetLive(false)}
+}
+
+function v41Clone(x){return JSON.parse(JSON.stringify(x))}
+function v41AccessConfig(){
+  try{
+    const x=JSON.parse(localStorage.getItem(ACCESS_KEY)||'null');
+    if(x&&typeof x==='object')return x;
+  }catch(e){}
+  const cfg={};
+  V41_STAFF.forEach(s=>cfg[s.name]={profile:s.profile,permissions:v41Clone(V41_DEFAULTS[s.profile])});
+  return cfg;
+}
+function v41AccessFor(name){
+  const cfg=v41AccessConfig(),staff=V41_STAFF.find(s=>s.name===name);
+  if(cfg[name])return cfg[name];
+  let profile=(staff&&staff.profile)||'Field Officer';
+  if(v43User&&v43User.role){
+    const map={'Manager':'Manager','Administrative':'Administrative','Senior Officer':'Senior Officer','Field Officer':'Field Officer','Senior Staff':'Senior Staff'};
+    profile=map[v43User.role]||profile;
+  }
+  return {profile,permissions:v41Clone(V41_DEFAULTS[profile]||V41_DEFAULTS['Field Officer'])};
+}
+function v41CurrentAccess(){return v41AccessFor(activeName())}
+function v41CanEditCase(r){
+  const a=v41CurrentAccess();
+  if(!a.permissions.editCases)return false;
+  if(r.status==='Closed'&&!a.permissions.assignCases)return false;
+  if(a.permissions.viewAll)return true;
+  return r.caseOwner===activeName()||r.assigned===activeName();
+}
+function v41ApplyModuleAccess(){
+  const a=v41CurrentAccess(),p=a.permissions;
+  const chip=$('#v41-access-chip');if(chip)chip.textContent=a.profile;
+  const nav=document.querySelector('.v40-app-nav');if(nav){
+    const hide=(href,allowed)=>{const el=nav.querySelector(`a[href="${href}"]`);if(el)el.classList.toggle('v41-hidden-by-role',!allowed)};
+    hide('community.html',p.community);hide('records.html',p.records);hide('reports.html',p.reports);hide('audit.html',p.audit);hide('access.html',p.accessAdmin);
+  }
+  if(!p.viewAll && currentView==='All'){
+    currentView='My Cases';
+    document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.view==='My Cases'));
+  }
+}
+function v41ApplyCaseAccess(r){
+  const a=v41CurrentAccess(),p=a.permissions,canEdit=v41CanEditCase(r),note=$('#v41-readonly-note');
+  if(note)note.classList.toggle('show',!canEdit);
+  const lock=(sel,locked)=>{document.querySelectorAll(sel).forEach(el=>el.classList.toggle('v41-locked',locked))};
+  lock('#save-case,#save-referral,#add-note,#add-doc,#v39-save-community',!canEdit);
+  lock('#save-public-update',!(canEdit&&p.publishResident));
+  if($('#case-owner'))$('#case-owner').disabled=!p.assignCases;
+  if($('#case-officer'))$('#case-officer').disabled=!p.assignCases;
+  if($('#closure-reason'))$('#closure-reason').disabled=!p.assignCases;
+  const closedOpt=[...($('#case-status')?.options||[])].find(o=>o.value==='Closed'||o.textContent==='Closed');
+  if(closedOpt)closedOpt.disabled=!p.assignCases&&r.status!=='Closed';
+}
+
+function buildAlerts(rows){
+  const alerts=[];
+  rows.forEach(r=>{
+    if(isClosed(r))return;
+    const days=r.followUpDate?daysUntil(r.followUpDate):null;
+    if(r.followUpDate&&days<0)alerts.push({id:r.id,kind:'overdue',title:`${r.reference} is overdue`,text:`${r.fullName} · follow-up was due ${fmtDate(r.followUpDate)}.`});
+    else if(r.followUpDate&&days===0)alerts.push({id:r.id,kind:'today',title:`${r.reference} is due today`,text:`${r.fullName} · ${r.nextAction||'Case follow-up due.'}`});
+    else if(r.followUpDate&&days>0&&days<=2)alerts.push({id:r.id,kind:'today',title:`${r.reference} due soon`,text:`${r.fullName} · due in ${days} day${days===1?'':'s'}.`});
+    if(r.priority==='Urgent')alerts.push({id:r.id,kind:'high',title:`Urgent case: ${r.reference}`,text:`${r.fullName} · ${r.type||'Enquiry'}.`});
+  });
+  return alerts;
+}
+function renderAlerts(){
+  const alerts=buildAlerts(load());
+  const count=$('#v36-bell-count'), list=$('#v36-alert-list');
+  if(count)count.textContent=alerts.length>99?'99+':alerts.length;
+  if(!list)return;
+  list.innerHTML=alerts.length?alerts.map((a,i)=>`<div class="v36-alert ${esc(a.kind)}">
+    <span class="v36-alert-dot"></span><div><strong>${esc(a.title)}</strong><span>${esc(a.text)}</span></div>
+    <button type="button" data-v36-case="${esc(a.id)}">OPEN</button></div>`).join(''):'<div class="v36-no-alerts">No due, overdue or urgent case alerts right now.</div>';
+  list.querySelectorAll('[data-v36-case]').forEach(b=>b.addEventListener('click',()=>{openCase(b.dataset.v36Case);$('#v36-notification-panel').classList.remove('open')}));
+}
+function v36PublicMessage(r,type){
+  const ref=r.reference||'';
+  const status=r.publicStatus||r.status||'Received';
+  const update=r.publicUpdate||'Your enquiry is being processed by the Scarborough / Mt. Grace District Office.';
+  const next=r.publicNextStep||'Please keep your reference number available for any follow-up.';
+  if(type==='ack')return `Scarborough / Mt. Grace District Office\n\nYour enquiry ${ref} has been received. Please keep this reference number for follow-up.\n\nOffice: (868) 610-6314\nWhatsApp: (868) 344-5268`;
+  if(type==='documents')return `Scarborough / Mt. Grace District Office\n\nRe: Enquiry ${ref}\n\nAdditional information or supporting documents are required before the office can continue processing your enquiry. Please contact the District Office with your reference number so staff can confirm what is needed.\n\nOffice: (868) 610-6314`;
+  if(type==='completed')return `Scarborough / Mt. Grace District Office\n\nRe: Enquiry ${ref}\n\nYour enquiry has been marked ${status.toLowerCase()}. ${update}\n\nIf you need clarification, please contact the office and quote your reference number.`;
+  return `Scarborough / Mt. Grace District Office\n\nRe: Enquiry ${ref}\n\nStatus: ${status}\n${update}\n\nNext step: ${next}\n\nPlease quote ${ref} if contacting the office.`;
+}
+function updateMessageTools(){
+  if(!currentCaseId||!$('#v36-template-preview'))return;
+  const r=load().find(x=>x.id===currentCaseId);if(!r)return;
+  const type=$('#v36-message-type').value, msg=v36PublicMessage(r,type);
+  $('#v36-template-preview').textContent=msg;
+  const phone=String(r.phone||'').replace(/\D/g,'');
+  $('#v36-open-whatsapp').href=phone?`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`:`https://wa.me/18683445268?text=${encodeURIComponent(msg)}`;
+  $('#v36-open-email').href=`mailto:${encodeURIComponent(r.email||'')}?subject=${encodeURIComponent('Scarborough / Mt. Grace Enquiry '+r.reference)}&body=${encodeURIComponent(msg)}`;
+}
+
+
+function v38ResidentKey(r){return String(r.email||'').trim().toLowerCase()||String(r.phone||'').replace(/\D/g,'')||String(r.fullName||'').trim().toLowerCase()+'|'+String(r.address||'').trim().toLowerCase()}
+function renderResidentRecord(r){
+  const related=load().filter(x=>v38ResidentKey(x)===v38ResidentKey(r)).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  const open=related.filter(x=>!isClosed(x)).length;
+  const docs=related.reduce((n,x)=>n+(x.documents||[]).length,0);
+  $('#v38-profile-grid').innerHTML=[
+    ['Resident',r.fullName||'—'],['Linked Cases',related.length],['Open Cases',open],['Document Records',docs]
+  ].map(([a,b])=>`<div><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
+  $('#v38-linked-cases').innerHTML=related.length>1?'<div style="margin-top:9px">'+related.map(x=>`<div class="v38-linked-case"><strong>${esc(x.reference)} · ${esc(x.type)}</strong><span>${esc(x.status)}</span></div>`).join('')+'</div>':'';
+}
+
+
+function v40RequestedCase(){
+  try{return new URLSearchParams(window.location.search).get('case')||''}catch(e){return ''}
+}
+function v40OpenRequestedCase(){
+  const id=v40RequestedCase();
+  if(!id)return;
+  const exists=load().some(r=>r.id===id);
+  if(exists){
+    setTimeout(()=>openCase(id),60);
+  }
+}
+
+function enter(){v43Login()}
+$('#enter-demo').addEventListener('click',enter);
+$('#switch-user').textContent='Sign Out';
+$('#switch-user').addEventListener('click',async()=>{
+  try{await v43Api('/api/auth/logout',{method:'POST',body:'{}'})}catch(e){}
+  v43User=null;window.v43User=null;v43Csrf='';sessionStorage.removeItem('smg_v43_csrf');portal.classList.add('hidden');login.classList.remove('hidden');v43SetLive(false);
+});
+
+
+
+function counts(rows){
+  const by=s=>rows.filter(r=>r.status===s).length;
+  $('#count-all').textContent=rows.length;
+  $('#count-my-cases').textContent=rows.filter(r=>r.caseOwner===activeName()||r.assigned===activeName()).length;
+  $('#count-overdue').textContent=rows.filter(isOverdue).length;
+  $('#count-high-priority').textContent=rows.filter(r=>!isClosed(r)&&(r.priority==='Urgent'||r.priority==='High')).length;
+  STATUSES.forEach(s=>{const el=$('#count-'+slug(s));if(el)el.textContent=by(s)});
+  $('#metric-new').textContent=by('New')+by('Unassigned');
+  $('#metric-due').textContent=rows.filter(r=>!isClosed(r)&&r.followUpDate&&daysUntil(r.followUpDate)<=2).length;
+  $('#metric-active').textContent=rows.filter(r=>['Assigned','In Progress','Awaiting Documents','Referred'].includes(r.status)).length;
+  const d=new Date();
+  $('#metric-completed').textContent=rows.filter(r=>r.status==='Completed'&&new Date(r.updatedAt).getMonth()===d.getMonth()&&new Date(r.updatedAt).getFullYear()===d.getFullYear()).length;
+}
+function buildFilters(rows){
+  const of=$('#officer-filter'),tf=$('#type-filter'),oldO=of.value,oldT=tf.value;
+  of.innerHTML='<option value="All">All owners/officers</option>'+OFFICERS.slice(1).map(x=>'<option>'+esc(x)+'</option>').join('');
+  const types=[...new Set(rows.map(r=>r.type).filter(Boolean))].sort();
+  tf.innerHTML='<option value="All">All enquiry types</option>'+types.map(x=>'<option>'+esc(x)+'</option>').join('');
+  if([...of.options].some(o=>o.value===oldO))of.value=oldO;if([...tf.options].some(o=>o.value===oldT))tf.value=oldT;
+}
+function viewMatch(r){
+  if(currentView==='All')return true;
+  if(currentView==='My Cases')return r.caseOwner===activeName()||r.assigned===activeName();
+  if(currentView==='Overdue')return isOverdue(r);
+  if(currentView==='High Priority')return !isClosed(r)&&(r.priority==='Urgent'||r.priority==='High');
+  return r.status===currentView;
+}
+function filtered(rows){
+  const access=v41CurrentAccess();
+  const q=$('#search').value.trim().toLowerCase(),o=$('#officer-filter').value,t=$('#type-filter').value,p=$('#priority-filter').value;
+  return rows.filter(r=>{
+    const permitted=access.permissions.viewAll || r.caseOwner===activeName() || r.assigned===activeName();
+    const officer=o==='All'||r.caseOwner===o||r.assigned===o,type=t==='All'||r.type===t,priority=p==='All'||r.priority===p;
+    const hay=[r.reference,r.fullName,r.phone,r.email,r.address,r.type,r.status,r.assigned,r.caseOwner,r.priority,r.nextAction,r.referralAgency,r.referralReference,r.referralContact,r.referralResponseStatus,r.referralPurpose,r.referralResponseNote,r.message].join(' ').toLowerCase();
+    return permitted&&viewMatch(r)&&officer&&type&&priority&&(!q||hay.includes(q));
+  }).sort((a,b)=>{
+    const rank={Urgent:0,High:1,Standard:2,Low:3};
+    const oa=isOverdue(a)?0:1,ob=isOverdue(b)?0:1;if(oa!==ob)return oa-ob;
+    if(rank[a.priority]!==rank[b.priority])return rank[a.priority]-rank[b.priority];
+    return new Date(b.createdAt)-new Date(a.createdAt);
+  });
+}
+function dueHtml(r){
+  if(!r.followUpDate)return '<div class="due"><strong>Not set</strong><small>'+esc(r.nextAction||'No next action')+'</small></div>';
+  const overdue=isOverdue(r);
+  return `<div class="due ${overdue?'overdue':''}"><strong>${esc(fmtDate(r.followUpDate))}</strong><small>${esc((r.nextAction||'No next action').slice(0,52))}${(r.nextAction||'').length>52?'…':''}</small>${overdue?'<span class="overdue-tag">OVERDUE</span>':''}</div>`;
+}
+function v137DatePassed(value){if(!value)return false;const d=new Date(value+'T23:59:59');return d<new Date()}
+function v137DueNext7(value){if(!value)return false;const d=new Date(value+'T23:59:59'),n=new Date(),limit=new Date();limit.setDate(limit.getDate()+7);return d>=n&&d<=limit}
+function v137OpenActive(r){return !['Completed','Closed'].includes(r.status)}
+function v137ReferralPending(r){return !!r.referralAgency&&!['Response Received','Closed'].includes(r.referralResponseStatus||'No Acknowledgement')}
+function v137RenderOperations(rows){
+  const active=rows.filter(v137OpenActive),overdue=active.filter(isOverdue),targetRisk=active.filter(r=>v137DatePassed(r.dueDate));
+  const pending=rows.filter(v137ReferralPending),docReview=rows.reduce((n,r)=>n+(r.documents||[]).filter(d=>(d.reviewStatus||'Needs Review')==='Needs Review').length,0);
+  const set=(id,v)=>{const e=$(id);if(e)e.textContent=String(v)};set('#v137-active-cases',active.length);set('#v137-overdue-followups',overdue.length);set('#v137-target-risk',targetRisk.length);set('#v137-pending-referrals',pending.length);set('#v137-doc-review',docReview);set('#v137-ops-count',overdue.length+targetRisk.length+pending.filter(r=>v137DatePassed(r.referralFollowUpDate)).length);
+  const officers=OFFICERS.filter(x=>x!=='Unassigned');
+  const stats=officers.map(name=>{const own=rows.filter(r=>v137OpenActive(r)&&(r.caseOwner===name||r.assigned===name));return {name,active:own.length,overdue:own.filter(isOverdue).length,high:own.filter(r=>['Urgent','High'].includes(r.priority)).length,next7:own.filter(r=>v137DueNext7(r.followUpDate)||v137DueNext7(r.dueDate)).length,referrals:own.filter(v137ReferralPending).length,docs:own.reduce((n,r)=>n+(r.documents||[]).filter(d=>(d.reviewStatus||'Needs Review')==='Needs Review').length,0)}});
+  const wt=$('#v137-workload-table');if(wt)wt.innerHTML=`<table><thead><tr><th>Officer</th><th>Active</th><th>Overdue</th><th>Urgent / High</th><th>Due next 7d</th><th>Pending referrals</th><th>Docs review</th></tr></thead><tbody>${stats.map(x=>`<tr><td><button class="v137-officer-link" data-v137-officer="${esc(x.name)}">${esc(x.name)}</button></td><td>${x.active}</td><td class="v137-risk ${x.overdue?'bad':'ok'}">${x.overdue}</td><td class="v137-risk ${x.high?'warn':'ok'}">${x.high}</td><td>${x.next7}</td><td>${x.referrals}</td><td>${x.docs}</td></tr>`).join('')}</tbody></table>`;
+  wt?.querySelectorAll('[data-v137-officer]').forEach(b=>b.addEventListener('click',()=>{const sel=$('#officer-filter');sel.value=b.dataset.v137Officer;currentView='All';document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.view==='All'));render();document.querySelector('.table-wrap')?.scrollIntoView({behavior:'smooth',block:'start'})}));
+  const rq=$('#v137-referral-queue');
+  const q=rows.filter(r=>r.referralAgency).sort((a,b)=>{const ad=a.referralFollowUpDate||'9999-12-31',bd=b.referralFollowUpDate||'9999-12-31';return ad.localeCompare(bd)}).slice(0,12);
+  rq.innerHTML=q.length?`<table><thead><tr><th>Case</th><th>Agency</th><th>Status</th><th>Agency follow-up</th></tr></thead><tbody>${q.map(r=>`<tr><td><button class="v137-case-link" data-v137-case="${esc(r.id)}">${esc(r.reference)}</button><br><small>${esc(r.fullName)}</small></td><td>${esc(r.referralAgency)}</td><td><span class="v137-referral-status ${slug(r.referralResponseStatus||'No Acknowledgement')}">${esc(r.referralResponseStatus||'No Acknowledgement')}</span></td><td class="v137-risk ${v137DatePassed(r.referralFollowUpDate)&&v137ReferralPending(r)?'bad':''}">${r.referralFollowUpDate?esc(fmtDate(r.referralFollowUpDate)):'Not set'}</td></tr>`).join('')}</tbody></table>`:'<div class="v137-empty">No referrals have been recorded in the current case register.</div>';
+  rq.querySelectorAll?.('[data-v137-case]').forEach(b=>b.addEventListener('click',()=>openCase(b.dataset.v137Case)));
+}
+function render(){
+  const rows=load();buildFilters(rows);counts(rows);const list=filtered(rows),body=$('#case-rows');
+  body.innerHTML=list.map(r=>`<tr data-id="${esc(r.id)}">
+    <td><span class="ref">${esc(r.reference)}</span>${r.demo?'<span class="demo-tag">DEMO</span>':''}</td>
+    <td class="resident"><strong>${esc(r.fullName)}</strong><small>${esc(r.type)}</small></td>
+    <td><span class="priority p-${slug(r.priority)}">${esc(r.priority)}</span></td>
+    <td><span class="badge s-${slug(r.status)}">${esc(r.status)}</span></td>
+    <td><strong style="font-size:9px;color:#2e5368">${esc(r.caseOwner)}</strong><br><small style="font-size:8px;color:#82959e">${r.assigned==='Unassigned'?'No assigned officer':'Assigned: '+esc(r.assigned)}</small></td>
+    <td>${dueHtml(r)}</td><td>${esc(fmt(r.createdAt))}</td>
+  </tr>`).join('');
+  $('#empty').classList.toggle('hidden',list.length!==0);
+  body.querySelectorAll('tr[data-id]').forEach(tr=>tr.addEventListener('click',()=>openCase(tr.dataset.id)));
+  renderAlerts();
+  v137RenderOperations(rows);v138RenderHub(rows);
+}
+['#search','#officer-filter','#type-filter','#priority-filter'].forEach(sel=>{$(sel).addEventListener(sel==='#search'?'input':'change',render)});
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentView=b.dataset.view;render()}));
+$('#v137-ops-nav')?.addEventListener('click',()=>document.getElementById('v137-operations-control')?.scrollIntoView({behavior:'smooth',block:'start'}));
+
+function populateSelect(el,values,current){el.innerHTML=values.map(x=>`<option ${x===current?'selected':''}>${esc(x)}</option>`).join('')}
+function openCase(id){
+  const r=load().find(x=>x.id===id);if(!r)return;currentCaseId=id;
+  $('#drawer-ref').textContent=r.reference+(r.demo?' · TEST':'');
+  $('#case-grid').innerHTML=[
+    ['Resident',r.fullName],['Phone',r.phone||'—'],['Email',r.email||'—'],['Address',r.address||'—'],
+    ['Date of Birth',r.dob||'—'],['Preferred Contact',r.preferred||'—'],['Enquiry Type',r.type||'—'],['Received',fmt(r.createdAt)],['Target Date',r.dueDate?fmtDate(r.dueDate):'Not set'],['Escalation',r.escalation||'Normal']
+  ].map(([a,b])=>`<div class="case-card"><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
+  $('#case-message').textContent=r.message||'No message supplied.';
+  populateSelect($('#case-priority'),PRIORITIES,r.priority);populateSelect($('#case-status'),STATUSES,r.status);populateSelect($('#case-owner'),OFFICERS,r.caseOwner);populateSelect($('#case-officer'),OFFICERS,r.assigned);
+  $('#case-followup').value=r.followUpDate||'';$('#case-due-date').value=r.dueDate||'';$('#case-escalation').value=r.escalation||'Normal';$('#case-next-action').value=r.nextAction||'';$('#case-updated').value=fmt(r.updatedAt);$('#closure-reason').value=r.closureReason||'';
+  const fs=followupState(r),fa=$('#followup-alert');fa.className='followup-alert '+fs.cls;fa.textContent=fs.text;
+  $('#referral-agency').value=r.referralAgency||'';$('#referral-reference').value=r.referralReference||'';$('#referral-date').value=r.referralDate||'';$('#referral-contact').value=r.referralContact||'';$('#referral-ack-date').value=r.referralAckDate||'';$('#referral-response-status').value=r.referralResponseStatus||'No Acknowledgement';$('#referral-followup-date').value=r.referralFollowUpDate||'';$('#referral-purpose').value=r.referralPurpose||'';$('#referral-response-note').value=r.referralResponseNote||'';
+  $('#v39-community-area').value=r.communityArea||'Other / Not Sure';
+  $('#v39-issue-theme').value=r.issueTheme||'General Community Concern';
+  $('#v39-project-link').value=r.projectLink||'Not linked';
+  $('#v39-townhall-flag').checked=r.townHallFlag===true;
+  $('#v39-recurring-issue').checked=r.recurringIssue===true;
+  $('#v39-townhall-reason').value=r.townHallReason||'';
+
+  $('#public-status').value=r.publicStatus||'Received';
+  $('#resident-visible').value=r.residentVisible===false?'false':'true';
+  $('#public-update').value=r.publicUpdate||'';
+  $('#public-next-step').value=r.publicNextStep||'';
+  $('#public-update-meta').textContent=r.publicUpdatedAt?'Last resident-facing update: '+fmt(r.publicUpdatedAt):'No resident-facing update has been published yet.';
+
+  renderReferral(r);renderResidentRecord(r);renderNotes(r);renderDocs(r);renderTimeline(r);v138RenderCaseTools(r);
+  updateMessageTools();
+  v41ApplyCaseAccess(r);
+  $('#drawer-backdrop').classList.add('open');$('#drawer-backdrop').setAttribute('aria-hidden','false');
+}
+function renderReferral(r){
+  const has=r.referralAgency||r.referralReference||r.referralDate||r.referralPurpose;
+  $('#referral-summary').innerHTML=has?[
+    ['Agency / Division',r.referralAgency||'Not recorded'],['Referral Reference',r.referralReference||'Not recorded'],
+    ['Referral Date',r.referralDate?fmtDate(r.referralDate):'Not recorded'],['Agency Contact',r.referralContact||'Not recorded'],
+    ['Acknowledged',r.referralAckDate?fmtDate(r.referralAckDate):'Not recorded'],['Response Status',r.referralResponseStatus||'Not recorded'],
+    ['Next Agency Follow-up',r.referralFollowUpDate?fmtDate(r.referralFollowUpDate):'Not set'],['Purpose',r.referralPurpose||'Not recorded'],
+    ['Latest Response',r.referralResponseNote||'No response note recorded']
+  ].map(([a,b])=>`<div><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join(''):'<div style="grid-column:1/-1"><small>REFERRAL STATUS</small><strong>No referral details recorded.</strong></div>';
+}
+function renderNotes(r){$('#notes-list').innerHTML=(r.notes||[]).slice().reverse().map(n=>`<div class="note"><strong>${esc(n.by||'Staff')}</strong><small>${esc(fmt(n.at))}</small><p>${esc(n.text)}</p></div>`).join('')||'<p style="font-size:10px;color:#8698a1">No internal notes yet.</p>'}
+function renderDocs(r){
+  const docs=r.documents||[];
+  $('#docs-list').innerHTML=docs.length?docs.map(d=>`<div class="v38-doc-row">
+    <div><strong>${esc(d.name)}</strong><small>${esc(d.category||'Unclassified')} · ${esc(d.source||'Staff / Resident')}</small>${d.reference||d.documentDate?`<div class="v137-doc-ref">${d.reference?'Ref: '+esc(d.reference):''}${d.reference&&d.documentDate?' · ':''}${d.documentDate?'Dated '+esc(fmtDate(d.documentDate)):''}</div>`:''}</div>
+    <span class="${d.sensitivity==='Restricted'?'restricted':'standard'}">${esc(d.sensitivity||'Standard')}</span>
+    <span>${esc(d.reviewStatus||'Needs Review')}</span>
+    <span>${d.size?Math.round(d.size/1024)+' KB':'metadata only'}</span>
+  </div>`).join(''):'<p style="font-size:10px;color:#8698a1">No document metadata listed.</p>';
+}
+function mutate(fn){
+  const rows=load(),i=rows.findIndex(x=>x.id===currentCaseId);if(i<0)return;
+  if(!v41CanEditCase(rows[i])){alert('This test access profile is read-only for this case.');return;}
+  fn(rows[i]);rows[i].updatedAt=now();save(rows);const changed=rows[i];openCase(currentCaseId);render();
+  if(v43User){v43SaveCase(changed).then(()=>{render();openCase(currentCaseId)}).catch(e=>{v43SetLive(false);alert('Central save failed: '+e.message)})}
+}
+function describeChange(label,oldV,newV){return oldV!==newV?`${label} changed from ${oldV||'not set'} to ${newV||'not set'} by ${activeName()}.`:''}
+
+$('#save-case').addEventListener('click',()=>{
+  const r=load().find(x=>x.id===currentCaseId);if(!r)return;
+  const perm=v41CurrentAccess().permissions;
+  const status=$('#case-status').value,owner=$('#case-owner').value,assigned=$('#case-officer').value;
+  const followUp=$('#case-followup').value,dueDate=$('#case-due-date').value,escalation=$('#case-escalation').value,nextAction=$('#case-next-action').value.trim(),closureReason=$('#closure-reason').value;
+  if(['Assigned','In Progress','Awaiting Documents','Referred'].includes(status)){
+    if(owner==='Unassigned'||assigned==='Unassigned'){alert('Active cases require both a case owner and an assigned officer.');return;}
+    if(!followUp){alert('Active cases require a next follow-up date.');return;}
+    if(!nextAction){alert('Active cases require a clear next action.');return;}
+  }
+  if(status==='Referred'){
+    if(!$('#referral-agency').value.trim()||!$('#referral-date').value||!$('#referral-purpose').value.trim()){
+      alert('Before saving Referred status, record the receiving agency/division, referral date and referral purpose.');return;
+    }
+  }
+  if(status==='Closed'){
+    if(!perm.assignCases){alert('Only Manager or Administrative staff may close a case.');return;}
+    if(!closureReason){alert('Select a closure reason before closing the case.');return;}
+    if($('#resident-visible').value==='true'&&!['Completed','Closed'].includes($('#public-status').value)){
+      alert('Before closing a resident-visible case, publish a public status of Completed or Closed.');return;
+    }
+    if($('#resident-visible').value==='true'&&!$('#public-update').value.trim()){
+      alert('Before closing a resident-visible case, publish a resident-facing completion/closure update.');return;
+    }
+  }
+  mutate(r=>{
+    const before={priority:r.priority,status:r.status,owner:r.caseOwner,assigned:r.assigned,followUp:r.followUpDate,dueDate:r.dueDate||'',escalation:r.escalation||'Normal',next:r.nextAction,closure:r.closureReason||''};
+    const after={priority:$('#case-priority').value,status,owner,assigned,followUp,dueDate,escalation,next:nextAction,closure:closureReason};
+    r.priority=after.priority;r.status=after.status;if(perm.assignCases){r.caseOwner=after.owner;r.assigned=after.assigned;}else{after.owner=r.caseOwner;after.assigned=r.assigned;}r.followUpDate=after.followUp;r.dueDate=after.dueDate;r.escalation=after.escalation;r.nextAction=after.next;r.closureReason=after.closure;
+    r.activity=r.activity||[];
+    [
+      describeChange('Priority',before.priority,after.priority),describeChange('Status',before.status,after.status),
+      describeChange('Case owner',before.owner,after.owner),describeChange('Assigned officer',before.assigned,after.assigned),
+      describeChange('Follow-up date',before.followUp,after.followUp),describeChange('Target date',before.dueDate,after.dueDate),describeChange('Escalation',before.escalation,after.escalation),describeChange('Next action',before.next,after.next),
+      describeChange('Closure reason',before.closure,after.closure)
+    ].filter(Boolean).forEach(text=>r.activity.push({at:now(),text}));
+  });
+});
+
+$('#save-referral').addEventListener('click',()=>{
+  mutate(r=>{
+    const old=[r.referralAgency,r.referralReference,r.referralDate,r.referralPurpose,r.referralContact,r.referralAckDate,r.referralResponseStatus,r.referralFollowUpDate,r.referralResponseNote].join('|');
+    r.referralAgency=$('#referral-agency').value.trim();r.referralReference=$('#referral-reference').value.trim();r.referralDate=$('#referral-date').value;r.referralPurpose=$('#referral-purpose').value.trim();
+    r.referralContact=$('#referral-contact').value.trim();r.referralAckDate=$('#referral-ack-date').value;r.referralResponseStatus=$('#referral-response-status').value;r.referralFollowUpDate=$('#referral-followup-date').value;r.referralResponseNote=$('#referral-response-note').value.trim();
+    const neu=[r.referralAgency,r.referralReference,r.referralDate,r.referralPurpose,r.referralContact,r.referralAckDate,r.referralResponseStatus,r.referralFollowUpDate,r.referralResponseNote].join('|');
+    if(old!==neu){r.activity=r.activity||[];r.activity.push({at:now(),text:`Referral control updated by ${activeName()}${r.referralAgency?' for '+r.referralAgency:''}${r.referralReference?' · Ref '+r.referralReference:''}${r.referralResponseStatus?' · '+r.referralResponseStatus:''}.`})}
+  });
+});
+
+
+
+$('#v39-save-community').addEventListener('click',()=>{
+  mutate(r=>{
+    const before=[r.communityArea,r.issueTheme,r.projectLink,r.townHallFlag,r.recurringIssue,r.townHallReason].join('|');
+    r.communityArea=$('#v39-community-area').value;
+    r.issueTheme=$('#v39-issue-theme').value;
+    r.projectLink=$('#v39-project-link').value;
+    r.townHallFlag=$('#v39-townhall-flag').checked;
+    r.recurringIssue=$('#v39-recurring-issue').checked;
+    r.townHallReason=$('#v39-townhall-reason').value.trim();
+    const after=[r.communityArea,r.issueTheme,r.projectLink,r.townHallFlag,r.recurringIssue,r.townHallReason].join('|');
+    if(before!==after){
+      r.activity=r.activity||[];
+      r.activity.push({at:now(),text:`Community linkage updated by ${activeName()} · Area: ${r.communityArea} · Theme: ${r.issueTheme} · Town Hall: ${r.townHallFlag?'Yes':'No'} · Recurring: ${r.recurringIssue?'Yes':'No'} · Project: ${r.projectLink}.`});
+    }
+  });
+});
+
+$('#save-public-update').addEventListener('click',()=>{
+  if(!v41CurrentAccess().permissions.publishResident){alert('Your test access profile cannot publish resident-facing updates.');return;}
+  mutate(r=>{
+    const oldStatus=r.publicStatus||'Received';
+    r.publicStatus=$('#public-status').value;
+    r.residentVisible=$('#resident-visible').value==='true';
+    r.publicUpdate=$('#public-update').value.trim();
+    r.publicNextStep=$('#public-next-step').value.trim();
+    r.publicUpdatedAt=now();
+    r.activity=r.activity||[];
+    r.activity.push({at:now(),text:`Resident-facing update published by ${activeName()}. Public status: ${r.publicStatus}. Tracker visibility: ${r.residentVisible?'visible':'hidden'}.`});
+    if(oldStatus!==r.publicStatus)r.activity.push({at:now(),text:`Public status changed from ${oldStatus} to ${r.publicStatus}.`});
+  });
+});
+
+$('#add-note').addEventListener('click',()=>{
+  const text=$('#new-note').value.trim();if(!text)return;
+  mutate(r=>{r.notes=r.notes||[];r.notes.push({at:now(),by:activeName(),text});r.activity=r.activity||[];r.activity.push({at:now(),text:`Internal note added by ${activeName()}.`})});
+  $('#new-note').value='';
+});
+$('#add-doc').addEventListener('click',()=>{
+  const files=[...$('#staff-doc').files];if(!files.length)return;
+  const category=$('#v38-doc-category').value,sensitivity=$('#v38-doc-sensitivity').value,reviewStatus=$('#v38-doc-review').value,reference=$('#v137-doc-reference').value.trim(),documentDate=$('#v137-doc-date').value;
+  mutate(r=>{
+    r.documents=r.documents||[];
+    files.forEach(f=>r.documents.push({name:f.name,size:f.size,type:f.type||'File metadata',category,sensitivity,reviewStatus,reference,documentDate,source:'Staff / Resident',receivedAt:now()}));
+    r.activity=r.activity||[];
+    r.activity.push({at:now(),text:`${files.length} document metadata item(s) added by ${activeName()} · ${category} · ${sensitivity} · ${reviewStatus}. No file bytes stored.`});
+  });
+  $('#staff-doc').value='';$('#v137-doc-reference').value='';$('#v137-doc-date').value='';
+});
+$('#print-case').addEventListener('click',()=>window.print());
+$('#close-drawer').addEventListener('click',()=>{$('#drawer-backdrop').classList.remove('open');$('#drawer-backdrop').setAttribute('aria-hidden','true')});
+$('#drawer-backdrop').addEventListener('click',e=>{if(e.target===$('#drawer-backdrop'))$('#close-drawer').click()});
+
+
+function v138IsoDateTime(date,time){if(!date)return '';return date+'T'+(time||'09:00')+':00'}
+function v138FmtAppt(a){try{return new Intl.DateTimeFormat('en-TT',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(new Date(a.when))}catch(e){return a.when||'Not scheduled'}}
+function v138RenderCaseTools(r){
+  $('#v138-pref-channel').value=r.notificationChannel||r.preferred||'WhatsApp';$('#v138-notify-contact').value=r.notificationContact||((r.notificationChannel||r.preferred)==='Email'?r.email:r.phone)||'';$('#v138-consent-status').checked=r.notificationConsent===true;$('#v138-consent-reminder').checked=r.reminderConsent===true;
+  populateSelect($('#v138-appt-officer'),OFFICERS,r.assigned||'Unassigned');
+  const appts=(r.appointments||[]).slice().sort((a,b)=>String(a.when).localeCompare(String(b.when)));
+  $('#v138-case-schedule').innerHTML='<strong style="font-size:9px;color:#17394e">Appointments / site visits</strong>'+ (appts.length?appts.map(a=>`<div class="v138-comm"><strong>${esc(a.type)} · ${esc(v138FmtAppt(a))}</strong><small>${esc(a.officer||'Unassigned')} · ${esc(a.location||'Location not recorded')} · ${esc(a.status||'Scheduled')}</small><p>${esc(a.note||'No additional note.')}</p></div>`).join(''):'<div class="v138-empty">No appointments or site visits recorded.</div>');
+  const comms=(r.communications||[]).slice().reverse();$('#v138-case-comms').innerHTML='<strong style="font-size:9px;color:#17394e">Communication history</strong>'+ (comms.length?comms.map(c=>`<div class="v138-comm"><strong>${esc(c.kind||'Update')} · ${esc(c.channel||'Internal log')}</strong><small>${esc(fmt(c.at))} · ${esc(c.by||'Staff')} · ${esc(c.delivery||'Training log only')}</small><p>${esc(c.message||'')}</p></div>`).join(''):'<div class="v138-empty">No resident communications logged.</div>');
+}
+function v138RenderHub(rows){
+  const nowD=new Date(),today=nowD.toISOString().slice(0,10),limit=new Date(nowD);limit.setDate(limit.getDate()+7);
+  const all=[];let commCount=0;rows.forEach(r=>{commCount+=(r.communications||[]).length;(r.appointments||[]).forEach(a=>all.push({...a,caseId:r.id,reference:r.reference,resident:r.fullName}))});all.sort((a,b)=>String(a.when).localeCompare(String(b.when)));
+  const upcoming=all.filter(a=>{const d=new Date(a.when);return d>=nowD&&d<=limit&&a.status!=='Cancelled'}),todayCount=all.filter(a=>String(a.when||'').slice(0,10)===today&&a.status!=='Cancelled').length,reminders=upcoming.filter(a=>!a.reminderLogged).length;
+  const set=(id,v)=>{const e=$(id);if(e)e.textContent=String(v)};set('#v138-upcoming',upcoming.length);set('#v138-today',todayCount);set('#v138-reminders',reminders);set('#v138-comms-count',commCount);set('#v138-count',upcoming.length+reminders);
+  const agenda=$('#v138-agenda');if(agenda)agenda.innerHTML=upcoming.length?upcoming.map(a=>`<div class="v138-row"><div><strong>${esc(v138FmtAppt(a))}</strong><small>${esc(a.type)}</small></div><div><button class="v137-case-link" data-v138-case="${esc(a.caseId)}">${esc(a.reference)}</button><small>${esc(a.resident)} · ${esc(a.officer||'Unassigned')}</small></div><span class="v138-badge ${a.reminderLogged?'done':'due'}">${a.reminderLogged?'Reminder logged':'Reminder due'}</span></div>`).join(''):'<div class="v138-empty">No appointments or site visits scheduled in the next seven days.</div>';
+  agenda?.querySelectorAll('[data-v138-case]').forEach(b=>b.addEventListener('click',()=>openCase(b.dataset.v138Case)));
+  const queue=[];rows.forEach(r=>{if(r.notificationConsent&&['Received','Under Review','Action / Referral in Progress','Awaiting Resident Information'].includes(r.publicStatus||'Received'))queue.push(r)});const cq=$('#v138-comm-queue');if(cq)cq.innerHTML=queue.length?queue.slice(0,12).map(r=>`<div class="v138-row"><div><strong>${esc(r.notificationChannel||r.preferred||'Contact')}</strong><small>${esc(r.notificationContact||r.phone||r.email||'No contact')}</small></div><div><button class="v137-case-link" data-v138-qcase="${esc(r.id)}">${esc(r.reference)}</button><small>${esc(r.fullName)} · ${esc(r.publicStatus||'Received')}</small></div><span class="v138-badge">Status update</span></div>`).join(''):'<div class="v138-empty">No consented resident status notifications are waiting in the training queue.</div>';cq?.querySelectorAll('[data-v138-qcase]').forEach(b=>b.addEventListener('click',()=>openCase(b.dataset.v138Qcase)));
+}
+$('#v138-nav')?.addEventListener('click',()=>document.getElementById('v138-hub')?.scrollIntoView({behavior:'smooth',block:'start'}));
+$('#v138-save-preferences')?.addEventListener('click',()=>mutate(r=>{r.notificationChannel=$('#v138-pref-channel').value;r.notificationContact=$('#v138-notify-contact').value.trim();r.notificationConsent=$('#v138-consent-status').checked;r.reminderConsent=$('#v138-consent-reminder').checked;r.activity=r.activity||[];r.activity.push({at:now(),text:`Notification preferences updated by ${activeName()} · ${r.notificationChannel} · Status consent ${r.notificationConsent?'Yes':'No'} · Reminder consent ${r.reminderConsent?'Yes':'No'}.`})}));
+$('#v138-add-appointment')?.addEventListener('click',()=>{const date=$('#v138-appt-date').value,time=$('#v138-appt-time').value;if(!date||!time){alert('Choose both a date and time.');return}mutate(r=>{r.appointments=r.appointments||[];r.appointments.push({id:'appt-'+Date.now(),type:$('#v138-appt-type').value,when:v138IsoDateTime(date,time),officer:$('#v138-appt-officer').value,location:$('#v138-appt-location').value.trim(),note:$('#v138-appt-note').value.trim(),status:'Scheduled',reminderLogged:false,createdAt:now(),createdBy:activeName()});r.activity=r.activity||[];r.activity.push({at:now(),text:`${$('#v138-appt-type').value} scheduled for ${date} ${time} by ${activeName()}.`})});$('#v138-appt-date').value='';$('#v138-appt-time').value='';$('#v138-appt-location').value='';$('#v138-appt-note').value=''});
+function v138LogMessage(kind,message){mutate(r=>{r.communications=r.communications||[];r.communications.push({at:now(),by:activeName(),kind,channel:r.notificationChannel||r.preferred||'Contact',message,delivery:'Training log only'});r.activity=r.activity||[];r.activity.push({at:now(),text:`${kind} recorded in resident communication history by ${activeName()} (training log only).`});if(kind==='Appointment Reminder'){const ap=(r.appointments||[]).filter(a=>new Date(a.when)>=new Date()&&a.status!=='Cancelled').sort((a,b)=>String(a.when).localeCompare(String(b.when)))[0];if(ap)ap.reminderLogged=true}})}
+$('#v138-log-status-message')?.addEventListener('click',()=>{const r=load().find(x=>x.id===currentCaseId);if(!r)return;if(!r.notificationConsent){alert('Record resident consent for status notifications first.');return}v138LogMessage('Status Update',r.publicUpdate||`Your enquiry ${r.reference} is currently ${r.publicStatus||'being reviewed'}.`)});
+$('#v138-log-reminder')?.addEventListener('click',()=>{const r=load().find(x=>x.id===currentCaseId);if(!r)return;if(!r.reminderConsent){alert('Record resident consent for appointment reminders first.');return}const ap=(r.appointments||[]).filter(a=>new Date(a.when)>=new Date()&&a.status!=='Cancelled').sort((a,b)=>String(a.when).localeCompare(String(b.when)))[0];if(!ap){alert('No upcoming appointment or site visit is recorded.');return}v138LogMessage('Appointment Reminder',`Reminder: ${ap.type} scheduled for ${v138FmtAppt(ap)}${ap.location?' at '+ap.location:''}.`)});
+
+$('#reset-demo').addEventListener('click',()=>{if(v43User){alert('Test reset is disabled while connected to the central database.');return}if(confirm('Reset local offline test records?')){save(JSON.parse(JSON.stringify(demoCases)));render()}});
+$('#export-csv').addEventListener('click',()=>{
+  const rows=filtered(load()),cols=['Reference','Resident','Phone','Email','Address','Enquiry Type','Priority','Status','Case Owner','Assigned Officer','Next Follow-up','Next Action','Referral Agency','Referral Reference','Referral Date','Referral Purpose','Closure Reason','Received','Updated'];
+  const values=rows.map(r=>[r.reference,r.fullName,r.phone,r.email,r.address,r.type,r.priority,r.status,r.caseOwner,r.assigned,r.followUpDate,r.nextAction,r.referralAgency,r.referralReference,r.referralDate,r.referralPurpose,r.closureReason||'',r.createdAt,r.updatedAt]);
+  const csv=[cols,...values].map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SMG_Case_Register_Development.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+});
+
+
+
+
+
+$('#v43-refresh').addEventListener('click',async()=>{try{await v43PullCases();render();v43SetLive(true,'REFRESHED')}catch(e){v43SetLive(false);alert(e.message)}});
+$('#v36-notification-bell').addEventListener('click',()=>{$('#v36-notification-panel').classList.toggle('open');renderAlerts()});
+$('#v36-close-notifications').addEventListener('click',()=>$('#v36-notification-panel').classList.remove('open'));
+$('#v36-message-type').addEventListener('change',updateMessageTools);
+$('#v36-message-channel').addEventListener('change',updateMessageTools);
+$('#v36-copy-message').addEventListener('click',async()=>{
+  const text=$('#v36-template-preview').textContent;
+  try{await navigator.clipboard.writeText(text);$('#v36-copy-message').textContent='COPIED';setTimeout(()=>$('#v36-copy-message').textContent='COPY MESSAGE',1000)}
+  catch(e){window.prompt('Copy this message:',text)}
+});
+$('#v36-enable-browser').addEventListener('click',async()=>{
+  if(!('Notification' in window)){alert('Browser notifications are not supported here.');return}
+  const permission=await Notification.requestPermission();
+  if(permission==='granted'){
+    const alerts=buildAlerts(load());
+    new Notification('SMG Case Reminders',{body:alerts.length?`${alerts.length} case alert(s) currently need attention.`:'No current due/overdue case alerts.'});
+    $('#v36-enable-browser').textContent='ENABLED';
+  }else alert('Notification permission was not granted.');
+});
+
+ensureData();
+v43RestoreSession();
+})();
+</script>
+<aside aria-label="Case notifications" class="v36-notification-panel" id="v36-notification-panel">
+<div class="v36-panel-head">
+<div><strong>Case Alerts</strong><small>Due dates, overdue cases and priority reminders</small></div>
+<button id="v36-close-notifications" type="button">CLOSE</button>
+</div>
+<div class="v36-alert-list" id="v36-alert-list"></div>
+</aside><div class="v62-toast" id="v62-toast"></div><script id="v75-case-a11y-js">
+(function(){
+'use strict';
+const body=document.getElementById('case-rows');
+function enhanceRows(){
+  if(!body)return;
+  body.querySelectorAll('tr[data-id]').forEach(tr=>{
+    tr.setAttribute('tabindex','0');
+    tr.setAttribute('role','button');
+    const ref=tr.querySelector('.ref')?.textContent?.trim()||'case';
+    const resident=tr.querySelector('.resident strong')?.textContent?.trim()||'resident';
+    tr.setAttribute('aria-label','Open '+ref+' for '+resident);
+    if(!tr.dataset.v75key){
+      tr.dataset.v75key='1';
+      tr.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.click();}
+      });
+    }
+  });
+}
+if(body){
+  new MutationObserver(enhanceRows).observe(body,{childList:true,subtree:true});
+  enhanceRows();
+}
+const backdrop=document.getElementById('drawer-backdrop');
+const drawer=backdrop?.querySelector('.drawer');
+const close=document.getElementById('close-drawer');
+let lastFocus=null;
+if(drawer){
+  drawer.setAttribute('role','dialog');
+  drawer.setAttribute('aria-modal','true');
+  drawer.setAttribute('aria-labelledby','drawer-ref');
+  drawer.setAttribute('tabindex','-1');
+}
+if(backdrop){
+  new MutationObserver(()=>{
+    if(backdrop.classList.contains('open')){
+      lastFocus=document.activeElement;
+      setTimeout(()=>drawer?.focus(),0);
+    }else if(lastFocus && typeof lastFocus.focus==='function'){
+      setTimeout(()=>lastFocus.focus(),0);
+    }
+  }).observe(backdrop,{attributes:true,attributeFilter:['class','aria-hidden']});
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&backdrop?.classList.contains('open')) close?.click();
+});
+})();
+</script><script id="v114-system-theme-js">
+(function(){
+'use strict';
+const STORAGE='smg_theme_v112';
+const body=document.body;
+const btn=document.getElementById('v114-theme-toggle');
+function apply(on,persist){
+  body.classList.toggle('v112-dark',!!on);
+  if(btn){
+    btn.textContent=on?'☀ Light':'☾ Dark';
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.setAttribute('aria-label',on?'Use light mode':'Use dark mode');
+    btn.title=on?'Use light mode':'Use dark mode';
+  }
+  if(persist){try{localStorage.setItem(STORAGE,on?'dark':'light')}catch(e){}}
+}
+let saved=null;try{saved=localStorage.getItem(STORAGE)}catch(e){}
+let initial=saved==='dark';
+if(saved!=='dark'&&saved!=='light'){
+  try{initial=!!window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches}catch(e){}
+}
+apply(initial,false);
+btn?.addEventListener('click',()=>apply(!body.classList.contains('v112-dark'),true));
+})();
+</script><script id="v136-staff-cms-js">
+(function(){
+'use strict';
+const KEY='smg_v135_public_content',CASE_KEY='smg_v33_enquiries';
+const $=s=>document.querySelector(s);
+const nowISO=()=>new Date().toISOString();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function getItems(){try{if(parent&&parent!==window&&typeof parent.__v135GetContent==='function')return parent.__v135GetContent().map(norm)}catch(e){}try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x.map(norm):[]}catch(e){return[]}}
+function setItems(items){items=items.map(norm);try{if(parent&&parent!==window&&typeof parent.__v135SetContent==='function'){parent.__v135SetContent(items);return}}catch(e){}try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}window.dispatchEvent(new CustomEvent('smg-v135-content-changed'))}
+function norm(r){r=Object.assign({},r);if(!r.workflowState)r.workflowState=r.publishState==='published'?'published':'draft';r.publishState=r.workflowState==='published'?'published':'draft';r.publishAt=r.publishAt||'';r.expireAt=r.expireAt||'';r.reviewedBy=r.reviewedBy||'';r.reviewedAt=r.reviewedAt||'';r.reviewNote=r.reviewNote||'';return r}
+function msg(t){const e=$('#v135-cms-msg');if(e)e.textContent=t||''}
+function role(){return String(window.v43User?.role||'Manager')}
+function canApprove(){return !window.v43User||['Manager','Administrative'].includes(role())||String(window.v43User?.name||'').includes('Randell')}
+function canPublish(){return canApprove()}
+function stateOf(r){const n=Date.now(),pub=r.publishAt?new Date(r.publishAt).getTime():0,exp=r.expireAt?new Date(r.expireAt).getTime():0;if(r.workflowState==='published'&&exp&&exp<=n)return'expired';if(r.workflowState==='published'&&pub&&pub>n)return'scheduled';return r.workflowState||'draft'}
+function publicNow(r){const n=Date.now(),pub=r.publishAt?new Date(r.publishAt).getTime():0,exp=r.expireAt?new Date(r.expireAt).getTime():0;return r.workflowState==='published'&&(!pub||pub<=n)&&(!exp||exp>n)}
+function fmtDT(v){if(!v)return'';try{return new Intl.DateTimeFormat('en-TT',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v))}catch(e){return v}}
+function stateLabel(st){return {draft:'Draft',review:'In Review',approved:'Approved',published:'Published',scheduled:'Scheduled',expired:'Expired'}[st]||st}
+function render(){const host=$('#v135-cms-table');if(!host)return;const rows=getItems().sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));const count=rows.filter(publicNow).length;const c=$('#v135-published-count');if(c)c.textContent=count;if(!rows.length){host.innerHTML='<div class="v135-cms-item"><p>No website content items have been created in this training workspace.</p></div>';renderAttention();return}host.innerHTML=rows.map(r=>{const st=stateOf(r);return '<article class="v135-cms-item" data-id="'+esc(r.id)+'"><div class="v135-cms-item-top"><small>'+esc(r.type)+' · '+esc(r.status)+'</small><span class="v136-cms-state v136-state-'+esc(st)+'">'+esc(stateLabel(st))+'</span></div><strong>'+esc(r.title)+'</strong><p>'+esc(r.summary||'')+'</p><div class="v136-cms-meta">'+(r.publishAt?'<span>Publish: '+esc(fmtDT(r.publishAt))+'</span>':'')+(r.expireAt?'<span>Expire: '+esc(fmtDT(r.expireAt))+'</span>':'')+(r.verifiedBy?'<span>Verified: '+esc(r.verifiedBy)+'</span>':'')+'</div><div class="v136-cms-actions2"><button data-act="edit">EDIT</button><button class="review" data-act="review">SEND TO REVIEW</button><button class="approve" data-act="approve">APPROVE</button><button class="publish" data-act="publish">PUBLISH</button><button data-act="unpublish">RETURN TO DRAFT</button><button class="danger" data-act="delete">DELETE</button></div></article>'}).join('');renderAttention()}
+function clear(){['v135-content-id','v135-content-title','v135-content-date','v135-content-location','v135-content-summary','v135-content-verified','v136-content-publish-at','v136-content-expire-at','v136-content-review-note'].forEach(id=>{const e=$('#'+id);if(e)e.value=''});$('#v135-content-type').value='Announcement';$('#v135-content-status').value='Information';$('#v135-content-publish').value='draft';msg('')}
+function collect(forceState){const title=$('#v135-content-title').value.trim(),summary=$('#v135-content-summary').value.trim();if(!title||!summary){msg('Title and public summary are required.');return null}let state=forceState||$('#v135-content-publish').value;if(['approved','published'].includes(state)&&!canApprove()){state='review';msg('Your current role cannot approve or publish. The item was moved to In Review.')}const rows=getItems(),id=$('#v135-content-id').value||('web-'+Date.now()+'-'+Math.random().toString(16).slice(2));const old=rows.find(x=>x.id===id)||{};const item=Object.assign({},old,{id,type:$('#v135-content-type').value,status:$('#v135-content-status').value,title,summary,date:$('#v135-content-date').value,location:$('#v135-content-location').value.trim(),workflowState:state,publishState:state==='published'?'published':'draft',verifiedBy:$('#v135-content-verified').value.trim(),publishAt:$('#v136-content-publish-at').value||'',expireAt:$('#v136-content-expire-at').value||'',reviewNote:$('#v136-content-review-note').value.trim(),updatedAt:nowISO()});if(state==='review'&&!item.reviewSubmittedAt)item.reviewSubmittedAt=nowISO();if(['approved','published'].includes(state)){item.reviewedAt=nowISO();item.reviewedBy=item.verifiedBy||window.v43User?.name||'Manager'}return {rows,id,item}}
+function saveState(forceState,clearAfter=true){const x=collect(forceState);if(!x)return;const i=x.rows.findIndex(r=>r.id===x.id);if(i>=0)x.rows[i]=x.item;else x.rows.push(x.item);setItems(x.rows);render();if(clearAfter)clear();msg('Website item saved as '+stateLabel(x.item.workflowState)+'.')}
+function edit(id){const r=getItems().find(x=>x.id===id);if(!r)return;$('#v135-content-id').value=r.id;$('#v135-content-type').value=r.type||'Announcement';$('#v135-content-status').value=r.status||'Information';$('#v135-content-title').value=r.title||'';$('#v135-content-date').value=r.date||'';$('#v135-content-location').value=r.location||'';$('#v135-content-summary').value=r.summary||'';$('#v135-content-publish').value=r.workflowState||'draft';$('#v135-content-verified').value=r.verifiedBy||'';$('#v136-content-publish-at').value=(r.publishAt||'').slice(0,16);$('#v136-content-expire-at').value=(r.expireAt||'').slice(0,16);$('#v136-content-review-note').value=r.reviewNote||'';$('#v135-webmanager').scrollIntoView({behavior:'smooth',block:'start'})}
+function setState(id,state){const rows=getItems(),r=rows.find(x=>x.id===id);if(!r)return;if(['approved','published'].includes(state)&&!canApprove()){msg('Only Manager or Administrative roles can approve/publish.');return}r.workflowState=state;r.publishState=state==='published'?'published':'draft';r.updatedAt=nowISO();if(state==='review')r.reviewSubmittedAt=nowISO();if(['approved','published'].includes(state)){r.reviewedAt=nowISO();r.reviewedBy=r.verifiedBy||window.v43User?.name||'Manager'}setItems(rows);render();msg('Item moved to '+stateLabel(state)+'.')}
+function del(id){if(!confirm('Delete this website content item from the training register?'))return;setItems(getItems().filter(x=>x.id!==id));render();msg('Item deleted from the training register.')}
+function exportJson(){const blob=new Blob([JSON.stringify({version:'V136',exportedAt:nowISO(),items:getItems()},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SMG_V136_Public_Content_Backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function getCases(){try{return JSON.parse(localStorage.getItem(CASE_KEY)||'[]')||[]}catch(e){return[]}}
+function renderAttention(){const cases=getCases(),today=new Date();today.setHours(0,0,0,0);const open=c=>!['Completed','Closed'].includes(c.status);let overdue=0,unassigned=0;for(const c of cases){if(open(c)&&(!c.assigned||c.assigned==='Unassigned'))unassigned++;if(open(c)&&c.followUpDate){const d=new Date(c.followUpDate+'T00:00:00');if(d<today)overdue++}}const items=getItems(),review=items.filter(x=>x.workflowState==='review').length,scheduled=items.filter(x=>stateOf(x)==='scheduled'||(x.workflowState==='approved'&&x.publishAt&&new Date(x.publishAt)>new Date())).length;[['v136-overdue-count',overdue],['v136-unassigned-count',unassigned],['v136-review-count',review],['v136-scheduled-count',scheduled]].forEach(([id,v])=>{const e=$('#'+id);if(e)e.textContent=v});const total=overdue+unassigned+review;const badge=$('#v136-attention-count');if(badge)badge.textContent=total}
+$('#v135-content-save')?.addEventListener('click',()=>saveState());$('#v136-submit-review')?.addEventListener('click',()=>saveState('review'));$('#v136-approve')?.addEventListener('click',()=>saveState('approved'));$('#v136-publish-now')?.addEventListener('click',()=>{const pa=$('#v136-content-publish-at');if(pa&&!pa.value)pa.value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);saveState('published')});$('#v135-content-clear')?.addEventListener('click',clear);$('#v135-content-export')?.addEventListener('click',exportJson);
+$('#v135-cms-table')?.addEventListener('click',e=>{const b=e.target.closest('button[data-act]'),row=e.target.closest('[data-id]');if(!b||!row)return;const id=row.dataset.id;({edit:()=>edit(id),review:()=>setState(id,'review'),approve:()=>setState(id,'approved'),publish:()=>setState(id,'published'),unpublish:()=>setState(id,'draft'),delete:()=>del(id)}[b.dataset.act]||(()=>{}))()});
+$('#v135-site-nav')?.addEventListener('click',()=>$('#v135-webmanager')?.scrollIntoView({behavior:'smooth',block:'start'}));$('#v136-attention-nav')?.addEventListener('click',()=>$('#v136-attention-centre')?.scrollIntoView({behavior:'smooth',block:'start'}));
+$('#v135-training-preview')?.addEventListener('click',()=>{try{v43User={name:'Training Workspace — Manager',role:'Manager'};window.v43User=v43User}catch(e){}try{ensureData()}catch(e){}const login=document.getElementById('login'),portal=document.getElementById('portal'),active=document.getElementById('active-user');login?.classList.add('hidden');portal?.classList.remove('hidden');if(active)active.textContent='Training Workspace — Manager · Browser only';try{v41ApplyModuleAccess();window.render?.();v40OpenRequestedCase?.()}catch(e){}const state=$('#v135-cms-state');if(state)state.textContent='LOCAL TRAINING WORKSPACE';render()});
+window.addEventListener('storage',e=>{if(e.key===KEY||e.key===CASE_KEY)render()});setInterval(renderAttention,60000);render();
+})();
+</script></body>
+</html>

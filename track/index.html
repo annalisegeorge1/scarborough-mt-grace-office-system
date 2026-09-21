@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Track Your Enquiry — Scarborough / Mt. Grace District Office</title>
+<style>
+:root{
+  --navy:#08263d;--navy2:#0d3554;--blue:#174f74;--paper:#f4f8fb;--line:rgba(10,47,73,.12);
+  --gold:#c9a34a;--muted:#6f8491;--green:#3f7b5f;--amber:#9b7627;--red:#a74740;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#193447;background:
+  radial-gradient(circle at 88% 10%,rgba(74,139,174,.16),transparent 24rem),
+  linear-gradient(150deg,#dce9f0,#eef5f8 58%,#d6e5ed)}
+a{color:inherit}
+header{background:linear-gradient(90deg,#061f33,#0b3553);color:#fff;padding:18px 22px;box-shadow:0 8px 28px rgba(5,28,45,.16)}
+.head-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.brand{display:flex;gap:11px;align-items:center}.mark{width:42px;height:42px;border-radius:11px;border:1px solid rgba(201,163,74,.62);display:grid;place-items:center;color:#d8c17d;font:700 12px Georgia,serif}.brand strong{display:block;font-size:13px}.brand small{display:block;font-size:9px;color:#9fb6c2;margin-top:2px}
+.back{border:1px solid rgba(255,255,255,.13);border-radius:9px;padding:9px 11px;text-decoration:none;font-size:10px;color:#fff}
+main{max-width:1100px;margin:auto;padding:48px 22px 72px}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+.intro{padding:18px 0}.eyebrow{font-size:8px;letter-spacing:.16em;font-weight:900;color:#607d8d}.intro h1{font:500 46px/1.02 Georgia,serif;color:#082f49;margin:8px 0 13px}.intro p{max-width:650px;color:#617986;font-size:13px;line-height:1.65}
+.security{margin-top:18px;padding:13px;border-left:3px solid var(--gold);border-radius:8px;background:rgba(255,255,255,.58);font-size:10px;color:#6f7f87;line-height:1.55}
+.lookup{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 18px 45px rgba(7,39,62,.11)}
+.lookup h2{font:500 23px Georgia,serif;color:#0b3553;margin:0 0 6px}.lookup>p{font-size:10px;color:#718692;line-height:1.5}
+.lookup label{display:block;font-size:9px;font-weight:900;color:#456575;margin:14px 0 5px}
+.lookup input{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px;background:#f9fbfc;color:#17394e}
+.lookup button{width:100%;margin-top:16px;border:0;border-radius:9px;padding:12px;background:linear-gradient(145deg,#d4bb78,#c9a34a);color:#0a2c44;font-size:10px;font-weight:900}
+.error{display:none;margin-top:12px;padding:11px;border-radius:8px;background:#f8e7e4;color:#87433d;font-size:10px;line-height:1.5}.error.show{display:block}
+.result{display:none;margin-top:28px}.result.show{display:block}
+.result-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:12px}.result-head span{font-size:8px;letter-spacing:.13em;font-weight:900;color:#6e8693}.result-head h2{font:500 30px Georgia,serif;color:#0b3553;margin:5px 0 0}.last-update{font-size:9px;color:#738a96;text-align:right}
+.case-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}.card small{display:block;font-size:7px;letter-spacing:.08em;color:#7b909b}.card strong{display:block;font-size:11px;color:#214a62;margin-top:5px}
+.status-panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 12px 28px rgba(6,32,50,.06)}
+.public-status{display:flex;justify-content:space-between;gap:18px;align-items:center}.public-status h3{font:500 22px Georgia,serif;color:#0b3553;margin:0}.status-badge{border-radius:999px;padding:7px 10px;background:#e9f0f4;color:#3c6176;font-size:8px;font-weight:900}
+.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:22px 0 17px;position:relative}
+.stage{position:relative;padding-top:27px;font-size:8px;color:#83959e}.stage::before{content:"";position:absolute;top:0;left:0;width:18px;height:18px;border-radius:50%;background:#dce6eb;border:3px solid #fff;box-shadow:0 0 0 1px #cbd8df;z-index:2}.stage::after{content:"";position:absolute;top:8px;left:18px;right:-8px;height:2px;background:#dce6eb}.stage:last-child::after{display:none}.stage.done::before{background:#4d819b;box-shadow:0 0 0 1px #4d819b}.stage.done::after{background:#6e9ab0}.stage.current::before{background:#c9a34a;box-shadow:0 0 0 4px rgba(201,163,74,.13)}.stage strong{display:block;color:#466778;font-size:8px}.stage small{font-size:7px}
+.update-box{display:grid;grid-template-columns:1fr 1fr;gap:10px}.update{padding:14px;border-radius:11px;background:#edf4f7}.update span{display:block;font-size:7px;letter-spacing:.09em;font-weight:900;color:#748995}.update p{font-size:10px;line-height:1.55;color:#587181;margin:6px 0 0}
+.contact-strip{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-top:12px;padding:15px 16px;border-radius:13px;background:linear-gradient(145deg,#0b3553,#08263d);color:#fff}.contact-strip span{font-size:8px;letter-spacing:.1em;color:#9cb6c3}.contact-strip strong{display:block;font:500 15px Georgia,serif;margin-top:3px}.contact-actions{display:flex;gap:7px;flex-wrap:wrap}.contact-actions a{text-decoration:none;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px 9px;font-size:8px;font-weight:800}.contact-actions .wa{background:#25D366;border-color:#25D366}
+.prototype{margin-top:24px;padding:11px 13px;border-radius:9px;background:#f6f0df;border:1px solid #e2d29d;color:#705c26;font-size:9px;line-height:1.5}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.case-summary{grid-template-columns:1fr 1fr}.update-box{grid-template-columns:1fr}.result-head,.public-status,.contact-strip{align-items:flex-start;flex-direction:column}.last-update{text-align:left}}
+@media(max-width:470px){.intro h1{font-size:37px}.case-summary{grid-template-columns:1fr}.progress{grid-template-columns:1fr}.stage{padding:0 0 12px 28px}.stage::before{left:0;top:0}.stage::after{left:8px;top:18px;width:2px;height:calc(100% - 9px)}}
+</style>
+<style id="v40-connected-nav-css">
+.v40-app-nav{
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center
+}
+.v40-app-nav a,.v40-app-nav button{
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);color:#fff!important;
+  border-radius:8px;padding:8px 9px;font-size:9px;
+  text-decoration:none;font-weight:700
+}
+.v40-app-nav a.active{
+  border-color:rgba(201,163,74,.48);
+  color:#efdca2!important;background:rgba(201,163,74,.08)
+}
+.v40-system-strip{
+  max-width:1320px;margin:0 auto 12px;padding:10px 12px;
+  border:1px solid rgba(10,47,73,.10);border-radius:10px;
+  background:rgba(255,255,255,.82);color:#607885;
+  font-size:9px;line-height:1.45
+}
+.v40-system-strip strong{color:#2a5269}
+.v40-case-link{
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid rgba(10,47,73,.10);border-radius:7px;
+  padding:5px 7px;text-decoration:none!important;
+  background:#f4f8fa;color:#315a70!important;
+  font-size:8px;font-weight:900
+}
+.v40-case-link:hover{border-color:rgba(201,163,74,.45)}
+@media(max-width:720px){
+  .v40-app-nav{overflow:auto;flex-wrap:nowrap}
+  .v40-app-nav a,.v40-app-nav button{white-space:nowrap}
+}
+</style>
+<style id="v50-tracker-mobile-polish">
+:focus-visible{outline:3px solid rgba(201,163,74,.88)!important;outline-offset:3px!important}
+@media(max-width:680px){main{padding-left:14px!important;padding-right:14px!important}input,button{font-size:16px!important;min-height:48px}.lookup-card,.result{border-radius:16px!important}.progress{overflow-x:auto;padding-bottom:5px}.stage{min-width:118px}}
+</style>
+<style id="v60-tracker-suite-css">
+.v60-tracker-portals{max-width:1100px;margin:12px auto 0;padding:0 22px}.v60-tracker-portals-inner{display:flex;gap:6px;overflow:auto;scrollbar-width:none;padding:8px;border:1px solid rgba(10,47,73,.09);border-radius:10px;background:rgba(255,255,255,.70)}.v60-tracker-portals-inner a{flex:0 0 auto;padding:7px 8px;border-radius:7px;background:#fff;color:#315a70;text-decoration:none;font-size:7px;font-weight:900;border:1px solid rgba(10,47,73,.07)}.v60-tracker-portals-inner strong{flex:0 0 auto;display:flex;align-items:center;padding:0 5px;color:#8d7844;font-size:7px}@media(max-width:680px){.v60-tracker-portals{padding:0 14px}}
+</style>
+<style id="v68-tracker-polish-css">
+.v68-tracker-guide{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+.v68-guide-card{
+  min-height:104px;
+  padding:11px;
+  border:1px solid rgba(11,53,83,.08);
+  border-radius:9px;
+  background:linear-gradient(145deg,#fff,#faf8f1);
+}
+.v68-guide-card em{
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:7px;
+  background:#0b3553;
+  color:#fff;
+  font-style:normal;
+  font-size:7px;
+  font-weight:900;
+}
+.v68-guide-card strong{
+  display:block;
+  margin-top:7px;
+  color:#315a70;
+  font-size:8px;
+}
+.v68-guide-card span{
+  display:block;
+  margin-top:4px;
+  color:#7a8d95;
+  font-size:7px;
+  line-height:1.4;
+}
+.v68-safe-status{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:10px 0 0;
+}
+.v68-safe-status article{
+  padding:10px;
+  border:1px solid rgba(11,53,83,.08);
+  border-radius:8px;
+  background:#fbfcfa;
+}
+.v68-safe-status small{
+  display:block;
+  color:#8c753f;
+  font-size:6px;
+  font-weight:900;
+}
+.v68-safe-status strong{
+  display:block;
+  margin-top:4px;
+  color:#315a70;
+  font-size:8px;
+}
+.v68-safe-status span{
+  display:block;
+  margin-top:4px;
+  color:#7b8d95;
+  font-size:7px;
+  line-height:1.38;
+}
+.v68-privacy-note{
+  margin:10px 0;
+  padding:9px 10px;
+  border-left:3px solid #c9a34a;
+  border-radius:7px;
+  background:#fff8e8;
+  color:#6e633f;
+  font-size:7px;
+  line-height:1.45;
+}
+.v68-tracker-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.v68-tracker-actions a{
+  min-height:34px;
+  display:inline-flex;
+  align-items:center;
+  padding:6px 8px;
+  border:1px solid rgba(11,53,83,.09);
+  border-radius:7px;
+  background:#fff;
+  color:#315a70;
+  text-decoration:none;
+  font-size:6px;
+  font-weight:900;
+}
+.v68-tracker-actions a.primary{
+  background:#0b3553;
+  color:#fff;
+}
+.v68-result-shell{
+  border-radius:10px!important;
+}
+.v68-state-line{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:7px;
+  color:#6e838d;
+  font-size:6px;
+}
+.v68-state-line i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#c9a34a;
+}
+@media(max-width:760px){
+  .v68-tracker-guide,.v68-safe-status{
+    display:flex;
+    overflow-x:auto;
+    gap:8px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    overscroll-behavior-x:contain;
+    touch-action:pan-x;
+  }
+  .v68-tracker-guide::-webkit-scrollbar,.v68-safe-status::-webkit-scrollbar{display:none}
+  .v68-guide-card,.v68-safe-status article{
+    flex:0 0 78vw;
+    scroll-snap-align:start;
+  }
+}
+</style>
+<style id="v73-public-consistency-css">
+/* V73 — final public consistency/accessibility sweep */
+.v73-skip{
+  position:absolute!important;left:10px;top:-60px;z-index:99999;
+  padding:10px 12px;border-radius:7px;background:#0b3553;color:#fff;
+  text-decoration:none;font:800 12px/1.2 Segoe UI,Arial,sans-serif;
+  transition:top .12s ease;
+}
+.v73-skip:focus{top:10px}
+:focus-visible{
+  outline:2px solid #c9a34a!important;
+  outline-offset:3px!important;
+}
+button,a,input,select,textarea{scroll-margin-top:18px}
+img{max-width:100%;height:auto}
+html,body{max-width:100%;overflow-x:hidden}
+[role="dialog"]{outline:none}
+@media(max-width:760px){
+  a,button,input,select,textarea{min-height:44px}
+  input,select,textarea{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
+</style>
+<style id="v86-desktop-typography-css">
+/* V86 — resident tracker desktop readability pass; mobile unchanged. */
+@media (min-width:1024px){
+  html{font-size:16px}
+  header a,nav a{font-size:10px!important}
+  main p{font-size:13px!important;line-height:1.58!important}
+  main small,.eyebrow{font-size:9px!important;line-height:1.35!important}
+  main a,main button{font-size:10px!important;line-height:1.3!important}
+  main label{font-size:11px!important}
+  main input,main select,main textarea{font-size:13px!important}
+  main :is(.step,.status-card,.guide-card,.result-card,.privacy-card) strong{font-size:14px!important;line-height:1.3!important}
+  main :is(.step,.status-card,.guide-card,.result-card,.privacy-card) span{font-size:11px!important;line-height:1.48!important}
+  main :is(.step,.status-card,.guide-card,.result-card,.privacy-card) small{font-size:9px!important}
+}
+</style><style id="v96-tracker-visual-cleanup-css">
+/* V96 — resident tracker polish */
+body{overflow-x:hidden}
+main, main *{box-sizing:border-box;min-width:0}
+.lookup input{width:100%;max-width:100%}
+.lookup button{min-height:42px}
+a:focus-visible,button:focus-visible,input:focus-visible{
+  outline:3px solid rgba(201,163,74,.48)!important;
+  outline-offset:2px!important;
+}
+@media(min-width:1024px){
+  h1{font-size:clamp(34px,2.6vw,44px)!important;line-height:1.08!important}
+  .lookup h2{font-size:24px!important}
+  main p{line-height:1.55}
+}
+@media(max-width:620px){
+  .contact-actions{display:grid!important;grid-template-columns:1fr!important}
+  .contact-actions a{min-height:44px;white-space:normal;text-align:center}
+  .case-summary{grid-template-columns:1fr!important}
+}
+</style><style id="v114-system-theme-css">
+/* V114 — system-wide navy/dark theme for portals, tracker, staff and 404 pages. */
+:root{
+  --v114-navy:#061d30;
+  --v114-navy2:#082b45;
+  --v114-surface:#0d314b;
+  --v114-surface2:#123b57;
+  --v114-line:rgba(184,217,234,.16);
+  --v114-heading:#e9f0f3;
+  --v114-strong:#d7e3e8;
+  --v114-text:#a9bdc8;
+  --v114-muted:#91a7b3;
+  --v114-gold:#cdb270;
+}
+.v114-theme-toggle{
+  position:fixed;left:14px;bottom:14px;z-index:9999;
+  min-width:92px;min-height:42px;padding:8px 12px;border-radius:12px;
+  border:1px solid rgba(11,53,83,.18);background:#f7fafc;color:#0b3553;
+  font:800 11px/1.1 'Segoe UI',Arial,sans-serif;letter-spacing:.03em;
+  box-shadow:0 10px 26px rgba(4,25,41,.18);cursor:pointer;
+}
+.v114-theme-toggle:focus-visible{outline:3px solid #c9a34a;outline-offset:3px}
+body.v112-dark .v114-theme-toggle{background:#c9a34a;color:#082238;border-color:#c9a34a;box-shadow:0 10px 28px rgba(0,0,0,.34)}
+
+body.v112-dark{
+  color-scheme:dark;
+  background:linear-gradient(180deg,#03131f 0%,var(--v114-navy) 48%,#020d16 100%)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail){
+  background:#041725!important;border-color:rgba(255,255,255,.09)!important;color:var(--v114-text)!important;
+}
+body.v112-dark footer{background:#020d16!important;border-color:rgba(205,178,112,.28)!important;color:var(--v114-muted)!important}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail,footer) :is(a,strong,b,h1,h2,h3,h4){color:var(--v114-heading)!important}
+body.v112-dark :is(header,.top,.topbar,.v40-tracker-nav,.v60-tracker-portals,.v60-staff-suite,.suite,.rail,footer) :is(span,small,p){color:var(--v114-muted)!important}
+
+/* Public service portals */
+body.v112-dark main,
+body.v112-dark .hero,
+body.v112-dark .section,
+body.v112-dark .v65-hub-guide,
+body.v112-dark .v65-hub-shortcuts,
+body.v112-dark .v66-grant-paths,
+body.v112-dark .v65-student-paths,
+body.v112-dark .v66-choice-grid,
+body.v112-dark .v67-community-paths,
+body.v112-dark .v67-status-grid,
+body.v112-dark .v67-business-paths,
+body.v112-dark .v68-resident-paths,
+body.v112-dark .v68-contact-grid{
+  background:linear-gradient(145deg,#082b45,#0b3553)!important;
+  color:var(--v114-text)!important;
+  border-color:var(--v114-line)!important;
+}
+body.v112-dark :is(
+  .action-card,.step,.doc,.notice,.help-card,.v65-hub-shortcut,.v65-guide-card,
+  .v66-grant-path,.v65-student-path,.v66-choice,.v67-community-path,.v67-status-card,
+  .v67-business-path,.v68-resident-path,.v68-contact-card,.v98-source-note,
+  .v66-caution,.v66-note,.v67-note,.v67-business-note,.v68-note
+){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(.section-head,.hero-main,.action-card,.step,.doc,.notice,.help-card,.v65-guide-card,.v66-choice,.v67-status-card,.v68-contact-card) :is(h1,h2,h3,h4,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.section-head,.hero-main,.action-card,.step,.doc,.notice,.help-card,.v65-guide-card,.v66-choice,.v67-status-card,.v68-contact-card) :is(p,span,small,li){color:var(--v114-text)!important}
+body.v112-dark .eyebrow{color:var(--v114-gold)!important}
+body.v112-dark .pdf-modal{background:rgba(1,10,17,.86)!important}
+body.v112-dark .pdf-shell{background:#071f33!important;border-color:var(--v114-line)!important}
+body.v112-dark .pdf-head{background:#082b45!important;color:var(--v114-heading)!important;border-color:var(--v114-line)!important}
+
+/* Resident tracker */
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  color:var(--v114-text)!important;
+}
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage) :is(h1,h2,h3,h4,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.intro,.security,.lookup,.result,.v68-result-shell,.status-panel,.update-box,.contact-strip,.prototype,.v68-guide-card,.card,.stage) :is(p,span,small,label,li){color:var(--v114-text)!important}
+body.v112-dark .public-status{color:var(--v114-strong)!important}
+body.v112-dark .last-update,
+body.v112-dark .v68-privacy-note,
+body.v112-dark .v68-state-line{color:var(--v114-muted)!important}
+
+/* Staff suite */
+body.v112-dark :is(.v108-staff-mailbox,.v62-state-note,.v61-module-card,.v61-test-guard,.demo-banner,.login-card,
+  .panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,
+  .table-wrap,.drawer,.drawer-body,.v42-backend-callout,.v41-readonly-note,.v76-state,.v77-state,.v78-final-note){
+  background:var(--v114-surface)!important;
+  border-color:var(--v114-line)!important;
+  color:var(--v114-text)!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.18)!important;
+}
+body.v112-dark :is(.panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,.table-wrap,.drawer,.login-card) :is(h1,h2,h3,h4,h5,strong,b){color:var(--v114-heading)!important}
+body.v112-dark :is(.panel,.card,.metric,.section-card,.module,.person,.scenario,.template,.notice,.management-grid,.summary,.toolbar,.table-wrap,.drawer,.login-card) :is(p,span,small,label,li){color:var(--v114-text)!important}
+body.v112-dark .v108-staff-mailbox a{color:#d7e3e8!important}
+body.v112-dark .v108-staff-mailbox small{color:var(--v114-muted)!important}
+body.v112-dark :is(.nav-btn,.tab,.suite-nav a,.v60-staff-suite-links a,.v40-app-nav a,.headlinks a){
+  background:#0a2942!important;color:#c7d6dd!important;border-color:rgba(255,255,255,.10)!important;
+}
+body.v112-dark :is(.nav-btn.active,.tab.active,.suite-nav a.active,.v60-staff-suite-links a.active,.v40-app-nav a.active,[aria-current="page"]){
+  background:#174f74!important;color:#fff!important;border-color:rgba(205,178,112,.36)!important;
+}
+body.v112-dark table{background:#0b2c45!important;color:var(--v114-text)!important;border-color:var(--v114-line)!important}
+body.v112-dark :is(th,td){border-color:rgba(184,217,234,.12)!important;color:var(--v114-text)!important}
+body.v112-dark th{background:#08263d!important;color:var(--v114-strong)!important}
+body.v112-dark tr:nth-child(even) td{background:rgba(255,255,255,.018)!important}
+
+/* Forms and controls everywhere */
+body.v112-dark :is(input,select,textarea){
+  background:#061d30!important;color:#d4e0e5!important;border-color:rgba(184,217,234,.24)!important;
+  box-shadow:none!important;
+}
+body.v112-dark :is(input,textarea)::placeholder{color:#819aa7!important;opacity:1!important}
+body.v112-dark select option{background:#061d30!important;color:#d4e0e5!important}
+body.v112-dark :is(button,.primary,.save-btn,.login-button,.v61-module-actions a,.hero-actions a){
+  border-color:rgba(255,255,255,.13)!important;
+}
+body.v112-dark :is(a,button,input,select,textarea):focus-visible{outline:3px solid var(--v114-gold)!important;outline-offset:3px!important}
+body.v112-dark a{color:#b9d3df}
+body.v112-dark .wa{color:#fff!important}
+
+/* Status tones should remain readable */
+body.v112-dark :is(.badge,.status,.count,.v62-state-chip){color:#d4e0e5!important}
+body.v112-dark .gold{color:var(--v114-gold)!important}
+body.v112-dark .error{color:#e7b0b0!important}
+body.v112-dark .empty{color:var(--v114-muted)!important}
+
+/* 404 / simple pages */
+body.v112-dark #main-content{color:var(--v114-text)!important}
+body.v112-dark #main-content :is(h1,h2,h3,strong){color:var(--v114-heading)!important}
+body.v112-dark #main-content :is(p,span,small){color:var(--v114-text)!important}
+
+/* Never alter supplied photography. */
+body.v112-dark img{filter:none!important}
+
+@media(max-width:720px){
+  .v114-theme-toggle{left:8px;bottom:8px;min-width:84px;min-height:40px;font-size:10px}
+}
+</style><style id="v115-final-cleanup-css">
+/* V115 — final system cleanup: navigation theme control, overflow guards, print polish. */
+.v114-theme-toggle.v115-theme-control{
+  position:static!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  z-index:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;min-height:32px!important;height:auto!important;padding:7px 10px!important;margin:0!important;
+  border-radius:8px!important;box-shadow:none!important;white-space:nowrap!important;
+  font-size:9px!important;line-height:1.1!important;letter-spacing:.025em!important;
+  vertical-align:middle!important;
+}
+.toplinks .v115-theme-control,.v40-tracker-nav .v115-theme-control,.v60-staff-suite-links .v115-theme-control{
+  flex:0 0 auto!important;
+}
+.v115-inline-theme{margin-top:14px!important}
+
+/* Collision/overflow protection for long names, references, badges, tables and 140% browser/text zoom. */
+html,body{max-width:100%}
+main,section,article,aside,header,footer,nav,div{min-width:0}
+table{max-width:100%!important}
+th,td{overflow-wrap:anywhere;word-break:normal;vertical-align:top}
+:is(.badge,.chip,.status,.pill,[class*="badge"],[class*="chip"],[class*="status"],[class*="reference"],[class*="ref-"]){
+  max-width:100%;overflow-wrap:anywhere;word-break:normal;
+}
+:is(input,select,textarea,button,a){box-sizing:border-box;max-width:100%}
+.v60-staff-suite-copy,.brand,.head-inner,.top,.toplinks,.v40-app-nav,.v40-tracker-nav,.v60-staff-suite-links{
+  min-width:0;
+}
+.v60-staff-suite-links,.v40-app-nav,.toplinks,.v40-tracker-nav{row-gap:6px!important}
+
+/* Theme control remains usable without becoming a floating obstruction on small screens. */
+@media(max-width:720px){
+  .v114-theme-toggle.v115-theme-control{min-height:36px!important;padding:8px 10px!important;font-size:10px!important}
+  .toplinks,.v40-tracker-nav,.v60-staff-suite-links{align-items:center!important}
+  th,td{overflow-wrap:anywhere!important}
+}
+@media(max-width:380px){
+  .v114-theme-toggle.v115-theme-control{white-space:normal!important;text-align:center!important}
+}
+
+/* Print views: no theme controls, no dark canvas, clean paper output. */
+@media print{
+  .v114-theme-toggle,.v115-theme-control,.v8-accessibility,.v3-contact-rail{display:none!important}
+  html,body{background:#fff!important;color:#111!important;filter:none!important;box-shadow:none!important}
+  body.v112-dark,body.v112-dark *{color:#111!important;text-shadow:none!important}
+  body.v112-dark :is(main,section,article,aside,header,footer,nav,div,table,thead,tbody,tr,td,th){
+    background:#fff!important;box-shadow:none!important;
+  }
+  a{color:#111!important;text-decoration:none!important}
+  article,.card,table,tr{break-inside:avoid-page}
+}
+</style><style id="v121-feedback-css">
+.v121-feedback{display:none;margin-top:18px;padding:18px;border:1px solid rgba(10,47,73,.14);border-radius:15px;background:#f7fafb}.v121-feedback.show{display:block}.v121-feedback h3{margin:0 0 6px;color:#0b2e48;font:600 20px Georgia,serif}.v121-feedback>p{margin:0 0 14px;color:#5b7180;font-size:10px;line-height:1.5}.v121-feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.v121-feedback label{display:block;font-size:9px;font-weight:800;color:#405e6e}.v121-feedback select,.v121-feedback textarea{width:100%;margin-top:5px;padding:10px;border:1px solid #cbdbe3;border-radius:9px;background:#fff;color:#17394e;font:inherit}.v121-feedback textarea{min-height:84px;resize:vertical}.v121-feedback .wide{grid-column:1/-1}.v121-feedback button{border:0;border-radius:9px;background:#0b2e48;color:#fff;padding:10px 13px;font-size:9px;font-weight:900}.v121-feedback-msg{margin-top:9px;font-size:9px;color:#436555}.v121-feedback-note{margin-top:9px;font-size:8px;color:#758b96}.v121-feedback-test{background:#fff8df;border:1px solid #e5d49b;padding:8px 10px;border-radius:8px;color:#6c5924;font-size:8px;margin-bottom:10px}body.v112-dark .v121-feedback{background:#102f45!important;border-color:#2c4d60!important}body.v112-dark .v121-feedback h3{color:#e9f0f3!important}body.v112-dark .v121-feedback>p,body.v112-dark .v121-feedback label,body.v112-dark .v121-feedback-note{color:#a8bcc7!important}body.v112-dark .v121-feedback select,body.v112-dark .v121-feedback textarea{background:#0a2639!important;border-color:#35556a!important;color:#e9f0f3!important}@media(max-width:620px){.v121-feedback-grid{grid-template-columns:1fr}.v121-feedback .wide{grid-column:auto}}
+</style></head>
+<body><a class="v73-skip" href="#main-content">Skip to main content</a>
+<header><div class="head-inner"><div class="brand"><div class="mark">SMG</div><div><strong>Scarborough / Mt. Grace District Office</strong><small>Resident Enquiry Tracking</small></div></div><a class="back" href="../index-self-contained.html">← Public Website</a></div></header><div class="v40-tracker-nav" style="background:#0a2f49;border-top:1px solid rgba(255,255,255,.06)">
+<div style="max-width:1100px;margin:auto;padding:8px 22px;display:flex;gap:7px;flex-wrap:wrap">
+<a href="../index-self-contained.html" style="color:#fff;text-decoration:none;font-size:9px;padding:6px 8px;border:1px solid rgba(255,255,255,.10);border-radius:7px">Public Website</a>
+<a href="../index-self-contained.html#contact-us" style="color:#fff;text-decoration:none;font-size:9px;padding:6px 8px;border:1px solid rgba(255,255,255,.10);border-radius:7px">Contact the Office</a>
+</div>
+<button aria-label="Use dark mode" aria-pressed="false" class="v114-theme-toggle v115-theme-control" id="v114-theme-toggle" title="Use dark mode" type="button">☾ Dark</button></div>
+<div class="v60-tracker-portals"><div class="v60-tracker-portals-inner"><strong>OTHER PORTALS</strong><a href="../portals/student-youth.html">Student &amp; Youth</a><a href="../portals/housing-home.html">Housing &amp; Home Support</a><a href="../portals/grants-financial.html">Grants &amp; Financial Assistance</a><a href="../portals/community-projects.html">Community &amp; Projects</a><a href="../portals/business-land-electrical.html">Business, Land &amp; Electrical</a><a href="../portals/resident-services.html">Resident Services</a></div></div><main id="main-content">
+<section class="hero">
+<div class="intro">
+<span class="eyebrow">RESIDENT ENQUIRY SERVICE</span>
+<h1>Track Your District Office Enquiry</h1>
+<p>Enter your District Office reference and the same phone number or email used when the enquiry was created. The tracker shows only follow-up information intended for the resident.</p>
+<div class="security"><strong>Privacy by design:</strong> this page never displays internal staff notes, staff assignments, date of birth, uploaded document information, referral references or other internal case-management details.</div>
+</div>
+<form class="lookup" id="lookup-form">
+<h2>Find your enquiry</h2>
+<p>Both fields must match the information stored with the enquiry.</p>
+<label for="reference">District Office Reference</label>
+<input autocomplete="off" id="reference" placeholder="e.g. SMG-2026-000001" required=""/>
+<label for="contact">Phone or Email Used for the Enquiry</label>
+<input autocomplete="off" id="contact" placeholder="Use the contact supplied on your enquiry" required=""/>
+<button type="submit">CHECK STATUS →</button>
+<div aria-live="polite" class="error" id="error"></div>
+</form>
+</section><section aria-label="How enquiry tracking works" class="v68-tracker-guide">
+<article class="v68-guide-card"><em>1</em><strong>Find your reference</strong><span>Use the District Office reference issued when the enquiry was created.</span></article>
+<article class="v68-guide-card"><em>2</em><strong>Use the matching contact</strong><span>Enter the phone number or email connected to that enquiry.</span></article>
+<article class="v68-guide-card"><em>3</em><strong>View your update</strong><span>The tracker shows only information intended for the resident.</span></article>
+<article class="v68-guide-card"><em>4</em><strong>Contact the office if needed</strong><span>Call, WhatsApp or email when the published status does not answer your question.</span></article>
+</section><section aria-label="Resident tracker status guide" class="v68-safe-status">
+<article><small>RECEIVED</small><strong>Enquiry recorded</strong><span>Your enquiry has been received into the District Office workflow.</span></article>
+<article><small>UNDER REVIEW</small><strong>Being reviewed</strong><span>The office is reviewing the matter or preparing the next internal step.</span></article>
+<article><small>FOLLOW-UP</small><strong>Further action needed</strong><span>The office may be waiting on information, a referral, a response or another follow-up step.</span></article>
+<article><small>COMPLETED</small><strong>District Office follow-up completed</strong><span>This does not automatically mean an external agency approved or completed a separate matter.</span></article>
+</section><div class="v68-privacy-note"><strong>Privacy:</strong> the public tracker should not display internal notes, date of birth, uploaded documents, staff-only priority, referral details or other restricted case information.</div>
+<section aria-atomic="true" aria-live="polite" class="result v68-result-shell" id="result">
+<div class="result-head">
+<div><span>YOUR ENQUIRY</span><h2 id="result-ref"></h2></div>
+<div class="last-update">Last updated: <strong id="public-updated"></strong></div>
+</div>
+<div class="case-summary">
+<div class="card"><small>ENQUIRY TYPE</small><strong id="result-type"></strong></div>
+<div class="card"><small>DATE RECEIVED</small><strong id="result-received"></strong></div>
+<div class="card"><small>CONTACT METHOD</small><strong id="result-contact"></strong></div>
+<div class="card"><small>STATUS</small><strong id="result-status-card"></strong></div>
+</div>
+<div class="status-panel">
+<div class="public-status"><div><span class="eyebrow">CURRENT STATUS</span><h3 id="result-status"></h3></div><span class="status-badge" id="status-badge"></span></div>
+<div class="progress">
+<div class="stage" data-step="1"><strong>Received</strong><small>Enquiry logged</small></div>
+<div class="stage" data-step="2"><strong>Under Review</strong><small>Office review</small></div>
+<div class="stage" data-step="3"><strong>Follow-up</strong><small>Action / referral</small></div>
+<div class="stage" data-step="4"><strong>Completed</strong><small>Case outcome</small></div>
+</div>
+<div class="update-box">
+<div class="update"><span>LATEST UPDATE</span><p id="result-update"></p></div>
+<div class="update"><span>WHAT HAPPENS NEXT</span><p id="result-next"></p></div>
+</div>
+</div>
+<div class="contact-strip">
+<div><span>NEED TO SPEAK WITH THE OFFICE?</span><strong>Have your enquiry reference ready.</strong></div>
+<div class="contact-actions">
+<a href="tel:+18686106314">Call (868) 610-6314</a>
+<a class="wa" href="https://wa.me/18683445268">WhatsApp</a>
+<a href="mailto:smgofficestaff@yahoo.com">Email</a>
+</div>
+</div>
+<section aria-labelledby="v121-feedback-heading" class="v121-feedback" id="v121-feedback"><div class="v121-feedback-test">Feedback appears only after a completed or closed enquiry. During pre-launch, use test references and test information only.</div><h3 id="v121-feedback-heading">How was the District Office follow-up?</h3><p>This short feedback is about the clarity and respectfulness of the District Office service. It does not affect any application, referral or external decision.</p><form id="v121-feedback-form"><div class="v121-feedback-grid"><label>Was the information clear?<select id="v121-feedback-clarity" required=""><option value="">Choose one</option><option>Yes</option><option>Mostly</option><option>No</option></select></label><label>Were you treated respectfully?<select id="v121-feedback-respect" required=""><option value="">Choose one</option><option>Yes</option><option>Mostly</option><option>No</option></select></label><label class="wide">Optional comment<textarea id="v121-feedback-comment" maxlength="800" placeholder="Please do not include sensitive personal information."></textarea></label><div class="wide"><button type="submit">SEND FEEDBACK →</button><div aria-live="polite" class="v121-feedback-msg" id="v121-feedback-msg"></div><div class="v121-feedback-note">One feedback response is stored per enquiry reference. A later submission updates the earlier response.</div></div></div></form></section></section>
+<div class="prototype">Pre-launch testing only — use test references until the central production service is approved. Six-digit SMG references are used for local test records.</div>
+<div class="v68-tracker-actions">
+<a class="primary" href="../index-self-contained.html#enquiry">START A NEW ENQUIRY</a>
+<a href="../index-self-contained.html#contact-us">CONTACT THE OFFICE</a>
+<a href="https://wa.me/18683445268">WHATSAPP</a>
+<a href="../portals/resident-services.html">RESIDENT SERVICES</a>
+<a href="../portals/index.html">ALL SERVICE PORTALS</a></div><div class="v68-state-line"><i></i><span>Pre-launch testing only — live resident tracking begins after management and IT approval.</span></div></main>
+<script id="v43-resident-tracker-api">
+(function(){
+'use strict';
+const KEY='smg_v33_enquiries';
+const form=document.getElementById('lookup-form'),error=document.getElementById('error'),result=document.getElementById('result');
+let v121MatchedReference='',v121MatchedContact='';
+function localLoad(){try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+function digits(s){return String(s||'').replace(/\D/g,'')}
+function contactMatch(r,c){c=String(c||'').trim();if(c.includes('@'))return String(r.email||'').trim().toLowerCase()===c.toLowerCase();return !!digits(c)&&digits(r.phone)===digits(c)}
+function fmtDate(dt){if(!dt)return 'Not available';try{return new Intl.DateTimeFormat('en-TT',{year:'numeric',month:'long',day:'numeric'}).format(new Date(dt))}catch(e){return dt}}
+function stepFor(status){if(status==='Received')return 1;if(status==='Under Review')return 2;if(status==='Action / Referral in Progress'||status==='Awaiting Resident Information')return 3;if(status==='Completed'||status==='Closed')return 4;return 1}
+function showRecord(record){
+  const status=record.publicStatus||'Received',step=stepFor(status);
+  document.getElementById('result-ref').textContent=record.reference;
+  document.getElementById('result-type').textContent=record.type||'General Enquiry';
+  document.getElementById('result-received').textContent=fmtDate(record.createdAt);
+  document.getElementById('result-contact').textContent=record.preferred||'Not specified';
+  document.getElementById('result-status-card').textContent=status;
+  document.getElementById('result-status').textContent=status;
+  document.getElementById('status-badge').textContent=status==='Awaiting Resident Information'?'Resident action may be needed':'District Office update';
+  document.getElementById('result-update').textContent=record.publicUpdate||'Your enquiry is being processed by the District Office.';
+  document.getElementById('result-next').textContent=record.publicNextStep||'Please keep your reference number available for follow-up.';
+  document.getElementById('public-updated').textContent=fmtDate(record.publicUpdatedAt||record.createdAt);
+  document.querySelectorAll('.stage').forEach(el=>{const n=parseInt(el.dataset.step,10);el.classList.toggle('done',n<step);el.classList.toggle('current',n===step)});
+  result.classList.add('show');
+  const fb=document.getElementById('v121-feedback');
+  if(fb)fb.classList.toggle('show',status==='Completed'||status==='Closed');
+  v121MatchedReference=record.reference||'';
+  result.scrollIntoView({behavior:'auto',block:'start'});
+}
+form.addEventListener('submit',async e=>{
+  e.preventDefault();error.className='error';result.className='result';
+  const reference=document.getElementById('reference').value.trim().toUpperCase(),contact=document.getElementById('contact').value.trim();
+  v121MatchedContact=contact;
+  if(!reference||!contact){error.textContent='Please enter both the reference number and the phone number or email supplied on the enquiry.';error.classList.add('show');return}
+  try{
+    const r=await fetch('/api/public/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference,contact})});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(data.detail||'Enquiry details could not be matched.');
+    showRecord(data.case);
+  }catch(apiErr){
+    error.textContent=apiErr.message||'We could not match those details. Check the reference and contact information and try again.';
+    error.classList.add('show');
+  }
+});
+
+const v121FeedbackForm=document.getElementById('v121-feedback-form');
+v121FeedbackForm?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const msg=document.getElementById('v121-feedback-msg');
+  const clarity=document.getElementById('v121-feedback-clarity').value;
+  const respect=document.getElementById('v121-feedback-respect').value;
+  const comment=document.getElementById('v121-feedback-comment').value.trim();
+  if(!clarity||!respect){msg.textContent='Please answer both service questions.';return;}
+  msg.textContent='Sending…';
+  try{
+    const r=await fetch('/api/public/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference:v121MatchedReference,contact:v121MatchedContact,clarity,respect,comment})});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(data.detail||'Feedback could not be submitted.');
+    msg.textContent='Thank you. Your feedback has been recorded.';
+  }catch(err){
+    msg.textContent=err.message||'Feedback could not be submitted.';
+  }
+});
+
+})();
+</script>
+<script id="v114-system-theme-js">
+(function(){
+'use strict';
+const STORAGE='smg_theme_v112';
+const body=document.body;
+const btn=document.getElementById('v114-theme-toggle');
+function apply(on,persist){
+  body.classList.toggle('v112-dark',!!on);
+  if(btn){
+    btn.textContent=on?'☀ Light':'☾ Dark';
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.setAttribute('aria-label',on?'Use light mode':'Use dark mode');
+    btn.title=on?'Use light mode':'Use dark mode';
+  }
+  if(persist){try{localStorage.setItem(STORAGE,on?'dark':'light')}catch(e){}}
+}
+let saved=null;try{saved=localStorage.getItem(STORAGE)}catch(e){}
+let initial=saved==='dark';
+if(saved!=='dark'&&saved!=='light'){
+  try{initial=!!window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches}catch(e){}
+}
+apply(initial,false);
+btn?.addEventListener('click',()=>apply(!body.classList.contains('v112-dark'),true));
+})();
+</script></body>
+</html>

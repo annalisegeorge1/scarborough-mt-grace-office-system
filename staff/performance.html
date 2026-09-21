@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Performance — Scarborough / Mt. Grace District Office</title><style>
+:root{--navy:#08263d;--navy2:#0d3554;--blue:#174f74;--paper:#f4f8fb;--line:rgba(10,47,73,.12);--gold:#c9a34a;--muted:#6f8491;--green:#3e8162;--red:#aa4a44;--amber:#9a792d}*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#e8f0f4;color:#193447}a{color:inherit}.topbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 22px;background:linear-gradient(90deg,#061f33,#0b3553);color:#fff}.brand strong{display:block;font-size:12px}.brand small{display:block;color:#9db5c1;font-size:9px;margin-top:3px}.nav{display:flex;gap:5px;flex-wrap:wrap}.nav a{font-size:9px;text-decoration:none;padding:7px 8px;border-radius:8px;color:#c1d2da}.nav a.active{background:#fff;color:#0b3553;font-weight:900}.wrap{max-width:1240px;margin:auto;padding:24px}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}.hero span{font-size:9px;letter-spacing:.12em;font-weight:900;color:#6c8491}.hero h1{font:500 31px Georgia,serif;color:#0b2f49;margin:5px 0}.hero p{margin:0;color:#718793;font-size:11px;line-height:1.5}.notice{background:#fff7dc;border:1px solid #e4d49c;color:#695a2a;padding:11px 13px;border-radius:10px;font-size:10px;line-height:1.5;margin-bottom:14px}.toolbar{display:grid;grid-template-columns:1fr 180px 160px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:11px;margin-bottom:14px}.toolbar input,.toolbar select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#f9fbfc;color:#17394e}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.metric small{font-size:8px;color:#738894;font-weight:800}.metric strong{display:block;font:600 26px Georgia,serif;color:#0b3553;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}.panel h2{font:600 18px Georgia,serif;color:#0b3553;margin:0 0 5px}.panel .sub{font-size:9px;color:#768b96;margin:0 0 12px}.case{border:1px solid #e1e9ed;border-radius:12px;padding:12px;margin:9px 0;background:#fbfdfe}.case-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.case strong{color:#0b3553;font-size:11px}.case small{color:#768b96;font-size:8px}.pill{display:inline-block;border-radius:999px;background:#e8f1f5;color:#355f74;padding:4px 7px;font-size:7px;font-weight:900}.handover-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.kv{background:#f4f8fa;border-radius:8px;padding:8px}.kv small{display:block;color:#82949d;font-size:7px;font-weight:800}.kv b{display:block;margin-top:3px;color:#31576b;font-size:9px;overflow-wrap:anywhere}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.actions button,.actions a{border:1px solid #cbdbe3;background:#fff;color:#315a70;border-radius:8px;padding:7px 9px;font-size:8px;font-weight:900;text-decoration:none}.actions .primary{background:#0b3553;color:#fff;border-color:#0b3553}.bar-row{display:grid;grid-template-columns:150px 1fr 36px;gap:8px;align-items:center;margin:7px 0;font-size:9px}.bar{height:9px;border-radius:99px;background:#edf2f4;overflow:hidden}.bar i{display:block;height:100%;background:#174f74;border-radius:99px}.feedback-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.feedback-summary article{background:#f5f9fa;border-radius:10px;padding:11px}.feedback-summary strong{display:block;font-size:20px;color:#0b3553}.feedback-summary span{font-size:8px;color:#718793}.footer{padding:20px;text-align:center;font-size:8px;color:#7a909a}.theme{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:7px 9px;font-size:8px;font-weight:800}body.v112-dark{background:#071c2b;color:#c5d3da}body.v112-dark .panel,body.v112-dark .metric,body.v112-dark .toolbar,body.v112-dark .case{background:#102f45;border-color:#294a5d}body.v112-dark .hero h1,body.v112-dark .panel h2,body.v112-dark .metric strong,body.v112-dark .case strong{color:#e9f0f3}body.v112-dark .hero p,body.v112-dark .panel .sub,body.v112-dark .case small{color:#a8bcc7}body.v112-dark .kv,body.v112-dark .feedback-summary article{background:#0b273a}body.v112-dark .kv b,body.v112-dark .bar-row{color:#bfd0d8}body.v112-dark .toolbar input,body.v112-dark .toolbar select{background:#0a2639;border-color:#35556a;color:#e9f0f3}@media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.nav{display:none}}@media(max-width:520px){.metrics,.handover-grid,.feedback-summary{grid-template-columns:1fr}.wrap{padding:16px}.hero{align-items:flex-start;flex-direction:column}.bar-row{grid-template-columns:110px 1fr 28px}}
+
+/* V127 — Staff readability and size controls */
+:root{--staff-scale:1}
+body[data-staff-size="small"]{--staff-scale:.90}
+body[data-staff-size="standard"]{--staff-scale:1}
+body[data-staff-size="large"]{--staff-scale:1.18}
+.brand strong{font-size:calc(12px * var(--staff-scale))!important}
+.brand small{font-size:calc(9px * var(--staff-scale))!important}
+.nav a{font-size:calc(9px * var(--staff-scale))!important}
+.hero span{font-size:calc(9px * var(--staff-scale))!important}
+.hero h1{font-size:calc(31px * var(--staff-scale))!important}
+.hero p{font-size:calc(11px * var(--staff-scale))!important;color:#526f80!important}
+.notice{font-size:calc(10px * var(--staff-scale))!important}
+.toolbar input,.toolbar select{font-size:calc(10px * var(--staff-scale))!important}
+.metric small{font-size:calc(8px * var(--staff-scale))!important;color:#596f7d!important}
+.metric strong{font-size:calc(26px * var(--staff-scale))!important}
+.panel h2{font-size:calc(18px * var(--staff-scale))!important}
+.panel .sub{font-size:calc(9px * var(--staff-scale))!important;color:#5d7482!important}
+.case strong{font-size:calc(11px * var(--staff-scale))!important}
+.case small{font-size:calc(8px * var(--staff-scale))!important;color:#617886!important}
+.pill{font-size:calc(7px * var(--staff-scale))!important}
+.kv small{font-size:calc(7px * var(--staff-scale))!important;color:#667d89!important}
+.kv b{font-size:calc(9px * var(--staff-scale))!important}
+.actions button,.actions a{font-size:calc(8px * var(--staff-scale))!important}
+.bar-row{font-size:calc(9px * var(--staff-scale))!important}
+.feedback-summary strong{font-size:calc(20px * var(--staff-scale))!important}
+.feedback-summary span{font-size:calc(8px * var(--staff-scale))!important;color:#607887!important}
+.footer{font-size:calc(8px * var(--staff-scale))!important}
+.theme{font-size:calc(8px * var(--staff-scale))!important}
+
+/* Compact accessibility toolbar */
+.staff-display-controls{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.staff-size-group{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid rgba(201,163,74,.35);border-radius:10px;background:rgba(255,255,255,.06)}
+.staff-size-label{font-size:8px;color:#d9e6ec;font-weight:800;margin:0 2px 0 3px;white-space:nowrap}
+.staff-size-btn{min-width:31px;min-height:31px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}
+.staff-size-btn[aria-pressed="true"]{background:#c9a34a;color:#08263d;border-color:#c9a34a}
+.staff-size-btn:focus-visible,.theme:focus-visible,.nav a:focus-visible{outline:3px solid #e2c56f;outline-offset:2px}
+.topbar{border-bottom:2px solid rgba(201,163,74,.62)!important}
+.panel,.metric,.toolbar,.case{border-top:2px solid rgba(201,163,74,.38)!important}
+
+/* Staff mobile nav remains usable instead of disappearing. */
+@media(max-width:850px){
+  .topbar{align-items:flex-start;flex-wrap:wrap;padding:10px 14px}
+  .brand{order:1;min-width:0;flex:1 1 220px}
+  .staff-display-controls{order:2;margin-left:auto}
+  .nav{order:3;display:flex!important;flex:1 0 100%;flex-wrap:nowrap!important;overflow-x:auto!important;white-space:nowrap!important;gap:6px;padding:8px 0 3px;scroll-snap-type:x proximity;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(201,163,74,.7) transparent}
+  .nav::-webkit-scrollbar{height:5px}.nav::-webkit-scrollbar-thumb{background:rgba(201,163,74,.7);border-radius:99px}
+  .nav a{flex:0 0 auto;scroll-snap-align:start;border:1px solid rgba(201,163,74,.32);background:rgba(255,255,255,.05)}
+  .wrap{padding-top:18px}
+}
+@media(max-width:560px){
+  .staff-display-controls{width:100%;justify-content:space-between;margin-top:5px}
+  .staff-size-label{font-size:7px}
+  .theme{min-height:38px}
+}
+body.v112-dark .hero p,body.v112-dark .panel .sub,body.v112-dark .case small,body.v112-dark .metric small,body.v112-dark .feedback-summary span{color:#a8bcc7!important}
+</style>
+<style id="v128-staff-navy-text-css">
+/* V128 — navy/near-black staff text on light surfaces; gold remains trim only. */
+body:not(.v112-dark){color:#102a3c!important}
+body:not(.v112-dark) .hero span{color:#294b60!important}
+body:not(.v112-dark) .hero h1{color:#081f33!important}
+body:not(.v112-dark) .hero p{color:#17384e!important}
+body:not(.v112-dark) .notice{color:#44370e!important}
+body:not(.v112-dark) .metric small{color:#294b60!important}
+body:not(.v112-dark) .metric strong{color:#081f33!important}
+body:not(.v112-dark) .panel h2{color:#081f33!important}
+body:not(.v112-dark) .panel .sub{color:#17384e!important}
+body:not(.v112-dark) .case strong{color:#081f33!important}
+body:not(.v112-dark) .case small{color:#27485c!important}
+body:not(.v112-dark) .kv small{color:#294b60!important}
+body:not(.v112-dark) .kv b{color:#102f45!important}
+body:not(.v112-dark) .feedback-summary span{color:#27485c!important}
+body:not(.v112-dark) .bar-row{color:#17384e!important}
+body:not(.v112-dark) .footer{color:#294b60!important}
+body:not(.v112-dark) .pill{color:#17384e!important;background:#e5eef3!important}
+body:not(.v112-dark) .toolbar input,
+body:not(.v112-dark) .toolbar select{color:#102d40!important;background:#fff!important}
+body:not(.v112-dark) .toolbar input::placeholder{color:#526b7a!important;opacity:1}
+body:not(.v112-dark) .actions button,
+body:not(.v112-dark) .actions a:not(.primary){color:#17384e!important}
+body:not(.v112-dark) .panel,
+body:not(.v112-dark) .metric,
+body:not(.v112-dark) .toolbar,
+body:not(.v112-dark) .case{border-top-color:rgba(201,163,74,.55)!important}
+</style>
+
+<style id="v159-staff-ui-fix">
+html{scroll-behavior:smooth}body{min-width:0}.v159-global-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:rgba(255,255,255,.98);border-bottom:1px solid #d9e3e8;box-shadow:0 3px 12px rgba(6,31,51,.07);font-family:system-ui,-apple-system,Segoe UI,sans-serif}.v159-global-nav>a{text-decoration:none!important;color:#0b3553!important;background:#f3f7f9!important;border:1px solid #dbe5e9!important;border-radius:7px!important;padding:6px 8px!important;font-size:10px!important;line-height:1.2!important;font-weight:800!important;white-space:nowrap!important}.v159-global-nav>a:hover,.v159-global-nav>a[aria-current="page"]{background:#08263d!important;color:#fff!important;border-color:#08263d!important}.v159-global-nav .v159-brand{margin-right:auto;background:transparent!important;border-color:transparent!important;color:#87691f!important;letter-spacing:.08em!important}table{max-width:100%}.table-wrap,.table-scroll,[class*="table-wrap"],[class*="table-scroll"]{overflow-x:auto;max-width:100%}img,svg,canvas{max-width:100%}input,select,textarea,button{max-width:100%}@media(max-width:720px){.v159-global-nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:7px 8px}.v159-global-nav .v159-brand{display:none}.v159-global-nav>a{flex:0 0 auto}.wrap,.shell,.sheet,main{max-width:100%!important}.grid,.cards,.metrics,.management-grid{min-width:0}}
+</style></head><body><nav class="v159-global-nav" aria-label="Staff system navigation"><a class="v159-brand" href="sections.html">SMG STAFF SYSTEM</a><a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a href="workflow.html">Daily Work</a><a href="search.html">Search</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="events.html">Events</a><a href="records.html">Records</a><a href="reports.html">Reports</a><a href="roster.html">Roster</a><a href="production.html">Production</a></nav><header class="topbar"><div class="brand"><strong>SCARBOROUGH / MT. GRACE DISTRICT OFFICE</strong><small>Pre-Launch / Test Environment</small></div><div class="nav"><a href="command.html">Command</a><a href="workflow.html">Workboard</a><a href="index.html">Cases</a><a href="handover.html">Handover</a><a href="roster.html">Roster</a><a class="active" href="performance.html">Performance</a><a href="quality.html">Quality</a><a href="search.html">Search</a><a href="reports.html">Reports</a><a href="records.html">Records</a><a href="correspondence.html">Correspondence</a><a href="applications.html">Applications</a><a href="community.html">Community</a><a href="procedures.html">Procedures</a><a href="training.html">Training</a><a href="readiness.html">Readiness</a><a href="pilot.html">Pilot</a><a href="it-review.html">IT Review</a></div><div class="staff-display-controls" aria-label="Staff display options"><div class="staff-size-group" role="group" aria-label="Text size"><span class="staff-size-label">Text size</span><button class="staff-size-btn" type="button" data-staff-size="small" aria-label="Smaller text" aria-pressed="false">A−</button><button class="staff-size-btn" type="button" data-staff-size="standard" aria-label="Standard text" aria-pressed="true">A</button><button class="staff-size-btn" type="button" data-staff-size="large" aria-label="Larger text" aria-pressed="false">A+</button></div><button class="theme" id="top-theme" type="button">☾ Dark</button></div></header><main class="wrap"><div class="hero"><div><span>MANAGEMENT OVERVIEW</span><h1>Operational Performance Dashboard</h1><p>Service-flow indicators for management review. This dashboard measures workload and case movement; it does not rank staff.</p></div></div><div class="notice"><strong>Use with context:</strong> counts and age indicators support management discussion. They should not be interpreted as staff performance scores or promises to residents.</div><div class="metrics"><div class="metric"><small>OPEN CASES</small><strong id="m-open">0</strong></div><div class="metric"><small>UNASSIGNED</small><strong id="m-unassigned">0</strong></div><div class="metric"><small>OVERDUE</small><strong id="m-overdue">0</strong></div><div class="metric"><small>COMPLETED • 30 DAYS</small><strong id="m-completed">0</strong></div></div><div class="grid"><section class="panel"><h2>Case status</h2><p class="sub">Current case distribution.</p><div id="status-bars"></div></section><section class="panel"><h2>Focus Group / community area</h2><p class="sub">Open cases classified from the recorded community area/address.</p><div id="area-bars"></div></section><section class="panel"><h2>Common enquiry types</h2><p class="sub">Volume by recorded case type. No resident names are shown.</p><div id="type-bars"></div></section><section class="panel"><h2>Resident feedback</h2><p class="sub">Short service feedback from completed/closed enquiries.</p><div class="feedback-summary"><article><strong id="f-count">0</strong><span>responses</span></article><article><strong id="f-clear">—</strong><span>clear / mostly clear</span></article><article><strong id="f-respect">—</strong><span>respectful / mostly</span></article><article><strong id="f-updated">—</strong><span>latest feedback</span></article></div></section></div></main><div class="footer">District Office staff system • Test data only until production approval.</div><script>
+const KEY='smg_v33_enquiries';let rows=[];const closed=r=>['Completed','Closed'].includes(r.status),today=()=>new Date().toISOString().slice(0,10);function local(){try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}function daysAgo(s){return s?(Date.now()-new Date(s).getTime())/86400000:99999}function overdue(r){return r.followUpDate&&!closed(r)&&r.followUpDate<today()}function countBy(arr,fn){const m={};arr.forEach(r=>{const k=fn(r)||'Unclassified';m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])}function area(r){const a=String(r.communityArea||r.address||'').toLowerCase();if(a.includes('calder hall'))return'Calder Hall';if(a.includes('darrel spring')||a.includes('andrews trace')||a.includes('log wood'))return'Darrel Spring';if(a.includes('mt. grace')||a.includes('mt grace')||a.includes('harmony hall')||a.includes('cinnamon hill')||a.includes('gru gru'))return'Mt. Grace';if(a.includes('government house')||a.includes('hart lane')||a.includes('mile end')||a.includes('sargent cain'))return'Government House Road';if(a.includes('friendsfield')||a.includes('brown lane')||a.includes('harry lane'))return'Friendsfield';if(a.includes('rockly vale')||a.includes('glenelg'))return'Rockly Vale';return'Other / not classified'}function bars(id,data){const max=Math.max(1,...data.map(x=>x[1]));document.getElementById(id).innerHTML=data.length?data.map(([k,v])=>`<div class="bar-row"><span>${k}</span><div class="bar"><i style="width:${Math.round(v/max*100)}%"></i></div><b>${v}</b></div>`).join(''):'<p class="sub">No data available.</p>'}async function load(){try{const r=await fetch('/api/cases',{credentials:'same-origin'});if(!r.ok)throw 0;const d=await r.json();rows=d.cases||[];localStorage.setItem(KEY,JSON.stringify(rows))}catch(e){rows=local()}render();loadFeedback()}function render(){document.getElementById('m-open').textContent=rows.filter(r=>!closed(r)).length;document.getElementById('m-unassigned').textContent=rows.filter(r=>!closed(r)&&(r.caseOwner==='Unassigned'||r.assigned==='Unassigned')).length;document.getElementById('m-overdue').textContent=rows.filter(overdue).length;document.getElementById('m-completed').textContent=rows.filter(r=>closed(r)&&daysAgo(r.updatedAt)<=30).length;bars('status-bars',countBy(rows,r=>r.status));bars('area-bars',countBy(rows.filter(r=>!closed(r)),area));bars('type-bars',countBy(rows,r=>r.type||'General Enquiry').slice(0,8))}async function loadFeedback(){try{const r=await fetch('/api/feedback',{credentials:'same-origin'});if(!r.ok)throw 0;const d=await r.json(),f=d.feedback||[];document.getElementById('f-count').textContent=f.length;if(!f.length)return;const good=x=>x==='Yes'||x==='Mostly';document.getElementById('f-clear').textContent=Math.round(f.filter(x=>good(x.clarity)).length/f.length*100)+'%';document.getElementById('f-respect').textContent=Math.round(f.filter(x=>good(x.respect)).length/f.length*100)+'%';document.getElementById('f-updated').textContent=new Date(f[0].updated_at||f[0].created_at).toLocaleDateString('en-TT')}catch(e){document.getElementById('f-count').textContent='—'}}load();
+
+(function(){const S='smg_theme_v112',b=document.body,bs=[document.getElementById('theme'),document.getElementById('top-theme')].filter(Boolean);function a(on,p){b.classList.toggle('v112-dark',on);bs.forEach(x=>x.textContent=on?'☀ Light':'☾ Dark');if(p)try{localStorage.setItem(S,on?'dark':'light')}catch(e){}}let v;try{v=localStorage.getItem(S)}catch(e){}a(v==='dark'||(!v&&matchMedia('(prefers-color-scheme:dark)').matches),false);bs.forEach(x=>x.addEventListener('click',()=>a(!b.classList.contains('v112-dark'),true)))})();</script><script>
+(function(){
+  const KEY='smg_staff_text_size_v127';
+  const body=document.body;
+  const buttons=[...document.querySelectorAll('[data-staff-size]')];
+  const allowed=['small','standard','large'];
+  function apply(size,persist=true){
+    if(!allowed.includes(size)) size='standard';
+    body.setAttribute('data-staff-size',size);
+    buttons.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.staffSize===size)));
+    if(persist){try{localStorage.setItem(KEY,size)}catch(e){}}
+  }
+  let saved='standard';
+  try{saved=localStorage.getItem(KEY)||'standard'}catch(e){}
+  apply(saved,false);
+  buttons.forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.staffSize,true)));
+})();
+</script></body></html>
