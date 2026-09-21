@@ -3,12 +3,10 @@ services:
     name: scarborough-mt-grace-staging
     runtime: node
     plan: free
-    buildCommand: cd server && npm install --omit=dev
-    preDeployCommand: cd server && npm run migrate
-    startCommand: cd server && npm start
+    buildCommand: cd server && npm ci --omit=dev
+    startCommand: cd server && npm run migrate && npm start
     initialDeployHook: cd server && npm run seed:admin
     healthCheckPath: /api/health/live
-    maxShutdownDelaySeconds: 30
     envVars:
       - key: NODE_ENV
         value: production
