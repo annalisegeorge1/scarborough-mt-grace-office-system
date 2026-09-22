@@ -10729,6 +10729,196 @@ body:not(.v112-dark) #enquiry .v35-track-box .v106-track-action a{
 /* Replace the old release-note appearance with a normal civic footer note. */
 .v48-launch-note{background:rgba(11,53,83,.035)!important;color:#516d7c!important;border-color:rgba(11,53,83,.08)!important}
 </style>
+
+<style id="v165-light-section-depth-css">
+/* V165 — richer light-section backgrounds and depth */
+:root{
+  --v165-paper:#f7f4ec;
+  --v165-paper-2:#fbfaf6;
+  --v165-ice:#eef5f8;
+  --v165-gold:#b89145;
+  --v165-gold-soft:rgba(184,145,69,.22);
+  --v165-navy-soft:rgba(23,62,96,.055);
+  --v165-guilloche:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Cg fill='none' stroke='%23173e60' stroke-opacity='.048' stroke-width='.75'%3E%3Cpath d='M-30 90 C25 12 80 12 135 90 S245 168 350 90'/%3E%3Cpath d='M-30 90 C25 168 80 168 135 90 S245 12 350 90'/%3E%3Cpath d='M-30 58 C35 132 86 132 150 58 S260 -16 350 58'/%3E%3Cpath d='M-30 122 C35 48 86 48 150 122 S260 196 350 122'/%3E%3C/g%3E%3Cg fill='none' stroke='%23b89145' stroke-opacity='.038' stroke-width='.7'%3E%3Cellipse cx='80' cy='90' rx='62' ry='28'/%3E%3Cellipse cx='240' cy='90' rx='62' ry='28'/%3E%3C/g%3E%3C/svg%3E");
+  --v165-rosette:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 250 250'%3E%3Cg fill='none' stroke='%23173e60' stroke-opacity='.045' stroke-width='.7'%3E%3Ccircle cx='125' cy='125' r='88'/%3E%3Ccircle cx='125' cy='125' r='70'/%3E%3Cpath d='M125 29c25 37 55 51 96 51-37 25-51 55-51 96-25-37-55-51-96-51 37-25 51-55 51-96Z'/%3E%3Cpath d='M57 57c44 8 75-3 104-32-8 44 3 75 32 104-44-8-75 3-104 32 8-44-3-75-32-104Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Give major light sections an elegant civic-paper base instead of flat white. */
+.services-section,
+.office-section,
+.contact-section,
+#resident-start,
+#enquiry,
+.v145-public-cms{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.services-section,
+.office-section,
+.contact-section{
+  background-color:var(--v165-paper-2)!important;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.82),rgba(247,244,236,.90)),
+    var(--v165-guilloche)!important;
+  background-size:auto,320px 180px!important;
+  background-position:center,center!important;
+}
+
+/* A second treatment keeps adjacent sections from feeling repetitive. */
+.office-section{
+  background-image:
+    radial-gradient(circle at 12% 16%,rgba(184,145,69,.12),transparent 24%),
+    radial-gradient(circle at 88% 82%,rgba(23,62,96,.08),transparent 26%),
+    linear-gradient(180deg,rgba(250,249,244,.96),rgba(239,246,249,.96)),
+    var(--v165-rosette)!important;
+  background-size:auto,auto,auto,250px 250px!important;
+}
+
+.contact-section,
+#enquiry{
+  background-image:
+    linear-gradient(135deg,rgba(255,255,255,.96),rgba(241,247,249,.96)),
+    var(--v165-guilloche)!important;
+  background-size:auto,320px 180px!important;
+}
+
+/* Fine engraved rules at the top/bottom of light sections. */
+.services-section::before,
+.office-section::before,
+.contact-section::before,
+#resident-start::before,
+#enquiry::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:0;
+  height:3px;
+  z-index:-1;
+  background:linear-gradient(90deg,transparent 0%,rgba(184,145,69,.55) 22%,rgba(23,62,96,.28) 50%,rgba(184,145,69,.55) 78%,transparent 100%);
+}
+.services-section::after,
+.office-section::after,
+.contact-section::after{
+  content:"";
+  position:absolute;
+  width:360px;height:360px;
+  right:-150px;bottom:-170px;
+  z-index:-1;
+  pointer-events:none;
+  background-image:var(--v165-rosette);
+  background-size:360px 360px;
+  opacity:.65;
+}
+
+/* Stronger heading hierarchy without becoming flashy. */
+.services-section h2,
+.office-section h2,
+.contact-section h2,
+#resident-start h2,
+#enquiry h2{
+  position:relative;
+  display:inline-block;
+  padding-bottom:12px;
+}
+.services-section h2::after,
+.office-section h2::after,
+.contact-section h2::after,
+#resident-start h2::after,
+#enquiry h2::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:72px;height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--v165-gold),rgba(184,145,69,.18));
+}
+
+/* Make light-section cards feel deliberate and layered. */
+.service-card,
+.office-img,
+.form-area,
+.contact-card,
+.v145-card{
+  position:relative;
+}
+.service-card{
+  border-right:none!important;
+  border:1px solid rgba(23,62,96,.09)!important;
+  border-top:3px solid rgba(184,145,69,.58)!important;
+  border-radius:16px;
+  padding:24px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,251,249,.93));
+  box-shadow:0 12px 28px rgba(17,49,72,.07), inset 0 1px 0 rgba(255,255,255,.9);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.service-card::after{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(184,145,69,.10);
+  border-radius:11px;
+  pointer-events:none;
+}
+.services-grid{gap:16px!important}
+
+.office-img img{
+  border:1px solid rgba(23,62,96,.11)!important;
+  box-shadow:0 18px 44px rgba(17,49,72,.14)!important;
+}
+.office-img::before{
+  content:"";
+  position:absolute;
+  inset:-10px 10px 10px -10px;
+  z-index:-1;
+  border:1px solid rgba(184,145,69,.30);
+  border-radius:8px;
+}
+
+.form-area{
+  padding:30px;
+  border:1px solid rgba(23,62,96,.09);
+  border-radius:18px;
+  background:rgba(255,255,255,.84);
+  box-shadow:0 16px 38px rgba(17,49,72,.08);
+  backdrop-filter:blur(3px);
+}
+
+/* Small medallion feel for icons/details. */
+.detail svg,
+.service-card svg{
+  filter:drop-shadow(0 4px 8px rgba(23,62,96,.10));
+}
+.detail{
+  padding:10px 12px;
+  margin-left:-12px;
+  border-radius:12px;
+  transition:background .2s ease,transform .2s ease;
+}
+
+/* Desktop interaction: subtle, official, not playful. */
+@media(hover:hover) and (pointer:fine){
+  .service-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(184,145,69,.35)!important;
+    box-shadow:0 20px 42px rgba(17,49,72,.12), inset 0 1px 0 rgba(255,255,255,.95);
+  }
+  .detail:hover{
+    background:rgba(255,255,255,.56);
+    transform:translateX(3px);
+  }
+}
+
+/* Protect readability on smaller screens. */
+@media(max-width:760px){
+  .service-card{padding:20px!important}
+  .form-area{padding:22px}
+  .services-section::after,
+  .office-section::after,
+  .contact-section::after{opacity:.36}
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
