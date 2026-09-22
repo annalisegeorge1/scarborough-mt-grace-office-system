@@ -1434,6 +1434,28 @@ function renderDocs(r){
     <span>${d.size?Math.round(d.size/1024)+' KB':'metadata only'}</span>
   </div>`).join(''):'<p style="font-size:10px;color:#8698a1">No document metadata listed.</p>';
 }
+  function renderTimeline(r){
+  const host=$('#activity-list');
+  if(!host)return;
+
+  const items=Array.isArray(r.activity)
+    ? r.activity.slice()
+    : [];
+
+  items.sort((a,b)=>
+    String(a.at||'').localeCompare(String(b.at||''))
+  );
+
+  host.innerHTML=items.length
+    ? items.map((a,i)=>`
+        <div class="activity ${i===items.length-1?'latest':''}">
+          <span class="activity-dot" aria-hidden="true"></span>
+          <time>${esc(fmt(a.at))}</time>
+          <div>${esc(a.text||'Case activity recorded.')}</div>
+        </div>
+      `).join('')
+    : '<p style="font-size:10px;color:#8698a1">No case activity has been recorded yet.</p>';
+}
 function mutate(fn){
   const rows=load(),i=rows.findIndex(x=>x.id===currentCaseId);if(i<0)return;
   if(!v41CanEditCase(rows[i])){alert('This test access profile is read-only for this case.');return;}
