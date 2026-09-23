@@ -1,0 +1,9 @@
+V178 — Larger Tobago Locator + Working Internal Links
+
+Changes:
+- Enlarged the top Tobago locator image substantially on desktop and tablet.
+- Kept the existing design, information, colours, and map styling.
+- Repaired internal #section links across the page. A legacy script was preventing all hash links from working.
+- OPEN DISTRICT PROFILE now scrolls smoothly to the District Profile section.
+- Other internal section links now work as expected where a matching section exists.
+- Preserved the clickable Scarborough/Mt. Grace map callout, pulse, shimmer and float effects.

@@ -11644,18 +11644,18 @@ footer div[style*="text-align:right"] span{
 .v170-locator-band{position:relative;padding:28px 0;background:linear-gradient(180deg,#f7f1e5 0%,#fbf8f1 100%);border-top:1px solid rgba(11,53,83,.08);border-bottom:1px solid rgba(11,53,83,.08);overflow:hidden;}
 .v170-locator-band::before{content:"";position:absolute;left:-70px;top:-70px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(201,163,74,.22);opacity:.9;}
 .v170-locator-band::after{content:"";position:absolute;right:-60px;bottom:-60px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(201,163,74,.18),rgba(201,163,74,0) 72%);}
-.v170-locator-wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:280px minmax(0,1fr) auto;gap:28px;align-items:center;position:relative;z-index:1;}
-.v170-mini-map{position:relative;background:linear-gradient(180deg,#ffffff 0%,#fbf8f1 100%);border:1px solid rgba(11,53,83,.12);border-radius:24px;padding:18px;box-shadow:0 18px 44px rgba(11,53,83,.08);}
+.v170-locator-wrap{max-width:1280px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:minmax(360px,440px) minmax(0,1fr) auto;gap:32px;align-items:center;position:relative;z-index:1;}
+.v170-mini-map{position:relative;background:linear-gradient(180deg,#ffffff 0%,#fbf8f1 100%);border:1px solid rgba(11,53,83,.12);border-radius:26px;padding:20px;box-shadow:0 20px 48px rgba(11,53,83,.10);min-height:300px;display:grid;place-items:center;}
 .v170-mini-map::before{content:"";position:absolute;inset:12px auto auto 12px;width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,163,74,.26);}
 .v170-mini-map::after{content:"";position:absolute;right:14px;bottom:14px;width:88px;height:88px;border-radius:50%;background:radial-gradient(circle,rgba(11,53,83,.08),rgba(11,53,83,0) 70%);pointer-events:none;}
-.v170-mini-map img{width:100%;display:block;position:relative;z-index:1;filter:drop-shadow(0 12px 24px rgba(11,53,83,.16));}
+.v170-mini-map img{width:100%;max-width:430px;display:block;position:relative;z-index:1;filter:drop-shadow(0 14px 26px rgba(11,53,83,.17));}
 .v170-locator-copy small{display:block;color:#8a6f34;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;}
 .v170-locator-copy h2{margin:6px 0 10px;color:#0b2e48;font:500 clamp(1.65rem,2.9vw,2.3rem)/1.06 Georgia,serif;}
 .v170-locator-copy p{margin:0;max-width:720px;color:#455f6f;font-size:14px;line-height:1.7;}
 .v170-locator-highlights{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
 .v170-locator-highlights span{padding:8px 11px;border-radius:999px;background:rgba(11,53,83,.06);border:1px solid rgba(11,53,83,.09);font-size:11px;font-weight:800;color:#21445c;letter-spacing:.04em;}
 .v170-locator-btn{justify-self:end;display:inline-flex;align-items:center;gap:8px;padding:14px 18px;border-radius:999px;background:#0b3553;color:#fff!important;text-decoration:none!important;font-size:12px;font-weight:900;letter-spacing:.08em;box-shadow:0 14px 28px rgba(11,53,83,.14);white-space:nowrap;}
-.v170-locator-btn:hover{transform:translateY(-1px);background:#174f74;}
+.v170-locator-btn:hover,.v170-locator-btn:focus-visible{transform:translateY(-2px);background:#174f74;box-shadow:0 18px 34px rgba(11,53,83,.20);outline:none;}
 #district-profile .v170-island-panel{margin-top:32px;display:grid;grid-template-columns:.88fr 1.12fr;gap:30px;align-items:stretch;}
 #district-profile .v170-island-copy{position:relative;padding:28px 28px 26px;border-radius:24px;background:linear-gradient(145deg,#fbf7ef,#ffffff);border:1px solid rgba(11,53,83,.08);box-shadow:0 16px 42px rgba(11,53,83,.06);overflow:hidden;}
 #district-profile .v170-island-copy::before{content:"";position:absolute;right:-32px;top:-36px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(201,163,74,.22);}
@@ -11780,8 +11780,8 @@ footer div[style*="text-align:right"] span{
 footer{position:relative;overflow:hidden;}
 .v170-footer-watermark{position:absolute;right:26px;bottom:132px;width:190px;opacity:.08;pointer-events:none;filter:grayscale(1) contrast(.95);z-index:0;}
 footer>*{position:relative;z-index:1;}
-@media(max-width:960px){.v170-locator-wrap{grid-template-columns:1fr;gap:18px;}.v170-locator-btn{justify-self:start;}#district-profile .v170-island-panel{grid-template-columns:1fr;}}
-@media(max-width:720px){.v170-locator-band{padding:20px 0;}.v170-mini-map{max-width:300px;padding:16px;}.v170-locator-copy p{font-size:13px;}.v170-locator-highlights span{font-size:10px;}#district-profile .v170-island-copy{padding:22px 18px;}#district-profile .v170-island-list{grid-template-columns:1fr;}#district-profile .v170-island-map-head strong{font-size:18px;}#district-profile .v173-map-subtitle{font-size:10px;letter-spacing:.09em;}#district-profile .v170-island-map-frame{min-height:320px;padding:18px;}#district-profile .v170-island-map-frame img{width:min(100%,520px);}#district-profile .v172-map-overlay{left:28%;top:59%;}#district-profile .v172-map-callout{left:20px;top:-58px;min-width:170px;padding:10px 12px;}#district-profile .v172-map-callout::before{left:-30px;width:30px;}#district-profile .v172-map-callout::after{left:-34px;}#district-profile .v172-map-callout strong{font-size:.92rem;}#district-profile .v172-map-callout span{font-size:11px;}.v170-footer-watermark{width:120px;right:12px;bottom:96px;opacity:.06;}}
+@media(max-width:960px){.v170-locator-wrap{grid-template-columns:1fr;gap:18px;}.v170-mini-map{max-width:520px;min-height:0;}.v170-locator-btn{justify-self:start;}#district-profile .v170-island-panel{grid-template-columns:1fr;}}
+@media(max-width:720px){.v170-locator-band{padding:20px 0;}.v170-mini-map{max-width:360px;padding:16px;}.v170-locator-copy p{font-size:13px;}.v170-locator-highlights span{font-size:10px;}#district-profile .v170-island-copy{padding:22px 18px;}#district-profile .v170-island-list{grid-template-columns:1fr;}#district-profile .v170-island-map-head strong{font-size:18px;}#district-profile .v173-map-subtitle{font-size:10px;letter-spacing:.09em;}#district-profile .v170-island-map-frame{min-height:320px;padding:18px;}#district-profile .v170-island-map-frame img{width:min(100%,520px);}#district-profile .v172-map-overlay{left:28%;top:59%;}#district-profile .v172-map-callout{left:20px;top:-58px;min-width:170px;padding:10px 12px;}#district-profile .v172-map-callout::before{left:-30px;width:30px;}#district-profile .v172-map-callout::after{left:-34px;}#district-profile .v172-map-callout strong{font-size:.92rem;}#district-profile .v172-map-callout span{font-size:11px;}.v170-footer-watermark{width:120px;right:12px;bottom:96px;opacity:.06;}}
 </style>
 
 </head>
@@ -11921,7 +11921,7 @@ footer>*{position:relative;z-index:1;}
 <span>DISTRICT OFFICE • TOBAGO</span>
 <span>ACCESS • SERVICE • COMMUNITY</span>
 </div>
-</div><section aria-labelledby="v170-locator-title" class="v170-locator-band"><div class="v170-locator-wrap"><div class="v170-mini-map"><img alt="Map of Tobago highlighting Scarborough" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a4"/></div><div class="v170-locator-copy"><small>OUR DISTRICT ON THE ISLAND</small><h2 id="v170-locator-title">Scarborough highlighted within Tobago</h2><p>This gives residents a quick island-level locator before they move into the more detailed District Profile below. It helps anchor the office visually as both a local service point and part of the wider Tobago community.</p><div class="v170-locator-highlights"><span>ISLAND CONTEXT</span><span>SCARBOROUGH HIGHLIGHTED</span><span>DISTRICT PROFILE BELOW</span></div></div><a class="v170-locator-btn" href="#district-profile">OPEN DISTRICT PROFILE →</a></div></section><section class="v55-start v132-civic-section v132-tone-light" id="resident-start">
+</div><section aria-labelledby="v170-locator-title" class="v170-locator-band"><div class="v170-locator-wrap"><div class="v170-mini-map"><img alt="Map of Tobago highlighting Scarborough" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a4"/></div><div class="v170-locator-copy"><small>OUR DISTRICT ON THE ISLAND</small><h2 id="v170-locator-title">Scarborough highlighted within Tobago</h2><p>This gives residents a quick island-level locator before they move into the more detailed District Profile below. It helps anchor the office visually as both a local service point and part of the wider Tobago community.</p><div class="v170-locator-highlights"><span>ISLAND CONTEXT</span><span>SCARBOROUGH HIGHLIGHTED</span><span>DISTRICT PROFILE BELOW</span></div></div><a class="v170-locator-btn" href="#district-profile" aria-label="Open the Scarborough Mt. Grace District Profile">OPEN DISTRICT PROFILE →</a></div></section><section class="v55-start v132-civic-section v132-tone-light" id="resident-start">
 <div class="wrap v55-start-grid"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><circle cx="32" cy="32" r="7"></circle><path d="M32 8v10M32 46v10M8 32h10M46 32h10"></path><path d="M20 44l24-24-7 17z"></path></svg></span></span>
 <span class="v132-section-badge-copy"><b>START CENTRE</b><small>FIND THE RIGHT PATH • GET HELP FASTER</small><span aria-live="polite" class="v139-live-clock"><span class="v139-clock-label">TRINIDAD &amp; TOBAGO</span><strong id="v139-clock-time">--:--:--</strong><span id="v139-clock-date">Loading local date…</span></span></span>
@@ -14035,11 +14035,20 @@ footer>*{position:relative;z-index:1;}
    });
  }
 })();
-</script><script>
+</script><script id="v178-working-anchor-navigation">
 (function(){
-  document.querySelectorAll('a[href^="#"]:not(.v14-skip)').forEach(function(a){
-    a.addEventListener("click",function(e){e.preventDefault();});
-  });
+  document.addEventListener('click', function(e){
+    const a=e.target.closest('a[href^="#"]');
+    if(!a)return;
+    const href=(a.getAttribute('href')||'').trim();
+    if(!href || href==='#')return;
+    let target=null;
+    try{ target=document.querySelector(href); }catch(err){ return; }
+    if(!target)return;
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    try{ history.pushState(null,'',href); }catch(err){}
+  }, false);
 })();
 </script><div aria-label="Gallery image viewer" aria-modal="true" class="v21-lightbox" hidden="" id="v21-lightbox" role="dialog">
 <div class="v21-lightbox-panel">
