@@ -11454,6 +11454,188 @@ footer div[style*="text-align:right"] span{
 }
 </style>
 
+
+<style id="v169-contrast-readability-css">
+/* V169 — stronger contrast in the hero and public-resource cards.
+   Gold ornament/accent colours are intentionally preserved. */
+
+/* HERO: retain navy/gold atmosphere around the section, but give the content
+   a light civic-paper surface so important copy can use navy/black. */
+@media(min-width:1024px){
+  .hero .hero-inner{
+    background:
+      radial-gradient(circle at 92% 10%,rgba(210,187,120,.13),transparent 24%),
+      radial-gradient(circle at 8% 88%,rgba(142,194,218,.13),transparent 26%),
+      linear-gradient(135deg,rgba(255,255,255,.96),rgba(241,247,250,.94))!important;
+    border:1px solid rgba(11,46,72,.14)!important;
+    box-shadow:0 28px 70px rgba(2,18,29,.26)!important;
+  }
+}
+
+/* Main hero copy */
+.hero .hero-text,
+.hero .hero-text h1,
+.hero .hero-text .quote,
+.hero .hero-text .sub,
+.hero .hero-text .kicker{
+  color:#0b2e48!important;
+}
+.hero .hero-text h1{
+  text-shadow:none!important;
+}
+.hero .hero-text .sub{
+  background:rgba(11,46,72,.055)!important;
+  border-color:rgba(11,46,72,.12)!important;
+}
+.hero .hero-text .executive-label{
+  color:#0b2e48!important;
+  background:rgba(255,255,255,.84)!important;
+  border-color:rgba(11,46,72,.12)!important;
+}
+
+/* Quick resident actions beneath the main CTA */
+.v8-hero-actions button{
+  background:rgba(255,255,255,.88)!important;
+  border-color:rgba(11,46,72,.13)!important;
+  box-shadow:0 12px 24px rgba(7,31,48,.07)!important;
+}
+.v8-hero-actions button span{
+  color:#0b2e48!important;
+}
+.v8-hero-actions button small{
+  color:#334d5c!important;
+}
+.v8-hero-actions .v8-primary-action{
+  background:linear-gradient(145deg,#eef5f8,#ffffff)!important;
+}
+
+/* SCARBOROUGH / MT. GRACE • ACCESS • SERVICE • COMMUNITY */
+.v8-trust-line{
+  background:rgba(255,255,255,.78)!important;
+  border-color:rgba(11,46,72,.12)!important;
+}
+.v8-trust-line span{
+  color:#0b2e48!important;
+}
+.v8-trust-line i{
+  background:rgba(210,187,120,.78)!important;
+}
+
+/* Assembly Member feature: light information plate, dark readable copy.
+   Gold quote accent is retained. */
+.hero-photo .info{
+  background:rgba(251,253,253,.96)!important;
+  border-color:rgba(11,46,72,.14)!important;
+}
+.hero-photo .info h3{
+  color:#0b2e48!important;
+}
+.hero-photo .info p{
+  color:#263f4e!important;
+}
+.hero-photo>.quote{
+  color:#0b2e48!important;
+  background:rgba(255,255,255,.94)!important;
+  border-color:rgba(210,187,120,.36)!important;
+}
+
+/* 01 / 02 / 03 cards: white/grey copy becomes navy/dark;
+   gold number medallions remain gold. */
+.v23-action-card{
+  background:
+    radial-gradient(circle at 100% 0,rgba(210,187,120,.10),transparent 38%),
+    linear-gradient(145deg,rgba(255,255,255,.96),rgba(239,246,249,.94))!important;
+  border-color:rgba(11,46,72,.13)!important;
+  box-shadow:0 16px 34px rgba(7,31,48,.10)!important;
+}
+.v23-action-card strong,
+.v23-action-card b{
+  color:#0b2e48!important;
+}
+.v23-action-card small{
+  color:#304b5a!important;
+}
+.v23-action-card>span{
+  /* Intentionally preserve the gold number treatment */
+  color:#8e6d24!important;
+  background:linear-gradient(135deg,rgba(210,187,120,.32),rgba(255,255,255,.66))!important;
+  border-color:rgba(184,145,69,.42)!important;
+}
+.v23-action-card::after{
+  background:radial-gradient(circle,rgba(142,194,218,.13) 0,transparent 70%)!important;
+}
+
+/* Existing decorative gold/navy circular work remains visible */
+.v166-ring.ring-1,
+.v166-ring.ring-3{
+  border-color:rgba(184,145,69,.24)!important;
+}
+.v166-dot.dot-1,
+.v166-dot.dot-3{
+  background:#d2bb78!important;
+}
+
+/* PUBLIC DOCUMENT RESOURCE CARDS */
+.v5-doc-grid article{
+  background:
+    radial-gradient(circle at 100% 0,rgba(210,187,120,.10),transparent 34%),
+    linear-gradient(180deg,#ffffff,#f4f8fa)!important;
+  border-color:rgba(11,46,72,.12)!important;
+  box-shadow:0 16px 32px rgba(7,31,48,.08)!important;
+}
+.v5-doc-grid article strong{
+  color:#0b2e48!important;
+}
+.v5-doc-grid article span{
+  color:#263f4e!important;
+}
+.v5-doc-grid article a{
+  color:#0b2e48!important;
+  font-weight:800!important;
+}
+.v5-doc-grid article a:hover{
+  color:#153f61!important;
+}
+.v5-doc-grid article svg{
+  fill:#0b2e48!important;
+}
+.v5-doc-grid article em{
+  color:#0b2e48!important;
+  background:rgba(210,187,120,.17)!important;
+  border:1px solid rgba(184,145,69,.28)!important;
+}
+
+/* Public Information Centre heading area */
+.v5-doc-head h2,
+.v5-doc-head p{
+  color:#0b2e48!important;
+}
+.v5-doc-head p{
+  color:#334d5c!important;
+}
+.v5-doc-head .v3-eyebrow,
+.v5-doc-badge{
+  color:#0b2e48!important;
+}
+
+/* Mobile keeps the same contrast treatment without flattening the design */
+@media(max-width:1023px){
+  .hero .hero-inner{
+    background:
+      radial-gradient(circle at 96% 8%,rgba(210,187,120,.10),transparent 22%),
+      linear-gradient(145deg,rgba(255,255,255,.97),rgba(239,246,249,.96))!important;
+    border:1px solid rgba(11,46,72,.11)!important;
+  }
+  .hero .hero-text,
+  .hero .hero-text h1,
+  .hero .hero-text .quote,
+  .hero .hero-text .sub,
+  .hero .hero-text .kicker{
+    color:#0b2e48!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
