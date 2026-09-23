@@ -1,0 +1,17 @@
+Scarborough / Mt. Grace V176 Performance Cleanup
+
+Purpose: reduce page weight without changing the visible design, wording, sections, links, or functionality.
+
+Original HTML size: 25.33 MB
+Optimized HTML size: 7.33 MB
+External image files: 23
+Total unique image asset size: 6.27 MB
+
+What changed under the hood:
+- Large Base64 bitmap images were extracted from the HTML into assets/images/.
+- Repeated images now reuse the same physical file instead of being embedded multiple times.
+- Browsers can cache image files independently on repeat visits.
+- CSS, page copy, section order, forms, navigation, map callout, pulse, and visual styling were left intact.
+
+Important deployment note:
+- Upload the entire V176 folder structure, not only index-self-contained.html, because the HTML now references assets/images/.
