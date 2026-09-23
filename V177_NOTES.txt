@@ -1,0 +1,10 @@
+V177 SELF-CONTAINED IMAGE RESTORE
+
+This version restores the one-file deployment workflow.
+- All website images are contained inside index-self-contained.html.
+- No assets/images folder is required for the public page.
+- The visual design and public information are preserved from V176.
+- Repeated IMG files are embedded once and reused by a small loader script.
+- CSS background images and the favicon are inlined directly.
+
+Use: replace the root index-self-contained.html with this file.
