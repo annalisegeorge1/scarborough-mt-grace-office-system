@@ -13165,6 +13165,267 @@ section > :not(.v181-constellation-signature){
 /* Keep the existing V179/V189 mobile and tablet behaviour intact. */
 </style>
 
+
+<style id="v191-top-alignment-smg-background-services-centre">
+/* ==========================================================
+   V191 — TOP ALIGNMENT + SMG BACKGROUND + SERVICES CENTRING
+   Continues V190 while tightening desktop composition further.
+   ========================================================== */
+@media (min-width:1024px){
+
+  /* 1) Pull constellation/header pairs even closer to the top. */
+  section > .v181-constellation-signature{
+    top:2px!important;
+    right:14px!important;
+    width:clamp(88px,7.4vw,118px)!important;
+    opacity:.54!important;
+  }
+
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #v51-more-gateway,
+  #v70-info-directory,
+  #services,
+  #about,
+  #team,
+  #leadership,
+  #district-profile,
+  #v121-scope,
+  #how-we-help,
+  #help-selector,
+  #support-areas,
+  #resident-guide,
+  #v145-public-cms,
+  #resident-faq,
+  #resources,
+  #privacy-accessibility,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #v133-public-action,
+  #v135-live-updates,
+  #v142-public-matters,
+  #v141-public-plans,
+  #community-engagement{
+    padding-top:14px!important;
+    padding-bottom:24px!important;
+  }
+
+  .v20-section-marker{
+    top:14px!important;
+  }
+
+  /* Major section identity/header rows sit beside the constellation,
+     not below it. */
+  .v132-section-badge-row,
+  #community-compass .v59-section-marker,
+  #service-forms .v51-primary-label,
+  #enquiry .v51-primary-label{
+    margin-top:0!important;
+    transform:translateY(-1px)!important;
+  }
+
+  #activity-hub .v132-section-badge-row,
+  #contact-us .v132-section-badge-row,
+  #services .v132-section-badge-row,
+  #team .v132-section-badge-row,
+  #documents .v132-section-badge-row,
+  #resident-programmes .v132-section-badge-row,
+  #community-engagement .v132-section-badge-row,
+  #v121-what-we-heard .v121-kicker,
+  #v121-feedback-info .v121-kicker,
+  #v151-resident-voice .v151-head,
+  #community-compass .v59-section-marker,
+  #community-compass .v59-compass-head,
+  #service-forms .v51-primary-label,
+  #service-forms .v12-section-head,
+  #enquiry .v51-primary-label,
+  #enquiry .v9-contact-process{
+    margin-right:118px!important;
+  }
+
+  /* 2) SMG seal becomes a soft background watermark behind the hero. */
+  #v51-home{
+    position:relative!important;
+    isolation:isolate!important;
+  }
+
+  #v51-home .v20-hero-frame,
+  #v51-home .v20-hero-aside{
+    position:relative!important;
+    z-index:3!important;
+  }
+
+  #v51-home .v23-hero-visual{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    z-index:0!important;
+    opacity:.34!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+
+  #v51-home .v23-community-mark{
+    right:3.5%!important;
+    top:8%!important;
+    width:285px!important;
+    height:285px!important;
+    opacity:.42!important;
+    background:rgba(4,28,45,.11)!important;
+    border-color:rgba(255,255,255,.12)!important;
+    backdrop-filter:none!important;
+    box-shadow:
+      0 0 0 20px rgba(255,255,255,.010),
+      0 0 0 42px rgba(210,187,120,.012)!important;
+  }
+
+  #v51-home .v23-community-mark b{
+    font-size:60px!important;
+    color:rgba(228,213,159,.70)!important;
+    text-shadow:none!important;
+  }
+
+  #v51-home .v23-community-mark span{
+    color:rgba(206,225,234,.52)!important;
+  }
+
+  #v51-home .v23-orbit,
+  #v51-home .v23-glow,
+  #v51-home .v23-words,
+  #v51-home .v23-floral{
+    opacity:.48!important;
+  }
+
+  /* Keep Trevor James and quick district summary clearly above watermark. */
+  #v51-home .hero-photo,
+  #v51-home .v20-hero-aside{
+    position:relative!important;
+    z-index:4!important;
+  }
+
+  /* 3) SERVICES — make the service area uniform and centred. */
+  #services .services-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+    align-items:stretch!important;
+  }
+
+  /* Badge row spans all three columns. */
+  #services .v132-section-badge-row{
+    grid-column:1/-1!important;
+    margin-bottom:6px!important;
+  }
+
+  #services .service-card{
+    min-height:0!important;
+    height:auto!important;
+    padding:15px 14px!important;
+    border:1px solid rgba(11,53,83,.09)!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,.86)!important;
+    text-align:center!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+  }
+
+  #services .service-icon{
+    margin:0 auto 7px!important;
+  }
+
+  #services .service-card h3{
+    margin:3px 0 5px!important;
+    text-align:center!important;
+  }
+
+  #services .service-card p{
+    margin:0 auto 7px!important;
+    max-width:320px!important;
+    text-align:center!important;
+    line-height:1.4!important;
+  }
+
+  #services .v72-service-route{
+    margin:3px auto 0!important;
+  }
+
+  #services .v25-learn-more{
+    margin:8px auto 0!important;
+    align-self:center!important;
+  }
+
+  /* District Office role note is centred under the full service grid. */
+  #services .v72-note{
+    grid-column:1/-1!important;
+    width:min(860px,82%)!important;
+    margin:8px auto 0!important;
+    padding:10px 14px!important;
+    text-align:center!important;
+    border-left:0!important;
+    border-top:2px solid #c9a34a!important;
+    line-height:1.5!important;
+  }
+
+  /* The three service actions are centred in one uniform row. */
+  #services .v72-actions{
+    grid-column:1/-1!important;
+    width:100%!important;
+    margin:0 auto!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    gap:7px!important;
+    padding-top:1px!important;
+  }
+
+  #services .v72-actions a{
+    justify-content:center!important;
+    text-align:center!important;
+    min-width:150px!important;
+    padding:7px 10px!important;
+  }
+
+  /* Remove competing leaf so the constellation remains the visual signature. */
+  #services > span[aria-hidden="true"][style*="right:18px"]{
+    display:none!important;
+  }
+
+  /* Keep services section compact after converting to a 3 x 2 grid. */
+  #services{
+    padding-bottom:20px!important;
+  }
+
+  /* 4) Slightly reduce the remaining top blank space in major intro blocks. */
+  #community-compass .v59-compass-head,
+  #service-forms .v12-section-head,
+  #resident-programmes .v17-head,
+  #community-engagement .v18-head,
+  #v70-info-directory .v70-info-head,
+  #before-you-visit .v89-before-visit-head,
+  #resources .v3-section-head,
+  #team .v32-team-intro,
+  #district-profile .v13-profile-copy{
+    transform:translateY(-3px)!important;
+  }
+}
+
+/* Mobile/tablet retain existing responsive layout. */
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>

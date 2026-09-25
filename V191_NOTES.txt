@@ -1,0 +1,13 @@
+V191 — TIGHTER TOP ALIGNMENT + SMG BACKGROUND + SERVICES CENTRING
+
+Desktop changes:
+- Constellation/header pairs are moved further upward.
+- Major section top padding is reduced again.
+- The SMG circular seal is now a soft background watermark behind the hero rather than sitting visually on top of the content.
+- Trevor James and the District Office summary stay clearly above the SMG watermark.
+- Services are reorganised into a uniform 3 x 2 grid.
+- All service cards, including Social & General Support, are centred consistently.
+- The District Office role statement is centred beneath the service cards.
+- OPEN RESIDENT SERVICE PORTALS / START AN ENQUIRY / CONTACT THE OFFICE are centred together beneath the note.
+- Competing leaf ornament in Services is removed on desktop.
+- Existing public information, links and functionality remain.
