@@ -14251,6 +14251,243 @@ section > .v181-constellation-signature{
 }
 </style>
 
+
+<style id="v195-high-constellation-header-overlap">
+/* ==========================================================
+   V195 — MOVE CONSTELLATIONS / CIRCLES MUCH HIGHER
+   Stronger overlap with section header zone on desktop + mobile.
+   ========================================================== */
+
+@media (min-width:1024px){
+
+  /* Put constellation artwork high enough to sit partly above the section
+     boundary and partly behind the header band. */
+  section > .v181-constellation-signature{
+    top:-46px!important;
+    right:-12px!important;
+    width:clamp(112px,8.8vw,144px)!important;
+    opacity:.68!important;
+    transform:rotate(-8deg)!important;
+  }
+
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:-46px!important;
+    transform:rotate(-8deg)!important;
+  }
+
+  #community-compass > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature,
+  #district-profile > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature{
+    top:-54px!important;
+    right:-16px!important;
+    width:150px!important;
+    opacity:.74!important;
+  }
+
+  /* Circles also shift upward so they frame the header rather than sit
+     inside the body of the section. */
+  #services.v132-civic-section::after,
+  #team.v132-civic-section::after,
+  #resident-programmes.v132-civic-section::after,
+  #community-engagement.v132-civic-section::after{
+    top:-78px!important;
+    right:-58px!important;
+    width:182px!important;
+    height:182px!important;
+    opacity:.50!important;
+  }
+
+  /* Remove almost all top air in major sections. */
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #v51-more-gateway,
+  #v70-info-directory,
+  #services,
+  #about,
+  #team,
+  #leadership,
+  #district-profile,
+  #v121-scope,
+  #how-we-help,
+  #help-selector,
+  #support-areas,
+  #resident-guide,
+  #v145-public-cms,
+  #resident-faq,
+  #resources,
+  #privacy-accessibility,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #v133-public-action,
+  #v135-live-updates,
+  #v142-public-matters,
+  #v141-public-plans,
+  #community-engagement{
+    padding-top:2px!important;
+  }
+
+  /* Headers themselves sit slightly higher too. */
+  .v132-section-badge-row,
+  #community-compass .v59-section-marker,
+  #service-forms .v51-primary-label,
+  #enquiry .v51-primary-label,
+  #v121-what-we-heard .v121-kicker,
+  #v121-feedback-info .v121-kicker{
+    transform:translateY(-8px)!important;
+  }
+
+  .v59-compass-head,
+  .v12-section-head,
+  .v17-head,
+  .v18-head,
+  .v70-info-head,
+  .v89-before-visit-head,
+  .v3-section-head,
+  .v32-team-intro,
+  .v13-profile-copy{
+    transform:translateY(-13px)!important;
+  }
+
+  #v151-resident-voice .v151-head{
+    transform:translateY(-9px)!important;
+  }
+
+  .v20-section-marker{
+    top:2px!important;
+  }
+}
+
+@media (max-width:1023px){
+
+  /* Mobile/tablet: pull the constellation into the upper header corner,
+     with visible but controlled overlap. */
+  section > .v181-constellation-signature{
+    top:-34px!important;
+    right:-24px!important;
+    width:118px!important;
+    opacity:.60!important;
+    transform:rotate(-9deg)!important;
+  }
+
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:-34px!important;
+    transform:rotate(-9deg)!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature{
+    top:-40px!important;
+    right:-28px!important;
+    width:132px!important;
+    opacity:.66!important;
+  }
+
+  #services.v132-civic-section::after,
+  #team.v132-civic-section::after,
+  #resident-programmes.v132-civic-section::after,
+  #community-engagement.v132-civic-section::after{
+    top:-64px!important;
+    right:-76px!important;
+    width:164px!important;
+    height:164px!important;
+    opacity:.42!important;
+  }
+
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #services,
+  #about,
+  #team,
+  #district-profile,
+  #resources,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #community-engagement{
+    padding-top:8px!important;
+  }
+
+  .v132-section-badge-row,
+  #community-compass .v59-section-marker,
+  #service-forms .v51-primary-label,
+  #enquiry .v51-primary-label,
+  #v121-what-we-heard .v121-kicker,
+  #v121-feedback-info .v121-kicker{
+    transform:translateY(-5px)!important;
+  }
+
+  .v59-compass-head,
+  .v12-section-head,
+  .v17-head,
+  .v18-head,
+  .v70-info-head,
+  .v89-before-visit-head,
+  .v3-section-head,
+  .v32-team-intro,
+  .v13-profile-copy{
+    transform:translateY(-8px)!important;
+  }
+
+  #v151-resident-voice .v151-head{
+    transform:translateY(-6px)!important;
+  }
+}
+
+@media (max-width:560px){
+  section > .v181-constellation-signature{
+    top:-28px!important;
+    right:-24px!important;
+    width:102px!important;
+    opacity:.54!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature{
+    top:-34px!important;
+    right:-28px!important;
+    width:116px!important;
+    opacity:.60!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>

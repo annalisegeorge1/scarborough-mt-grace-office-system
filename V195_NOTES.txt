@@ -1,0 +1,6 @@
+V195 — HIGH CONSTELLATION / HEADER OVERLAP
+
+The constellation artwork and civic circles have been moved substantially higher on both desktop and mobile/tablet.
+They now sit partly above the section boundary and partly behind the header zone, with intentional overlap.
+Major section top padding was reduced again and heading groups were nudged upward.
+All V194/V193 content, responsive styling and functionality remain.
