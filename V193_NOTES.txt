@@ -1,0 +1,24 @@
+V193 — DESKTOP V192 / MOBILE V180-V181 RESPONSIVE SPLIT
+
+Desktop (1024px and wider)
+- Keeps the V192 appearance and structure.
+- Retains the compact desktop layout, restored ornate SMG seal behind the hero,
+  centred service treatment, combined Start Centre clock, and all later additions.
+
+Mobile / tablet (1023px and below)
+- Restores the V180/V181 visual language:
+  luxury navy/gold constellation atmosphere,
+  V181 middle/lower-right constellation placement,
+  lighter civic cards and layered section styling,
+  V180 map/footer celestial detailing.
+- Keeps V182 selected constellation animation, softened for mobile.
+- Keeps all added content and functionality.
+- Keeps the live Trinidad & Tobago clock combined with District Office Today.
+- Keeps enquiry/tracking links, public service portals, map integration,
+  documents, programmes and later content.
+- Keeps the ornate SMG seal as a smaller background emblem so it does not cover mobile text.
+- Services stack cleanly on mobile while retaining the later service content and buttons.
+
+Breakpoint:
+- Desktop: >= 1024px
+- Mobile/tablet style: <= 1023px

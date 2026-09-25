@@ -13618,6 +13618,334 @@ section > :not(.v181-constellation-signature){
 /* Smaller screens keep the established responsive treatment. */
 </style>
 
+
+<style id="v193-responsive-style-split">
+/* ==========================================================
+   V193 — RESPONSIVE STYLE SPLIT
+   DESKTOP (1024+): keep V192 exactly as the visual direction.
+   MOBILE/TABLET (<=1023): restore the V180/V181 visual rhythm
+   while keeping all later content/functionality additions.
+   ========================================================== */
+
+/* -------------------- MOBILE / TABLET -------------------- */
+@media (max-width:1023px){
+
+  /* Restore the V180 luxury-civic mobile atmosphere. */
+  .hero{
+    min-height:0!important;
+    height:auto!important;
+    padding-top:22px!important;
+    padding-bottom:26px!important;
+    overflow:hidden!important;
+  }
+
+  .hero::before{
+    background:
+      radial-gradient(circle at 8% 18%, rgba(234,217,164,.62) 0 2px, transparent 2.3px),
+      radial-gradient(circle at 18% 27%, rgba(11,53,83,.22) 0 1.5px, transparent 1.8px),
+      radial-gradient(circle at 27% 12%, rgba(201,163,74,.54) 0 1.8px, transparent 2.1px),
+      radial-gradient(circle at 72% 15%, rgba(234,217,164,.62) 0 2px, transparent 2.3px),
+      radial-gradient(circle at 84% 26%, rgba(11,53,83,.20) 0 1.4px, transparent 1.7px),
+      radial-gradient(circle at 91% 13%, rgba(201,163,74,.54) 0 1.8px, transparent 2.1px),
+      linear-gradient(126deg, transparent 0 10.7%, rgba(201,163,74,.14) 10.9% 11.05%, transparent 11.25% 100%),
+      linear-gradient(67deg, transparent 0 75.5%, rgba(201,163,74,.13) 75.7% 75.86%, transparent 76.05% 100%),
+      radial-gradient(360px 180px at 100% 0%, rgba(201,163,74,.10), transparent 64%),
+      radial-gradient(330px 180px at 0% 100%, rgba(201,163,74,.08), transparent 64%)!important;
+    opacity:1!important;
+  }
+
+  .hero::after{
+    width:300px!important;
+    height:300px!important;
+    right:-190px!important;
+    top:-130px!important;
+    border:1px solid rgba(201,163,74,.22)!important;
+    box-shadow:
+      0 0 0 22px rgba(201,163,74,.035),
+      0 0 0 52px rgba(11,53,83,.022)!important;
+    opacity:1!important;
+  }
+
+  .hero .hero-inner{
+    background:
+      radial-gradient(circle at 96% 8%,rgba(210,187,120,.10),transparent 22%),
+      linear-gradient(145deg,rgba(255,255,255,.97),rgba(239,246,249,.96))!important;
+    border:1px solid rgba(11,46,72,.11)!important;
+    border-radius:22px!important;
+    box-shadow:0 18px 42px rgba(11,53,83,.08)!important;
+  }
+
+  .hero .hero-text,
+  .hero .hero-text h1,
+  .hero .hero-text .quote,
+  .hero .hero-text .sub,
+  .hero .hero-text .kicker{
+    color:#0b2e48!important;
+  }
+
+  /* Keep the ornate SMG seal, but use it as a lower-right background
+     emblem so it never covers mobile information. */
+  #v51-home .v23-hero-visual{
+    position:absolute!important;
+    inset:0!important;
+    z-index:0!important;
+    pointer-events:none!important;
+    overflow:hidden!important;
+    opacity:1!important;
+  }
+
+  #v51-home .v23-community-mark{
+    position:absolute!important;
+    width:150px!important;
+    height:150px!important;
+    right:-48px!important;
+    top:auto!important;
+    bottom:18px!important;
+    transform:none!important;
+    opacity:.36!important;
+    background:
+      radial-gradient(circle at 34% 24%,rgba(255,255,255,.10),transparent 28%),
+      radial-gradient(circle at 50% 58%,rgba(210,187,120,.10),transparent 38%),
+      linear-gradient(145deg,rgba(6,36,57,.72),rgba(10,56,84,.48))!important;
+    border:1px solid rgba(226,210,157,.34)!important;
+    box-shadow:
+      0 0 0 6px rgba(255,255,255,.022),
+      0 0 0 12px rgba(210,187,120,.035),
+      inset 0 0 28px rgba(111,178,207,.07)!important;
+  }
+
+  #v51-home .v23-community-mark::before{
+    inset:-12px!important;
+    opacity:.48!important;
+  }
+
+  #v51-home .v23-community-mark::after{
+    inset:11px!important;
+  }
+
+  #v51-home .v23-community-mark b{
+    font-size:36px!important;
+  }
+
+  #v51-home .v23-community-mark span{
+    font-size:5px!important;
+    letter-spacing:.18em!important;
+  }
+
+  #v51-home .v130-seal-rule{
+    width:38px!important;
+    margin:5px 0!important;
+  }
+
+  #v51-home .v130-seal-motto{
+    font-size:4.5px!important;
+    margin-top:5px!important;
+  }
+
+  #v51-home .v20-hero-frame,
+  #v51-home .hero-inner,
+  #v51-home .hero-text,
+  #v51-home .hero-photo,
+  #v51-home .v23-hero-actions,
+  #v51-home .v20-hero-aside{
+    position:relative!important;
+    z-index:2!important;
+  }
+
+  /* V181 signature positioning on mobile/tablet. */
+  section > .v181-constellation-signature{
+    right:8px!important;
+    top:66%!important;
+    width:112px!important;
+    opacity:.48!important;
+    transform:translateY(-18%) rotate(-8deg)!important;
+    z-index:0!important;
+  }
+
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:66%!important;
+    transform:translateY(-18%) rotate(-8deg)!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature{
+    width:132px!important;
+    opacity:.56!important;
+  }
+
+  /* Preserve the selected V182 animation, but gentler on mobile. */
+  .v182-in-view .v181-constellation-signature svg{
+    animation-duration:14s!important;
+  }
+
+  /* Restore more breathing room than the compact desktop,
+     without recreating the large empty bands. */
+  section:not(.hero){
+    min-height:0!important;
+  }
+
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #services,
+  #about,
+  #team,
+  #district-profile,
+  #resources,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #community-engagement{
+    padding-top:30px!important;
+    padding-bottom:32px!important;
+  }
+
+  /* Start Centre keeps all newer functions and the combined clock,
+     but returns to the elegant V180/V181 card feel. */
+  #resident-start .v55-start-grid{
+    border-radius:22px!important;
+    border:1px solid rgba(11,53,83,.10)!important;
+    box-shadow:0 18px 42px rgba(11,53,83,.08)!important;
+    overflow:hidden!important;
+  }
+
+  #resident-start .v132-section-badge-row{
+    background:
+      radial-gradient(circle at 92% 12%,rgba(201,163,74,.08),transparent 24%),
+      linear-gradient(135deg,#fbf8f1,#f6f9fb)!important;
+  }
+
+  #resident-start .v55-start-main{
+    background:
+      linear-gradient(145deg,rgba(255,255,255,.98),rgba(245,249,251,.96))!important;
+  }
+
+  #resident-start .v55-office-today{
+    background:
+      radial-gradient(circle at 92% 12%,rgba(210,187,120,.10),transparent 24%),
+      linear-gradient(145deg,#082c46,#0b3553 62%,#174f74)!important;
+  }
+
+  #resident-start .v189-office-clock{
+    background:rgba(255,255,255,.075)!important;
+    border-color:rgba(218,194,121,.36)!important;
+  }
+
+  /* Keep later-added service organisation on mobile as a clean stack. */
+  #services .services-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+
+  #services .service-card{
+    text-align:left!important;
+    align-items:flex-start!important;
+    padding:15px!important;
+    border-radius:16px!important;
+  }
+
+  #services .service-icon{
+    margin:0 0 7px!important;
+  }
+
+  #services .service-card h3,
+  #services .service-card p{
+    text-align:left!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+
+  #services .v72-note{
+    width:100%!important;
+    margin:10px 0 0!important;
+    text-align:left!important;
+    border-left:3px solid #c9a34a!important;
+    border-top:0!important;
+  }
+
+  #services .v72-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    width:100%!important;
+  }
+
+  #services .v72-actions a{
+    width:100%!important;
+    min-width:0!important;
+    justify-content:center!important;
+  }
+
+  /* Map and district visuals retain V180 luxury edging. */
+  #district-profile .v84-district-map,
+  #district-profile .v170-island-map-card{
+    border:1px solid rgba(201,163,74,.28)!important;
+    box-shadow:0 20px 48px rgba(11,53,83,.11),
+               0 0 0 1px rgba(255,255,255,.55) inset!important;
+  }
+
+  #district-profile::after{
+    width:220px!important;
+    height:220px!important;
+    right:-145px!important;
+    top:150px!important;
+  }
+
+  /* Footer keeps the V180 celestial finish. */
+  footer::after{
+    width:220px!important;
+    height:220px!important;
+    right:-120px!important;
+    bottom:-130px!important;
+  }
+}
+
+/* Phone-specific refinement matching V181. */
+@media (max-width:560px){
+  section > .v181-constellation-signature{
+    width:92px!important;
+    right:4px!important;
+    top:72%!important;
+    opacity:.38!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature{
+    width:108px!important;
+    opacity:.44!important;
+  }
+
+  #v51-home .v23-community-mark{
+    width:126px!important;
+    height:126px!important;
+    right:-45px!important;
+    bottom:22px!important;
+    opacity:.30!important;
+  }
+
+  #v51-home .v23-community-mark b{
+    font-size:30px!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
