@@ -2,7 +2,6 @@
 
 <html lang="en">
 <head>
-<!-- V184: tighter desktop rhythm; district summary beside Trevor James; clock integrated into hero -->
 <!-- V177: self-contained image payloads restored; no external image folder required -->
 <!-- V176 PERFORMANCE CLEANUP: embedded bitmap assets externalized for caching; visual/content structure preserved. -->
 
@@ -12519,1813 +12518,256 @@ section > :not(.v181-constellation-signature){
 </style>
 
 
-<style id="v183-pc-compact-stable-hero">
+<style id="v189-v179-structure-unified-start-centre">
 /* ==========================================================
-   V183 — PC COMPACT + STABLE HERO
-   Reduces motion and excess space in the top desktop area.
-   Information/content remains unchanged.
+   V189 — V179 STRUCTURE RESTORE + UNIFIED START CENTRE
+   Base: V182, which retains the V179 page structure and all
+   V180–V182 constellation additions/animations.
+   No V183–V188 layout overrides are carried forward.
    ========================================================== */
 
-/* Stable highlight bar: no rotating/fading text at the top. */
-.v183-static-ribbon .v21-ribbon-rotator{
-  min-height:auto!important;
-  position:static!important;
-  overflow:hidden;
-}
-.v183-static-ribbon .v21-ribbon-rotator span{
-  position:static!important;
-  inset:auto!important;
-  opacity:1!important;
-  transition:none!important;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+/* Keep the Resident Start Centre as one coordinated desktop module. */
+#resident-start{
+  padding:24px 0 28px!important;
 }
 
-/* Clearer hierarchy inside the quick-information card. */
-.v183-aside-identity{
-  padding:0 0 11px;
-  margin-bottom:2px;
-  border-bottom:1px solid rgba(11,46,72,.10);
-}
-.v183-aside-identity strong{
-  display:block;
-  font:600 18px/1.12 Georgia,serif;
-  color:#0b3553;
-  letter-spacing:-.015em;
-}
-.v183-aside-identity span{
-  display:block;
-  margin-top:4px;
-  color:#667c88;
-  font-size:8px;
-  line-height:1.35;
-  font-weight:800;
-  letter-spacing:.035em;
-}
-.v183-aside-stats{display:grid;gap:0}
-
-@media (min-width:1024px){
-  /* Make the whole first screen calmer and more compact. */
-  .hero{
-    min-height:590px!important;
-    padding:28px 0 38px!important;
-    grid-template-columns:minmax(0,1fr) 252px!important;
-    column-gap:24px!important;
-  }
-  .hero .v20-hero-frame{min-width:0}
-  .hero-inner{
-    max-width:920px!important;
-    padding:34px 38px!important;
-    gap:14px!important;
-    border-radius:24px!important;
-  }
-  .hero h1{
-    font-size:clamp(3rem,4vw,4.65rem)!important;
-    line-height:.98!important;
-    margin-bottom:12px!important;
-  }
-  .hero .sub{margin-bottom:12px!important}
-  .hero .quote{margin:16px 0!important;line-height:1.5!important}
-  .v23-hero-actions{margin-top:12px!important;gap:8px!important}
-  .v23-action-card{min-height:64px!important;padding:10px 11px!important}
-
-  /* Compact and lock the District Office information panel. */
-  .v20-hero-aside.v183-hero-aside{
-    width:236px!important;
-    margin-right:16px!important;
-    padding:17px 17px 15px!important;
-    border-radius:20px!important;
-    align-self:center!important;
-    transform:none!important;
-    animation:none!important;
-  }
-  .v183-hero-aside .v20-aside-label{
-    margin-bottom:8px!important;
-    font-size:7px!important;
-    letter-spacing:.18em!important;
-  }
-  .v183-hero-aside .v20-aside-stat{
-    display:grid!important;
-    grid-template-columns:44px minmax(0,1fr)!important;
-    gap:11px!important;
-    align-items:center!important;
-    padding:8px 0!important;
-    min-height:48px!important;
-  }
-  .v183-hero-aside .v20-aside-stat strong{
-    font-size:25px!important;
-    line-height:1!important;
-    white-space:nowrap!important;
-  }
-  .v183-hero-aside .v20-aside-stat span{
-    font-size:8.5px!important;
-    line-height:1.3!important;
-    color:#506a79!important;
-  }
-  .v183-hero-aside .v20-aside-stat.v109-townhall-stat{
-    grid-template-columns:76px minmax(0,1fr)!important;
-  }
-  .v183-hero-aside .v20-aside-stat.v109-townhall-stat strong{
-    font-size:15px!important;
-    line-height:1.08!important;
-  }
-  .v183-hero-aside .v20-aside-stat.v109-townhall-stat span{
-    font-size:8.5px!important;
-  }
-
-  /* Keep the decorative hero elegant but visually quieter. */
-  .v23-hero-visual{opacity:.43!important}
-  .v166-hero-decor{opacity:.58!important}
-  .v23-hero-visual,
-  .v23-hero-visual *,
-  .v166-hero-decor,
-  .v166-hero-decor *{
-    animation:none!important;
-    transition:none!important;
-  }
-
-  /* Pull the elements immediately below the hero closer together. */
-  .v8-hours-card{
-    padding:12px 16px!important;
-    margin-bottom:12px!important;
-  }
-  .v56-district-rail .wrap{min-height:30px!important}
-  .v170-locator-band{padding-top:24px!important;padding-bottom:24px!important}
-
-  /* Slightly tighter desktop rhythm through major content sections. */
-  #resident-start,
-  #portal-hub,
-  #activity-hub,
-  #community-compass,
-  #contact-us,
-  #service-forms,
-  #enquiry,
-  #gallery,
-  #services,
-  #about,
-  #team,
-  #leadership,
-  #district-profile,
-  #how-we-help,
-  #help-selector,
-  #support-areas,
-  #resident-guide,
-  #resident-faq,
-  #resources,
-  #privacy-accessibility,
-  #documents,
-  #resident-programmes,
-  #community-engagement{
-    padding-top:56px!important;
-    padding-bottom:56px!important;
-  }
-
-  /* Do not disturb sections designed as compact strips/bands. */
-  .v20-desktop-feature-strip,
-  .v5-notice-strip,
-  .v56-district-rail{padding-top:0!important;padding-bottom:0!important}
+#resident-start > .v181-constellation-signature{
+  top:22px!important;
+  right:max(22px,calc((100vw - 1200px)/2 + 18px))!important;
+  width:clamp(118px,10vw,154px)!important;
+  transform:rotate(-7deg)!important;
+  opacity:.58!important;
 }
 
-/* Keep phone/tablet behaviour from V182. */
-@media (max-width:1023px){
-  .v183-aside-identity{display:none}
-  .v183-static-ribbon .v21-ribbon-rotator span{
-    white-space:normal;
-    line-height:1.35;
-  }
+#resident-start .v55-start-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.65fr) minmax(295px,.72fr)!important;
+  grid-template-areas:
+    "badge badge"
+    "main office"!important;
+  gap:0!important;
+  overflow:hidden!important;
+  border:1px solid rgba(10,47,73,.11)!important;
+  border-radius:24px!important;
+  background:rgba(255,255,255,.90)!important;
+  box-shadow:0 18px 42px rgba(7,35,55,.075)!important;
 }
-</style>
 
+/* The Start Centre identity becomes the header of the combined module. */
+#resident-start .v132-section-badge-row{
+  grid-area:badge!important;
+  margin:0!important;
+  padding:13px 165px 11px 16px!important;
+  gap:11px!important;
+  border-bottom:1px solid rgba(10,47,73,.075)!important;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.96),rgba(246,250,252,.88))!important;
+}
 
-<style id="v184-pc-tighter-layout">
-/* ==========================================================
-   V184 — PC TIGHTER LAYOUT
-   Uses existing space more efficiently without removing information.
-   ========================================================== */
-.v184-member-utility{display:none}
+#resident-start .v132-section-badge{
+  flex-basis:54px!important;
+  width:54px!important;
+  height:54px!important;
+  box-shadow:0 9px 22px rgba(11,46,72,.12),
+             0 0 0 3px rgba(255,255,255,.82),
+             0 0 0 4px rgba(23,79,116,.09)!important;
+}
+#resident-start .v132-section-badge-core{
+  width:40px!important;
+  height:40px!important;
+}
+#resident-start .v132-section-badge svg{
+  width:28px!important;
+  height:28px!important;
+}
+#resident-start .v132-section-badge-copy{
+  gap:2px!important;
+}
+#resident-start .v132-section-badge-copy b{
+  font-size:10px!important;
+}
+#resident-start .v132-section-badge-copy small{
+  font-size:7px!important;
+}
+#resident-start .v132-section-badge-row>i{
+  max-width:280px!important;
+}
 
-@media (min-width:1024px){
-  /* The top ribbon repeats information already present in the hero. */
-  .v183-static-ribbon{display:none!important}
+/* Main task area and office information now read as two halves of one card. */
+#resident-start .v55-start-main{
+  grid-area:main!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:rgba(255,255,255,.94)!important;
+  padding:18px 19px 16px!important;
+  min-width:0!important;
+}
 
-  /* Keep the original mobile/tablet copies out of the desktop layout. */
-  .hero > .v8-hours-card,
-  .hero > .v20-hero-aside.v183-hero-aside{display:none!important}
-  .hero-photo > .info{display:none!important}
+#resident-start .v55-office-today{
+  grid-area:office!important;
+  border:0!important;
+  border-left:1px solid rgba(255,255,255,.13)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  padding:18px!important;
+  min-width:0!important;
+}
 
-  /* Hero uses the full page width instead of reserving an empty third column. */
-  .hero{
-    display:block!important;
-    min-height:0!important;
-    padding:14px 0 12px!important;
-  }
-  .hero .v20-hero-frame{
-    width:100%!important;
-    max-width:1240px!important;
-    margin:0 auto!important;
-    padding:0 20px!important;
-  }
-  .hero-inner{
-    max-width:1200px!important;
-    margin:0 auto!important;
-    padding:24px 26px!important;
-    gap:22px!important;
-    grid-template-columns:minmax(0,1.08fr) minmax(350px,.92fr)!important;
-    align-items:start!important;
-    border-radius:22px!important;
-  }
-  .hero h1{
-    font-size:clamp(2.75rem,3.65vw,4.2rem)!important;
-    line-height:1!important;
-    margin-top:7px!important;
-    margin-bottom:9px!important;
-  }
-  .hero .hero-text .executive-label{
-    margin-bottom:9px!important;
-    padding:5px 10px!important;
-    font-size:9px!important;
-  }
-  .hero .kicker{margin-bottom:5px!important;font-size:10px!important}
-  .hero .sub{margin:7px 0 8px!important;padding:6px 10px!important;font-size:9px!important}
-  .hero .quote{margin:10px 0 12px!important;padding-left:16px!important;font-size:13px!important;line-height:1.4!important}
-  .hero-actions{gap:8px!important}
-  .hero-actions .btn{padding:10px 15px!important;font-size:10px!important}
-  .v8-hero-actions{gap:7px!important;margin-top:12px!important}
-  .v8-hero-actions button{padding:9px 10px!important;border-radius:11px!important}
-  .v8-hero-actions span{font-size:9px!important}
-  .v8-hero-actions small{font-size:7.5px!important;margin-top:2px!important}
-  .v8-trust-line{margin-top:10px!important;padding:7px 10px!important;font-size:7px!important}
+#resident-start .v55-start-main h2{
+  margin:4px 0 5px!important;
+  font-size:clamp(25px,2.6vw,33px)!important;
+}
+#resident-start .v55-start-main>p{
+  line-height:1.48!important;
+  max-width:760px!important;
+}
 
-  /* Right hero column: image, then Trevor + district facts + office hours. */
-  .hero-photo{min-width:0!important}
-  .hero-photo img{
-    height:300px!important;
-    object-position:top center!important;
-    border-radius:20px!important;
-  }
-  .hero-photo>.quote{
-    top:12px!important;
-    right:12px!important;
-    width:auto!important;
-    max-width:165px!important;
-    padding:7px 10px!important;
-    font-size:12px!important;
-  }
-  .v184-member-utility{
-    display:grid!important;
-    grid-template-columns:148px minmax(0,1fr)!important;
-    grid-template-rows:auto auto!important;
+/* Keep all six actions visible on desktop without unnecessary height. */
+@media(min-width:701px){
+  #resident-start .v55-start-actions{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
     gap:7px!important;
-    margin-top:7px!important;
-    align-items:stretch!important;
+    margin-top:12px!important;
   }
-  .hero-photo .v184-member-utility>.v184-info-copy{
-    position:static!important;
-    right:auto!important;
-    bottom:auto!important;
-    grid-column:1!important;
-    grid-row:1!important;
-    min-width:0!important;
-    padding:10px 11px!important;
-    text-align:left!important;
-    border-radius:13px!important;
-    box-shadow:none!important;
-    display:flex!important;
-    flex-direction:column!important;
-    justify-content:center!important;
-  }
-  .hero-photo .v184-info-copy h3{font-size:13px!important;line-height:1.1!important}
-  .hero-photo .v184-info-copy p{font-size:9px!important;line-height:1.35!important;margin-top:3px!important}
-
-  /* District Office information is now directly beside Trevor James. */
-  .v184-member-utility .v184-aside-copy{
-    display:block!important;
-    position:static!important;
-    grid-column:2!important;
-    grid-row:1 / span 2!important;
-    width:auto!important;
-    min-width:0!important;
-    margin:0!important;
-    padding:10px 12px!important;
-    align-self:stretch!important;
-    border-radius:13px!important;
-    box-shadow:none!important;
-    transform:none!important;
-    animation:none!important;
-  }
-  .v184-member-utility .v20-aside-label{
-    margin-bottom:4px!important;
-    font-size:6.5px!important;
-    letter-spacing:.15em!important;
-  }
-  .v184-member-utility .v183-aside-identity{
-    padding:0 0 6px!important;
-    margin:0 0 2px!important;
-  }
-  .v184-member-utility .v183-aside-identity strong{font-size:13px!important;line-height:1.1!important}
-  .v184-member-utility .v183-aside-identity span{font-size:6.7px!important;margin-top:2px!important}
-  .v184-member-utility .v183-aside-stats{display:grid!important;grid-template-columns:1fr!important;gap:0!important}
-  .v184-member-utility .v20-aside-stat,
-  .v184-member-utility .v20-aside-stat.v109-townhall-stat{
-    display:grid!important;
-    grid-template-columns:48px minmax(0,1fr)!important;
-    min-height:0!important;
-    gap:6px!important;
-    padding:4px 0!important;
-    align-items:center!important;
-  }
-  .v184-member-utility .v20-aside-stat strong{font-size:18px!important;line-height:1!important}
-  .v184-member-utility .v20-aside-stat.v109-townhall-stat strong{font-size:10px!important;line-height:1.05!important}
-  .v184-member-utility .v20-aside-stat span,
-  .v184-member-utility .v20-aside-stat.v109-townhall-stat span{font-size:7.2px!important;line-height:1.2!important}
-
-  /* Clock uses the small area beneath Trevor rather than hanging below the hero. */
-  .v184-member-utility .v184-hours-copy{
-    display:flex!important;
-    position:static!important;
-    right:auto!important;
-    bottom:auto!important;
-    grid-column:1!important;
-    grid-row:2!important;
-    width:auto!important;
-    margin:0!important;
-    padding:8px 9px!important;
-    gap:7px!important;
-    border-radius:12px!important;
-    box-shadow:none!important;
-  }
-  .v184-member-utility .v8-clock{width:28px!important;height:28px!important;border-radius:8px!important}
-  .v184-member-utility .v8-clock svg{width:15px!important;height:15px!important}
-  .v184-member-utility .v8-hours-card small{font-size:5.8px!important}
-  .v184-member-utility .v8-hours-card strong{font-size:7.7px!important;line-height:1.2!important}
-  .v184-member-utility .v8-hours-card span{font-size:6.8px!important;line-height:1.2!important}
-
-  /* 01 / 02 / 03 become a slim navigation strip instead of a large shelf. */
-  .v23-hero-actions{margin:8px auto 0!important;gap:7px!important;max-width:1200px!important}
-  .v23-action-card{
-    min-height:52px!important;
-    padding:7px 10px!important;
-    grid-template-columns:30px minmax(0,1fr)!important;
-    grid-template-rows:auto auto!important;
-    column-gap:8px!important;
-    row-gap:0!important;
-    border-radius:10px!important;
-    box-shadow:0 8px 18px rgba(7,31,48,.07)!important;
-  }
-  .v23-action-card>span{
-    width:28px!important;height:28px!important;
-    grid-column:1!important;grid-row:1 / span 2!important;
-    font-size:9px!important;
-  }
-  .v23-action-card>strong{grid-column:2!important;grid-row:1!important;font-size:9px!important;line-height:1.15!important}
-  .v23-action-card>small{grid-column:2!important;grid-row:2!important;font-size:7px!important;line-height:1.2!important;margin-top:1px!important}
-
-  /* Eliminate reserved decorative/empty hero space. */
-  .v23-hero-visual{display:none!important}
-  .v56-district-rail .wrap{min-height:26px!important;padding-top:5px!important;padding-bottom:5px!important}
-  .v170-locator-band{padding:14px 0!important}
-
-  /* Consistent tighter desktop rhythm from the middle through the bottom. */
-  #resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,
-  #service-forms,#enquiry,#gallery,#services,#about,#team,#leadership,
-  #district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,
-  #resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,
-  #community-engagement{
-    padding-top:40px!important;
-    padding-bottom:40px!important;
-  }
-  #v132-public-paths,#v121-what-we-heard,#before-you-visit,#v121-feedback-info,
-  #v151-resident-voice,#v51-more-gateway,#v70-info-directory,#v121-scope,
-  #v145-public-cms,#community-action-centre,#v133-public-action,#v135-live-updates,
-  #v142-public-matters,#v141-public-plans{
-    padding-top:30px!important;
-    padding-bottom:30px!important;
-  }
-  .v20-desktop-feature-strip article{padding:14px 15px!important}
-  .v14-service-overview{padding-top:9px!important;padding-bottom:9px!important}
-  .v5-notice-strip{padding-top:10px!important;padding-bottom:10px!important}
-  main section h2{margin-top:0!important;margin-bottom:7px!important}
-  main section h3{margin-top:0!important}
-  .v132-section-badge-row,.v20-section-marker,.v59-section-marker{margin-bottom:7px!important}
-}
-</style>
-
-
-<style id="v185-compact-middle-lower-sections">
-/* ==========================================================
-   V185 — COMPACT MIDDLE / LOWER DESKTOP RHYTHM
-   Pulls key public sections upward and removes excess vertical
-   whitespace while preserving all content and functionality.
-   ========================================================== */
-@media (min-width:1024px){
-
-  /* Main sections requested for a tighter desktop flow */
-  #v121-what-we-heard,
-  #community-compass,
-  #service-forms,
-  #enquiry,
-  #v121-feedback-info,
-  #v151-resident-voice{
-    padding-top:18px!important;
-    padding-bottom:18px!important;
-  }
-
-  /* Tighten the section immediately before each requested block
-     so the next heading begins sooner. */
-  #activity-hub{padding-bottom:22px!important}
-  #contact-us{padding-bottom:24px!important}
-  #before-you-visit{padding-top:22px!important;padding-bottom:18px!important}
-  #gallery{padding-top:24px!important}
-
-  /* COMMUNITY COMPASS */
-  #community-compass .v59-section-marker{
-    margin-bottom:4px!important;
-  }
-  #community-compass .v59-compass-head{
-    margin-bottom:8px!important;
-    gap:8px!important;
-  }
-  #community-compass .v59-compass-head h2{
-    margin:2px 0 3px!important;
-  }
-  #community-compass .v59-compass-head p{
-    line-height:1.4!important;
-  }
-  #community-compass .v59-compass-grid,
-  #community-compass .v59-compass-list{
-    margin-top:10px!important;
-  }
-  #community-compass .v59-compass-footer{
-    margin-top:10px!important;
-  }
-
-  /* WHAT WE HEARD */
-  #v121-what-we-heard .v121-kicker{
-    margin-bottom:2px!important;
-  }
-  #v121-what-we-heard .v121-title{
-    margin:2px 0 5px!important;
-  }
-  #v121-what-we-heard .v121-title::after{
-    margin-top:6px!important;
-  }
-  #v121-what-we-heard .v121-lead{
-    margin-top:5px!important;
-    margin-bottom:0!important;
-    line-height:1.45!important;
-  }
-  #v121-what-we-heard .v121-heard-grid{
-    margin-top:11px!important;
-    gap:10px!important;
-  }
-  #v121-what-we-heard .v121-heard{
-    padding:13px 14px!important;
-  }
-
-  /* FORMS / PUBLIC DOCUMENT LIBRARY */
-  #service-forms .v20-section-marker{
-    margin-bottom:4px!important;
-  }
-  #service-forms .v51-primary-label{
-    margin-bottom:5px!important;
-  }
-  #service-forms .v12-section-head,
-  #service-forms .section-head{
-    margin-bottom:9px!important;
-  }
-  #service-forms .v16-form-notice{
-    margin:10px 0 15px!important;
-    padding:12px 15px!important;
-  }
-  #service-forms .v16-form-group{
-    margin:16px 0!important;
-  }
-  #service-forms .v16-group-head{
-    margin-bottom:7px!important;
-    padding-bottom:6px!important;
-  }
-  #service-forms .v16-form-grid{
-    gap:8px!important;
-  }
-  #service-forms .v16-form-card{
-    padding:12px 13px!important;
-  }
-
-  /* The dark Submit → Track strip stays useful but very compact */
-  .v40-public-system{
-    padding:7px 0!important;
-  }
-  .v40-public-system .wrap{
-    min-height:0!important;
-  }
-  .v40-public-system strong{
-    margin-top:1px!important;
-  }
-  .v40-public-system small{
-    margin-top:1px!important;
-    line-height:1.25!important;
-  }
-
-  /* ENQUIRY / START • FOLLOW UP */
-  #enquiry .v20-section-marker{
-    margin-bottom:4px!important;
-  }
-  #enquiry .contact-grid{
-    row-gap:8px!important;
-    gap:12px!important;
-  }
-  #enquiry .v51-primary-label{
-    margin-bottom:4px!important;
-  }
-  #enquiry .v9-contact-process{
-    margin-top:6px!important;
-    margin-bottom:8px!important;
-  }
-  #enquiry .v54-enquiry-actions{
-    margin-bottom:8px!important;
-    gap:8px!important;
-  }
-  #enquiry .form-area>h2{
-    margin:4px 0 4px!important;
-  }
-  #enquiry .v74-enquiry-intro{
-    margin:0 0 8px!important;
-  }
-  #enquiry .v35-track-box{
-    margin-top:8px!important;
-    margin-bottom:8px!important;
-  }
-  #enquiry .v55-before-submit{
-    margin-top:8px!important;
-    margin-bottom:8px!important;
-    padding-top:12px!important;
-    padding-bottom:12px!important;
-  }
-  #enquiry .v69-enquiry-stage{
-    margin-top:8px!important;
-    margin-bottom:8px!important;
-    gap:7px!important;
-  }
-
-  /* RESIDENT FEEDBACK */
-  #v121-feedback-info .v121-kicker{
-    margin-bottom:2px!important;
-  }
-  #v121-feedback-info .v121-title{
-    margin:2px 0 5px!important;
-  }
-  #v121-feedback-info .v121-title::after{
-    margin-top:6px!important;
-  }
-  #v121-feedback-info .v121-lead{
-    margin:5px 0 0!important;
-    line-height:1.45!important;
-  }
-  #v121-feedback-info .v121-feedback-box{
-    margin-top:10px!important;
-    padding:12px 14px!important;
-  }
-
-  /* RESIDENT VOICE */
-  #v151-resident-voice .v151-wrap{
-    padding-top:0!important;
-    padding-bottom:0!important;
-  }
-  #v151-resident-voice .v151-head{
-    gap:11px!important;
-    align-items:center!important;
-  }
-  #v151-resident-voice .v151-badge{
-    width:62px!important;
-    height:62px!important;
-  }
-  #v151-resident-voice .v151-kicker{
-    margin-bottom:2px!important;
-  }
-  #v151-resident-voice .v151-title{
-    margin:2px 0 5px!important;
-  }
-  #v151-resident-voice .v151-lead{
-    margin:0!important;
-    line-height:1.45!important;
-  }
-  #v151-resident-voice .v151-grid{
-    margin-top:10px!important;
-    gap:9px!important;
-  }
-  #v151-resident-voice .v151-card{
-    padding:13px 14px!important;
-  }
-
-  /* General cleanup for these six blocks: remove oversized heading gaps
-     introduced by earlier decorative passes. */
-  #v121-what-we-heard h2,
-  #community-compass h2,
-  #service-forms h2,
-  #enquiry h2,
-  #v121-feedback-info h2,
-  #v151-resident-voice h2{
-    scroll-margin-top:86px;
-  }
-
-  #v121-what-we-heard p:last-child,
-  #community-compass p:last-child,
-  #service-forms p:last-child,
-  #v121-feedback-info p:last-child,
-  #v151-resident-voice p:last-child{
-    margin-bottom:0!important;
-  }
-}
-</style>
-
-
-<style id="v186-compact-remaining-sections">
-/* ==========================================================
-   V186 — COMPACT REMAINING DESKTOP SECTIONS
-   Services • About • Our Team • Resources • Programmes • Community
-   Desktop only; content and functionality preserved.
-   ========================================================== */
-@media (min-width:1024px){
-
-  /* Pull these major sections upward and reduce empty bands. */
-  #services,
-  #about,
-  #team,
-  #resources,
-  #resident-programmes,
-  #community-engagement{
-    padding-top:20px!important;
-    padding-bottom:20px!important;
-  }
-
-  /* Reduce transition space around the More / directory area. */
-  #v51-more-gateway{
-    padding-top:18px!important;
-    padding-bottom:14px!important;
-  }
-  #v70-info-directory{
-    padding-top:14px!important;
-    padding-bottom:18px!important;
-  }
-  #v70-info-directory .v70-info-grid{
-    gap:8px!important;
-    margin-top:9px!important;
-  }
-  #v70-info-directory .v70-info-card{
-    padding:12px 13px!important;
-  }
-
-  /* SERVICES */
-  #services .v132-section-badge-row{
-    margin-bottom:7px!important;
-  }
-  #services .services-grid{
-    gap:9px!important;
-    align-items:stretch!important;
-  }
-  #services .service-card{
-    padding:13px 13px!important;
-    min-height:0!important;
-  }
-  #services .service-card svg,
-  #services .service-icon svg{
-    width:34px!important;
-    height:34px!important;
-    margin-bottom:7px!important;
-  }
-  #services .service-card h3{
-    margin:4px 0 5px!important;
-    font-size:12px!important;
-    line-height:1.18!important;
-  }
-  #services .service-card p{
-    margin:0 0 7px!important;
-    font-size:9px!important;
-    line-height:1.42!important;
-  }
-  #services .v72-service-route{
-    margin-top:2px!important;
-  }
-  #services .v25-learn-more{
-    margin-top:6px!important;
-    padding-top:7px!important;
-    padding-bottom:7px!important;
-  }
-
-  /* ABOUT / DISTRICT OFFICE */
-  #about .office-grid{
-    gap:24px!important;
-    align-items:center!important;
-  }
-  #about .office-img img{
-    height:330px!important;
-    min-height:0!important;
-  }
-  #about .office-info .kicker{
-    margin-bottom:3px!important;
-  }
-  #about .office-info h2{
-    margin:2px 0 8px!important;
-  }
-  #about .v131-office-glance{
-    gap:7px!important;
-    margin:8px 0!important;
-  }
-  #about .v131-glance-card{
+  #resident-start .v55-start-action{
+    min-height:70px!important;
     padding:10px 11px!important;
   }
-  #about .v71-office-intro{
-    margin:8px 0!important;
-    padding:10px 12px!important;
-    line-height:1.4!important;
-  }
-  #about .detail{
-    margin-bottom:7px!important;
-    padding-top:3px!important;
-    padding-bottom:3px!important;
-  }
-  #about .v71-office-actions{
-    margin-top:9px!important;
-    gap:7px!important;
-  }
-
-  /* OUR TEAM */
-  #team .v132-section-badge-row{
-    margin-bottom:6px!important;
-  }
-  #team .v32-team-banner{
-    margin-bottom:10px!important;
-    padding:10px 13px!important;
-  }
-  #team .v32-team-intro{
-    margin-bottom:12px!important;
-  }
-  #team .v32-team-intro h2{
-    font-size:31px!important;
+  #resident-start .v55-start-action strong{
     margin-top:4px!important;
   }
-  #team .v71-team-summary{
-    margin:7px 0 8px!important;
-    gap:6px!important;
-  }
-  #team .v71-team-summary article{
-    padding:8px 9px!important;
-  }
-  #team .v32-group-head{
-    margin:14px 0 8px!important;
-    padding-bottom:6px!important;
-  }
-  #team .v32-leadership-grid,
-  #team .v32-staff-grid{
-    gap:8px!important;
-  }
-  #team .v32-lead-card,
-  #team .v32-staff-card,
-  #team .member{
-    min-height:0!important;
-  }
-  #team .v71-team-note{
-    margin-top:7px!important;
-    padding:8px 10px!important;
-  }
-
-  /* RESOURCES */
-  #resources .v3-section-head{
-    padding:14px 17px!important;
-    margin-bottom:10px!important;
-    max-width:760px!important;
-  }
-  #resources .v3-section-head h2{
-    margin:3px 0 4px!important;
-  }
-  #resources .v3-section-head p{
-    margin:0!important;
-    line-height:1.4!important;
-  }
-  #resources .v4-resource-grid{
-    gap:9px!important;
-  }
-  #resources .v4-resource-grid article{
-    padding:15px 15px!important;
-    border-radius:14px!important;
-  }
-  #resources .v4-resource-icon{
-    margin-bottom:7px!important;
-  }
-  #resources .v4-resource-grid h3{
-    margin:3px 0 5px!important;
-    font-size:13px!important;
-  }
-  #resources .v4-resource-grid p{
-    margin:0 0 8px!important;
-    font-size:9px!important;
-    line-height:1.4!important;
-  }
-  #resources .v72-resource-action{
-    margin-top:5px!important;
-  }
-  #resources .v99-download-guide{
-    margin-top:10px!important;
-    padding-top:10px!important;
-    padding-bottom:10px!important;
-  }
-
-  /* PROGRAMMES */
-  #resident-programmes .v132-section-badge-row{
-    margin-bottom:7px!important;
-  }
-  #resident-programmes .v17-head{
-    margin-bottom:10px!important;
-    gap:12px!important;
-  }
-  #resident-programmes .v17-head h2{
-    margin:2px 0 4px!important;
-    font-size:1.85rem!important;
-  }
-  #resident-programmes .v17-head p{
-    line-height:1.4!important;
-  }
-  #resident-programmes .v17-start{
-    margin-bottom:10px!important;
-    padding:10px 12px!important;
-    gap:10px!important;
-  }
-  #resident-programmes .v17-start-items{
-    gap:4px!important;
-  }
-  #resident-programmes .v17-start-items span{
-    padding:5px 7px!important;
-  }
-  #resident-programmes .v72-source-banner{
-    margin:7px 0 8px!important;
-    padding:8px 10px!important;
-  }
-  #resident-programmes .v72-programme-links{
-    margin:7px 0 9px!important;
-    gap:6px!important;
-  }
-  #resident-programmes .v72-programme-links a{
-    padding:8px 9px!important;
-  }
-  #resident-programmes .v17-grid{
-    gap:9px!important;
-  }
-  #resident-programmes .v17-card{
-    padding:14px 15px!important;
-  }
-  #resident-programmes .v17-card h3{
-    margin:5px 0!important;
-  }
-  #resident-programmes .v17-purpose{
-    margin:4px 0 7px!important;
-  }
-  #resident-programmes .v17-facts{
-    gap:6px!important;
-    margin:7px 0!important;
-  }
-  #resident-programmes .v17-card ul{
-    margin-top:7px!important;
-    margin-bottom:8px!important;
-  }
-
-  /* COMMUNITY */
-  #community-engagement .v132-section-badge-row{
-    margin-bottom:7px!important;
-  }
-  #community-engagement .v18-head{
-    margin-bottom:10px!important;
-    gap:12px!important;
-  }
-  #community-engagement .v18-head h2{
-    margin:2px 0 4px!important;
-    font-size:1.9rem!important;
-  }
-  #community-engagement .v18-head p{
-    line-height:1.42!important;
-  }
-  #community-engagement .v18-townhall{
-    margin-bottom:12px!important;
-    padding:15px!important;
-    gap:15px!important;
-    grid-template-columns:145px 1fr!important;
-  }
-  #community-engagement .v18-townhall-copy h3{
-    margin:4px 0!important;
-  }
-  #community-engagement .v18-townhall-copy p{
-    margin:3px 0!important;
-    line-height:1.42!important;
-  }
-  #community-engagement .v18-townhall-points{
-    margin:6px 0!important;
-  }
-  #community-engagement .v22-townhall-photo{
-    height:245px!important;
-    margin:0 0 13px!important;
-  }
-  #community-engagement .v22-townhall-photo>div{
-    left:22px!important;
-    bottom:18px!important;
-  }
-  #community-engagement .v18-actions-intro{
-    margin-bottom:10px!important;
-  }
-  #community-engagement .v18-actions-intro h3{
-    margin:3px 0!important;
-  }
-  #community-engagement .v18-actions-intro p{
-    margin:3px 0!important;
-    line-height:1.4!important;
-  }
-  #community-engagement .v18-action-grid{
-    gap:7px!important;
-    margin-bottom:12px!important;
-  }
-  #community-engagement .v18-action-grid article{
-    padding:11px 11px!important;
-    min-height:100px!important;
-  }
-  #community-engagement .v18-action-grid b{
-    margin-bottom:7px!important;
-    font-size:20px!important;
-  }
-  #community-engagement .v19-action-purpose{
-    margin-top:8px!important;
-    margin-bottom:8px!important;
-    padding:10px 12px!important;
-  }
-  #community-engagement .v21-action-explorer{
-    margin:10px 0 12px!important;
-    gap:12px!important;
-  }
-  #community-engagement .v21-area-buttons{
-    gap:5px!important;
-  }
-  #community-engagement .v21-area-detail{
-    padding:12px!important;
-  }
-
-  /* Tighten decorative end spacing created by earlier releases. */
-  #services::after,
-  #team::after{
-    margin-top:8px!important;
-    height:14px!important;
-    line-height:14px!important;
-  }
-
-  #services h2,
-  #about h2,
-  #team h2,
-  #resources h2,
-  #resident-programmes h2,
-  #community-engagement h2{
-    scroll-margin-top:86px;
-  }
-}
-</style>
-
-
-<style id="v187-desktop-alignment-cleanup">
-/* ==========================================================
-   V187 — DESKTOP ALIGNMENT & CLEANUP
-   Main goal:
-   - constellation art sits at the SAME visual level as section intros
-   - remove awkward blank bands
-   - create one consistent desktop rhythm
-   - preserve content, links, forms and functionality
-   ========================================================== */
-
-@media (min-width:1024px){
-
-  /* ----------------------------------------------------------
-     1. CONSTELLATIONS: TOP-RIGHT / SAME LEVEL AS SECTION INTRO
-     ---------------------------------------------------------- */
-  #services > .v181-constellation-signature,
-  #about > .v181-constellation-signature,
-  #team > .v181-constellation-signature,
-  #resources > .v181-constellation-signature,
-  #resident-programmes > .v181-constellation-signature,
-  #community-engagement > .v181-constellation-signature{
-    top:18px!important;
-    right:clamp(22px,3vw,48px)!important;
-    width:clamp(118px,9.5vw,158px)!important;
-    transform:none!important;
-    opacity:.62!important;
-    z-index:1!important;
-  }
-
-  /* Dark / stronger areas get a slightly brighter constellation. */
-  #team > .v181-constellation-signature,
-  #resident-programmes > .v181-constellation-signature{
-    opacity:.74!important;
-  }
-
-  /* ----------------------------------------------------------
-     2. SECTION SHELL: REMOVE EXCESS HEIGHT
-     ---------------------------------------------------------- */
-  #services,
-  #about,
-  #team,
-  #resources,
-  #resident-programmes,
-  #community-engagement{
-    min-height:0!important;
-    height:auto!important;
-    padding-top:24px!important;
-    padding-bottom:28px!important;
-    margin-top:0!important;
-    margin-bottom:0!important;
-  }
-
-  /* Keep decorative artwork inside the section rather than creating
-     the impression of a separate empty band. */
-  #services,
-  #about,
-  #team,
-  #resources,
-  #resident-programmes,
-  #community-engagement{
-    overflow:hidden!important;
-  }
-
-  /* First content rows begin close to the top of each section. */
-  #services > .wrap,
-  #about > .wrap,
-  #team > .wrap,
-  #resources > .wrap,
-  #resident-programmes > .wrap,
-  #community-engagement > .wrap{
-    margin-top:0!important;
-    padding-top:0!important;
-    padding-bottom:0!important;
-  }
-
-  /* ----------------------------------------------------------
-     3. LEFT VERTICAL SECTION MARKER: ALIGN WITH CONSTELLATION
-     ---------------------------------------------------------- */
-  #services > .v20-section-marker,
-  #team > .v20-section-marker,
-  #resident-programmes > .v20-section-marker,
-  #community-engagement > .v20-section-marker{
-    top:22px!important;
-  }
-
-  /* ----------------------------------------------------------
-     4. TOP IDENTITY ROW: SMALLER + TIGHTER
-     ---------------------------------------------------------- */
-  #services .v132-section-badge-row,
-  #team .v132-section-badge-row,
-  #resident-programmes .v132-section-badge-row,
-  #community-engagement .v132-section-badge-row{
-    min-height:58px!important;
-    margin:0 145px 10px 0!important;
-    gap:10px!important;
-    align-items:center!important;
-  }
-
-  #services .v132-section-badge,
-  #team .v132-section-badge,
-  #resident-programmes .v132-section-badge,
-  #community-engagement .v132-section-badge{
-    flex-basis:52px!important;
-    width:52px!important;
-    height:52px!important;
-    box-shadow:0 8px 20px rgba(11,46,72,.12),
-               0 0 0 3px rgba(255,255,255,.75)!important;
-  }
-
-  #services .v132-section-badge-core,
-  #team .v132-section-badge-core,
-  #resident-programmes .v132-section-badge-core,
-  #community-engagement .v132-section-badge-core{
-    width:39px!important;
-    height:39px!important;
-  }
-
-  #services .v132-section-badge svg,
-  #team .v132-section-badge svg,
-  #resident-programmes .v132-section-badge svg,
-  #community-engagement .v132-section-badge svg{
-    width:27px!important;
-    height:27px!important;
-  }
-
-  #services .v132-section-badge-copy,
-  #team .v132-section-badge-copy,
-  #resident-programmes .v132-section-badge-copy,
-  #community-engagement .v132-section-badge-copy{
-    gap:2px!important;
-  }
-
-  #services .v132-section-badge-copy b,
-  #team .v132-section-badge-copy b,
-  #resident-programmes .v132-section-badge-copy b,
-  #community-engagement .v132-section-badge-copy b{
-    font-size:9px!important;
-  }
-
-  #services .v132-section-badge-copy small,
-  #team .v132-section-badge-copy small,
-  #resident-programmes .v132-section-badge-copy small,
-  #community-engagement .v132-section-badge-copy small{
-    font-size:6.5px!important;
-  }
-
-  /* The long badge rule does not need to stretch under the constellation. */
-  #services .v132-section-badge-row > i,
-  #team .v132-section-badge-row > i,
-  #resident-programmes .v132-section-badge-row > i,
-  #community-engagement .v132-section-badge-row > i{
-    max-width:220px!important;
-  }
-
-  /* ----------------------------------------------------------
-     5. SERVICES — one compact, intentional block
-     ---------------------------------------------------------- */
-  #services .services-grid{
-    grid-template-columns:repeat(5,minmax(0,1fr))!important;
-    gap:8px!important;
-  }
-  #services .service-card{
-    padding:11px 11px!important;
-    margin:0!important;
-    border-right:0!important;
-    border:1px solid rgba(11,53,83,.09)!important;
-    border-radius:13px!important;
-    background:rgba(255,255,255,.82)!important;
-    min-height:0!important;
-  }
-  #services .service-icon{
-    margin-bottom:4px!important;
-  }
-  #services .service-icon svg{
-    width:31px!important;
-    height:31px!important;
-    margin:0!important;
-  }
-  #services .service-card h3{
-    margin:3px 0 4px!important;
-    font-size:11.5px!important;
-  }
-  #services .service-card p{
-    margin:0 0 6px!important;
-    line-height:1.35!important;
-  }
-  #services .v25-learn-more{
-    margin-top:5px!important;
-  }
-
-  /* Remove the old floating leaf because it competes with the
-     constellation occupying the same corner. */
-  #services > span[aria-hidden="true"][style*="right:18px"]{
-    display:none!important;
-  }
-
-  /* ----------------------------------------------------------
-     6. ABOUT — image + office info use the available width cleanly
-     ---------------------------------------------------------- */
-  #about .office-grid{
-    grid-template-columns:.82fr 1.18fr!important;
-    gap:20px!important;
-    align-items:stretch!important;
-  }
-  #about .office-img{
-    min-height:0!important;
-  }
-  #about .office-img img{
-    height:100%!important;
-    min-height:315px!important;
-    max-height:390px!important;
-    border-radius:16px!important;
-  }
-  #about .office-info{
-    padding:18px 18px!important;
-    margin:0!important;
-  }
-  #about .office-info .kicker{
-    margin:0 145px 2px 0!important;
-    font-size:10px!important;
-  }
-  #about .office-info h2{
-    margin:2px 145px 8px 0!important;
-    font-size:1.85rem!important;
-  }
-  #about .v131-office-glance{
-    margin:7px 0!important;
-    gap:6px!important;
-  }
-  #about .v131-glance-card{
-    padding:9px 10px!important;
-  }
-  #about .v71-office-intro{
-    margin:7px 0!important;
-    padding:9px 11px!important;
-  }
-  #about .detail{
-    margin-bottom:5px!important;
-  }
-  #about .v71-office-actions{
-    margin-top:7px!important;
-  }
-
-  /* ----------------------------------------------------------
-     7. OUR TEAM — compact header then staff immediately follows
-     ---------------------------------------------------------- */
-  #team .v32-team-banner{
-    margin:0 145px 8px 0!important;
-    padding:8px 11px!important;
-  }
-  #team .v32-team-intro{
-    max-width:700px!important;
-    margin:0 145px 10px 0!important;
-    text-align:left!important;
-  }
-  #team .v32-team-intro h2{
-    font-size:28px!important;
-    margin:2px 0 4px!important;
-  }
-  #team .v71-team-summary{
-    margin:5px 0 7px!important;
-    gap:5px!important;
-  }
-  #team .v71-team-summary article{
-    padding:7px 8px!important;
-  }
-  #team .v32-group-head{
-    margin:10px 0 6px!important;
-    padding-bottom:5px!important;
-  }
-  #team .v32-leadership-grid,
-  #team .v32-staff-grid{
-    gap:7px!important;
-  }
-  #team .member,
-  #team .v32-lead-card,
-  #team .v32-staff-card{
-    margin:0!important;
-    min-height:0!important;
-  }
-
-  /* ----------------------------------------------------------
-     8. RESOURCES — heading and constellation occupy one header level
-     ---------------------------------------------------------- */
-  #resources .v3-section-head{
-    max-width:720px!important;
-    margin:0 150px 10px 0!important;
-    padding:12px 15px!important;
-  }
-  #resources .v3-section-head h2{
-    margin:2px 0 3px!important;
-    font-size:1.8rem!important;
-  }
-  #resources .v4-resource-grid{
-    gap:8px!important;
-  }
-  #resources .v4-resource-grid article{
-    padding:12px 13px!important;
-    min-height:0!important;
-  }
-  #resources .v4-resource-icon{
-    width:42px!important;
-    height:42px!important;
-    margin-bottom:6px!important;
-  }
-  #resources .v4-resource-icon svg{
-    width:22px!important;
-    height:22px!important;
-  }
-  #resources .v4-resource-grid h3{
-    margin:2px 0 4px!important;
-  }
-  #resources .v4-resource-grid p{
-    margin:0 0 6px!important;
-  }
-  #resources .v72-resource-action{
+  #resident-start .v55-start-action span{
     margin-top:3px!important;
   }
+}
 
-  /* ----------------------------------------------------------
-     9. PROGRAMMES — intro shares the row with constellation
-     ---------------------------------------------------------- */
-  #resident-programmes .v17-head{
-    align-items:start!important;
-    margin:0 145px 8px 0!important;
-    gap:8px!important;
+/* District preview remains inside the same Start Centre, but slimmer. */
+#resident-start .v56-community-pulse{
+  margin-top:10px!important;
+  padding:8px 10px!important;
+  min-height:0!important;
+}
+#resident-start .v56-community-pulse-copy small{
+  font-size:7px!important;
+}
+#resident-start .v56-community-pulse-copy strong{
+  font-size:9px!important;
+}
+@media(min-width:701px){
+  #resident-start .v56-community-pulse{
+    grid-template-columns:minmax(160px,1fr) repeat(3,72px)!important;
+    gap:7px!important;
   }
-  #resident-programmes .v17-head h2{
-    margin:2px 0 3px!important;
-    font-size:1.75rem!important;
-  }
-  #resident-programmes .v17-head p{
-    margin-top:4px!important;
-  }
-  #resident-programmes .v17-badge{
-    padding:7px 9px!important;
-  }
-  #resident-programmes .v17-start{
-    margin:7px 0!important;
-    padding:8px 10px!important;
-  }
-  #resident-programmes .v72-source-banner{
-    margin:6px 0 7px!important;
-    padding:8px 10px!important;
-  }
-  #resident-programmes .v72-programme-links{
-    margin:6px 0 8px!important;
-    gap:5px!important;
-  }
-  #resident-programmes .v17-grid{
-    gap:8px!important;
-  }
-  #resident-programmes .v17-card{
-    padding:12px 13px!important;
-  }
-
-  /* ----------------------------------------------------------
-     10. COMMUNITY — top intro + constellation are one composition
-     ---------------------------------------------------------- */
-  #community-engagement .v18-head{
-    align-items:start!important;
-    margin:0 145px 8px 0!important;
-    gap:8px!important;
-  }
-  #community-engagement .v18-head h2{
-    margin:2px 0 3px!important;
-    font-size:1.8rem!important;
-  }
-  #community-engagement .v18-cycle{
-    padding:6px 9px!important;
-  }
-  #community-engagement .v18-townhall{
-    margin:7px 0 9px!important;
-    padding:12px!important;
-    grid-template-columns:130px 1fr!important;
-    gap:12px!important;
-  }
-  #community-engagement .v18-calendar{
-    padding:10px!important;
-  }
-  #community-engagement .v22-townhall-photo{
-    height:220px!important;
-    margin:0 0 10px!important;
-  }
-  #community-engagement .v18-actions-intro{
-    margin:7px 0!important;
-  }
-  #community-engagement .v18-action-grid{
-    gap:6px!important;
-    margin-bottom:9px!important;
-  }
-  #community-engagement .v18-action-grid article{
-    min-height:88px!important;
-    padding:9px 10px!important;
-  }
-  #community-engagement .v21-action-explorer{
-    margin:8px 0 9px!important;
-  }
-
-  /* ----------------------------------------------------------
-     11. GLOBAL DESKTOP CLEANUP FOR REMAINING PAGE
-     Keep sections from looking like independent tall posters.
-     ---------------------------------------------------------- */
-  section:not(.hero):not(.v132-public-paths){
-    scroll-margin-top:84px;
-  }
-
-  /* Earlier civic circles can remain, but make them quieter so the
-     constellation becomes the intentional right-side ornament. */
-  #services.v132-civic-section::after,
-  #team.v132-civic-section::after,
-  #resident-programmes.v132-civic-section::after,
-  #community-engagement.v132-civic-section::after{
-    width:150px!important;
-    height:150px!important;
-    right:-65px!important;
-    top:15px!important;
-    opacity:.45!important;
-  }
-
-  /* No decorative pseudo-element should force extra layout height. */
-  #services::before,#services::after,
-  #about::before,#about::after,
-  #team::before,#team::after,
-  #resources::before,#resources::after,
-  #resident-programmes::before,#resident-programmes::after,
-  #community-engagement::before,#community-engagement::after{
-    margin-bottom:0!important;
+  #resident-start .v56-community-thumb{
+    height:54px!important;
   }
 }
 
-/* Preserve the established responsive/mobile layout. */
-</style>
+/* Clock is now physically part of "District Office Today". */
+#resident-start .v189-office-clock{
+  width:100%!important;
+  max-width:none!important;
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-areas:
+    "label time"
+    "date date"!important;
+  gap:5px 10px!important;
+  margin:0 0 12px!important;
+  padding:10px 11px!important;
+  border:1px solid rgba(218,194,121,.38)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.075)!important;
+  box-shadow:none!important;
+  color:#fff!important;
+}
+#resident-start .v189-office-clock .v139-clock-label{
+  grid-area:label!important;
+  align-self:center!important;
+  color:#e1c979!important;
+  font-size:7px!important;
+  letter-spacing:.13em!important;
+}
+#resident-start .v189-office-clock strong{
+  grid-area:time!important;
+  color:#fff!important;
+  font-size:1.08rem!important;
+  font-variant-numeric:tabular-nums!important;
+  white-space:nowrap!important;
+}
+#resident-start .v189-office-clock #v139-clock-date{
+  grid-area:date!important;
+  color:#c6d7df!important;
+  font-size:.68rem!important;
+  font-weight:700!important;
+}
 
+#resident-start .v55-office-today>span{
+  display:block!important;
+  margin-bottom:2px!important;
+}
+#resident-start .v55-office-today h3{
+  margin:4px 0 10px!important;
+  font-size:22px!important;
+}
+#resident-start .v55-status{
+  margin-top:0!important;
+}
+#resident-start .v55-office-today p{
+  margin:9px 0 0!important;
+}
+#resident-start .v55-office-mini{
+  margin-top:12px!important;
+  gap:6px!important;
+}
 
-<style id="v188-align-additional-sections">
-/* ==========================================================
-   V188 — ALIGNMENT CLEANUP EXPANDED
-   Applies the V187 "same-level constellation" treatment to:
-   Community Compass • What We Heard • Forms • Enquiry
-   Resident Feedback • Resident Voice
-   ========================================================== */
-@media (min-width:1024px){
-
-  /* --------------------------------------------------------
-     1. SAME-LEVEL CONSTELLATION POSITIONING
-     -------------------------------------------------------- */
-  #community-compass > .v181-constellation-signature,
-  #v121-what-we-heard > .v181-constellation-signature,
-  #service-forms > .v181-constellation-signature,
-  #enquiry > .v181-constellation-signature,
-  #v121-feedback-info > .v181-constellation-signature,
-  #v151-resident-voice > .v181-constellation-signature{
-    top:18px!important;
-    right:max(22px,calc((100vw - 1200px)/2 + 20px))!important;
-    width:clamp(120px,9.5vw,158px)!important;
-    transform:none!important;
-    opacity:.66!important;
-    z-index:1!important;
-  }
-
-  #community-compass > .v181-constellation-signature,
-  #service-forms > .v181-constellation-signature,
-  #enquiry > .v181-constellation-signature{
-    opacity:.72!important;
-  }
-
-  /* --------------------------------------------------------
-     2. REMOVE TALL EMPTY SECTION BANDS
-     -------------------------------------------------------- */
-  #community-compass,
-  #v121-what-we-heard,
-  #service-forms,
-  #enquiry,
-  #v121-feedback-info,
-  #v151-resident-voice{
-    min-height:0!important;
-    height:auto!important;
-    padding-top:24px!important;
-    padding-bottom:28px!important;
-    margin-top:0!important;
-    margin-bottom:0!important;
-    overflow:hidden!important;
-  }
-
-  #community-compass > .wrap,
-  #service-forms > .wrap,
-  #enquiry > .wrap,
-  #v121-what-we-heard > .v121-wrap,
-  #v121-feedback-info > .v121-wrap,
-  #v151-resident-voice > .v151-wrap{
-    margin-top:0!important;
-    padding-top:0!important;
-    padding-bottom:0!important;
-  }
-
-  /* --------------------------------------------------------
-     3. COMMUNITY COMPASS
-     -------------------------------------------------------- */
-  #community-compass .v59-section-marker{
-    margin:0 165px 5px 0!important;
-    min-height:18px!important;
-  }
-  #community-compass .v59-compass-head{
-    margin:0 165px 10px 0!important;
-    gap:10px!important;
-    align-items:center!important;
-  }
-  #community-compass .v59-compass-head h2{
-    margin:2px 0 3px!important;
-    font-size:30px!important;
-  }
-  #community-compass .v59-compass-head p{
-    max-width:720px!important;
-    line-height:1.4!important;
-  }
-  #community-compass .v59-compass-help{
-    min-height:34px!important;
-    padding:7px 9px!important;
-  }
-  #community-compass .v59-compass-rail{
-    gap:7px!important;
-  }
-  #community-compass .v59-area-card{
-    min-height:198px!important;
-    padding:12px!important;
-  }
-  #community-compass .v59-area-card h3{
-    margin:4px 0!important;
-  }
-  #community-compass .v59-area-card p{
-    line-height:1.4!important;
-  }
-  #community-compass .v59-area-status{
-    margin-top:7px!important;
-  }
-  #community-compass .v59-area-card button{
-    margin-top:8px!important;
-  }
-
-  /* --------------------------------------------------------
-     4. WHAT WE HEARD
-     -------------------------------------------------------- */
-  #v121-what-we-heard .v121-wrap{
-    position:relative!important;
-  }
-  #v121-what-we-heard .v121-kicker,
-  #v121-what-we-heard .v121-title,
-  #v121-what-we-heard .v121-lead{
-    max-width:760px!important;
-    margin-right:165px!important;
-  }
-  #v121-what-we-heard .v121-kicker{
-    display:block!important;
-    margin-bottom:2px!important;
-  }
-  #v121-what-we-heard .v121-title{
-    margin-top:2px!important;
-    margin-bottom:5px!important;
-    font-size:32px!important;
-  }
-  #v121-what-we-heard .v121-lead{
-    margin-top:0!important;
-    margin-bottom:0!important;
-    line-height:1.42!important;
-  }
-  #v121-what-we-heard .v121-heard-grid{
-    margin-top:10px!important;
-    gap:8px!important;
-  }
-  #v121-what-we-heard .v121-heard{
-    padding:11px 13px!important;
-  }
-  #v121-what-we-heard .v121-heard strong{
-    margin:4px 0!important;
-  }
-  #v121-what-we-heard .v121-heard-status{
-    margin-top:6px!important;
-  }
-
-  /* --------------------------------------------------------
-     5. FORMS / PUBLIC DOCUMENT LIBRARY
-     -------------------------------------------------------- */
-  #service-forms > .v20-section-marker{
-    top:22px!important;
-  }
-  #service-forms .v51-primary-label{
-    margin:0 165px 5px 0!important;
-  }
-  #service-forms .v12-section-head{
-    margin:0 165px 10px 0!important;
-    gap:10px!important;
-    align-items:center!important;
-  }
-  #service-forms .v12-section-head h2{
-    margin:2px 0 3px!important;
-    font-size:30px!important;
-  }
-  #service-forms .v12-section-head p{
-    margin:3px 0 0!important;
-    line-height:1.4!important;
-  }
-  #service-forms .v12-label{
-    padding:6px 8px!important;
-  }
-  #service-forms .v55-forms-help{
-    margin-top:5px!important;
-    min-height:32px!important;
-  }
-  #service-forms .v98-source-note{
-    margin-top:8px!important;
-    margin-bottom:9px!important;
-    padding:9px 11px!important;
-  }
-  #service-forms .v16-form-notice{
-    margin:8px 0 11px!important;
-    padding:10px 13px!important;
-    gap:12px!important;
-  }
-  #service-forms .v16-form-group{
-    margin:12px 0!important;
-  }
-  #service-forms .v16-group-head{
-    margin-bottom:6px!important;
-    padding-bottom:5px!important;
-  }
-  #service-forms .v16-form-grid{
-    gap:7px!important;
-  }
-  #service-forms .v16-form-card{
-    min-height:0!important;
-    padding:10px 11px!important;
-    gap:10px!important;
-  }
-  #service-forms .v16-pdf-icon{
-    width:39px!important;
-    height:45px!important;
-  }
-  #service-forms .v16-help-box{
-    margin-top:12px!important;
-    padding:11px 13px!important;
-  }
-  #service-forms .v54-section-end{
-    margin-top:7px!important;
-  }
-
-  /* --------------------------------------------------------
-     6. ENQUIRY / START • FOLLOW UP
-     -------------------------------------------------------- */
-  #enquiry > .v20-section-marker{
-    top:22px!important;
-  }
-  #enquiry > span[aria-hidden="true"][style*="right:18px"]{
-    display:none!important;
-  }
-  #enquiry .contact-grid{
-    grid-template-columns:minmax(0,1.55fr) minmax(250px,.72fr)!important;
-    gap:20px!important;
-    align-items:start!important;
-  }
-  #enquiry .v51-primary-label{
-    margin:0 165px 5px 0!important;
-  }
-  #enquiry .v9-contact-process{
-    margin:0 165px 10px 0!important;
-    padding:10px 12px!important;
-    gap:6px!important;
-    border-radius:12px!important;
-  }
-  #enquiry .v9-contact-process strong{
-    width:22px!important;
-    height:22px!important;
-  }
-  #enquiry .v9-contact-process span{
-    font-size:8px!important;
-  }
-  #enquiry .v54-enquiry-actions{
-    margin:0 0 8px!important;
-    gap:7px!important;
-  }
-  #enquiry .v54-enquiry-action{
-    min-height:50px!important;
-    padding:9px 11px!important;
-  }
-  #enquiry .form-area h2{
-    margin:3px 0 3px!important;
-    font-size:29px!important;
-  }
-  #enquiry .form-area>p,
-  #enquiry .v74-enquiry-intro{
-    margin:0 0 7px!important;
-    line-height:1.42!important;
-  }
-  #enquiry .v35-track-box{
-    margin:7px 0!important;
-    padding:10px 12px!important;
-  }
-  #enquiry .v55-before-submit{
-    margin:7px 0!important;
-    padding:10px 12px!important;
-  }
-  #enquiry .form-grid{
-    gap:11px!important;
-  }
-  #enquiry .form-group{
-    margin-bottom:5px!important;
-  }
-  #enquiry .form-group label{
-    margin-bottom:5px!important;
-    font-size:11px!important;
-  }
-  #enquiry .form-group input,
-  #enquiry .form-group select,
-  #enquiry .form-group textarea{
-    padding:10px!important;
-    font-size:12px!important;
-  }
-  #enquiry .form-group textarea{
-    min-height:92px!important;
-  }
-  #enquiry .v69-enquiry-stage{
-    margin:7px 0!important;
-  }
-  #enquiry .social-box,
-  #enquiry [class*="contact-card"],
-  #enquiry [class*="side-card"]{
-    padding-top:14px!important;
-    padding-bottom:14px!important;
-  }
-  #enquiry .v54-section-end{
-    margin-top:7px!important;
-  }
-
-  /* --------------------------------------------------------
-     7. RESIDENT FEEDBACK
-     -------------------------------------------------------- */
-  #v121-feedback-info .v121-wrap{
-    position:relative!important;
-  }
-  #v121-feedback-info .v121-kicker,
-  #v121-feedback-info .v121-title,
-  #v121-feedback-info .v121-lead{
-    max-width:780px!important;
-    margin-right:165px!important;
-  }
-  #v121-feedback-info .v121-kicker{
-    display:block!important;
-    margin-bottom:2px!important;
-  }
-  #v121-feedback-info .v121-title{
-    margin:2px 165px 5px 0!important;
-    font-size:31px!important;
-  }
-  #v121-feedback-info .v121-lead{
-    margin-top:0!important;
-    margin-bottom:0!important;
-    line-height:1.42!important;
-  }
-  #v121-feedback-info .v121-feedback-box{
-    margin-top:9px!important;
-    padding:11px 13px!important;
-    gap:12px!important;
-  }
-  #v121-feedback-info .v121-feedback-box span{
-    margin-top:2px!important;
-  }
-  #v121-feedback-info .v121-feedback-box a{
-    padding:8px 10px!important;
-  }
-
-  /* --------------------------------------------------------
-     8. RESIDENT VOICE
-     -------------------------------------------------------- */
-  #v151-resident-voice .v151-wrap{
-    position:relative!important;
-  }
-  #v151-resident-voice .v151-head{
-    grid-template-columns:58px minmax(0,1fr)!important;
-    gap:10px!important;
-    margin-right:165px!important;
-    align-items:center!important;
-  }
-  #v151-resident-voice .v151-badge{
-    width:56px!important;
-    height:56px!important;
-    box-shadow:0 0 0 4px rgba(201,163,74,.10),
-               0 8px 20px rgba(8,38,61,.10)!important;
-  }
-  #v151-resident-voice .v151-badge svg{
-    width:27px!important;
-    height:27px!important;
-  }
-  #v151-resident-voice .v151-kicker{
-    margin-bottom:1px!important;
-  }
-  #v151-resident-voice .v151-title{
-    margin:1px 0 4px!important;
-    font-size:31px!important;
-  }
-  #v151-resident-voice .v151-lead{
-    margin:0!important;
-    line-height:1.42!important;
-    max-width:760px!important;
-  }
-  #v151-resident-voice .v151-grid{
-    margin-top:9px!important;
-    gap:7px!important;
-  }
-  #v151-resident-voice .v151-card{
+/* Tablet/mobile keeps the established V179/V182 swipe behaviour. */
+@media(max-width:700px){
+  #resident-start{
+    padding:20px 0 22px!important;
+  }
+  #resident-start > .v181-constellation-signature{
+    top:82px!important;
+    right:-18px!important;
+    width:112px!important;
+    opacity:.38!important;
+  }
+  #resident-start .v55-start-grid{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "badge"
+      "main"
+      "office"!important;
+    border-radius:20px!important;
+  }
+  #resident-start .v132-section-badge-row{
     padding:11px 12px!important;
   }
-
-  /* --------------------------------------------------------
-     9. DECORATIVE CLEANUP / SECTION TRANSITIONS
-     -------------------------------------------------------- */
-  #community-compass::before,
-  #v121-what-we-heard::before,
-  #service-forms::before,
-  #enquiry::before,
-  #v121-feedback-info::before,
-  #v151-resident-voice::before{
-    margin-bottom:0!important;
+  #resident-start .v132-section-badge-row>i{
+    display:none!important;
   }
-
-  #community-compass::after,
-  #v121-what-we-heard::after,
-  #service-forms::after,
-  #enquiry::after,
-  #v121-feedback-info::after,
-  #v151-resident-voice::after{
-    margin-bottom:0!important;
+  #resident-start .v55-start-main{
+    padding:16px!important;
   }
+  #resident-start .v55-office-today{
+    border-left:0!important;
+    border-top:1px solid rgba(255,255,255,.13)!important;
+    padding:16px!important;
+  }
+  #resident-start .v189-office-clock{
+    grid-template-columns:1fr auto!important;
+    border-radius:12px!important;
+  }
+}
 
-  #community-compass h2,
-  #v121-what-we-heard h2,
-  #service-forms h2,
-  #enquiry h2,
-  #v121-feedback-info h2,
-  #v151-resident-voice h2{
-    scroll-margin-top:84px!important;
+/* Medium screens: keep the combined look but avoid crowding. */
+@media(min-width:701px) and (max-width:980px){
+  #resident-start .v55-start-grid{
+    grid-template-columns:minmax(0,1.35fr) minmax(250px,.75fr)!important;
+  }
+  #resident-start .v132-section-badge-row{
+    padding-right:135px!important;
   }
 }
 </style>
@@ -14398,12 +12840,15 @@ section > :not(.v181-constellation-signature){
 </div>
 <button aria-label="Show more navigation items" class="v125-mobile-nav-arrow" id="v125-nav-next" type="button">›</button>
 </div>
-<div aria-label="District Office highlights" class="v21-live-ribbon v183-static-ribbon">
+<div aria-label="District Office highlights" class="v21-live-ribbon">
 <div class="wrap">
 <span aria-hidden="true" class="v21-ribbon-dot"></span>
 <strong>District Office Highlights</strong>
-<div class="v21-ribbon-rotator" aria-label="District Office highlights summary">
-<span class="is-visible">6 Focus Group Areas&nbsp;&nbsp;•&nbsp;&nbsp;Quarterly Town Hall Programme&nbsp;&nbsp;•&nbsp;&nbsp;14 Forms &amp; Public Documents&nbsp;&nbsp;•&nbsp;&nbsp;Phone, WhatsApp &amp; Email</span>
+<div aria-live="polite" class="v21-ribbon-rotator">
+<span class="is-visible">Quarterly Town Hall programme planned</span>
+<span>Six Focus Group areas available for community follow-up</span>
+<span>Service Forms &amp; Application Documents available online</span>
+<span>Residents can reach the office by phone, WhatsApp or email</span>
 </div>
 </div>
 </div>
@@ -14423,20 +12868,7 @@ section > :not(.v181-constellation-signature){
 <div class="v8-trust-line">
 <span>SCARBOROUGH / MT. GRACE</span><i></i><span>ACCESS • SERVICE • COMMUNITY</span>
 </div>
-</div><div class="hero-photo"><img alt="Assembly Member Trevor James" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a3"/><div class="info"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div class="quote">“People First, Always”</div><div class="v184-member-utility" aria-label="Assembly Member and District Office quick information"><div class="info v184-info-copy"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div aria-label="District Office quick information" class="v20-hero-aside v183-hero-aside v184-aside-copy">
-<div class="v20-aside-label">DISTRICT OFFICE</div>
-<div class="v183-aside-identity"><strong>Scarborough / Mt. Grace</strong><span>People • Community • Opportunity</span></div>
-<div class="v183-aside-stats">
-<div class="v20-aside-stat"><strong>6</strong><span>Focus Group Areas</span></div>
-<div class="v20-aside-stat v109-townhall-stat"><strong>Quarterly</strong><span>Town Hall Programme</span></div>
-<div class="v20-aside-stat"><strong>14</strong><span>Forms &amp; Public Documents</span></div>
-</div>
-</div><div class="v8-hours-card v184-hours-copy">
-<div class="v8-clock">
-<svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 11h5v-2h-5V6h-2v7z"></path></svg>
-</div>
-<div><small>OFFICE HOURS</small><strong>Mon–Thu 9:30–5:00</strong><span>Friday 9:30–2:00</span></div>
-</div></div></div></div><div class="v23-hero-actions">
+</div><div class="hero-photo"><img alt="Assembly Member Trevor James" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a3"/><div class="info"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div class="quote">“People First, Always”</div></div></div><div class="v23-hero-actions">
 <button class="v23-action-card" data-v25-scroll="portal-hub" data-v51-go="portal-hub" type="button"><span>01</span><strong>Service Portals</strong><small>Education, housing, grants &amp; more</small></button>
 <button class="v23-action-card" data-v25-scroll="activity-hub" data-v51-go="activity-hub" type="button"><span>02</span><strong>Activity Hub</strong><small>Notices, Town Halls &amp; follow-up</small></button>
 <button class="v23-action-card" data-v25-scroll="service-forms" data-v51-go="service-forms" type="button"><span>03</span><strong>Forms &amp; Documents</strong><small>14 PDFs across 5 categories</small></button>
@@ -14445,14 +12877,13 @@ section > :not(.v181-constellation-signature){
 <svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 11h5v-2h-5V6h-2v7z"></path></svg>
 </div>
 <div><small>OFFICE HOURS</small><strong>Mon–Thu 9:30–5:00</strong><span>Friday 9:30–2:00</span></div>
-</div><div aria-label="District Office quick information" class="v20-hero-aside v183-hero-aside">
+</div><div aria-label="District Office quick information" class="v20-hero-aside">
 <div class="v20-aside-label">DISTRICT OFFICE</div>
-<div class="v183-aside-identity"><strong>Scarborough / Mt. Grace</strong><span>People • Community • Opportunity</span></div>
-<div class="v183-aside-stats">
 <div class="v20-aside-stat"><strong>6</strong><span>Focus Group Areas</span></div>
 <div class="v20-aside-stat v109-townhall-stat"><strong>Quarterly</strong><span>Town Hall Programme</span></div>
 <div class="v20-aside-stat"><strong>14</strong><span>Forms &amp; Public Documents</span></div>
-</div>
+<div class="v20-aside-rule"></div>
+<div class="v20-aside-copy">Scarborough / Mt. Grace<br/><b>People • Community • Opportunity</b></div>
 </div><div aria-hidden="true" class="v23-hero-visual">
 <div class="v23-orbit orbit-a"></div>
 <div class="v23-orbit orbit-b"></div>
@@ -14481,7 +12912,7 @@ section > :not(.v181-constellation-signature){
 </div><section aria-labelledby="v170-locator-title" class="v170-locator-band"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v170-locator-wrap"><div class="v170-mini-map"><img alt="Map of Tobago highlighting Scarborough" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a4"/></div><div class="v170-locator-copy"><small>OUR DISTRICT ON THE ISLAND</small><h2 id="v170-locator-title">Scarborough highlighted within Tobago</h2><p>This gives residents a quick island-level locator before they move into the more detailed District Profile below. It helps anchor the office visually as both a local service point and part of the wider Tobago community.</p><div class="v170-locator-highlights"><span>ISLAND CONTEXT</span><span>SCARBOROUGH HIGHLIGHTED</span><span>DISTRICT PROFILE BELOW</span></div></div><a class="v170-locator-btn" href="#district-profile" aria-label="Open the Scarborough Mt. Grace District Profile">OPEN DISTRICT PROFILE →</a></div></section><section class="v55-start v132-civic-section v132-tone-light" id="resident-start"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap v55-start-grid"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><circle cx="32" cy="32" r="7"></circle><path d="M32 8v10M32 46v10M8 32h10M46 32h10"></path><path d="M20 44l24-24-7 17z"></path></svg></span></span>
-<span class="v132-section-badge-copy"><b>START CENTRE</b><small>FIND THE RIGHT PATH • GET HELP FASTER</small><span aria-live="polite" class="v139-live-clock"><span class="v139-clock-label">TRINIDAD &amp; TOBAGO</span><strong id="v139-clock-time">--:--:--</strong><span id="v139-clock-date">Loading local date…</span></span></span>
+<span class="v132-section-badge-copy"><b>START CENTRE</b><small>FIND THE RIGHT PATH • GET HELP FASTER</small></span>
 <i></i>
 </div>
 <div class="v55-start-main">
@@ -14523,9 +12954,10 @@ section > :not(.v181-constellation-signature){
 <div class="v56-community-thumb" data-v56-photo="1"></div>
 <div class="v56-community-thumb" data-v56-photo="2"></div>
 </div></div>
-<aside aria-label="District Office opening hours" class="v55-office-today">
+<aside aria-label="District Office opening hours and local time" class="v55-office-today">
 <span>DISTRICT OFFICE TODAY</span>
 <h3>Scarborough / Mt. Grace</h3>
+<div aria-live="polite" class="v139-live-clock v189-office-clock"><span class="v139-clock-label">TRINIDAD &amp; TOBAGO</span><strong id="v139-clock-time">--:--:--</strong><span id="v139-clock-date">Loading local date…</span></div>
 <div class="v55-status" id="v55-office-status"><i class="v55-status-dot"></i><strong>Checking office hours…</strong></div>
 <p id="v55-office-next">Monday–Thursday 9:30 A.M.–5:00 P.M. • Friday 9:30 A.M.–2:00 P.M.</p>
 <div class="v55-office-mini">

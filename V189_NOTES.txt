@@ -1,0 +1,21 @@
+V189 — V179 STRUCTURE RESTORE + UNIFIED START CENTRE
+
+BASELINE
+- Rebuilt from V182, which retains the V179 page structure.
+- This keeps the V180 luxury constellation treatment, V181 all-section constellation signatures, and V182 selected animations.
+- V183 through V188 layout/spacing experiments are not carried forward.
+
+START CENTRE CHANGE
+- START CENTRE header, service actions and DISTRICT OFFICE TODAY are presented as one coordinated module.
+- The live Trinidad & Tobago clock was moved into DISTRICT OFFICE TODAY.
+- The clock, office open/closed status, hours and contact buttons now read as one unit.
+- All six resident action pathways remain.
+- Our District in View remains.
+- Mobile/tablet swipe behaviour remains.
+
+FUNCTIONS RETAINED
+- Working internal section navigation from V178.
+- Tobago map integration, clickable district callout and map effects.
+- Self-contained images.
+- Constellation design and selected animations.
+- Existing public content, resident enquiry, tracking links and contact actions.
