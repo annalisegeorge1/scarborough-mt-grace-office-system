@@ -1,0 +1,11 @@
+V197 — STRUCTURAL HEADER ATTACHMENT FIX
+
+The prior versions only changed top offsets on artwork that was still positioned relative to the entire section. Some sections also clip overflow, so large negative offsets could produce little or no visible movement.
+
+V197 changes the structure instead:
+- each constellation is moved into the actual section header/identity block at runtime;
+- the constellation is vertically centred on that header and sits behind its text;
+- headings can overlap the artwork;
+- desktop and mobile use separate sizes while keeping the V193 responsive visual split;
+- the ornate hero SMG seal remains separate and unchanged;
+- all content and functionality remain.

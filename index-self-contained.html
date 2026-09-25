@@ -19241,4 +19241,218 @@ window.addEventListener('storage',e=>{if(e.key===KEY)render()});window.addEventL
 })();
 </script>
 
+
+<style id="v197-constellations-attached-to-headers">
+/* ==========================================================
+   V197 — STRUCTURAL FIX
+   Constellation artwork is attached to the actual header block,
+   rather than positioned by percentage down the section.
+   ========================================================== */
+
+.v197-decor-anchor{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+}
+
+.v197-decor-anchor > .v181-constellation-signature{
+  position:absolute!important;
+  top:50%!important;
+  right:-20px!important;
+  width:150px!important;
+  aspect-ratio:1/1!important;
+  transform:translateY(-52%) rotate(-8deg)!important;
+  opacity:.72!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  filter:drop-shadow(0 8px 18px rgba(11,53,83,.04))!important;
+}
+
+/* Header text and controls sit over the ornament. */
+.v197-decor-anchor > :not(.v181-constellation-signature),
+.v197-decor-anchor h1,
+.v197-decor-anchor h2,
+.v197-decor-anchor h3,
+.v197-decor-anchor p,
+.v197-decor-anchor span,
+.v197-decor-anchor strong,
+.v197-decor-anchor small,
+.v197-decor-anchor a,
+.v197-decor-anchor button,
+.v197-decor-anchor i{
+  position:relative!important;
+  z-index:2!important;
+}
+
+/* Do not reserve a separate right-side lane for the constellation anymore. */
+.v132-section-badge-row,
+#community-compass .v59-section-marker,
+#community-compass .v59-compass-head,
+#service-forms .v51-primary-label,
+#service-forms .v12-section-head,
+#enquiry .v51-primary-label,
+#enquiry .v9-contact-process,
+#v121-what-we-heard .v121-kicker,
+#v121-what-we-heard .v121-title,
+#v121-feedback-info .v121-kicker,
+#v121-feedback-info .v121-title,
+#v151-resident-voice .v151-head{
+  margin-right:0!important;
+  padding-right:0!important;
+}
+
+/* Keep the decorative civic circles in the SAME top header band too. */
+#services.v132-civic-section::after,
+#team.v132-civic-section::after,
+#resident-programmes.v132-civic-section::after,
+#community-engagement.v132-civic-section::after{
+  top:-18px!important;
+  right:-56px!important;
+  width:178px!important;
+  height:178px!important;
+  opacity:.48!important;
+  z-index:0!important;
+}
+
+/* Restore normal header transforms. Previous versions nudged the headers
+   because the constellation was positioned relative to the section. */
+.v132-section-badge-row,
+#community-compass .v59-section-marker,
+#service-forms .v51-primary-label,
+#enquiry .v51-primary-label,
+#v121-what-we-heard .v121-kicker,
+#v121-feedback-info .v121-kicker,
+.v59-compass-head,
+.v12-section-head,
+.v17-head,
+.v18-head,
+.v70-info-head,
+.v89-before-visit-head,
+.v3-section-head,
+.v32-team-intro,
+.v13-profile-copy,
+#v151-resident-voice .v151-head{
+  transform:none!important;
+}
+
+@media (min-width:1024px){
+  .v197-decor-anchor > .v181-constellation-signature{
+    top:46%!important;
+    right:-26px!important;
+    width:158px!important;
+    transform:translateY(-50%) rotate(-8deg)!important;
+  }
+
+  /* Key sections get the slightly larger luxury medallion. */
+  #community-compass .v197-decor-anchor > .v181-constellation-signature,
+  #service-forms .v197-decor-anchor > .v181-constellation-signature,
+  #enquiry .v197-decor-anchor > .v181-constellation-signature,
+  #district-profile .v197-decor-anchor > .v181-constellation-signature,
+  #resident-programmes .v197-decor-anchor > .v181-constellation-signature,
+  #community-engagement .v197-decor-anchor > .v181-constellation-signature,
+  #documents .v197-decor-anchor > .v181-constellation-signature{
+    width:172px!important;
+    right:-32px!important;
+    opacity:.77!important;
+  }
+}
+
+@media (max-width:1023px){
+  .v197-decor-anchor > .v181-constellation-signature{
+    top:45%!important;
+    right:-28px!important;
+    width:120px!important;
+    transform:translateY(-50%) rotate(-9deg)!important;
+    opacity:.64!important;
+  }
+
+  #community-compass .v197-decor-anchor > .v181-constellation-signature,
+  #service-forms .v197-decor-anchor > .v181-constellation-signature,
+  #enquiry .v197-decor-anchor > .v181-constellation-signature,
+  #district-profile .v197-decor-anchor > .v181-constellation-signature,
+  #resident-programmes .v197-decor-anchor > .v181-constellation-signature,
+  #community-engagement .v197-decor-anchor > .v181-constellation-signature,
+  #documents .v197-decor-anchor > .v181-constellation-signature{
+    width:132px!important;
+    right:-34px!important;
+    opacity:.69!important;
+  }
+}
+
+@media (max-width:560px){
+  .v197-decor-anchor > .v181-constellation-signature{
+    top:42%!important;
+    right:-30px!important;
+    width:106px!important;
+    opacity:.60!important;
+  }
+  #community-compass .v197-decor-anchor > .v181-constellation-signature,
+  #service-forms .v197-decor-anchor > .v181-constellation-signature,
+  #enquiry .v197-decor-anchor > .v181-constellation-signature,
+  #district-profile .v197-decor-anchor > .v181-constellation-signature,
+  #resident-programmes .v197-decor-anchor > .v181-constellation-signature,
+  #community-engagement .v197-decor-anchor > .v181-constellation-signature,
+  #documents .v197-decor-anchor > .v181-constellation-signature{
+    width:116px!important;
+    right:-34px!important;
+  }
+}
+</style>
+
+
+<script id="v197-attach-constellations-to-headers">
+(function(){
+  function attachDecorations(){
+    const sections=document.querySelectorAll('section');
+    const preferred=[
+      '.v132-section-badge-row',
+      '.v59-section-marker',
+      '.v26-hub-head',
+      '.v12-section-head',
+      '.v151-head',
+      '.v17-head',
+      '.v18-head',
+      '.v70-info-head',
+      '.v89-before-visit-head',
+      '.v3-section-head',
+      '.v32-team-intro',
+      '.v13-profile-copy',
+      '.section-head',
+      'h2'
+    ];
+
+    sections.forEach(section=>{
+      if(section.id==='v51-home') return; // hero uses the restored SMG seal treatment
+      let sig=section.querySelector(':scope > .v181-constellation-signature');
+      if(!sig){
+        // In case an earlier pass nested it already, reuse the existing signature.
+        sig=section.querySelector('.v181-constellation-signature');
+      }
+      if(!sig) return;
+
+      let anchor=null;
+      for(const sel of preferred){
+        const candidate=section.querySelector(sel);
+        if(candidate && !candidate.closest('.service-card,.v16-form-card,.v151-card,.v17-card,.member')){
+          anchor=candidate;
+          break;
+        }
+      }
+      if(!anchor) return;
+
+      anchor.classList.add('v197-decor-anchor');
+      if(sig.parentElement!==anchor) anchor.appendChild(sig);
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', attachDecorations, {once:true});
+  }else{
+    attachDecorations();
+  }
+  window.addEventListener('load', attachDecorations, {once:true});
+  setTimeout(attachDecorations, 250);
+})();
+</script>
+
 </body></html>
