@@ -13485,6 +13485,851 @@ section > :not(.v181-constellation-signature){
 }
 </style>
 
+
+<style id="v187-desktop-alignment-cleanup">
+/* ==========================================================
+   V187 — DESKTOP ALIGNMENT & CLEANUP
+   Main goal:
+   - constellation art sits at the SAME visual level as section intros
+   - remove awkward blank bands
+   - create one consistent desktop rhythm
+   - preserve content, links, forms and functionality
+   ========================================================== */
+
+@media (min-width:1024px){
+
+  /* ----------------------------------------------------------
+     1. CONSTELLATIONS: TOP-RIGHT / SAME LEVEL AS SECTION INTRO
+     ---------------------------------------------------------- */
+  #services > .v181-constellation-signature,
+  #about > .v181-constellation-signature,
+  #team > .v181-constellation-signature,
+  #resources > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature{
+    top:18px!important;
+    right:clamp(22px,3vw,48px)!important;
+    width:clamp(118px,9.5vw,158px)!important;
+    transform:none!important;
+    opacity:.62!important;
+    z-index:1!important;
+  }
+
+  /* Dark / stronger areas get a slightly brighter constellation. */
+  #team > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature{
+    opacity:.74!important;
+  }
+
+  /* ----------------------------------------------------------
+     2. SECTION SHELL: REMOVE EXCESS HEIGHT
+     ---------------------------------------------------------- */
+  #services,
+  #about,
+  #team,
+  #resources,
+  #resident-programmes,
+  #community-engagement{
+    min-height:0!important;
+    height:auto!important;
+    padding-top:24px!important;
+    padding-bottom:28px!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+  }
+
+  /* Keep decorative artwork inside the section rather than creating
+     the impression of a separate empty band. */
+  #services,
+  #about,
+  #team,
+  #resources,
+  #resident-programmes,
+  #community-engagement{
+    overflow:hidden!important;
+  }
+
+  /* First content rows begin close to the top of each section. */
+  #services > .wrap,
+  #about > .wrap,
+  #team > .wrap,
+  #resources > .wrap,
+  #resident-programmes > .wrap,
+  #community-engagement > .wrap{
+    margin-top:0!important;
+    padding-top:0!important;
+    padding-bottom:0!important;
+  }
+
+  /* ----------------------------------------------------------
+     3. LEFT VERTICAL SECTION MARKER: ALIGN WITH CONSTELLATION
+     ---------------------------------------------------------- */
+  #services > .v20-section-marker,
+  #team > .v20-section-marker,
+  #resident-programmes > .v20-section-marker,
+  #community-engagement > .v20-section-marker{
+    top:22px!important;
+  }
+
+  /* ----------------------------------------------------------
+     4. TOP IDENTITY ROW: SMALLER + TIGHTER
+     ---------------------------------------------------------- */
+  #services .v132-section-badge-row,
+  #team .v132-section-badge-row,
+  #resident-programmes .v132-section-badge-row,
+  #community-engagement .v132-section-badge-row{
+    min-height:58px!important;
+    margin:0 145px 10px 0!important;
+    gap:10px!important;
+    align-items:center!important;
+  }
+
+  #services .v132-section-badge,
+  #team .v132-section-badge,
+  #resident-programmes .v132-section-badge,
+  #community-engagement .v132-section-badge{
+    flex-basis:52px!important;
+    width:52px!important;
+    height:52px!important;
+    box-shadow:0 8px 20px rgba(11,46,72,.12),
+               0 0 0 3px rgba(255,255,255,.75)!important;
+  }
+
+  #services .v132-section-badge-core,
+  #team .v132-section-badge-core,
+  #resident-programmes .v132-section-badge-core,
+  #community-engagement .v132-section-badge-core{
+    width:39px!important;
+    height:39px!important;
+  }
+
+  #services .v132-section-badge svg,
+  #team .v132-section-badge svg,
+  #resident-programmes .v132-section-badge svg,
+  #community-engagement .v132-section-badge svg{
+    width:27px!important;
+    height:27px!important;
+  }
+
+  #services .v132-section-badge-copy,
+  #team .v132-section-badge-copy,
+  #resident-programmes .v132-section-badge-copy,
+  #community-engagement .v132-section-badge-copy{
+    gap:2px!important;
+  }
+
+  #services .v132-section-badge-copy b,
+  #team .v132-section-badge-copy b,
+  #resident-programmes .v132-section-badge-copy b,
+  #community-engagement .v132-section-badge-copy b{
+    font-size:9px!important;
+  }
+
+  #services .v132-section-badge-copy small,
+  #team .v132-section-badge-copy small,
+  #resident-programmes .v132-section-badge-copy small,
+  #community-engagement .v132-section-badge-copy small{
+    font-size:6.5px!important;
+  }
+
+  /* The long badge rule does not need to stretch under the constellation. */
+  #services .v132-section-badge-row > i,
+  #team .v132-section-badge-row > i,
+  #resident-programmes .v132-section-badge-row > i,
+  #community-engagement .v132-section-badge-row > i{
+    max-width:220px!important;
+  }
+
+  /* ----------------------------------------------------------
+     5. SERVICES — one compact, intentional block
+     ---------------------------------------------------------- */
+  #services .services-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  #services .service-card{
+    padding:11px 11px!important;
+    margin:0!important;
+    border-right:0!important;
+    border:1px solid rgba(11,53,83,.09)!important;
+    border-radius:13px!important;
+    background:rgba(255,255,255,.82)!important;
+    min-height:0!important;
+  }
+  #services .service-icon{
+    margin-bottom:4px!important;
+  }
+  #services .service-icon svg{
+    width:31px!important;
+    height:31px!important;
+    margin:0!important;
+  }
+  #services .service-card h3{
+    margin:3px 0 4px!important;
+    font-size:11.5px!important;
+  }
+  #services .service-card p{
+    margin:0 0 6px!important;
+    line-height:1.35!important;
+  }
+  #services .v25-learn-more{
+    margin-top:5px!important;
+  }
+
+  /* Remove the old floating leaf because it competes with the
+     constellation occupying the same corner. */
+  #services > span[aria-hidden="true"][style*="right:18px"]{
+    display:none!important;
+  }
+
+  /* ----------------------------------------------------------
+     6. ABOUT — image + office info use the available width cleanly
+     ---------------------------------------------------------- */
+  #about .office-grid{
+    grid-template-columns:.82fr 1.18fr!important;
+    gap:20px!important;
+    align-items:stretch!important;
+  }
+  #about .office-img{
+    min-height:0!important;
+  }
+  #about .office-img img{
+    height:100%!important;
+    min-height:315px!important;
+    max-height:390px!important;
+    border-radius:16px!important;
+  }
+  #about .office-info{
+    padding:18px 18px!important;
+    margin:0!important;
+  }
+  #about .office-info .kicker{
+    margin:0 145px 2px 0!important;
+    font-size:10px!important;
+  }
+  #about .office-info h2{
+    margin:2px 145px 8px 0!important;
+    font-size:1.85rem!important;
+  }
+  #about .v131-office-glance{
+    margin:7px 0!important;
+    gap:6px!important;
+  }
+  #about .v131-glance-card{
+    padding:9px 10px!important;
+  }
+  #about .v71-office-intro{
+    margin:7px 0!important;
+    padding:9px 11px!important;
+  }
+  #about .detail{
+    margin-bottom:5px!important;
+  }
+  #about .v71-office-actions{
+    margin-top:7px!important;
+  }
+
+  /* ----------------------------------------------------------
+     7. OUR TEAM — compact header then staff immediately follows
+     ---------------------------------------------------------- */
+  #team .v32-team-banner{
+    margin:0 145px 8px 0!important;
+    padding:8px 11px!important;
+  }
+  #team .v32-team-intro{
+    max-width:700px!important;
+    margin:0 145px 10px 0!important;
+    text-align:left!important;
+  }
+  #team .v32-team-intro h2{
+    font-size:28px!important;
+    margin:2px 0 4px!important;
+  }
+  #team .v71-team-summary{
+    margin:5px 0 7px!important;
+    gap:5px!important;
+  }
+  #team .v71-team-summary article{
+    padding:7px 8px!important;
+  }
+  #team .v32-group-head{
+    margin:10px 0 6px!important;
+    padding-bottom:5px!important;
+  }
+  #team .v32-leadership-grid,
+  #team .v32-staff-grid{
+    gap:7px!important;
+  }
+  #team .member,
+  #team .v32-lead-card,
+  #team .v32-staff-card{
+    margin:0!important;
+    min-height:0!important;
+  }
+
+  /* ----------------------------------------------------------
+     8. RESOURCES — heading and constellation occupy one header level
+     ---------------------------------------------------------- */
+  #resources .v3-section-head{
+    max-width:720px!important;
+    margin:0 150px 10px 0!important;
+    padding:12px 15px!important;
+  }
+  #resources .v3-section-head h2{
+    margin:2px 0 3px!important;
+    font-size:1.8rem!important;
+  }
+  #resources .v4-resource-grid{
+    gap:8px!important;
+  }
+  #resources .v4-resource-grid article{
+    padding:12px 13px!important;
+    min-height:0!important;
+  }
+  #resources .v4-resource-icon{
+    width:42px!important;
+    height:42px!important;
+    margin-bottom:6px!important;
+  }
+  #resources .v4-resource-icon svg{
+    width:22px!important;
+    height:22px!important;
+  }
+  #resources .v4-resource-grid h3{
+    margin:2px 0 4px!important;
+  }
+  #resources .v4-resource-grid p{
+    margin:0 0 6px!important;
+  }
+  #resources .v72-resource-action{
+    margin-top:3px!important;
+  }
+
+  /* ----------------------------------------------------------
+     9. PROGRAMMES — intro shares the row with constellation
+     ---------------------------------------------------------- */
+  #resident-programmes .v17-head{
+    align-items:start!important;
+    margin:0 145px 8px 0!important;
+    gap:8px!important;
+  }
+  #resident-programmes .v17-head h2{
+    margin:2px 0 3px!important;
+    font-size:1.75rem!important;
+  }
+  #resident-programmes .v17-head p{
+    margin-top:4px!important;
+  }
+  #resident-programmes .v17-badge{
+    padding:7px 9px!important;
+  }
+  #resident-programmes .v17-start{
+    margin:7px 0!important;
+    padding:8px 10px!important;
+  }
+  #resident-programmes .v72-source-banner{
+    margin:6px 0 7px!important;
+    padding:8px 10px!important;
+  }
+  #resident-programmes .v72-programme-links{
+    margin:6px 0 8px!important;
+    gap:5px!important;
+  }
+  #resident-programmes .v17-grid{
+    gap:8px!important;
+  }
+  #resident-programmes .v17-card{
+    padding:12px 13px!important;
+  }
+
+  /* ----------------------------------------------------------
+     10. COMMUNITY — top intro + constellation are one composition
+     ---------------------------------------------------------- */
+  #community-engagement .v18-head{
+    align-items:start!important;
+    margin:0 145px 8px 0!important;
+    gap:8px!important;
+  }
+  #community-engagement .v18-head h2{
+    margin:2px 0 3px!important;
+    font-size:1.8rem!important;
+  }
+  #community-engagement .v18-cycle{
+    padding:6px 9px!important;
+  }
+  #community-engagement .v18-townhall{
+    margin:7px 0 9px!important;
+    padding:12px!important;
+    grid-template-columns:130px 1fr!important;
+    gap:12px!important;
+  }
+  #community-engagement .v18-calendar{
+    padding:10px!important;
+  }
+  #community-engagement .v22-townhall-photo{
+    height:220px!important;
+    margin:0 0 10px!important;
+  }
+  #community-engagement .v18-actions-intro{
+    margin:7px 0!important;
+  }
+  #community-engagement .v18-action-grid{
+    gap:6px!important;
+    margin-bottom:9px!important;
+  }
+  #community-engagement .v18-action-grid article{
+    min-height:88px!important;
+    padding:9px 10px!important;
+  }
+  #community-engagement .v21-action-explorer{
+    margin:8px 0 9px!important;
+  }
+
+  /* ----------------------------------------------------------
+     11. GLOBAL DESKTOP CLEANUP FOR REMAINING PAGE
+     Keep sections from looking like independent tall posters.
+     ---------------------------------------------------------- */
+  section:not(.hero):not(.v132-public-paths){
+    scroll-margin-top:84px;
+  }
+
+  /* Earlier civic circles can remain, but make them quieter so the
+     constellation becomes the intentional right-side ornament. */
+  #services.v132-civic-section::after,
+  #team.v132-civic-section::after,
+  #resident-programmes.v132-civic-section::after,
+  #community-engagement.v132-civic-section::after{
+    width:150px!important;
+    height:150px!important;
+    right:-65px!important;
+    top:15px!important;
+    opacity:.45!important;
+  }
+
+  /* No decorative pseudo-element should force extra layout height. */
+  #services::before,#services::after,
+  #about::before,#about::after,
+  #team::before,#team::after,
+  #resources::before,#resources::after,
+  #resident-programmes::before,#resident-programmes::after,
+  #community-engagement::before,#community-engagement::after{
+    margin-bottom:0!important;
+  }
+}
+
+/* Preserve the established responsive/mobile layout. */
+</style>
+
+
+<style id="v188-align-additional-sections">
+/* ==========================================================
+   V188 — ALIGNMENT CLEANUP EXPANDED
+   Applies the V187 "same-level constellation" treatment to:
+   Community Compass • What We Heard • Forms • Enquiry
+   Resident Feedback • Resident Voice
+   ========================================================== */
+@media (min-width:1024px){
+
+  /* --------------------------------------------------------
+     1. SAME-LEVEL CONSTELLATION POSITIONING
+     -------------------------------------------------------- */
+  #community-compass > .v181-constellation-signature,
+  #v121-what-we-heard > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature,
+  #v121-feedback-info > .v181-constellation-signature,
+  #v151-resident-voice > .v181-constellation-signature{
+    top:18px!important;
+    right:max(22px,calc((100vw - 1200px)/2 + 20px))!important;
+    width:clamp(120px,9.5vw,158px)!important;
+    transform:none!important;
+    opacity:.66!important;
+    z-index:1!important;
+  }
+
+  #community-compass > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature{
+    opacity:.72!important;
+  }
+
+  /* --------------------------------------------------------
+     2. REMOVE TALL EMPTY SECTION BANDS
+     -------------------------------------------------------- */
+  #community-compass,
+  #v121-what-we-heard,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice{
+    min-height:0!important;
+    height:auto!important;
+    padding-top:24px!important;
+    padding-bottom:28px!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+    overflow:hidden!important;
+  }
+
+  #community-compass > .wrap,
+  #service-forms > .wrap,
+  #enquiry > .wrap,
+  #v121-what-we-heard > .v121-wrap,
+  #v121-feedback-info > .v121-wrap,
+  #v151-resident-voice > .v151-wrap{
+    margin-top:0!important;
+    padding-top:0!important;
+    padding-bottom:0!important;
+  }
+
+  /* --------------------------------------------------------
+     3. COMMUNITY COMPASS
+     -------------------------------------------------------- */
+  #community-compass .v59-section-marker{
+    margin:0 165px 5px 0!important;
+    min-height:18px!important;
+  }
+  #community-compass .v59-compass-head{
+    margin:0 165px 10px 0!important;
+    gap:10px!important;
+    align-items:center!important;
+  }
+  #community-compass .v59-compass-head h2{
+    margin:2px 0 3px!important;
+    font-size:30px!important;
+  }
+  #community-compass .v59-compass-head p{
+    max-width:720px!important;
+    line-height:1.4!important;
+  }
+  #community-compass .v59-compass-help{
+    min-height:34px!important;
+    padding:7px 9px!important;
+  }
+  #community-compass .v59-compass-rail{
+    gap:7px!important;
+  }
+  #community-compass .v59-area-card{
+    min-height:198px!important;
+    padding:12px!important;
+  }
+  #community-compass .v59-area-card h3{
+    margin:4px 0!important;
+  }
+  #community-compass .v59-area-card p{
+    line-height:1.4!important;
+  }
+  #community-compass .v59-area-status{
+    margin-top:7px!important;
+  }
+  #community-compass .v59-area-card button{
+    margin-top:8px!important;
+  }
+
+  /* --------------------------------------------------------
+     4. WHAT WE HEARD
+     -------------------------------------------------------- */
+  #v121-what-we-heard .v121-wrap{
+    position:relative!important;
+  }
+  #v121-what-we-heard .v121-kicker,
+  #v121-what-we-heard .v121-title,
+  #v121-what-we-heard .v121-lead{
+    max-width:760px!important;
+    margin-right:165px!important;
+  }
+  #v121-what-we-heard .v121-kicker{
+    display:block!important;
+    margin-bottom:2px!important;
+  }
+  #v121-what-we-heard .v121-title{
+    margin-top:2px!important;
+    margin-bottom:5px!important;
+    font-size:32px!important;
+  }
+  #v121-what-we-heard .v121-lead{
+    margin-top:0!important;
+    margin-bottom:0!important;
+    line-height:1.42!important;
+  }
+  #v121-what-we-heard .v121-heard-grid{
+    margin-top:10px!important;
+    gap:8px!important;
+  }
+  #v121-what-we-heard .v121-heard{
+    padding:11px 13px!important;
+  }
+  #v121-what-we-heard .v121-heard strong{
+    margin:4px 0!important;
+  }
+  #v121-what-we-heard .v121-heard-status{
+    margin-top:6px!important;
+  }
+
+  /* --------------------------------------------------------
+     5. FORMS / PUBLIC DOCUMENT LIBRARY
+     -------------------------------------------------------- */
+  #service-forms > .v20-section-marker{
+    top:22px!important;
+  }
+  #service-forms .v51-primary-label{
+    margin:0 165px 5px 0!important;
+  }
+  #service-forms .v12-section-head{
+    margin:0 165px 10px 0!important;
+    gap:10px!important;
+    align-items:center!important;
+  }
+  #service-forms .v12-section-head h2{
+    margin:2px 0 3px!important;
+    font-size:30px!important;
+  }
+  #service-forms .v12-section-head p{
+    margin:3px 0 0!important;
+    line-height:1.4!important;
+  }
+  #service-forms .v12-label{
+    padding:6px 8px!important;
+  }
+  #service-forms .v55-forms-help{
+    margin-top:5px!important;
+    min-height:32px!important;
+  }
+  #service-forms .v98-source-note{
+    margin-top:8px!important;
+    margin-bottom:9px!important;
+    padding:9px 11px!important;
+  }
+  #service-forms .v16-form-notice{
+    margin:8px 0 11px!important;
+    padding:10px 13px!important;
+    gap:12px!important;
+  }
+  #service-forms .v16-form-group{
+    margin:12px 0!important;
+  }
+  #service-forms .v16-group-head{
+    margin-bottom:6px!important;
+    padding-bottom:5px!important;
+  }
+  #service-forms .v16-form-grid{
+    gap:7px!important;
+  }
+  #service-forms .v16-form-card{
+    min-height:0!important;
+    padding:10px 11px!important;
+    gap:10px!important;
+  }
+  #service-forms .v16-pdf-icon{
+    width:39px!important;
+    height:45px!important;
+  }
+  #service-forms .v16-help-box{
+    margin-top:12px!important;
+    padding:11px 13px!important;
+  }
+  #service-forms .v54-section-end{
+    margin-top:7px!important;
+  }
+
+  /* --------------------------------------------------------
+     6. ENQUIRY / START • FOLLOW UP
+     -------------------------------------------------------- */
+  #enquiry > .v20-section-marker{
+    top:22px!important;
+  }
+  #enquiry > span[aria-hidden="true"][style*="right:18px"]{
+    display:none!important;
+  }
+  #enquiry .contact-grid{
+    grid-template-columns:minmax(0,1.55fr) minmax(250px,.72fr)!important;
+    gap:20px!important;
+    align-items:start!important;
+  }
+  #enquiry .v51-primary-label{
+    margin:0 165px 5px 0!important;
+  }
+  #enquiry .v9-contact-process{
+    margin:0 165px 10px 0!important;
+    padding:10px 12px!important;
+    gap:6px!important;
+    border-radius:12px!important;
+  }
+  #enquiry .v9-contact-process strong{
+    width:22px!important;
+    height:22px!important;
+  }
+  #enquiry .v9-contact-process span{
+    font-size:8px!important;
+  }
+  #enquiry .v54-enquiry-actions{
+    margin:0 0 8px!important;
+    gap:7px!important;
+  }
+  #enquiry .v54-enquiry-action{
+    min-height:50px!important;
+    padding:9px 11px!important;
+  }
+  #enquiry .form-area h2{
+    margin:3px 0 3px!important;
+    font-size:29px!important;
+  }
+  #enquiry .form-area>p,
+  #enquiry .v74-enquiry-intro{
+    margin:0 0 7px!important;
+    line-height:1.42!important;
+  }
+  #enquiry .v35-track-box{
+    margin:7px 0!important;
+    padding:10px 12px!important;
+  }
+  #enquiry .v55-before-submit{
+    margin:7px 0!important;
+    padding:10px 12px!important;
+  }
+  #enquiry .form-grid{
+    gap:11px!important;
+  }
+  #enquiry .form-group{
+    margin-bottom:5px!important;
+  }
+  #enquiry .form-group label{
+    margin-bottom:5px!important;
+    font-size:11px!important;
+  }
+  #enquiry .form-group input,
+  #enquiry .form-group select,
+  #enquiry .form-group textarea{
+    padding:10px!important;
+    font-size:12px!important;
+  }
+  #enquiry .form-group textarea{
+    min-height:92px!important;
+  }
+  #enquiry .v69-enquiry-stage{
+    margin:7px 0!important;
+  }
+  #enquiry .social-box,
+  #enquiry [class*="contact-card"],
+  #enquiry [class*="side-card"]{
+    padding-top:14px!important;
+    padding-bottom:14px!important;
+  }
+  #enquiry .v54-section-end{
+    margin-top:7px!important;
+  }
+
+  /* --------------------------------------------------------
+     7. RESIDENT FEEDBACK
+     -------------------------------------------------------- */
+  #v121-feedback-info .v121-wrap{
+    position:relative!important;
+  }
+  #v121-feedback-info .v121-kicker,
+  #v121-feedback-info .v121-title,
+  #v121-feedback-info .v121-lead{
+    max-width:780px!important;
+    margin-right:165px!important;
+  }
+  #v121-feedback-info .v121-kicker{
+    display:block!important;
+    margin-bottom:2px!important;
+  }
+  #v121-feedback-info .v121-title{
+    margin:2px 165px 5px 0!important;
+    font-size:31px!important;
+  }
+  #v121-feedback-info .v121-lead{
+    margin-top:0!important;
+    margin-bottom:0!important;
+    line-height:1.42!important;
+  }
+  #v121-feedback-info .v121-feedback-box{
+    margin-top:9px!important;
+    padding:11px 13px!important;
+    gap:12px!important;
+  }
+  #v121-feedback-info .v121-feedback-box span{
+    margin-top:2px!important;
+  }
+  #v121-feedback-info .v121-feedback-box a{
+    padding:8px 10px!important;
+  }
+
+  /* --------------------------------------------------------
+     8. RESIDENT VOICE
+     -------------------------------------------------------- */
+  #v151-resident-voice .v151-wrap{
+    position:relative!important;
+  }
+  #v151-resident-voice .v151-head{
+    grid-template-columns:58px minmax(0,1fr)!important;
+    gap:10px!important;
+    margin-right:165px!important;
+    align-items:center!important;
+  }
+  #v151-resident-voice .v151-badge{
+    width:56px!important;
+    height:56px!important;
+    box-shadow:0 0 0 4px rgba(201,163,74,.10),
+               0 8px 20px rgba(8,38,61,.10)!important;
+  }
+  #v151-resident-voice .v151-badge svg{
+    width:27px!important;
+    height:27px!important;
+  }
+  #v151-resident-voice .v151-kicker{
+    margin-bottom:1px!important;
+  }
+  #v151-resident-voice .v151-title{
+    margin:1px 0 4px!important;
+    font-size:31px!important;
+  }
+  #v151-resident-voice .v151-lead{
+    margin:0!important;
+    line-height:1.42!important;
+    max-width:760px!important;
+  }
+  #v151-resident-voice .v151-grid{
+    margin-top:9px!important;
+    gap:7px!important;
+  }
+  #v151-resident-voice .v151-card{
+    padding:11px 12px!important;
+  }
+
+  /* --------------------------------------------------------
+     9. DECORATIVE CLEANUP / SECTION TRANSITIONS
+     -------------------------------------------------------- */
+  #community-compass::before,
+  #v121-what-we-heard::before,
+  #service-forms::before,
+  #enquiry::before,
+  #v121-feedback-info::before,
+  #v151-resident-voice::before{
+    margin-bottom:0!important;
+  }
+
+  #community-compass::after,
+  #v121-what-we-heard::after,
+  #service-forms::after,
+  #enquiry::after,
+  #v121-feedback-info::after,
+  #v151-resident-voice::after{
+    margin-bottom:0!important;
+  }
+
+  #community-compass h2,
+  #v121-what-we-heard h2,
+  #service-forms h2,
+  #enquiry h2,
+  #v121-feedback-info h2,
+  #v151-resident-voice h2{
+    scroll-margin-top:84px!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>

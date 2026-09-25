@@ -1,0 +1,13 @@
+V188 — DESKTOP ALIGNMENT CLEANUP EXPANDED
+
+Applied the V187 same-level constellation treatment to:
+- Community Compass / Six Focus Group Areas
+- What We Heard / Community Matters in View
+- Forms / Public Document Library
+- Enquiry / Start • Follow Up
+- Resident Feedback
+- Resident Voice
+
+The constellation artwork now sits at the upper-right on the same visual level as the section heading/introduction instead of appearing below it.
+Also removed excess vertical space, tightened cards/forms/transitions, and removed the competing flower ornament in the Enquiry section on desktop.
+Public content and intended functionality are preserved. Mobile/tablet behavior remains under the existing responsive rules.
