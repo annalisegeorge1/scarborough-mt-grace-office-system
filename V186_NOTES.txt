@@ -1,0 +1,13 @@
+V186 — COMPACT REMAINING DESKTOP SECTIONS
+
+Tightened the following desktop sections:
+- Services
+- About / District Office
+- Our Team
+- Resources
+- Programmes
+- Community
+
+Also tightened the More / information directory transition.
+No public content, links, forms, images or intended functionality were removed.
+Mobile and tablet layouts are left to their existing responsive rules.
