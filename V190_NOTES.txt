@@ -1,0 +1,21 @@
+V190 — COMPACT DESKTOP + HEADER / CONSTELLATION ALIGNMENT
+
+BASE
+- Continues from V189, which restored the V179 structure.
+- Keeps the constellation design, selected animations, Tobago map, working links,
+  self-contained images, resident enquiry/tracker links and the combined Start Centre clock.
+
+DESKTOP CLEANUP
+- Hero no longer uses a 650–720px minimum-height stage.
+- Hero vertical padding and internal gaps are substantially reduced.
+- 01 Service Portals / 02 Activity Hub / 03 Forms & Documents is now a compact utility row.
+- The duplicate floating Office Hours card is hidden on desktop because the Start Centre now
+  contains the live clock and office status.
+- The District Office quick summary (Scarborough / Mt. Grace, People • Community • Opportunity,
+  6 Focus Group Areas, Quarterly Town Hall Programme, 14 Forms & Public Documents) is compacted
+  into the right-side column directly beside the Trevor James Assembly Member panel.
+- Major section constellation/circle artwork is moved to the top-right of each section.
+- Major headings and badges now begin near the top and sit on the same visual level as the
+  constellation artwork rather than below it.
+- Large inherited top/bottom gaps are reduced across the main desktop sections.
+- Mobile/tablet behaviour is left under the existing responsive rules.
