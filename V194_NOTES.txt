@@ -1,0 +1,10 @@
+V194 — HEADER / CONSTELLATION OVERLAP
+
+Desktop and mobile/tablet changes:
+- Constellation designs moved into the same top visual band as section headings.
+- Slight overlap is intentional.
+- Civic circular accents are also moved upward toward the headers.
+- Major section top padding reduced so headings do not sit far below decoration.
+- Header text remains above the decorative layer and readable.
+- Keeps the V193 responsive split: V192 look on desktop, V180/V181 style on mobile/tablet.
+- Keeps all later content and functionality.

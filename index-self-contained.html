@@ -13946,6 +13946,311 @@ section > :not(.v181-constellation-signature){
 }
 </style>
 
+
+<style id="v194-header-constellation-overlap">
+/* ==========================================================
+   V194 — CONSTELLATIONS / CIRCLES TIGHT TO HEADERS
+   Desktop + mobile.
+   The decorative geometry is intentionally allowed to overlap
+   the header zone slightly, rather than sitting below it.
+   ========================================================== */
+
+/* Shared behavior */
+section{
+  position:relative;
+}
+
+section > .v181-constellation-signature{
+  pointer-events:none!important;
+  z-index:1!important;
+}
+
+/* Keep actual text/buttons above the ornament. */
+.v132-section-badge-row,
+.v59-section-marker,
+.v59-compass-head,
+.v121-kicker,
+.v121-title,
+.v121-lead,
+.v12-section-head,
+.v51-primary-label,
+.v17-head,
+.v18-head,
+.v70-info-head,
+.v89-before-visit-head,
+.v3-section-head,
+.v32-team-intro,
+.v13-profile-copy,
+.v151-head{
+  position:relative!important;
+  z-index:3!important;
+}
+
+/* -------------------- DESKTOP -------------------- */
+@media (min-width:1024px){
+
+  /* Pull the constellation up into the same visual band as the header. */
+  section > .v181-constellation-signature{
+    top:-14px!important;
+    right:clamp(-8px,0.2vw,4px)!important;
+    width:clamp(102px,8.2vw,132px)!important;
+    opacity:.66!important;
+    transform:rotate(-8deg)!important;
+  }
+
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:-14px!important;
+    transform:rotate(-8deg)!important;
+  }
+
+  /* Stronger/larger constellation on the visually important sections. */
+  #community-compass > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature,
+  #district-profile > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature{
+    top:-18px!important;
+    right:-6px!important;
+    width:138px!important;
+    opacity:.72!important;
+  }
+
+  /* Let circular civic ornaments overlap the header zone instead of
+     sitting in a separate strip. */
+  #services.v132-civic-section::after,
+  #team.v132-civic-section::after,
+  #resident-programmes.v132-civic-section::after,
+  #community-engagement.v132-civic-section::after{
+    top:-44px!important;
+    right:-54px!important;
+    width:170px!important;
+    height:170px!important;
+    opacity:.52!important;
+    z-index:0!important;
+  }
+
+  /* Major section content starts almost immediately at the top edge. */
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #v51-more-gateway,
+  #v70-info-directory,
+  #services,
+  #about,
+  #team,
+  #leadership,
+  #district-profile,
+  #v121-scope,
+  #how-we-help,
+  #help-selector,
+  #support-areas,
+  #resident-guide,
+  #v145-public-cms,
+  #resident-faq,
+  #resources,
+  #privacy-accessibility,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #v133-public-action,
+  #v135-live-updates,
+  #v142-public-matters,
+  #v141-public-plans,
+  #community-engagement{
+    padding-top:8px!important;
+  }
+
+  /* Headers may sit slightly under the constellation edge. */
+  .v132-section-badge-row{
+    padding-right:88px!important;
+    margin-bottom:5px!important;
+  }
+
+  #community-compass .v59-section-marker,
+  #community-compass .v59-compass-head,
+  #service-forms .v51-primary-label,
+  #service-forms .v12-section-head,
+  #enquiry .v51-primary-label,
+  #enquiry .v9-contact-process,
+  #v121-what-we-heard .v121-kicker,
+  #v121-what-we-heard .v121-title,
+  #v121-feedback-info .v121-kicker,
+  #v121-feedback-info .v121-title,
+  #v151-resident-voice .v151-head{
+    margin-right:88px!important;
+  }
+
+  /* Nudge the text block upward into the ornament band. */
+  .v59-compass-head,
+  .v12-section-head,
+  .v17-head,
+  .v18-head,
+  .v70-info-head,
+  .v89-before-visit-head,
+  .v3-section-head,
+  .v32-team-intro,
+  .v13-profile-copy{
+    transform:translateY(-7px)!important;
+  }
+
+  .v20-section-marker{
+    top:8px!important;
+  }
+}
+
+/* -------------------- TABLET / MOBILE -------------------- */
+@media (max-width:1023px){
+
+  /* Move the V180/V181 constellation treatment from mid/lower-section
+     to the actual header zone. Slight overlap is intentional. */
+  section > .v181-constellation-signature{
+    top:-8px!important;
+    right:-14px!important;
+    width:112px!important;
+    opacity:.58!important;
+    transform:rotate(-9deg)!important;
+  }
+
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:-8px!important;
+    transform:rotate(-9deg)!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature{
+    top:-12px!important;
+    right:-18px!important;
+    width:124px!important;
+    opacity:.64!important;
+  }
+
+  /* Pull section content up. */
+  #resident-start,
+  #portal-hub,
+  #activity-hub,
+  #v121-what-we-heard,
+  #community-compass,
+  #contact-us,
+  #before-you-visit,
+  #service-forms,
+  #enquiry,
+  #v121-feedback-info,
+  #v151-resident-voice,
+  #gallery,
+  #services,
+  #about,
+  #team,
+  #district-profile,
+  #resources,
+  #documents,
+  #resident-programmes,
+  #community-action-centre,
+  #community-engagement{
+    padding-top:18px!important;
+  }
+
+  /* Header text can overlap the left edge of the ornament slightly. */
+  .v132-section-badge-row{
+    padding-right:70px!important;
+    margin-bottom:7px!important;
+  }
+
+  #community-compass .v59-section-marker,
+  #community-compass .v59-compass-head,
+  #service-forms .v51-primary-label,
+  #service-forms .v12-section-head,
+  #enquiry .v51-primary-label,
+  #v121-what-we-heard .v121-kicker,
+  #v121-what-we-heard .v121-title,
+  #v121-feedback-info .v121-kicker,
+  #v121-feedback-info .v121-title,
+  #v151-resident-voice .v151-head{
+    margin-right:64px!important;
+  }
+
+  .v59-compass-head,
+  .v12-section-head,
+  .v17-head,
+  .v18-head,
+  .v70-info-head,
+  .v89-before-visit-head,
+  .v3-section-head,
+  .v32-team-intro,
+  .v13-profile-copy{
+    transform:translateY(-4px)!important;
+  }
+
+  /* Civic circular accents move up as well. */
+  #services.v132-civic-section::after,
+  #team.v132-civic-section::after,
+  #resident-programmes.v132-civic-section::after,
+  #community-engagement.v132-civic-section::after{
+    top:-34px!important;
+    right:-70px!important;
+    width:155px!important;
+    height:155px!important;
+    opacity:.44!important;
+  }
+}
+
+@media (max-width:560px){
+  section > .v181-constellation-signature{
+    top:-5px!important;
+    right:-18px!important;
+    width:96px!important;
+    opacity:.50!important;
+  }
+
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature,
+  #service-forms > .v181-constellation-signature,
+  #enquiry > .v181-constellation-signature{
+    top:-8px!important;
+    right:-22px!important;
+    width:108px!important;
+    opacity:.56!important;
+  }
+
+  .v132-section-badge-row{
+    padding-right:58px!important;
+  }
+
+  #community-compass .v59-section-marker,
+  #community-compass .v59-compass-head,
+  #service-forms .v51-primary-label,
+  #service-forms .v12-section-head,
+  #enquiry .v51-primary-label,
+  #v121-what-we-heard .v121-kicker,
+  #v121-what-we-heard .v121-title,
+  #v121-feedback-info .v121-kicker,
+  #v121-feedback-info .v121-title,
+  #v151-resident-voice .v151-head{
+    margin-right:52px!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
