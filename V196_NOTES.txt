@@ -1,0 +1,1 @@
+V196: decorative constellations/circles moved significantly higher with intentional overlap behind headers; content layered above decoration.
