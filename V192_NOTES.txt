@@ -1,0 +1,9 @@
+V192 — RESTORED ORNATE SMG SEAL AS A BACK LAYER
+
+- Keeps the V191 compact desktop layout and centred Services section.
+- Restores the richer ornate SMG circle appearance from before V191:
+  layered navy gradient, gold ring ticks, inner ring, gold dots, SMG lettering and seal motto.
+- The seal now sits behind the hero/photo/district information rather than over the text.
+- Trevor James, the hero wording, 01/02/03 cards and District Office summary remain above the decorative layer.
+- Orbit/glow details are restored as background decoration.
+- No public information or intended functionality was removed.
