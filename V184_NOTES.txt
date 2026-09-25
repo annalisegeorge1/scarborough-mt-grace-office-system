@@ -1,0 +1,10 @@
+V184 — PC TIGHTER LAYOUT
+
+- Desktop District Office summary is placed beside the Trevor James identity panel.
+- Office-hours clock sits beneath Trevor in the same compact right-hand utility area.
+- The old desktop-only extra hero column and minimum-height reserve are removed.
+- 01/02/03 quick cards are reduced to a slim navigation strip.
+- Redundant desktop highlight ribbon is hidden.
+- Main desktop sections use a tighter vertical rhythm through the page.
+- Original mobile/tablet markup remains in place; the new compact utility rail is desktop-only.
+- Content, links, maps, forms and public information are preserved.

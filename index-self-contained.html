@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+<!-- V184: tighter desktop rhythm; district summary beside Trevor James; clock integrated into hero -->
 <!-- V177: self-contained image payloads restored; no external image folder required -->
 <!-- V176 PERFORMANCE CLEANUP: embedded bitmap assets externalized for caching; visual/content structure preserved. -->
 
@@ -12696,6 +12697,220 @@ section > :not(.v181-constellation-signature){
 }
 </style>
 
+
+<style id="v184-pc-tighter-layout">
+/* ==========================================================
+   V184 — PC TIGHTER LAYOUT
+   Uses existing space more efficiently without removing information.
+   ========================================================== */
+.v184-member-utility{display:none}
+
+@media (min-width:1024px){
+  /* The top ribbon repeats information already present in the hero. */
+  .v183-static-ribbon{display:none!important}
+
+  /* Keep the original mobile/tablet copies out of the desktop layout. */
+  .hero > .v8-hours-card,
+  .hero > .v20-hero-aside.v183-hero-aside{display:none!important}
+  .hero-photo > .info{display:none!important}
+
+  /* Hero uses the full page width instead of reserving an empty third column. */
+  .hero{
+    display:block!important;
+    min-height:0!important;
+    padding:14px 0 12px!important;
+  }
+  .hero .v20-hero-frame{
+    width:100%!important;
+    max-width:1240px!important;
+    margin:0 auto!important;
+    padding:0 20px!important;
+  }
+  .hero-inner{
+    max-width:1200px!important;
+    margin:0 auto!important;
+    padding:24px 26px!important;
+    gap:22px!important;
+    grid-template-columns:minmax(0,1.08fr) minmax(350px,.92fr)!important;
+    align-items:start!important;
+    border-radius:22px!important;
+  }
+  .hero h1{
+    font-size:clamp(2.75rem,3.65vw,4.2rem)!important;
+    line-height:1!important;
+    margin-top:7px!important;
+    margin-bottom:9px!important;
+  }
+  .hero .hero-text .executive-label{
+    margin-bottom:9px!important;
+    padding:5px 10px!important;
+    font-size:9px!important;
+  }
+  .hero .kicker{margin-bottom:5px!important;font-size:10px!important}
+  .hero .sub{margin:7px 0 8px!important;padding:6px 10px!important;font-size:9px!important}
+  .hero .quote{margin:10px 0 12px!important;padding-left:16px!important;font-size:13px!important;line-height:1.4!important}
+  .hero-actions{gap:8px!important}
+  .hero-actions .btn{padding:10px 15px!important;font-size:10px!important}
+  .v8-hero-actions{gap:7px!important;margin-top:12px!important}
+  .v8-hero-actions button{padding:9px 10px!important;border-radius:11px!important}
+  .v8-hero-actions span{font-size:9px!important}
+  .v8-hero-actions small{font-size:7.5px!important;margin-top:2px!important}
+  .v8-trust-line{margin-top:10px!important;padding:7px 10px!important;font-size:7px!important}
+
+  /* Right hero column: image, then Trevor + district facts + office hours. */
+  .hero-photo{min-width:0!important}
+  .hero-photo img{
+    height:300px!important;
+    object-position:top center!important;
+    border-radius:20px!important;
+  }
+  .hero-photo>.quote{
+    top:12px!important;
+    right:12px!important;
+    width:auto!important;
+    max-width:165px!important;
+    padding:7px 10px!important;
+    font-size:12px!important;
+  }
+  .v184-member-utility{
+    display:grid!important;
+    grid-template-columns:148px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    gap:7px!important;
+    margin-top:7px!important;
+    align-items:stretch!important;
+  }
+  .hero-photo .v184-member-utility>.v184-info-copy{
+    position:static!important;
+    right:auto!important;
+    bottom:auto!important;
+    grid-column:1!important;
+    grid-row:1!important;
+    min-width:0!important;
+    padding:10px 11px!important;
+    text-align:left!important;
+    border-radius:13px!important;
+    box-shadow:none!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+  }
+  .hero-photo .v184-info-copy h3{font-size:13px!important;line-height:1.1!important}
+  .hero-photo .v184-info-copy p{font-size:9px!important;line-height:1.35!important;margin-top:3px!important}
+
+  /* District Office information is now directly beside Trevor James. */
+  .v184-member-utility .v184-aside-copy{
+    display:block!important;
+    position:static!important;
+    grid-column:2!important;
+    grid-row:1 / span 2!important;
+    width:auto!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:10px 12px!important;
+    align-self:stretch!important;
+    border-radius:13px!important;
+    box-shadow:none!important;
+    transform:none!important;
+    animation:none!important;
+  }
+  .v184-member-utility .v20-aside-label{
+    margin-bottom:4px!important;
+    font-size:6.5px!important;
+    letter-spacing:.15em!important;
+  }
+  .v184-member-utility .v183-aside-identity{
+    padding:0 0 6px!important;
+    margin:0 0 2px!important;
+  }
+  .v184-member-utility .v183-aside-identity strong{font-size:13px!important;line-height:1.1!important}
+  .v184-member-utility .v183-aside-identity span{font-size:6.7px!important;margin-top:2px!important}
+  .v184-member-utility .v183-aside-stats{display:grid!important;grid-template-columns:1fr!important;gap:0!important}
+  .v184-member-utility .v20-aside-stat,
+  .v184-member-utility .v20-aside-stat.v109-townhall-stat{
+    display:grid!important;
+    grid-template-columns:48px minmax(0,1fr)!important;
+    min-height:0!important;
+    gap:6px!important;
+    padding:4px 0!important;
+    align-items:center!important;
+  }
+  .v184-member-utility .v20-aside-stat strong{font-size:18px!important;line-height:1!important}
+  .v184-member-utility .v20-aside-stat.v109-townhall-stat strong{font-size:10px!important;line-height:1.05!important}
+  .v184-member-utility .v20-aside-stat span,
+  .v184-member-utility .v20-aside-stat.v109-townhall-stat span{font-size:7.2px!important;line-height:1.2!important}
+
+  /* Clock uses the small area beneath Trevor rather than hanging below the hero. */
+  .v184-member-utility .v184-hours-copy{
+    display:flex!important;
+    position:static!important;
+    right:auto!important;
+    bottom:auto!important;
+    grid-column:1!important;
+    grid-row:2!important;
+    width:auto!important;
+    margin:0!important;
+    padding:8px 9px!important;
+    gap:7px!important;
+    border-radius:12px!important;
+    box-shadow:none!important;
+  }
+  .v184-member-utility .v8-clock{width:28px!important;height:28px!important;border-radius:8px!important}
+  .v184-member-utility .v8-clock svg{width:15px!important;height:15px!important}
+  .v184-member-utility .v8-hours-card small{font-size:5.8px!important}
+  .v184-member-utility .v8-hours-card strong{font-size:7.7px!important;line-height:1.2!important}
+  .v184-member-utility .v8-hours-card span{font-size:6.8px!important;line-height:1.2!important}
+
+  /* 01 / 02 / 03 become a slim navigation strip instead of a large shelf. */
+  .v23-hero-actions{margin:8px auto 0!important;gap:7px!important;max-width:1200px!important}
+  .v23-action-card{
+    min-height:52px!important;
+    padding:7px 10px!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:8px!important;
+    row-gap:0!important;
+    border-radius:10px!important;
+    box-shadow:0 8px 18px rgba(7,31,48,.07)!important;
+  }
+  .v23-action-card>span{
+    width:28px!important;height:28px!important;
+    grid-column:1!important;grid-row:1 / span 2!important;
+    font-size:9px!important;
+  }
+  .v23-action-card>strong{grid-column:2!important;grid-row:1!important;font-size:9px!important;line-height:1.15!important}
+  .v23-action-card>small{grid-column:2!important;grid-row:2!important;font-size:7px!important;line-height:1.2!important;margin-top:1px!important}
+
+  /* Eliminate reserved decorative/empty hero space. */
+  .v23-hero-visual{display:none!important}
+  .v56-district-rail .wrap{min-height:26px!important;padding-top:5px!important;padding-bottom:5px!important}
+  .v170-locator-band{padding:14px 0!important}
+
+  /* Consistent tighter desktop rhythm from the middle through the bottom. */
+  #resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,
+  #service-forms,#enquiry,#gallery,#services,#about,#team,#leadership,
+  #district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,
+  #resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,
+  #community-engagement{
+    padding-top:40px!important;
+    padding-bottom:40px!important;
+  }
+  #v132-public-paths,#v121-what-we-heard,#before-you-visit,#v121-feedback-info,
+  #v151-resident-voice,#v51-more-gateway,#v70-info-directory,#v121-scope,
+  #v145-public-cms,#community-action-centre,#v133-public-action,#v135-live-updates,
+  #v142-public-matters,#v141-public-plans{
+    padding-top:30px!important;
+    padding-bottom:30px!important;
+  }
+  .v20-desktop-feature-strip article{padding:14px 15px!important}
+  .v14-service-overview{padding-top:9px!important;padding-bottom:9px!important}
+  .v5-notice-strip{padding-top:10px!important;padding-bottom:10px!important}
+  main section h2{margin-top:0!important;margin-bottom:7px!important}
+  main section h3{margin-top:0!important}
+  .v132-section-badge-row,.v20-section-marker,.v59-section-marker{margin-bottom:7px!important}
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
@@ -12789,7 +13004,20 @@ section > :not(.v181-constellation-signature){
 <div class="v8-trust-line">
 <span>SCARBOROUGH / MT. GRACE</span><i></i><span>ACCESS • SERVICE • COMMUNITY</span>
 </div>
-</div><div class="hero-photo"><img alt="Assembly Member Trevor James" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a3"/><div class="info"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div class="quote">“People First, Always”</div></div></div><div class="v23-hero-actions">
+</div><div class="hero-photo"><img alt="Assembly Member Trevor James" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a3"/><div class="info"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div class="quote">“People First, Always”</div><div class="v184-member-utility" aria-label="Assembly Member and District Office quick information"><div class="info v184-info-copy"><h3>Trevor James</h3><p>Assembly Member<br/>Scarborough / Mt. Grace</p></div><div aria-label="District Office quick information" class="v20-hero-aside v183-hero-aside v184-aside-copy">
+<div class="v20-aside-label">DISTRICT OFFICE</div>
+<div class="v183-aside-identity"><strong>Scarborough / Mt. Grace</strong><span>People • Community • Opportunity</span></div>
+<div class="v183-aside-stats">
+<div class="v20-aside-stat"><strong>6</strong><span>Focus Group Areas</span></div>
+<div class="v20-aside-stat v109-townhall-stat"><strong>Quarterly</strong><span>Town Hall Programme</span></div>
+<div class="v20-aside-stat"><strong>14</strong><span>Forms &amp; Public Documents</span></div>
+</div>
+</div><div class="v8-hours-card v184-hours-copy">
+<div class="v8-clock">
+<svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 11h5v-2h-5V6h-2v7z"></path></svg>
+</div>
+<div><small>OFFICE HOURS</small><strong>Mon–Thu 9:30–5:00</strong><span>Friday 9:30–2:00</span></div>
+</div></div></div></div><div class="v23-hero-actions">
 <button class="v23-action-card" data-v25-scroll="portal-hub" data-v51-go="portal-hub" type="button"><span>01</span><strong>Service Portals</strong><small>Education, housing, grants &amp; more</small></button>
 <button class="v23-action-card" data-v25-scroll="activity-hub" data-v51-go="activity-hub" type="button"><span>02</span><strong>Activity Hub</strong><small>Notices, Town Halls &amp; follow-up</small></button>
 <button class="v23-action-card" data-v25-scroll="service-forms" data-v51-go="service-forms" type="button"><span>03</span><strong>Forms &amp; Documents</strong><small>14 PDFs across 5 categories</small></button>
