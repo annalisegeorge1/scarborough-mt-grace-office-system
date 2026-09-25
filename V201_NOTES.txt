@@ -1,0 +1,7 @@
+V201 — Gold Brand Lockup
+
+- Added a refined gold outline around the SMG + Scarborough / Mt. Grace / District Office brand lockup.
+- Kept the brand text white.
+- Changed the SMG seal outer ring to gold while keeping the inner artwork light/white.
+- Kept the clear gold navigation pills and V199/V200 search contrast improvements.
+- No layout, constellation, or content changes.

@@ -14742,6 +14742,426 @@ section .v70-info-grid {
 }
 </style>
 
+
+<style id="v198-gold-icon-search-contrast">
+/* ==========================================================
+   V198 — TARGETED POLISH ONLY
+   Baseline: V197
+   - Gold-outline treatment for principle/nav icons
+   - Stronger search-result contrast/readability
+   - No structural/layout changes
+   ========================================================== */
+
+/* Professional Service / Responsive Communication / People First */
+.v4-principles-grid > div > svg{
+  width:36px!important;
+  height:36px!important;
+  padding:7px!important;
+  box-sizing:border-box!important;
+  border-radius:50%!important;
+  border:1.5px solid rgba(201,163,74,.86)!important;
+  background:linear-gradient(145deg,#ffffff,#edf4f7)!important;
+  fill:#174f74!important;
+  box-shadow:
+    0 0 0 3px rgba(201,163,74,.10),
+    0 7px 16px rgba(11,46,72,.08)!important;
+}
+
+/* Desktop navigation: refined gold-outline pills, intentionally subtle */
+@media (min-width:761px){
+  nav .links > .v14-nav-label{
+    border:1px solid rgba(201,163,74,.58)!important;
+    border-radius:999px!important;
+    background:rgba(255,255,255,.76)!important;
+    color:#0b2e48!important;
+    padding:7px 10px!important;
+    min-height:32px!important;
+    font-weight:850!important;
+    line-height:1!important;
+    transition:background .16s ease,border-color .16s ease,color .16s ease!important;
+  }
+  nav .links > .v14-nav-label:hover,
+  nav .links > .v14-nav-label:focus-visible{
+    border-color:#c9a34a!important;
+    background:#f8f3e8!important;
+    color:#071f32!important;
+  }
+}
+
+/* Mobile rail already had gold borders; make them a little cleaner/richer. */
+@media (max-width:760px){
+  .v125-mobile-nav-rail button[data-v51-go]{
+    border:1.5px solid rgba(218,188,105,.80)!important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)!important;
+  }
+}
+
+/* Search dropdown: much darker and easier to read */
+.v27-search-results{
+  color:#0b2235!important;
+  border-color:rgba(11,46,72,.18)!important;
+}
+
+.v27-search-heading strong{
+  color:#071f32!important;
+  font-size:10px!important;
+  font-weight:950!important;
+}
+
+.v27-search-heading span{
+  color:#35566a!important;
+  font-size:9px!important;
+  font-weight:750!important;
+}
+
+.v27-search-result{
+  color:#0b2235!important;
+}
+
+.v27-search-result-copy strong{
+  color:#071f32!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.35!important;
+}
+
+.v27-search-result-copy small{
+  color:#294a5e!important;
+  font-size:9px!important;
+  font-weight:650!important;
+  line-height:1.45!important;
+  margin-top:4px!important;
+}
+
+.v27-search-result > em{
+  color:#17384e!important;
+  font-size:14px!important;
+  font-weight:800!important;
+}
+
+.v27-search-empty{
+  color:#294a5e!important;
+  font-size:10px!important;
+  font-weight:700!important;
+}
+
+.v27-search-result-icon{
+  border:1.5px solid rgba(201,163,74,.68)!important;
+  color:#0b3553!important;
+  background:#f4f7f8!important;
+  font-weight:950!important;
+}
+
+/* Keep PDF result badges readable while retaining their PDF identity. */
+.v27-search-result[data-kind="PDF"] .v27-search-result-icon{
+  border-color:rgba(201,163,74,.84)!important;
+  color:#fff!important;
+}
+
+/* Search input itself: stronger placeholder and typed-text contrast */
+#v27-site-search-input{
+  color:#071f32!important;
+  font-weight:700!important;
+}
+
+#v27-site-search-input::placeholder{
+  color:#526d7d!important;
+  opacity:1!important;
+  font-weight:600!important;
+}
+
+/* Dark mode remains high contrast. */
+body.v112-dark .v27-search-results{
+  background:#0d2d43!important;
+  border-color:rgba(218,188,105,.26)!important;
+}
+body.v112-dark .v27-search-heading strong,
+body.v112-dark .v27-search-result-copy strong{
+  color:#ffffff!important;
+}
+body.v112-dark .v27-search-heading span,
+body.v112-dark .v27-search-result-copy small,
+body.v112-dark .v27-search-empty{
+  color:#d0dee6!important;
+}
+body.v112-dark .v27-search-result{
+  background:#0d2d43!important;
+}
+body.v112-dark .v27-search-result:hover{
+  background:#153b55!important;
+}
+</style>
+
+
+<style id="v199-search-results-contrast-correction">
+/* ==========================================================
+   V199 — CLARIFICATION / TARGETED CORRECTION
+   Keep the gold-outline styling.
+   Readability changes apply specifically to the SEARCH RESULTS
+   dropdown — not to the Home / Portals / Activity / etc. labels.
+   ========================================================== */
+
+/* Search result panel */
+#v27-search-results.v27-search-results{
+  background:#ffffff!important;
+  color:#061724!important;
+  border:1px solid rgba(7,31,50,.20)!important;
+  box-shadow:0 22px 55px rgba(4,25,40,.24)!important;
+}
+
+/* "Best matches" heading */
+#v27-search-results .v27-search-heading strong{
+  color:#061724!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  letter-spacing:.01em!important;
+}
+#v27-search-results .v27-search-heading span{
+  color:#28475b!important;
+  font-size:9px!important;
+  font-weight:800!important;
+}
+
+/* Every individual search result */
+#v27-search-results .v27-search-result{
+  background:#ffffff!important;
+  color:#061724!important;
+}
+#v27-search-results .v27-search-result:hover,
+#v27-search-results .v27-search-result:focus-visible{
+  background:#eef5f8!important;
+}
+
+/* Main result title — deliberately dark */
+#v27-search-results .v27-search-result-copy strong{
+  color:#041521!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  line-height:1.35!important;
+}
+
+/* Supporting result description — no pale grey */
+#v27-search-results .v27-search-result-copy small{
+  color:#203e51!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+  line-height:1.45!important;
+  opacity:1!important;
+}
+
+/* Result category badge keeps the gold outline */
+#v27-search-results .v27-search-result-icon{
+  color:#0a314d!important;
+  background:#f4f7f8!important;
+  border:1.5px solid rgba(201,163,74,.82)!important;
+  font-weight:950!important;
+}
+#v27-search-results .v27-search-result[data-kind="PDF"] .v27-search-result-icon{
+  color:#ffffff!important;
+  border-color:#c9a34a!important;
+}
+
+/* Arrow and empty/help messages */
+#v27-search-results .v27-search-result > em{
+  color:#102f43!important;
+  opacity:1!important;
+  font-weight:900!important;
+}
+#v27-search-results .v27-search-empty{
+  color:#18384c!important;
+  font-size:10px!important;
+  font-weight:750!important;
+  line-height:1.55!important;
+  opacity:1!important;
+}
+#v27-search-results .v27-search-empty strong{
+  color:#041521!important;
+  font-weight:950!important;
+}
+
+/* Popular-search helper underneath navigation: readable but secondary */
+.v89-search-prompts,
+.v89-search-hint{
+  color:#334f61!important;
+}
+.v89-search-prompts button{
+  color:#12344a!important;
+  font-weight:750!important;
+}
+
+/* Search field itself stays clear; this is separate from the results. */
+#v27-site-search-input{
+  color:#061724!important;
+}
+#v27-site-search-input::placeholder{
+  color:#526d7d!important;
+  opacity:1!important;
+}
+
+/* High contrast in dark mode */
+body.v112-dark #v27-search-results.v27-search-results{
+  background:#0d2d43!important;
+  color:#ffffff!important;
+  border-color:rgba(218,188,105,.30)!important;
+}
+body.v112-dark #v27-search-results .v27-search-result{
+  background:#0d2d43!important;
+}
+body.v112-dark #v27-search-results .v27-search-result:hover,
+body.v112-dark #v27-search-results .v27-search-result:focus-visible{
+  background:#173e58!important;
+}
+body.v112-dark #v27-search-results .v27-search-heading strong,
+body.v112-dark #v27-search-results .v27-search-result-copy strong,
+body.v112-dark #v27-search-results .v27-search-empty strong{
+  color:#ffffff!important;
+}
+body.v112-dark #v27-search-results .v27-search-heading span,
+body.v112-dark #v27-search-results .v27-search-result-copy small,
+body.v112-dark #v27-search-results .v27-search-empty{
+  color:#d9e5eb!important;
+}
+body.v112-dark #v27-search-results .v27-search-result > em{
+  color:#f0d895!important;
+}
+</style>
+
+
+<style id="v200-clear-gold-navigation-pills">
+/* ==========================================================
+   V200 — CLEAR GOLD NAVIGATION PILLS
+   Removes the grey fill behind Home / Portals / Activity /
+   Contact / Forms / Enquiry / Gallery / More while retaining
+   the gold outline and the darker V199 search results.
+   ========================================================== */
+
+@media (min-width:761px){
+  nav .links > .v14-nav-label{
+    background:transparent!important;
+    border:1px solid rgba(201,163,74,.62)!important;
+    border-radius:999px!important;
+    color:#0b2e48!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  nav .links > .v14-nav-label:hover,
+  nav .links > .v14-nav-label:focus-visible{
+    background:linear-gradient(
+      135deg,
+      rgba(201,163,74,.12),
+      rgba(255,255,255,.04)
+    )!important;
+    border-color:#c9a34a!important;
+    color:#071f32!important;
+    box-shadow:0 7px 16px rgba(11,46,72,.06)!important;
+  }
+
+  /* A restrained "Track an Enquiry" style treatment:
+     clear centre, gold rim, rounded pill. */
+  nav .links > .v14-nav-label::after{
+    opacity:.75!important;
+  }
+}
+
+/* Mobile nav keeps its existing gold outline but removes any grey wash. */
+@media (max-width:760px){
+  .v125-mobile-nav-rail button[data-v51-go]{
+    background:transparent!important;
+    border:1.5px solid rgba(218,188,105,.82)!important;
+    box-shadow:none!important;
+  }
+  .v125-mobile-nav-rail button[data-v51-go]:hover,
+  .v125-mobile-nav-rail button[data-v51-go]:focus-visible{
+    background:rgba(201,163,74,.10)!important;
+  }
+}
+</style>
+
+
+<style id="v201-gold-brand-lockup">
+/* ==========================================================
+   V201 — GOLD-OUTLINED SMG BRAND LOCKUP
+   Keeps the text white while giving the SMG + office name
+   the same refined gold-outline language as the navigation.
+   ========================================================== */
+
+@media (min-width:761px){
+  nav .v7-brandmark{
+    display:flex!important;
+    align-items:center!important;
+    gap:10px!important;
+    padding:6px 12px 6px 7px!important;
+    margin-right:14px!important;
+    border:1px solid rgba(201,163,74,.68)!important;
+    border-radius:999px!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#ffffff!important;
+  }
+
+  nav .v7-seal{
+    width:48px!important;
+    height:48px!important;
+    flex:none!important;
+  }
+
+  nav .v7-seal .ring{
+    fill:#0a2942!important;
+    stroke:#c9a34a!important;
+    stroke-width:1.5!important;
+  }
+
+  nav .v7-seal .inner{
+    stroke:rgba(218,188,105,.82)!important;
+    stroke-width:1!important;
+  }
+
+  nav .v7-seal .hill,
+  nav .v7-seal .sea,
+  nav .v7-seal .leaf{
+    stroke:#f4f8fa!important;
+  }
+
+  nav .v7-seal text{
+    fill:#ffffff!important;
+  }
+
+  nav .v7-brandmark-copy{
+    display:flex!important;
+    flex-direction:column!important;
+    padding-right:2px!important;
+  }
+
+  nav .v7-brandmark-copy strong{
+    color:#ffffff!important;
+    font-size:10px!important;
+    font-weight:850!important;
+    letter-spacing:.045em!important;
+    line-height:1.2!important;
+  }
+
+  nav .v7-brandmark-copy span{
+    color:#ffffff!important;
+    font-size:8px!important;
+    font-weight:700!important;
+    letter-spacing:.15em!important;
+    line-height:1.35!important;
+    text-transform:uppercase!important;
+    opacity:.88!important;
+  }
+}
+
+/* Small-screen identity stays readable if/when shown. */
+@media (max-width:760px){
+  .v7-brandmark-copy strong,
+  .v7-brandmark-copy span{
+    color:#ffffff!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
