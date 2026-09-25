@@ -11784,6 +11784,739 @@ footer>*{position:relative;z-index:1;}
 @media(max-width:720px){.v170-locator-band{padding:20px 0;}.v170-mini-map{max-width:360px;padding:16px;}.v170-locator-copy p{font-size:13px;}.v170-locator-highlights span{font-size:10px;}#district-profile .v170-island-copy{padding:22px 18px;}#district-profile .v170-island-list{grid-template-columns:1fr;}#district-profile .v170-island-map-head strong{font-size:18px;}#district-profile .v173-map-subtitle{font-size:10px;letter-spacing:.09em;}#district-profile .v170-island-map-frame{min-height:320px;padding:18px;}#district-profile .v170-island-map-frame img{width:min(100%,520px);}#district-profile .v172-map-overlay{left:28%;top:59%;}#district-profile .v172-map-callout{left:20px;top:-58px;min-width:170px;padding:10px 12px;}#district-profile .v172-map-callout::before{left:-30px;width:30px;}#district-profile .v172-map-callout::after{left:-34px;}#district-profile .v172-map-callout strong{font-size:.92rem;}#district-profile .v172-map-callout span{font-size:11px;}.v170-footer-watermark{width:120px;right:12px;bottom:96px;opacity:.06;}}
 </style>
 
+
+<style id="v179-constellation-design">
+/* ==========================================================
+   V179 — CONSTELLATION DESIGN LANGUAGE
+   Adds subtle celestial/civic linework without changing content.
+   ========================================================== */
+:root{
+  --v179-gold-soft: rgba(201,163,74,.18);
+  --v179-gold-strong: rgba(201,163,74,.30);
+  --v179-navy-soft: rgba(11,53,83,.10);
+  --v179-navy-mid: rgba(11,53,83,.16);
+}
+
+.hero,
+#community-compass,
+#contact-us,
+#service-forms,
+#district-profile,
+footer{
+  position:relative;
+  isolation:isolate;
+}
+
+.hero::before,
+#community-compass::before,
+#contact-us::before,
+#service-forms::before,
+#district-profile::before,
+footer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-repeat:no-repeat;
+}
+
+.hero > *,
+#community-compass > *,
+#contact-us > *,
+#service-forms > *,
+#district-profile > *,
+footer > *{
+  position:relative;
+  z-index:1;
+}
+
+/* Hero — strongest constellation treatment */
+.hero::before{
+  background:
+    radial-gradient(circle at 12% 18%, rgba(201,163,74,.34) 0 2.1px, transparent 2.2px),
+    radial-gradient(circle at 17% 23%, rgba(11,53,83,.20) 0 1.55px, transparent 1.7px),
+    radial-gradient(circle at 22% 15%, rgba(201,163,74,.26) 0 1.6px, transparent 1.8px),
+    radial-gradient(circle at 78% 16%, rgba(201,163,74,.34) 0 2px, transparent 2.1px),
+    radial-gradient(circle at 84% 24%, rgba(11,53,83,.18) 0 1.45px, transparent 1.6px),
+    radial-gradient(circle at 88% 18%, rgba(201,163,74,.26) 0 1.55px, transparent 1.7px),
+    radial-gradient(circle at 72% 72%, rgba(201,163,74,.26) 0 1.8px, transparent 1.95px),
+    linear-gradient(125deg, transparent 0 12%, rgba(23,79,116,.07) 12.2% 12.5%, transparent 12.7% 100%),
+    linear-gradient(114deg, transparent 0 15.4%, rgba(201,163,74,.12) 15.6% 15.8%, transparent 16% 100%),
+    linear-gradient(76deg, transparent 0 81.6%, rgba(23,79,116,.07) 81.8% 82.05%, transparent 82.25% 100%),
+    linear-gradient(68deg, transparent 0 84.9%, rgba(201,163,74,.12) 85.1% 85.3%, transparent 85.5% 100%),
+    radial-gradient(900px 360px at 110% -8%, rgba(255,255,255,.14), transparent 60%),
+    radial-gradient(520px 220px at -6% 108%, rgba(201,163,74,.08), transparent 62%);
+  opacity:.88;
+}
+
+/* Light/content sections — subtle civic star-map wash */
+#community-compass::before,
+#contact-us::before,
+#service-forms::before,
+#district-profile::before{
+  background:
+    radial-gradient(circle at 9% 14%, rgba(201,163,74,.18) 0 1.5px, transparent 1.65px),
+    radial-gradient(circle at 14% 18%, rgba(11,53,83,.12) 0 1.1px, transparent 1.2px),
+    radial-gradient(circle at 18% 11%, rgba(201,163,74,.16) 0 1.25px, transparent 1.4px),
+    radial-gradient(circle at 87% 16%, rgba(201,163,74,.18) 0 1.45px, transparent 1.6px),
+    radial-gradient(circle at 91% 24%, rgba(11,53,83,.12) 0 1.05px, transparent 1.15px),
+    radial-gradient(circle at 83% 10%, rgba(201,163,74,.16) 0 1.15px, transparent 1.3px),
+    linear-gradient(110deg, transparent 0 11.6%, rgba(23,79,116,.045) 11.8% 12.0%, transparent 12.2% 100%),
+    linear-gradient(68deg, transparent 0 86.7%, rgba(201,163,74,.08) 86.9% 87.05%, transparent 87.2% 100%),
+    radial-gradient(280px 180px at 8% 106%, rgba(201,163,74,.07), transparent 62%),
+    radial-gradient(300px 190px at 92% -2%, rgba(11,53,83,.045), transparent 64%);
+  opacity:.72;
+}
+
+/* Footer — elegant night-sky version */
+footer{
+  overflow:hidden;
+}
+footer::before{
+  background:
+    radial-gradient(circle at 10% 28%, rgba(201,163,74,.46) 0 1.9px, transparent 2px),
+    radial-gradient(circle at 15% 35%, rgba(255,255,255,.20) 0 1.2px, transparent 1.35px),
+    radial-gradient(circle at 20% 22%, rgba(201,163,74,.30) 0 1.45px, transparent 1.55px),
+    radial-gradient(circle at 78% 22%, rgba(201,163,74,.42) 0 1.85px, transparent 1.95px),
+    radial-gradient(circle at 84% 30%, rgba(255,255,255,.20) 0 1.1px, transparent 1.25px),
+    radial-gradient(circle at 88% 18%, rgba(201,163,74,.28) 0 1.3px, transparent 1.45px),
+    linear-gradient(121deg, transparent 0 13.3%, rgba(201,163,74,.14) 13.45% 13.65%, transparent 13.8% 100%),
+    linear-gradient(63deg, transparent 0 80.2%, rgba(255,255,255,.08) 80.35% 80.52%, transparent 80.7% 100%),
+    radial-gradient(380px 180px at -8% 112%, rgba(201,163,74,.08), transparent 65%),
+    radial-gradient(380px 180px at 108% -18%, rgba(201,163,74,.08), transparent 65%);
+  opacity:.84;
+}
+
+/* Unify the map card + community guide card as paired feature panels */
+#district-profile .v84-district-map,
+#district-profile .v170-island-map-card{
+  position:relative;
+  overflow:hidden;
+}
+#district-profile .v84-district-map::before,
+#district-profile .v170-island-map-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(circle at 11% 16%, rgba(201,163,74,.18) 0 1.4px, transparent 1.5px),
+    radial-gradient(circle at 17% 23%, rgba(11,53,83,.10) 0 1px, transparent 1.1px),
+    radial-gradient(circle at 88% 13%, rgba(201,163,74,.16) 0 1.35px, transparent 1.45px),
+    linear-gradient(118deg, transparent 0 14.8%, rgba(201,163,74,.07) 14.95% 15.12%, transparent 15.3% 100%),
+    linear-gradient(68deg, transparent 0 84.5%, rgba(23,79,116,.05) 84.68% 84.86%, transparent 85.05% 100%);
+  opacity:.85;
+}
+#district-profile .v84-district-map > *,
+#district-profile .v170-island-map-card > *{
+  position:relative;
+  z-index:2;
+}
+
+/* A little more polish for the section headings in light areas */
+#community-compass .v59-section-marker,
+#contact-us .v132-section-badge-row,
+#service-forms .v20-section-marker,
+#district-profile .v3-eyebrow,
+#district-profile .v170-island-map-head small{
+  position:relative;
+}
+
+/* Optional floating specks near content cards without affecting readability */
+.hero-inner::after,
+#district-profile .v13-profile-grid::after{
+  content:"";
+  position:absolute;
+  right:2.5%;
+  bottom:5%;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  border:1px dashed rgba(201,163,74,.20);
+  opacity:.55;
+  pointer-events:none;
+}
+.hero-inner,
+#district-profile .v13-profile-grid{
+  position:relative;
+}
+
+@media (max-width: 900px){
+  .hero::before,
+  #community-compass::before,
+  #contact-us::before,
+  #service-forms::before,
+  #district-profile::before,
+  footer::before{
+    opacity:.62;
+  }
+  .hero-inner::after,
+  #district-profile .v13-profile-grid::after{
+    width:84px;
+    height:84px;
+    right:1.25rem;
+    bottom:1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero,
+  #district-profile .v84-district-map,
+  #district-profile .v170-island-map-card{
+    scroll-behavior:auto;
+  }
+}
+</style>
+
+
+<style id="v180-luxury-constellation">
+/* ==========================================================
+   V180 — LUXURY CONSTELLATION
+   Stronger celestial geometry, still civic, elegant, readable.
+   ========================================================== */
+:root{
+  --v180-gold:#c9a34a;
+  --v180-champagne:#ead9a4;
+  --v180-navy:#0b3553;
+  --v180-ink:#102c40;
+}
+
+/* Shared star-chart layer */
+.hero,
+#community-compass,
+#contact-us,
+#service-forms,
+#district-profile,
+footer{
+  --v180-node: rgba(201,163,74,.52);
+  --v180-line: rgba(201,163,74,.20);
+  --v180-inkline: rgba(11,53,83,.12);
+}
+
+/* Stronger hero constellation, with elegant radial halos and filigree arcs */
+.hero::before{
+  background:
+    radial-gradient(circle at 8% 18%, rgba(234,217,164,.72) 0 2.4px, transparent 2.7px),
+    radial-gradient(circle at 15% 27%, rgba(11,53,83,.30) 0 1.8px, transparent 2px),
+    radial-gradient(circle at 23% 13%, rgba(201,163,74,.64) 0 2.1px, transparent 2.35px),
+    radial-gradient(circle at 30% 31%, rgba(201,163,74,.38) 0 1.65px, transparent 1.9px),
+    radial-gradient(circle at 69% 14%, rgba(234,217,164,.70) 0 2.4px, transparent 2.7px),
+    radial-gradient(circle at 78% 24%, rgba(11,53,83,.26) 0 1.7px, transparent 1.95px),
+    radial-gradient(circle at 87% 13%, rgba(201,163,74,.62) 0 2.1px, transparent 2.35px),
+    radial-gradient(circle at 92% 32%, rgba(201,163,74,.36) 0 1.65px, transparent 1.9px),
+    radial-gradient(circle at 72% 75%, rgba(201,163,74,.46) 0 1.9px, transparent 2.15px),
+    linear-gradient(126deg, transparent 0 10.7%, rgba(201,163,74,.19) 10.9% 11.05%, transparent 11.25% 100%),
+    linear-gradient(113deg, transparent 0 17.6%, rgba(11,53,83,.10) 17.8% 17.96%, transparent 18.15% 100%),
+    linear-gradient(135deg, transparent 0 23.7%, rgba(201,163,74,.12) 23.9% 24.06%, transparent 24.26% 100%),
+    linear-gradient(67deg, transparent 0 75.5%, rgba(201,163,74,.17) 75.7% 75.86%, transparent 76.05% 100%),
+    linear-gradient(55deg, transparent 0 84.1%, rgba(11,53,83,.09) 84.3% 84.45%, transparent 84.65% 100%),
+    radial-gradient(520px 240px at 98% 8%, rgba(201,163,74,.12), transparent 64%),
+    radial-gradient(430px 210px at 2% 96%, rgba(201,163,74,.10), transparent 64%),
+    radial-gradient(700px 260px at 50% -12%, rgba(255,255,255,.20), transparent 64%);
+  opacity:1;
+}
+
+/* Add visible luxury orbit lines without touching content */
+.hero::after,
+#district-profile::after,
+footer::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  border-radius:50%;
+}
+.hero::after{
+  width:min(38vw,560px);
+  height:min(38vw,560px);
+  right:-12vw;
+  top:-16vw;
+  border:1px solid rgba(201,163,74,.22);
+  box-shadow:
+    0 0 0 22px rgba(201,163,74,.035),
+    0 0 0 52px rgba(11,53,83,.022),
+    0 0 0 92px rgba(201,163,74,.022);
+}
+
+/* Light sections: more obvious, still refined */
+#community-compass::before,
+#contact-us::before,
+#service-forms::before,
+#district-profile::before{
+  background:
+    radial-gradient(circle at 7% 16%, rgba(201,163,74,.34) 0 1.9px, transparent 2.1px),
+    radial-gradient(circle at 12% 22%, rgba(11,53,83,.18) 0 1.35px, transparent 1.55px),
+    radial-gradient(circle at 19% 10%, rgba(201,163,74,.28) 0 1.55px, transparent 1.75px),
+    radial-gradient(circle at 26% 28%, rgba(201,163,74,.20) 0 1.25px, transparent 1.45px),
+    radial-gradient(circle at 83% 12%, rgba(201,163,74,.32) 0 1.8px, transparent 2px),
+    radial-gradient(circle at 90% 21%, rgba(11,53,83,.18) 0 1.3px, transparent 1.5px),
+    radial-gradient(circle at 94% 9%, rgba(201,163,74,.26) 0 1.5px, transparent 1.7px),
+    linear-gradient(118deg, transparent 0 9.8%, rgba(201,163,74,.11) 10% 10.16%, transparent 10.34% 100%),
+    linear-gradient(102deg, transparent 0 16.6%, rgba(11,53,83,.065) 16.8% 16.94%, transparent 17.12% 100%),
+    linear-gradient(66deg, transparent 0 86.1%, rgba(201,163,74,.10) 86.3% 86.46%, transparent 86.64% 100%),
+    radial-gradient(340px 220px at 4% 102%, rgba(201,163,74,.075), transparent 64%),
+    radial-gradient(360px 220px at 96% -2%, rgba(11,53,83,.055), transparent 66%);
+  opacity:.96;
+}
+
+/* District section gets a statement-piece celestial medallion */
+#district-profile::after{
+  width:330px;
+  height:330px;
+  right:-150px;
+  top:120px;
+  border:1px solid rgba(201,163,74,.20);
+  box-shadow:
+    0 0 0 24px rgba(201,163,74,.03),
+    0 0 0 60px rgba(11,53,83,.018);
+}
+
+/* Constellation treatment inside map + community guide cards */
+#district-profile .v84-district-map,
+#district-profile .v170-island-map-card{
+  border:1px solid rgba(201,163,74,.28)!important;
+  box-shadow:0 26px 64px rgba(11,53,83,.13), 0 0 0 1px rgba(255,255,255,.55) inset!important;
+}
+#district-profile .v84-district-map::before,
+#district-profile .v170-island-map-card::before{
+  background:
+    radial-gradient(circle at 8% 13%, rgba(201,163,74,.32) 0 1.8px, transparent 2px),
+    radial-gradient(circle at 15% 20%, rgba(11,53,83,.18) 0 1.25px, transparent 1.45px),
+    radial-gradient(circle at 23% 11%, rgba(201,163,74,.26) 0 1.55px, transparent 1.75px),
+    radial-gradient(circle at 78% 12%, rgba(201,163,74,.30) 0 1.7px, transparent 1.9px),
+    radial-gradient(circle at 88% 20%, rgba(11,53,83,.16) 0 1.2px, transparent 1.4px),
+    linear-gradient(121deg, transparent 0 11.2%, rgba(201,163,74,.11) 11.4% 11.56%, transparent 11.75% 100%),
+    linear-gradient(66deg, transparent 0 82.1%, rgba(201,163,74,.10) 82.3% 82.46%, transparent 82.65% 100%),
+    radial-gradient(220px 160px at 12% 98%, rgba(201,163,74,.06), transparent 65%);
+  opacity:1;
+}
+
+/* Luxe treatment for the dark map header */
+#district-profile .v170-island-map-head{
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.035), transparent 38%),
+    linear-gradient(135deg,#082c46,#174f74 58%,#0b3553)!important;
+  border-bottom:1px solid rgba(234,217,164,.26);
+}
+#district-profile .v170-island-map-head::after{
+  content:"";
+  position:absolute;
+  right:22px;
+  top:18px;
+  width:84px;
+  height:84px;
+  border:1px solid rgba(234,217,164,.22);
+  border-radius:50%;
+  box-shadow:0 0 0 10px rgba(234,217,164,.025), inset 0 0 24px rgba(234,217,164,.025);
+  pointer-events:none;
+}
+
+/* Buttons and chips get a restrained champagne edge */
+#district-profile .v170-island-actions a,
+#district-profile .v172-map-callout,
+#community-compass a,
+#community-compass button,
+#contact-us a,
+#contact-us button,
+#service-forms a,
+#service-forms button{
+  box-shadow:0 8px 20px rgba(11,53,83,.07);
+}
+#district-profile .v170-island-actions a:hover,
+#district-profile .v170-island-actions a:focus-visible{
+  box-shadow:0 12px 26px rgba(11,53,83,.11),0 0 0 1px rgba(201,163,74,.22);
+}
+
+/* Footer: richer star-field, luxe but not 'space themed' */
+footer::before{
+  background:
+    radial-gradient(circle at 6% 23%, rgba(234,217,164,.72) 0 2.2px, transparent 2.45px),
+    radial-gradient(circle at 12% 34%, rgba(255,255,255,.30) 0 1.35px, transparent 1.55px),
+    radial-gradient(circle at 19% 18%, rgba(201,163,74,.48) 0 1.75px, transparent 2px),
+    radial-gradient(circle at 29% 38%, rgba(201,163,74,.30) 0 1.35px, transparent 1.55px),
+    radial-gradient(circle at 72% 18%, rgba(234,217,164,.68) 0 2.1px, transparent 2.35px),
+    radial-gradient(circle at 82% 31%, rgba(255,255,255,.28) 0 1.3px, transparent 1.5px),
+    radial-gradient(circle at 91% 17%, rgba(201,163,74,.45) 0 1.7px, transparent 1.95px),
+    linear-gradient(124deg, transparent 0 9.8%, rgba(201,163,74,.18) 10% 10.15%, transparent 10.34% 100%),
+    linear-gradient(107deg, transparent 0 16.8%, rgba(255,255,255,.09) 17% 17.15%, transparent 17.34% 100%),
+    linear-gradient(62deg, transparent 0 78.5%, rgba(201,163,74,.16) 78.7% 78.85%, transparent 79.04% 100%),
+    radial-gradient(520px 220px at -10% 114%, rgba(201,163,74,.12), transparent 66%),
+    radial-gradient(460px 220px at 112% -14%, rgba(201,163,74,.11), transparent 66%);
+  opacity:1;
+}
+footer::after{
+  width:300px;
+  height:300px;
+  right:-140px;
+  bottom:-160px;
+  border:1px solid rgba(234,217,164,.18);
+  box-shadow:0 0 0 26px rgba(234,217,164,.025),0 0 0 72px rgba(234,217,164,.018);
+}
+
+/* Subtle luxury shimmer — opacity/transform only */
+@keyframes v180ConstellationGleam{
+  0%,100%{opacity:.72;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.08)}
+}
+.hero::after,
+#district-profile::after,
+footer::after{
+  animation:v180ConstellationGleam 9s ease-in-out infinite;
+  transform-origin:center;
+}
+
+/* Maintain readability and avoid clutter on mobile */
+@media (max-width:900px){
+  .hero::after{width:300px;height:300px;right:-190px;top:-130px}
+  #district-profile::after{width:220px;height:220px;right:-145px;top:150px}
+  footer::after{width:220px;height:220px;right:-120px;bottom:-130px}
+  #community-compass::before,
+  #contact-us::before,
+  #service-forms::before,
+  #district-profile::before{opacity:.78}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero::after,
+  #district-profile::after,
+  footer::after{animation:none!important}
+}
+</style>
+
+
+<style id="v181-constellation-every-section">
+/* ==========================================================
+   V181 — LUXURY CONSTELLATION SIGNATURE ON EVERY SECTION
+   Positioned from the visual middle toward the lower-right.
+   Static by design to preserve scrolling performance.
+   ========================================================== */
+section{
+  position:relative;
+  isolation:isolate;
+}
+section > .v181-constellation-signature{
+  position:absolute;
+  right:clamp(14px,3.2vw,54px);
+  top:55%;
+  width:clamp(118px,13vw,210px);
+  aspect-ratio:1 / 1;
+  transform:translateY(-22%) rotate(-7deg);
+  pointer-events:none;
+  z-index:0;
+  opacity:.72;
+  filter:drop-shadow(0 8px 18px rgba(11,53,83,.04));
+}
+section:nth-of-type(3n+1) > .v181-constellation-signature{
+  top:48%;
+  transform:translateY(-12%) rotate(5deg) scale(.92);
+}
+section:nth-of-type(3n+2) > .v181-constellation-signature{
+  top:63%;
+  transform:translateY(-28%) rotate(-12deg) scale(1.04);
+}
+section > :not(.v181-constellation-signature){
+  position:relative;
+  z-index:1;
+}
+
+.v181-constellation-signature svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.v181-orbit{
+  fill:none;
+  stroke:rgba(201,163,74,.24);
+  stroke-width:1.05;
+  stroke-dasharray:2.6 5.4;
+}
+.v181-orbit-2{
+  fill:none;
+  stroke:rgba(201,163,74,.14);
+  stroke-width:.8;
+}
+.v181-line{
+  fill:none;
+  stroke:rgba(201,163,74,.42);
+  stroke-width:1.15;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.v181-line-secondary{
+  fill:none;
+  stroke:rgba(11,53,83,.19);
+  stroke-width:.86;
+  stroke-linecap:round;
+}
+.v181-node{
+  fill:#c9a34a;
+  stroke:rgba(255,255,255,.82);
+  stroke-width:.85;
+}
+.v181-node-small{
+  fill:#d9bf76;
+  stroke:rgba(11,53,83,.13);
+  stroke-width:.55;
+}
+.v181-halo{
+  fill:none;
+  stroke:rgba(201,163,74,.15);
+  stroke-width:4.5;
+}
+.v181-civic-star{
+  fill:rgba(201,163,74,.16);
+  stroke:rgba(201,163,74,.42);
+  stroke-width:.85;
+}
+
+/* Dark/blue panels: brighten the celestial linework without changing brand colours. */
+.v132-tone-blue > .v181-constellation-signature,
+.v132-tone-blue-soft > .v181-constellation-signature,
+.v26-hub > .v181-constellation-signature,
+.v18-engagement > .v181-constellation-signature{
+  opacity:.82;
+}
+.v132-tone-blue .v181-line-secondary,
+.v132-tone-blue-soft .v181-line-secondary,
+.v26-hub .v181-line-secondary,
+.v18-engagement .v181-line-secondary{
+  stroke:rgba(255,255,255,.16);
+}
+.v132-tone-blue .v181-node,
+.v132-tone-blue-soft .v181-node,
+.v26-hub .v181-node,
+.v18-engagement .v181-node{
+  stroke:rgba(255,255,255,.76);
+}
+
+/* Keep smaller/utility strips elegant rather than crowded. */
+.v170-locator-band > .v181-constellation-signature,
+.v5-notice-strip > .v181-constellation-signature,
+.v20-desktop-feature-strip > .v181-constellation-signature,
+.v121-principle > .v181-constellation-signature{
+  width:clamp(92px,9vw,145px);
+  opacity:.52;
+  top:57%;
+}
+
+/* Larger showcase areas receive the most luxurious signature. */
+#district-profile > .v181-constellation-signature,
+#community-compass > .v181-constellation-signature,
+#resident-programmes > .v181-constellation-signature,
+#community-engagement > .v181-constellation-signature,
+#documents > .v181-constellation-signature{
+  width:clamp(150px,16vw,245px);
+  opacity:.80;
+}
+
+@media (max-width: 900px){
+  section > .v181-constellation-signature{
+    right:8px;
+    top:66%;
+    width:112px;
+    opacity:.48;
+    transform:translateY(-18%) rotate(-8deg);
+  }
+  section:nth-of-type(3n+1) > .v181-constellation-signature,
+  section:nth-of-type(3n+2) > .v181-constellation-signature{
+    top:66%;
+    transform:translateY(-18%) rotate(-8deg);
+  }
+  #district-profile > .v181-constellation-signature,
+  #community-compass > .v181-constellation-signature,
+  #resident-programmes > .v181-constellation-signature,
+  #community-engagement > .v181-constellation-signature,
+  #documents > .v181-constellation-signature{
+    width:132px;
+    opacity:.56;
+  }
+}
+
+@media (max-width: 560px){
+  section > .v181-constellation-signature{
+    width:92px;
+    right:4px;
+    top:72%;
+    opacity:.38;
+  }
+}
+</style>
+
+
+<style id="v182-select-animated-constellations">
+/* ==========================================================
+   V182 — SELECTIVE LUXURY CONSTELLATION MOTION
+   10 key public sections animate only while near the viewport.
+   All other V181 constellation signatures remain static.
+   ========================================================== */
+
+/* Selected sections */
+#resident-start,
+#activity-hub,
+#community-compass,
+#service-forms,
+#enquiry,
+#gallery,
+#district-profile,
+#documents,
+#resident-programmes,
+#community-engagement{
+  --v182-motion-speed: 11s;
+}
+
+/* Different timings keep the site from feeling mechanically synchronized. */
+#resident-start{--v182-motion-speed:12.4s}
+#activity-hub{--v182-motion-speed:10.8s}
+#community-compass{--v182-motion-speed:13.2s}
+#service-forms{--v182-motion-speed:11.7s}
+#enquiry{--v182-motion-speed:12.9s}
+#gallery{--v182-motion-speed:10.9s}
+#district-profile{--v182-motion-speed:14s}
+#documents{--v182-motion-speed:11.3s}
+#resident-programmes{--v182-motion-speed:13.5s}
+#community-engagement{--v182-motion-speed:12.1s}
+
+/* Motion is paused until IntersectionObserver marks a section in view. */
+#resident-start .v181-constellation-signature svg,
+#activity-hub .v181-constellation-signature svg,
+#community-compass .v181-constellation-signature svg,
+#service-forms .v181-constellation-signature svg,
+#enquiry .v181-constellation-signature svg,
+#gallery .v181-constellation-signature svg,
+#district-profile .v181-constellation-signature svg,
+#documents .v181-constellation-signature svg,
+#resident-programmes .v181-constellation-signature svg,
+#community-engagement .v181-constellation-signature svg{
+  transform-origin:50% 50%;
+  animation:v182CelestialDrift var(--v182-motion-speed) ease-in-out infinite alternate;
+  animation-play-state:paused;
+  will-change:transform;
+}
+
+#resident-start .v181-orbit,
+#activity-hub .v181-orbit,
+#community-compass .v181-orbit,
+#service-forms .v181-orbit,
+#enquiry .v181-orbit,
+#gallery .v181-orbit,
+#district-profile .v181-orbit,
+#documents .v181-orbit,
+#resident-programmes .v181-orbit,
+#community-engagement .v181-orbit{
+  animation:v182OrbitTrace calc(var(--v182-motion-speed) * 1.35) linear infinite;
+  animation-play-state:paused;
+}
+
+#resident-start .v181-node,
+#activity-hub .v181-node,
+#community-compass .v181-node,
+#service-forms .v181-node,
+#enquiry .v181-node,
+#gallery .v181-node,
+#district-profile .v181-node,
+#documents .v181-node,
+#resident-programmes .v181-node,
+#community-engagement .v181-node{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:v182NodeGlow calc(var(--v182-motion-speed) * .55) ease-in-out infinite;
+  animation-play-state:paused;
+}
+
+#resident-start .v181-halo,
+#activity-hub .v181-halo,
+#community-compass .v181-halo,
+#service-forms .v181-halo,
+#enquiry .v181-halo,
+#gallery .v181-halo,
+#district-profile .v181-halo,
+#documents .v181-halo,
+#resident-programmes .v181-halo,
+#community-engagement .v181-halo{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:v182HaloPulse calc(var(--v182-motion-speed) * .62) ease-in-out infinite;
+  animation-play-state:paused;
+}
+
+#resident-start .v181-civic-star,
+#activity-hub .v181-civic-star,
+#community-compass .v181-civic-star,
+#service-forms .v181-civic-star,
+#enquiry .v181-civic-star,
+#gallery .v181-civic-star,
+#district-profile .v181-civic-star,
+#documents .v181-civic-star,
+#resident-programmes .v181-civic-star,
+#community-engagement .v181-civic-star{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:v182StarGlint calc(var(--v182-motion-speed) * .72) ease-in-out infinite;
+  animation-play-state:paused;
+}
+
+/* Run only while a selected section is in/near view. */
+.v182-in-view .v181-constellation-signature svg,
+.v182-in-view .v181-orbit,
+.v182-in-view .v181-node,
+.v182-in-view .v181-halo,
+.v182-in-view .v181-civic-star{
+  animation-play-state:running!important;
+}
+
+@keyframes v182CelestialDrift{
+  0%{transform:translate3d(0,0,0) rotate(-.8deg) scale(.995)}
+  50%{transform:translate3d(-2px,-3px,0) rotate(.55deg) scale(1.01)}
+  100%{transform:translate3d(2px,-1px,0) rotate(1deg) scale(1.005)}
+}
+@keyframes v182OrbitTrace{
+  0%{stroke-dashoffset:0;opacity:.72}
+  50%{opacity:1}
+  100%{stroke-dashoffset:-24;opacity:.72}
+}
+@keyframes v182NodeGlow{
+  0%,100%{opacity:.76;transform:scale(.93)}
+  45%{opacity:1;transform:scale(1.12)}
+  65%{opacity:.88;transform:scale(1.02)}
+}
+@keyframes v182HaloPulse{
+  0%,100%{opacity:.44;transform:scale(.92)}
+  50%{opacity:.9;transform:scale(1.12)}
+}
+@keyframes v182StarGlint{
+  0%,100%{opacity:.54;transform:scale(.92) rotate(0deg)}
+  48%{opacity:1;transform:scale(1.16) rotate(5deg)}
+  62%{opacity:.72;transform:scale(1.02) rotate(3deg)}
+}
+
+/* Mobile motion is intentionally gentler. */
+@media (max-width:900px){
+  @keyframes v182CelestialDrift{
+    0%{transform:translate3d(0,0,0) rotate(-.35deg)}
+    100%{transform:translate3d(1px,-2px,0) rotate(.45deg)}
+  }
+}
+
+/* Accessibility: keep the constellation artwork but stop all motion. */
+@media (prefers-reduced-motion:reduce){
+  #resident-start .v181-constellation-signature *,
+  #activity-hub .v181-constellation-signature *,
+  #community-compass .v181-constellation-signature *,
+  #service-forms .v181-constellation-signature *,
+  #enquiry .v181-constellation-signature *,
+  #gallery .v181-constellation-signature *,
+  #district-profile .v181-constellation-signature *,
+  #documents .v181-constellation-signature *,
+  #resident-programmes .v181-constellation-signature *,
+  #community-engagement .v181-constellation-signature *{
+    animation:none!important;
+    transform:none!important;
+  }
+}
+</style>
+
 </head>
 <body><a class="v73-skip" href="#main-content">Skip to main content</a><a class="v48-skip-link" href="#main-content">Skip to main content</a><a class="v14-skip" href="#main-content">Skip to main content</a>
 <div class="topbar"><div class="wrap"><span><a class="v119-tha-link" href="https://tha.gov.tt/services/" rel="noopener noreferrer" target="_blank">TOBAGO HOUSE OF ASSEMBLY</a></span><span>Community  |  Service  |  Progress</span></div></div>
@@ -11921,7 +12654,7 @@ footer>*{position:relative;z-index:1;}
 <span>DISTRICT OFFICE • TOBAGO</span>
 <span>ACCESS • SERVICE • COMMUNITY</span>
 </div>
-</div><section aria-labelledby="v170-locator-title" class="v170-locator-band"><div class="v170-locator-wrap"><div class="v170-mini-map"><img alt="Map of Tobago highlighting Scarborough" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a4"/></div><div class="v170-locator-copy"><small>OUR DISTRICT ON THE ISLAND</small><h2 id="v170-locator-title">Scarborough highlighted within Tobago</h2><p>This gives residents a quick island-level locator before they move into the more detailed District Profile below. It helps anchor the office visually as both a local service point and part of the wider Tobago community.</p><div class="v170-locator-highlights"><span>ISLAND CONTEXT</span><span>SCARBOROUGH HIGHLIGHTED</span><span>DISTRICT PROFILE BELOW</span></div></div><a class="v170-locator-btn" href="#district-profile" aria-label="Open the Scarborough Mt. Grace District Profile">OPEN DISTRICT PROFILE →</a></div></section><section class="v55-start v132-civic-section v132-tone-light" id="resident-start">
+</div><section aria-labelledby="v170-locator-title" class="v170-locator-band"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v170-locator-wrap"><div class="v170-mini-map"><img alt="Map of Tobago highlighting Scarborough" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a4"/></div><div class="v170-locator-copy"><small>OUR DISTRICT ON THE ISLAND</small><h2 id="v170-locator-title">Scarborough highlighted within Tobago</h2><p>This gives residents a quick island-level locator before they move into the more detailed District Profile below. It helps anchor the office visually as both a local service point and part of the wider Tobago community.</p><div class="v170-locator-highlights"><span>ISLAND CONTEXT</span><span>SCARBOROUGH HIGHLIGHTED</span><span>DISTRICT PROFILE BELOW</span></div></div><a class="v170-locator-btn" href="#district-profile" aria-label="Open the Scarborough Mt. Grace District Profile">OPEN DISTRICT PROFILE →</a></div></section><section class="v55-start v132-civic-section v132-tone-light" id="resident-start"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap v55-start-grid"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><circle cx="32" cy="32" r="7"></circle><path d="M32 8v10M32 46v10M8 32h10M46 32h10"></path><path d="M20 44l24-24-7 17z"></path></svg></span></span>
 <span class="v132-section-badge-copy"><b>START CENTRE</b><small>FIND THE RIGHT PATH • GET HELP FASTER</small><span aria-live="polite" class="v139-live-clock"><span class="v139-clock-label">TRINIDAD &amp; TOBAGO</span><strong id="v139-clock-time">--:--:--</strong><span id="v139-clock-date">Loading local date…</span></span></span>
@@ -11978,7 +12711,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 </aside>
 </div>
-</section><section aria-labelledby="v132-public-paths-title" class="v132-public-paths" id="v132-public-paths">
+</section><section aria-labelledby="v132-public-paths-title" class="v132-public-paths" id="v132-public-paths"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v132-public-paths-head">
 <div aria-hidden="true" class="v132-mini-seal"><span>SMG</span></div>
@@ -11993,7 +12726,7 @@ footer>*{position:relative;z-index:1;}
 <a href="#enquiry"><b>06</b><span><small>FOLLOW-UP</small><strong>Send an enquiry</strong></span></a>
 </div>
 </div>
-</section><section aria-label="District Office service principle" class="v121-principle"><div class="v121-principle-inner"><small>START WITH THE DISTRICT OFFICE</small><strong>You do not need to know which government office is responsible before contacting us.</strong><p>Tell us what the issue is, and we will help you identify where to start. Where another Division, Department or agency is responsible, the District Office can help guide or refer the matter without promising an external decision.</p></div></section><section class="v60-portals" id="portal-hub"><div class="wrap"><div aria-hidden="true" class="v59-section-marker"><span>DISTRICT PORTALS</span><i></i><span>FOCUSED RESIDENT SERVICES</span></div><div class="v60-portals-head"><div><small>RESIDENT SERVICE PORTALS</small><h2>Explore services by need</h2><p>Use a focused portal when you need guidance for a specific type of service. For quick everyday actions, use the Start Centre above.</p></div><a class="v60-portal-all" data-v60-portal="resident" href="#">VIEW PORTAL DIRECTORY</a></div><div class="v60-portal-grid" id="v60-portal-grid"><a class="v60-portal-card" data-v60-portal="student" href="#"><small>EDU • EDUCATION &amp; YOUTH</small><strong>Student &amp; Youth Portal</strong><span>Education guidance, grant and bursary starting points.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="housing" href="#"><small>HSG • HOUSING &amp; HOME</small><strong>Housing &amp; Home Support Portal</strong><span>Housing, home improvement and repair documents.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="grants" href="#"><small>GRT • GRANTS &amp; ASSISTANCE</small><strong>Grants &amp; Financial Assistance Portal</strong><span>Grant, bursary and assistance guidance.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="community" href="#"><small>COM • COMMUNITY &amp; PROJECTS</small><strong>Community &amp; Projects Portal</strong><span>Updates, youth volunteering, Focus Groups, Town Halls and community project pathways.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="business" href="#"><small>BLE • BUSINESS • LAND • ELECTRICAL</small><strong>Business, Land &amp; Electrical Portal</strong><span>Land tenancy and electrical application documents.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="resident" href="#"><small>RES • RESIDENT SERVICES</small><strong>Resident Services Portal</strong><span>Contact, enquiry, tracking and service navigation.</span><b>OPEN PORTAL →</b></a></div><div class="v60-portal-nav"><button aria-label="Previous service portal" id="v60-prev" type="button">‹</button><div class="v60-portal-dots" id="v60-dots"></div><button aria-label="Next service portal" id="v60-next" type="button">›</button></div></div></section><section class="v26-hub v132-civic-section v132-tone-blue" id="activity-hub">
+</section><section aria-label="District Office service principle" class="v121-principle"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v121-principle-inner"><small>START WITH THE DISTRICT OFFICE</small><strong>You do not need to know which government office is responsible before contacting us.</strong><p>Tell us what the issue is, and we will help you identify where to start. Where another Division, Department or agency is responsible, the District Office can help guide or refer the matter without promising an external decision.</p></div></section><section class="v60-portals" id="portal-hub"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="wrap"><div aria-hidden="true" class="v59-section-marker"><span>DISTRICT PORTALS</span><i></i><span>FOCUSED RESIDENT SERVICES</span></div><div class="v60-portals-head"><div><small>RESIDENT SERVICE PORTALS</small><h2>Explore services by need</h2><p>Use a focused portal when you need guidance for a specific type of service. For quick everyday actions, use the Start Centre above.</p></div><a class="v60-portal-all" data-v60-portal="resident" href="#">VIEW PORTAL DIRECTORY</a></div><div class="v60-portal-grid" id="v60-portal-grid"><a class="v60-portal-card" data-v60-portal="student" href="#"><small>EDU • EDUCATION &amp; YOUTH</small><strong>Student &amp; Youth Portal</strong><span>Education guidance, grant and bursary starting points.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="housing" href="#"><small>HSG • HOUSING &amp; HOME</small><strong>Housing &amp; Home Support Portal</strong><span>Housing, home improvement and repair documents.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="grants" href="#"><small>GRT • GRANTS &amp; ASSISTANCE</small><strong>Grants &amp; Financial Assistance Portal</strong><span>Grant, bursary and assistance guidance.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="community" href="#"><small>COM • COMMUNITY &amp; PROJECTS</small><strong>Community &amp; Projects Portal</strong><span>Updates, youth volunteering, Focus Groups, Town Halls and community project pathways.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="business" href="#"><small>BLE • BUSINESS • LAND • ELECTRICAL</small><strong>Business, Land &amp; Electrical Portal</strong><span>Land tenancy and electrical application documents.</span><b>OPEN PORTAL →</b></a><a class="v60-portal-card" data-v60-portal="resident" href="#"><small>RES • RESIDENT SERVICES</small><strong>Resident Services Portal</strong><span>Contact, enquiry, tracking and service navigation.</span><b>OPEN PORTAL →</b></a></div><div class="v60-portal-nav"><button aria-label="Previous service portal" id="v60-prev" type="button">‹</button><div class="v60-portal-dots" id="v60-dots"></div><button aria-label="Next service portal" id="v60-next" type="button">›</button></div></div></section><section class="v26-hub v132-civic-section v132-tone-blue" id="activity-hub"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div aria-hidden="true" class="v20-section-marker">
 <span>ACTIVITY</span><strong>District Activity Hub</strong>
 </div>
@@ -12271,7 +13004,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 </div>
 <div class="v54-section-end"><button data-v54-go="v51-home" type="button">BACK TO START ↑</button></div></div>
-</section><section aria-labelledby="v121-heard-title" id="v121-what-we-heard"><div class="v121-wrap"><span class="v121-kicker">WHAT WE HEARD • WHAT WE ARE FOLLOWING</span><h2 class="v121-title" id="v121-heard-title">Community matters in view</h2><p class="v121-lead">This section reflects matters already published in the District Activity Hub. It is not a survey, a promise of works, or proof that an external agency has approved action.</p><div class="v121-heard-grid"><article class="v121-heard"><small>ROCKLY VALE • GLENELG ROAD</small><strong>Street lighting advocacy</strong><p>The District Office has recorded the community concern and the matter remains subject to follow-up with the responsible electricity authority.</p><span class="v121-heard-status">FOLLOW-UP REQUIRED</span></article><article class="v121-heard"><small>MT. GRACE • GRU GRU PATCH / PROVIDENCE ROAD</small><strong>Tree cutting &amp; land clearing</strong><p>A District Office request exists for safety-related tree cutting and land clearing. Responsible-agency execution is not implied by the website status.</p><span class="v121-heard-status">FOLLOW-UP REQUIRED</span></article><article class="v121-heard"><small>DISTRICT-WIDE</small><strong>NGO &amp; community project pathway</strong><p>A structured pathway is being developed for community organisations to submit ideas and identify approvals, partners and resources required.</p><span class="v121-heard-status">IN DEVELOPMENT</span></article><article class="v121-heard"><small>DISTRICT-WIDE</small><strong>Quarterly Town Hall programme</strong><p>A recurring Town Hall programme is planned. The next date, venue and agenda are not published until they are confirmed.</p><span class="v121-heard-status">PLANNED</span></article></div></div></section><section aria-labelledby="v59-compass-title" class="v59-compass" id="community-compass">
+</section><section aria-labelledby="v121-heard-title" id="v121-what-we-heard"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v121-wrap"><span class="v121-kicker">WHAT WE HEARD • WHAT WE ARE FOLLOWING</span><h2 class="v121-title" id="v121-heard-title">Community matters in view</h2><p class="v121-lead">This section reflects matters already published in the District Activity Hub. It is not a survey, a promise of works, or proof that an external agency has approved action.</p><div class="v121-heard-grid"><article class="v121-heard"><small>ROCKLY VALE • GLENELG ROAD</small><strong>Street lighting advocacy</strong><p>The District Office has recorded the community concern and the matter remains subject to follow-up with the responsible electricity authority.</p><span class="v121-heard-status">FOLLOW-UP REQUIRED</span></article><article class="v121-heard"><small>MT. GRACE • GRU GRU PATCH / PROVIDENCE ROAD</small><strong>Tree cutting &amp; land clearing</strong><p>A District Office request exists for safety-related tree cutting and land clearing. Responsible-agency execution is not implied by the website status.</p><span class="v121-heard-status">FOLLOW-UP REQUIRED</span></article><article class="v121-heard"><small>DISTRICT-WIDE</small><strong>NGO &amp; community project pathway</strong><p>A structured pathway is being developed for community organisations to submit ideas and identify approvals, partners and resources required.</p><span class="v121-heard-status">IN DEVELOPMENT</span></article><article class="v121-heard"><small>DISTRICT-WIDE</small><strong>Quarterly Town Hall programme</strong><p>A recurring Town Hall programme is planned. The next date, venue and agenda are not published until they are confirmed.</p><span class="v121-heard-status">PLANNED</span></article></div></div></section><section aria-labelledby="v59-compass-title" class="v59-compass" id="community-compass"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div aria-hidden="true" class="v59-section-marker">
 <span>COMMUNITY COMPASS</span><i></i><span>SIX FOCUS GROUP AREAS</span>
@@ -12341,7 +13074,7 @@ footer>*{position:relative;z-index:1;}
 <button data-v59-go="activity-hub" type="button">VIEW ACTIVITY HUB</button>
 </div>
 </div>
-</section><section class="v6-status v132-civic-section v132-tone-light" id="contact-us">
+</section><section class="v6-status v132-civic-section v132-tone-light" id="contact-us"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><path d="M12 15h40v29H29L18 52v-8h-6z"></path><path d="M21 25h22M21 33h15"></path></svg></span></span>
 <span class="v132-section-badge-copy"><b>CONTACT &amp; VISIT</b><small>CALL • WHATSAPP • EMAIL • IN PERSON</small></span>
@@ -12370,7 +13103,7 @@ footer>*{position:relative;z-index:1;}
 <strong>Monday–Thursday · 9:30 A.M.–5:00 P.M.</strong>
 <span>Friday · 9:30 A.M.–2:00 P.M. Direct telephone and in-person availability should be understood within published office hours.</span>
 </article>
-</div><section aria-labelledby="v89-before-visit-title" class="v89-before-visit" id="before-you-visit">
+</div><section aria-labelledby="v89-before-visit-title" class="v89-before-visit" id="before-you-visit"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="v89-before-visit-head">
 <div>
 <small>BEFORE YOU VISIT</small>
@@ -12411,7 +13144,7 @@ footer>*{position:relative;z-index:1;}
 </section>
 <div class="v70-contact-tip"><strong>Which contact route should I use?</strong> Call for a quick question, WhatsApp for convenient written contact, email when you need a longer written explanation or attachment, and use the Enquiry form when the matter should enter the District Office follow-up workflow.</div>
 <div class="v54-section-end"><button data-v54-go="v51-home" type="button">BACK TO START ↑</button></div></div>
-</section><section class="v16-forms" id="service-forms"><div aria-hidden="true" class="v20-section-marker">
+</section><section class="v16-forms" id="service-forms"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>FORMS</span><strong>Forms &amp; Downloads</strong>
 </div>
 <div class="wrap"><div class="v51-primary-label"><b>03</b><span>FORMS &amp; DOWNLOADS</span></div>
@@ -12602,7 +13335,7 @@ footer>*{position:relative;z-index:1;}
 <span><strong>Not sure which document applies?</strong> Use the Resident Services Portal or send a District Office enquiry for general guidance. The office can help identify a starting point without promising programme eligibility or approval.</span>
 <a href="portals/resident-services.html">OPEN RESIDENT SERVICES →</a>
 </div></div>
-</section><section class="v40-public-system">
+</section><section class="v40-public-system"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div>
 <span>CONNECTED RESIDENT SERVICE</span>
@@ -12614,7 +13347,7 @@ footer>*{position:relative;z-index:1;}
 <a class="track" href="track/index.html">Track an Enquiry</a>
 </div>
 </div>
-</section><section class="contact-section" id="enquiry"><div aria-hidden="true" class="v20-section-marker">
+</section><section class="contact-section" id="enquiry"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>ENQUIRY</span><strong>Resident Follow-up</strong>
 </div><span aria-hidden="true" style="position:absolute;right:18px;top:18px;font-size:30px;opacity:.42;pointer-events:none;line-height:1;z-index:2">🌺</span><div class="wrap contact-grid"><div class="v51-primary-label"><b>04</b><span>SEND OR TRACK AN ENQUIRY</span></div><div class="v9-contact-process">
 <div><strong>1</strong><span>Choose enquiry type</span></div>
@@ -12713,9 +13446,9 @@ footer>*{position:relative;z-index:1;}
 </div></div>
 </div>
 </form></div>
-<div class="v54-section-end"><button data-v54-go="v51-home" type="button">BACK TO START ↑</button></div></div></section><section aria-labelledby="v121-feedback-title" id="v121-feedback-info"><div class="v121-wrap"><span class="v121-kicker">RESIDENT FEEDBACK</span><h2 class="v121-title" id="v121-feedback-title">A short check after a case is completed</h2><p class="v121-lead">After an enquiry reaches a completed or closed resident-facing status, the tracker can offer a short feedback form asking whether the information was clear and whether the resident was treated respectfully. Feedback is about the District Office service experience, not whether an external authority approved the resident's request.</p><div class="v121-feedback-box"><div><strong>Two questions + an optional comment</strong><span>The feedback feature is built into the tracker and remains subject to the same production/security approval as the live enquiry system.</span></div><a href="track/index.html">OPEN TRACKER →</a></div></div></section><section aria-labelledby="v151-voice-title" id="v151-resident-voice"><style>
+<div class="v54-section-end"><button data-v54-go="v51-home" type="button">BACK TO START ↑</button></div></div></section><section aria-labelledby="v121-feedback-title" id="v121-feedback-info"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v121-wrap"><span class="v121-kicker">RESIDENT FEEDBACK</span><h2 class="v121-title" id="v121-feedback-title">A short check after a case is completed</h2><p class="v121-lead">After an enquiry reaches a completed or closed resident-facing status, the tracker can offer a short feedback form asking whether the information was clear and whether the resident was treated respectfully. Feedback is about the District Office service experience, not whether an external authority approved the resident's request.</p><div class="v121-feedback-box"><div><strong>Two questions + an optional comment</strong><span>The feedback feature is built into the tracker and remains subject to the same production/security approval as the live enquiry system.</span></div><a href="track/index.html">OPEN TRACKER →</a></div></div></section><section aria-labelledby="v151-voice-title" id="v151-resident-voice"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><style>
 #v151-resident-voice{padding:58px 0;background:linear-gradient(135deg,#eef5f8 0%,#fff 52%,#f7f2e4 100%);border-top:1px solid rgba(10,47,73,.08);border-bottom:1px solid rgba(10,47,73,.08)}.v151-wrap{max-width:1200px;margin:auto;padding:0 20px}.v151-head{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}.v151-badge{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(201,163,74,.8);box-shadow:0 0 0 6px rgba(201,163,74,.12),0 12px 30px rgba(8,38,61,.12);background:radial-gradient(circle at 35% 30%,#174f74,#08263d 70%);color:#e4cb85}.v151-badge svg{width:36px;height:36px}.v151-kicker{font-size:9px;letter-spacing:.14em;font-weight:900;color:#836b30}.v151-title{font:500 clamp(28px,4vw,43px)/1.04 Georgia,serif;color:#0b2e48;margin:5px 0 8px}.v151-lead{max-width:800px;color:#506c7b;line-height:1.65;font-size:12px}.v151-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:22px}.v151-card{background:#fff;border:1px solid rgba(10,47,73,.11);border-radius:16px;padding:18px;box-shadow:0 10px 24px rgba(7,42,63,.06)}.v151-card small{font-size:8px;color:#876f37;font-weight:900;letter-spacing:.1em}.v151-card strong{display:block;color:#0b2e48;font:600 17px Georgia,serif;margin:7px 0}.v151-card p{margin:0;color:#5b7380;font-size:10px;line-height:1.55}.v151-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.v151-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:10px 13px;font-size:9px;font-weight:900}.v151-primary{background:#0b2e48;color:#fff}.v151-secondary{background:#fff;color:#0b2e48;border:1px solid #d5e2e8}.v151-note{margin-top:14px;padding:12px 14px;border-left:3px solid #c9a34a;background:#fff9e8;border-radius:10px;color:#695824;font-size:9px;line-height:1.55}body.v112-dark #v151-resident-voice{background:#081f31}body.v112-dark .v151-card,body.v112-dark .v151-secondary{background:#102f45;border-color:#294b5f}body.v112-dark .v151-title,body.v112-dark .v151-card strong{color:#edf4f7}body.v112-dark .v151-lead,body.v112-dark .v151-card p{color:#a9bdc7}@media(max-width:760px){.v151-grid{grid-template-columns:1fr}.v151-head{grid-template-columns:1fr}.v151-badge{width:70px;height:70px}}
-</style><div class="v151-wrap"><div class="v151-head"><div aria-hidden="true" class="v151-badge"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><path d="M4 5.5h16v10H9l-5 4v-14Z"></path><path d="M8 9h8M8 12h5"></path></svg></div><div><span class="v151-kicker">RESIDENT VOICE</span><h2 class="v151-title" id="v151-voice-title">Help us improve the service experience</h2><p class="v151-lead">Residents can share feedback about communication, timeliness, accessibility, clarity and respectful service. Feedback is about your experience with the District Office; it does not change eligibility decisions made by other agencies.</p></div></div><div class="v151-grid"><article class="v151-card"><small>AFTER A CASE</small><strong>Tell us how the service felt</strong><p>Once an enquiry is completed, use the tracker feedback option to rate clarity and respectful treatment and leave an optional comment.</p></article><article class="v151-card"><small>SERVICE CONCERN</small><strong>Raise a complaint appropriately</strong><p>If your concern is about District Office service, staff can formally record it for review, response and service-recovery action.</p></article><article class="v151-card"><small>IMPROVEMENT</small><strong>Suggestions are welcome</strong><p>Suggestions about accessibility, information, appointments, website use or office processes can help guide future service improvements.</p></article></div><div class="v151-actions"><a class="v151-primary" href="track/index.html">OPEN ENQUIRY TRACKER →</a><a class="v151-secondary" href="#contact-us">CONTACT THE OFFICE</a></div><div class="v151-note"><strong>Privacy:</strong> only provide information relevant to your service experience. Feedback and complaints must not be used to disadvantage a resident seeking assistance.</div></div></section><section class="gallery-section" id="gallery"><div aria-hidden="true" class="v20-section-marker">
+</style><div class="v151-wrap"><div class="v151-head"><div aria-hidden="true" class="v151-badge"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><path d="M4 5.5h16v10H9l-5 4v-14Z"></path><path d="M8 9h8M8 12h5"></path></svg></div><div><span class="v151-kicker">RESIDENT VOICE</span><h2 class="v151-title" id="v151-voice-title">Help us improve the service experience</h2><p class="v151-lead">Residents can share feedback about communication, timeliness, accessibility, clarity and respectful service. Feedback is about your experience with the District Office; it does not change eligibility decisions made by other agencies.</p></div></div><div class="v151-grid"><article class="v151-card"><small>AFTER A CASE</small><strong>Tell us how the service felt</strong><p>Once an enquiry is completed, use the tracker feedback option to rate clarity and respectful treatment and leave an optional comment.</p></article><article class="v151-card"><small>SERVICE CONCERN</small><strong>Raise a complaint appropriately</strong><p>If your concern is about District Office service, staff can formally record it for review, response and service-recovery action.</p></article><article class="v151-card"><small>IMPROVEMENT</small><strong>Suggestions are welcome</strong><p>Suggestions about accessibility, information, appointments, website use or office processes can help guide future service improvements.</p></article></div><div class="v151-actions"><a class="v151-primary" href="track/index.html">OPEN ENQUIRY TRACKER →</a><a class="v151-secondary" href="#contact-us">CONTACT THE OFFICE</a></div><div class="v151-note"><strong>Privacy:</strong> only provide information relevant to your service experience. Feedback and complaints must not be used to disadvantage a resident seeking assistance.</div></div></section><section class="gallery-section" id="gallery"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>GALLERY</span><strong>Community in Focus</strong>
 </div><span aria-hidden="true" style="position:absolute;right:18px;top:18px;font-size:30px;opacity:.42;pointer-events:none;line-height:1;z-index:2">🌸</span><div class="wrap"><div class="v51-primary-label">05  COMMUNITY GALLERY</div><div class="v8-gallery-mark">
 <span>COMMUNITY IN FOCUS</span>
@@ -12748,7 +13481,7 @@ footer>*{position:relative;z-index:1;}
 </div><div class="v54-section-end"><button data-v54-go="v51-home" type="button">BACK TO START ↑</button></div><div class="v56-gallery-signature">
 <span>SCARBOROUGH / MT. GRACE DISTRICT OFFICE</span>
 <strong>COMMUNITY • SERVICE • CONNECTION</strong>
-</div></div></section><section class="v51-more-gateway" id="v51-more-gateway">
+</div></div></section><section class="v51-more-gateway" id="v51-more-gateway"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v51-more-card">
 <span class="eyebrow">MORE DISTRICT INFORMATION</span>
@@ -12765,7 +13498,7 @@ footer>*{position:relative;z-index:1;}
 <button aria-controls="v51-more-content" aria-expanded="false" class="v51-more-toggle" id="v51-more-toggle" type="button">EXPLORE DISTRICT INFORMATION ↓</button>
 </div>
 </div>
-</section><div hidden="" id="v51-more-content"><section class="v70-info-directory" id="v70-info-directory">
+</section><div hidden="" id="v51-more-content"><section class="v70-info-directory" id="v70-info-directory"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="v70-info-head">
 <div><small>DISTRICT INFORMATION DIRECTORY</small><h2>Explore beyond the everyday tasks</h2></div>
 <p>The main website handles quick actions above. This directory contains the deeper office, team, programme and community information.</p>
@@ -12779,7 +13512,7 @@ footer>*{position:relative;z-index:1;}
 <article class="v70-info-card"><small>PROGRAMMES &amp; COMMUNITY</small><strong>Assistance and participation</strong><span>Programme summaries, Town Halls, Focus Groups and community partnerships.</span><button data-v70-target="#resident-programmes" type="button">OPEN PROGRAMMES →</button></article>
 <article class="v70-info-card"><small>RESIDENT FAQ</small><strong>Common questions</strong><span>Enquiries, tracking, forms, approvals, community issues and office visits.</span><button data-v70-target="#resident-faq" type="button">OPEN FAQ →</button></article><article class="v70-info-card"><small>PRIVACY &amp; ACCESSIBILITY</small><strong>Use the website confidently</strong><span>Privacy guidance, safe website use and reading/accessibility controls.</span><button data-v70-target="#privacy-accessibility" type="button">OPEN WEBSITE GUIDE →</button></article></div>
 <div class="v70-directory-note"><strong>Why this section is different:</strong> the Start Centre, Portal Hub, Activity Hub, Contact, Forms and Enquiry areas above are for doing tasks. This directory is for reading deeper District Office information.</div>
-</section><section aria-labelledby="v21-finder-title" class="v21-resident-finder">
+</section><section aria-labelledby="v21-finder-title" class="v21-resident-finder"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v21-finder-shell">
 <div class="v21-finder-copy">
@@ -12804,7 +13537,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 </div>
 </div>
-</section><section aria-label="District Office community priorities" class="v22-story">
+</section><section aria-label="District Office community priorities" class="v22-story"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v22-story-head">
 <div><span>OUR COMMUNITY FOCUS</span><h2>People first. Community connected.</h2></div>
@@ -12826,7 +13559,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 <p class="v22-stock-note">Supplied community-service imagery used for visual context.</p>
 <p class="v88-authentic-note">Photography in this section is drawn from District Office / supplied community-service imagery and is used for visual context; it should not be read as proof of a specific programme outcome.</p></div>
-</section><section aria-label="District Office contact options" class="v14-top-tasks">
+</section><section aria-label="District Office contact options" class="v14-top-tasks"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v14-task-intro">
 <span>HOW CAN WE HELP?</span>
@@ -12840,7 +13573,7 @@ footer>*{position:relative;z-index:1;}
 <div><b>Visit the Office</b><span>Harmony Hall, Mt. Grace Plaza</span></div>
 </div>
 </div>
-</section><section aria-label="District Office highlights" class="v20-desktop-feature-strip">
+</section><section aria-label="District Office highlights" class="v20-desktop-feature-strip"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <article><span>01</span><div><strong>Resident Assistance</strong><small>Housing, forms, guidance and referrals</small></div></article>
 <article><span>02</span><div><strong>Community Engagement</strong><small>Town halls and five area focus groups</small></div></article>
@@ -12854,7 +13587,7 @@ footer>*{position:relative;z-index:1;}
 <div><strong>Notices</strong><small>Public information</small></div>
 <div><strong>Forms</strong><small>Guides &amp; documents</small></div>
 <div><strong>Contact</strong><small>Call • WhatsApp • Email</small></div>
-</div><section aria-label="District office notice" class="v5-notice-strip">
+</div><section aria-label="District office notice" class="v5-notice-strip"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap v5-notice-inner">
 <span class="v5-notice-label">OFFICE NOTICE</span>
 <p>Residents may contact the Scarborough / Mt. Grace District Office by telephone, WhatsApp, email, or the public enquiry form.</p>
@@ -12870,7 +13603,7 @@ footer>*{position:relative;z-index:1;}
 <button data-v25-scroll="gallery" type="button">Gallery</button>
 <button data-v25-scroll="contact" type="button">Contact</button>
 </div>
-</div><section class="services v132-civic-section v132-tone-white" id="services"><div aria-hidden="true" class="v20-section-marker">
+</div><section class="services v132-civic-section v132-tone-white" id="services"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>SERVICES &amp; ASSISTANCE</span><strong>Resident Guidance &amp; Referral Pathways</strong>
 </div><span aria-hidden="true" style="position:absolute;right:18px;top:18px;font-size:30px;opacity:.42;pointer-events:none;line-height:1;z-index:2">🌿</span><div class="wrap services-grid"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><path d="M13 35c6-8 11-11 17-7l4 3 4-3c6-4 11-1 13 3 2 5-2 9-7 13L32 53 20 45c-7-5-11-6-7-10z"></path><path d="M23 23c2-5 5-8 9-8s7 3 9 8"></path></svg></span></span>
@@ -12897,7 +13630,7 @@ footer>*{position:relative;z-index:1;}
 <button class="v25-panel-secondary" id="v25-service-secondary" type="button"></button>
 <button aria-label="Close service details" class="v25-panel-close" id="v25-service-close" type="button">×</button>
 </div>
-</div></section><section class="office-section" id="about"><div class="wrap office-grid"><div class="office-img"><img alt="District Office interior" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a12"/></div><div class="office-info"><div class="kicker">THE DISTRICT OFFICE</div><h2>Your office at a glance.</h2>
+</div></section><section class="office-section" id="about"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="wrap office-grid"><div class="office-img"><img alt="District Office interior" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a12"/></div><div class="office-info"><div class="kicker">THE DISTRICT OFFICE</div><h2>Your office at a glance.</h2>
 <div aria-label="District Office at a glance" class="v131-office-glance">
 <div class="v131-glance-card"><span aria-hidden="true" class="v131-glance-icon">↗</span><div><small>RESIDENT SUPPORT</small><strong>Clear starting points</strong><p>Guidance, referrals and follow-up for resident enquiries.</p></div></div>
 <div class="v131-glance-card"><span aria-hidden="true" class="v131-glance-icon">◷</span><div><small>OFFICE HOURS</small><strong>Weekday access</strong><p>Monday–Thursday to 5:00 P.M.; Friday to 2:00 P.M.</p></div></div>
@@ -12917,7 +13650,7 @@ footer>*{position:relative;z-index:1;}
 <a href="tel:+18686106314">CALL OFFICE</a>
 <a class="wa" href="https://wa.me/18683445268">WHATSAPP</a>
 <a href="#enquiry">START AN ENQUIRY</a>
-</div></div></div></section><section class="team-section v132-civic-section v132-tone-white" id="team"><div aria-hidden="true" class="v20-section-marker">
+</div></div></div></section><section class="team-section v132-civic-section v132-tone-white" id="team"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>OUR TEAM</span><strong>District Office People &amp; Roles</strong>
 </div><div class="wrap team-grid"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><circle cx="32" cy="21" r="7"></circle><circle cx="17" cy="28" r="5"></circle><circle cx="47" cy="28" r="5"></circle><path d="M20 49c2-10 7-15 12-15s10 5 12 15M7 49c1-7 5-11 10-11 2 0 4 1 6 3M57 49c-1-7-5-11-10-11-2 0-4 1-6 3"></path></svg></span></span>
@@ -12978,7 +13711,7 @@ footer>*{position:relative;z-index:1;}
 </div></div></div>
 <div class="v71-team-note">
 <strong>Public contact:</strong> residents should use the District Office telephone, WhatsApp, email or enquiry system rather than relying on personal staff contact details. Staff photographs are displayed only where supplied; no portrait has been invented for the District Manager.
-        </div></div></div></section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section class="v8-office-promise">
+        </div></div></div></section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section class="v8-office-promise"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v8-promise-grid">
 <div class="v8-promise-heading">
@@ -12990,7 +13723,7 @@ footer>*{position:relative;z-index:1;}
 <div class="v8-promise-item"><strong>03</strong><span><b>Connect</b><small>Maintain clear channels between residents and the District Office.</small></span></div>
 </div>
 </div>
-</section><section class="v5-leadership" id="leadership">
+</section><section class="v5-leadership" id="leadership"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap v5-leadership-grid">
 <div class="v5-leadership-photo">
 <img alt="Assembly Member Trevor James" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-v177-img="a3"/>
@@ -13015,7 +13748,7 @@ footer>*{position:relative;z-index:1;}
 <a class="v71-wa" href="https://wa.me/18683445268">WhatsApp the Office</a><a href="#enquiry">Start an Enquiry</a></div>
 </div>
 </div>
-</section><section class="v13-district-profile" id="district-profile">
+</section><section class="v13-district-profile" id="district-profile"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v13-profile-grid">
 <div class="v13-profile-copy">
@@ -13155,7 +13888,7 @@ footer>*{position:relative;z-index:1;}
 </article>
 </div>
 </div>
-</div></section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section aria-labelledby="v121-scope-title" id="v121-scope"><div class="v121-wrap"><span class="v121-kicker">WHAT THE DISTRICT OFFICE CAN HELP WITH</span><h2 class="v121-title" id="v121-scope-title">A clearer starting point for residents</h2><p class="v121-lead">The District Office can help residents understand where to begin, organise an enquiry, identify useful documents, follow up on District Office actions and direct matters to the appropriate route when another authority is responsible.</p><div class="v121-card-grid"><article class="v121-card"><small>INFORMATION</small><strong>Find the right starting point</strong><span>Get basic guidance on District Office services, forms, public documents and available contact routes.</span></article><article class="v121-card"><small>ENQUIRIES</small><strong>Record a resident matter</strong><span>Create a reference so the office can identify, assign and follow up on a concern consistently.</span></article><article class="v121-card"><small>REFERRAL SUPPORT</small><strong>Identify the responsible route</strong><span>Where another Division, Department or agency is responsible, the office can help point the matter in the right direction.</span></article><article class="v121-card"><small>COMMUNITY</small><strong>Raise a community concern</strong><span>Infrastructure, public-space and recurring community issues can be recorded for District Office follow-up and community planning.</span></article><article class="v121-card"><small>DOCUMENT GUIDANCE</small><strong>Prepare before you apply</strong><span>Use the forms library and resident guides to understand what source documents are available and what to confirm with the responsible authority.</span></article><article class="v121-card"><small>FOLLOW-UP</small><strong>Know what happens next</strong><span>Use your reference and published resident-facing updates to understand the next District Office step.</span></article></div><div class="v121-boundary"><strong>Important service boundary:</strong> the District Office can guide, record, refer and follow up. It does not replace the legal or administrative authority of another Division, Department or agency, and it cannot guarantee grants, housing, licences, funding, works or other external approvals.</div></div></section><section class="v3-process v121-after-submit" id="how-we-help"><div class="v121-wrap"><span class="v121-kicker">AFTER YOU SUBMIT</span><h2 class="v121-title">What happens after I submit an enquiry?</h2><p class="v121-lead">The exact route depends on the issue, but the District Office follows a simple service path so the matter has a clear record and next step.</p><div class="v121-flow"><article class="v121-step"><em>1</em><strong>Received</strong><span>Your enquiry is recorded and given a District Office reference.</span></article><article class="v121-step"><em>2</em><strong>Reviewed</strong><span>Staff review the information and identify the appropriate office action or service route.</span></article><article class="v121-step"><em>3</em><strong>Assigned or referred</strong><span>The matter is assigned for follow-up or directed to another responsible authority when needed.</span></article><article class="v121-step"><em>4</em><strong>Resident update</strong><span>The office records a resident-facing status, next step or request for additional information where appropriate.</span></article><article class="v121-step"><em>5</em><strong>Completed or closed</strong><span>The District Office records the outcome or closure reason so the final position is clear.</span></article></div><div class="v121-boundary">A District Office reference confirms that the enquiry was recorded. It does not by itself mean that an external programme, grant, agency action or works request has been approved.</div></div></section><section class="v7-selector" id="help-selector">
+</div></section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section aria-labelledby="v121-scope-title" id="v121-scope"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v121-wrap"><span class="v121-kicker">WHAT THE DISTRICT OFFICE CAN HELP WITH</span><h2 class="v121-title" id="v121-scope-title">A clearer starting point for residents</h2><p class="v121-lead">The District Office can help residents understand where to begin, organise an enquiry, identify useful documents, follow up on District Office actions and direct matters to the appropriate route when another authority is responsible.</p><div class="v121-card-grid"><article class="v121-card"><small>INFORMATION</small><strong>Find the right starting point</strong><span>Get basic guidance on District Office services, forms, public documents and available contact routes.</span></article><article class="v121-card"><small>ENQUIRIES</small><strong>Record a resident matter</strong><span>Create a reference so the office can identify, assign and follow up on a concern consistently.</span></article><article class="v121-card"><small>REFERRAL SUPPORT</small><strong>Identify the responsible route</strong><span>Where another Division, Department or agency is responsible, the office can help point the matter in the right direction.</span></article><article class="v121-card"><small>COMMUNITY</small><strong>Raise a community concern</strong><span>Infrastructure, public-space and recurring community issues can be recorded for District Office follow-up and community planning.</span></article><article class="v121-card"><small>DOCUMENT GUIDANCE</small><strong>Prepare before you apply</strong><span>Use the forms library and resident guides to understand what source documents are available and what to confirm with the responsible authority.</span></article><article class="v121-card"><small>FOLLOW-UP</small><strong>Know what happens next</strong><span>Use your reference and published resident-facing updates to understand the next District Office step.</span></article></div><div class="v121-boundary"><strong>Important service boundary:</strong> the District Office can guide, record, refer and follow up. It does not replace the legal or administrative authority of another Division, Department or agency, and it cannot guarantee grants, housing, licences, funding, works or other external approvals.</div></div></section><section class="v3-process v121-after-submit" id="how-we-help"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v121-wrap"><span class="v121-kicker">AFTER YOU SUBMIT</span><h2 class="v121-title">What happens after I submit an enquiry?</h2><p class="v121-lead">The exact route depends on the issue, but the District Office follows a simple service path so the matter has a clear record and next step.</p><div class="v121-flow"><article class="v121-step"><em>1</em><strong>Received</strong><span>Your enquiry is recorded and given a District Office reference.</span></article><article class="v121-step"><em>2</em><strong>Reviewed</strong><span>Staff review the information and identify the appropriate office action or service route.</span></article><article class="v121-step"><em>3</em><strong>Assigned or referred</strong><span>The matter is assigned for follow-up or directed to another responsible authority when needed.</span></article><article class="v121-step"><em>4</em><strong>Resident update</strong><span>The office records a resident-facing status, next step or request for additional information where appropriate.</span></article><article class="v121-step"><em>5</em><strong>Completed or closed</strong><span>The District Office records the outcome or closure reason so the final position is clear.</span></article></div><div class="v121-boundary">A District Office reference confirms that the enquiry was recorded. It does not by itself mean that an external programme, grant, agency action or works request has been approved.</div></div></section><section class="v7-selector" id="help-selector"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v7-selector-head">
 <div>
@@ -13205,7 +13938,7 @@ footer>*{position:relative;z-index:1;}
 <span class="v7-help-cta v14-nav-label" data-v51-go="enquiry">Make an Enquiry</span>
 </div>
 </div>
-</section><section class="v6-support" id="support-areas">
+</section><section class="v6-support" id="support-areas"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v3-section-head">
 <span class="v3-eyebrow">SERVICE AREAS</span>
@@ -13257,7 +13990,7 @@ footer>*{position:relative;z-index:1;}
 </article>
 </div>
 </div>
-</section><section class="v5-checklist" id="resident-guide">
+</section><section class="v5-checklist" id="resident-guide"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap"><div class="v9-guide-tools">
 <div>
 <span class="v3-eyebrow">RESIDENT PREPARATION GUIDE</span>
@@ -13298,8 +14031,8 @@ footer>*{position:relative;z-index:1;}
 <div class="v72-note"><strong>Privacy first:</strong> start with only the information needed to understand the enquiry. Do not submit passwords, banking credentials, medical records or other unnecessary highly sensitive information through the public website.</div>
 <div class="v72-actions"><a class="primary" href="#enquiry">START AN ENQUIRY →</a><a href="portals/resident-services.html">OPEN RESIDENT SERVICES</a><a href="track/index.html">TRACK ENQUIRY</a><a href="resident-guide/index.html" rel="noopener" target="_blank">OPEN ONLINE GUIDE</a><a href="resident-guide/index.html" rel="noopener" target="_blank">OPEN GUIDE</a></div>
 <div class="v121-visit"><h3>Before you visit the office</h3><div class="v121-checks"><div class="v121-check"><b>✓</b><span>Bring your District Office reference if the matter was already reported.</span></div><div class="v121-check"><b>✓</b><span>Have a reliable phone number or email so the office can follow up.</span></div><div class="v121-check"><b>✓</b><span>Bring relevant letters, forms or supporting documents. Use copies where appropriate and keep originals unless a responsible authority specifically requires them.</span></div><div class="v121-check"><b>✓</b><span>Write down important dates, previous contacts and any external reference number already issued.</span></div><div class="v121-check"><b>✓</b><span>Know the address or location connected to the matter when location is relevant.</span></div><div class="v121-check"><b>✓</b><span>If you are unsure what to bring, call or WhatsApp the District Office before travelling.</span></div></div></div></div>
-</section><section aria-labelledby="v145-title" id="v145-public-cms"><div class="v145-wrap"><div class="v145-head"><div><div class="v145-kicker">RESIDENT INFORMATION CENTRE</div><h2 id="v145-title">Services, notices &amp; public resources</h2><p>Find verified District Office guidance and the latest public information published through the staff content register. Service guidance explains the office's role and does not guarantee eligibility, approval or action by another agency.</p></div></div><div class="v145-search"><input id="v145-public-search" placeholder="Search services and public information" type="search"/><select id="v145-public-type"><option value="">All public information</option><option value="service">Services</option><option value="faq">FAQs</option><option value="notice">Service notices</option><option value="important">Important notices</option><option value="programme">Programmes</option><option value="newsletter">Newsletters</option><option value="resource">Resources</option><option value="gallery">Gallery</option></select></div><h3 class="v145-section-title">Service Directory</h3><div class="v145-service-grid" id="v145-service-grid"></div><h3 class="v145-section-title">Latest Public Information</h3><div class="v145-feed" id="v145-public-feed"></div></div></section>
-<section class="v88-faq" id="resident-faq">
+</section><section aria-labelledby="v145-title" id="v145-public-cms"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="v145-wrap"><div class="v145-head"><div><div class="v145-kicker">RESIDENT INFORMATION CENTRE</div><h2 id="v145-title">Services, notices &amp; public resources</h2><p>Find verified District Office guidance and the latest public information published through the staff content register. Service guidance explains the office's role and does not guarantee eligibility, approval or action by another agency.</p></div></div><div class="v145-search"><input id="v145-public-search" placeholder="Search services and public information" type="search"/><select id="v145-public-type"><option value="">All public information</option><option value="service">Services</option><option value="faq">FAQs</option><option value="notice">Service notices</option><option value="important">Important notices</option><option value="programme">Programmes</option><option value="newsletter">Newsletters</option><option value="resource">Resources</option><option value="gallery">Gallery</option></select></div><h3 class="v145-section-title">Service Directory</h3><div class="v145-service-grid" id="v145-service-grid"></div><h3 class="v145-section-title">Latest Public Information</h3><div class="v145-feed" id="v145-public-feed"></div></div></section>
+<section class="v88-faq" id="resident-faq"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v88-head">
 <div><small>RESIDENT FAQ</small><h2>Common questions, clear next steps.</h2></div>
@@ -13319,7 +14052,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 <div class="v88-faq-actions"><a class="primary" href="#enquiry">START AN ENQUIRY →</a><a href="track/index.html">TRACK AN ENQUIRY</a><a href="#contact-us">CONTACT THE OFFICE</a></div>
 <div class="v121-faq-additions"><details><summary>Do I need an appointment to contact the District Office?</summary><p>You can begin by telephone, WhatsApp, email, the website enquiry form or an office visit. If your matter needs a specific meeting or documents, staff can advise you on the next step.</p></details><details><summary>Can someone contact the office on my behalf?</summary><p>A relative or representative may help you make contact, but the office may need to confirm information directly with you or request appropriate authority before discussing personal case details.</p></details><details><summary>Can I send my whole application or sensitive documents through WhatsApp?</summary><p>Use ordinary WhatsApp or email only for information suitable for those channels. Do not send passwords, banking credentials, full medical records or unnecessary identity documents. Use an approved secure process when one is provided.</p></details></div></div>
-</section><section class="v4-resources" id="resources">
+</section><section class="v4-resources" id="resources"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v3-section-head">
 <span class="v3-eyebrow">RESOURCE SHORTCUTS</span>
@@ -13349,7 +14082,7 @@ footer>*{position:relative;z-index:1;}
 </article>
 </div>
 </div>
-</section><section class="v88-privacy" id="privacy-accessibility">
+</section><section class="v88-privacy" id="privacy-accessibility"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v88-head">
 <div><small>PRIVACY • WEBSITE USE • ACCESSIBILITY</small><h2>Use the website confidently and carefully.</h2></div>
@@ -13381,7 +14114,7 @@ footer>*{position:relative;z-index:1;}
 </article>
 </div>
 <div aria-label="Plain-language privacy overview" class="v121-info-matrix"><article><small>WHAT WE NEED</small><strong>Minimum useful details</strong><span>Name, a reliable contact, the issue and location when relevant.</span></article><article><small>WHY WE NEED IT</small><strong>To understand and follow up</strong><span>Information should support the enquiry, referral or resident update.</span></article><article><small>WHO SHOULD SEE IT</small><strong>Authorised staff</strong><span>Case information should be limited to staff whose role permits access.</span></article><article><small>WHAT THE TRACKER SHOWS</small><strong>Resident-safe information only</strong><span>Reference, public status, resident-facing update, next step and public update date.</span></article></div></div>
-</section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section class="v3-cta">
+</section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section class="v3-cta"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v3-cta-box">
 <div>
@@ -13396,13 +14129,13 @@ footer>*{position:relative;z-index:1;}
 </div>
 </div>
 </div>
-</section><section class="v4-principles">
+</section><section class="v4-principles"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap v4-principles-grid">
 <div><svg viewbox="0 0 24 24"><path d="m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17.3l-6.3 3.2L7 13.7 2 8.9 9 8z"></path></svg><span><strong>Professional Service</strong><small>Respectful and community-minded</small></span></div>
 <div><svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 11h5v-2h-5V6h-2v7z"></path></svg><span><strong>Responsive Communication</strong><small>Clear routes for enquiries</small></span></div>
 <div><svg viewbox="0 0 24 24"><path d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zM8 11c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5C15 14.2 10.3 13 8 13zm8 0c-.3 0-.7 0-1 .1 1.2.9 2 2 2 3.4V19h6v-2.5c0-2.3-4.7-3.5-7-3.5z"></path></svg><span><strong>People First</strong><small>Focused on district residents</small></span></div>
 </div>
-</section><section aria-label="District office highlights" class="v3-glance">
+</section><section aria-label="District office highlights" class="v3-glance"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v3-glance-grid">
 <div class="v3-glance-intro">
@@ -13415,7 +14148,7 @@ footer>*{position:relative;z-index:1;}
 <div class="v3-stat"><span>03</span><strong>Public Enquiries</strong><small>A clear route to the District Office</small></div>
 </div>
 </div>
-</section><section class="v5-doc-centre v132-civic-section v132-tone-white" id="documents">
+</section><section class="v5-doc-centre v132-civic-section v132-tone-white" id="documents"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap"><div aria-hidden="true" class="v132-section-badge-row">
 <span class="v132-section-badge"><span class="v132-section-badge-core"><svg aria-hidden="true" viewbox="0 0 64 64"><path d="M18 10h22l8 8v36H18z"></path><path d="M40 10v10h10M25 29h16M25 37h16M25 45h10"></path></svg></span></span>
 <span class="v132-section-badge-copy"><b>PUBLIC RESOURCES</b><small>FORMS • INFORMATION • DOCUMENTS</small></span>
@@ -13447,7 +14180,7 @@ footer>*{position:relative;z-index:1;}
 </article>
 </div>
 </div>
-</section><section class="v10-case-tracking">
+</section><section class="v10-case-tracking"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v10-tracking-card">
 <div class="v10-tracking-icon">
@@ -13476,7 +14209,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 <div class="v11-lookup-result" id="v11-lookup-result"></div>
 </div></div>
-</section><section class="v11-journey">
+</section><section class="v11-journey"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v11-journey-head">
 <div>
@@ -13494,7 +14227,7 @@ footer>*{position:relative;z-index:1;}
 <article><strong>05</strong><span>Closed</span><p>The case can be closed once the appropriate action or guidance has been provided.</p></article>
 </div>
 </div>
-</section><section class="v17-programmes v132-civic-section v132-tone-blue-soft" id="resident-programmes"><div aria-hidden="true" class="v20-section-marker">
+</section><section class="v17-programmes v132-civic-section v132-tone-blue-soft" id="resident-programmes"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>PROGRAMMES &amp; SOURCE GUIDANCE</span><strong>SOURCE-VERSION PROGRAMME SUMMARIES</strong>
 </div>
 <div class="wrap"><div aria-hidden="true" class="v132-section-badge-row">
@@ -13615,7 +14348,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 </div>
 </section>
-<section aria-labelledby="v129-title" id="community-action-centre">
+<section aria-labelledby="v129-title" id="community-action-centre"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div aria-hidden="true" class="v129-marker v131-action-marker">
 <span class="v131-action-badge">
@@ -13692,7 +14425,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 </div>
 </section>
-<section aria-labelledby="v133-title" id="v133-public-action">
+<section aria-labelledby="v133-title" id="v133-public-action"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div aria-hidden="true" class="v133-marker">
 <span class="v133-badge"><span class="v133-badge-core"><svg viewbox="0 0 64 64"><circle cx="18" cy="20" r="4"></circle><circle cx="46" cy="20" r="4"></circle><circle cx="32" cy="43" r="4"></circle><path d="M22 21h20M20 24l9 14M44 24l-9 14"></path><path d="M13 49h38"></path></svg></span></span>
@@ -13750,15 +14483,15 @@ footer>*{position:relative;z-index:1;}
 <div class="v133-actions"><a href="#activity-hub">PROGRESS &amp; FOLLOW-UP →</a><a class="secondary" href="#documents">PUBLIC REPORTS</a></div>
 </article>
 </div>
-<div class="v133-trust"><div class="v133-trust-mark">✓</div><div><strong>Public trust standard</strong><span>Use clear dates and status labels. Protect personal data. Distinguish District Office assistance or advocacy from decisions made by Divisions and agencies. If information changes, publish the correction visibly.</span></div></div><section aria-labelledby="v135-live-title" class="v135-live" id="v135-live-updates">
+<div class="v133-trust"><div class="v133-trust-mark">✓</div><div><strong>Public trust standard</strong><span>Use clear dates and status labels. Protect personal data. Distinguish District Office assistance or advocacy from decisions made by Divisions and agencies. If information changes, publish the correction visibly.</span></div></div><section aria-labelledby="v135-live-title" class="v135-live" id="v135-live-updates"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="v135-live-head"><div><small>STAFF-PUBLISHED PUBLIC INFORMATION</small><h3 id="v135-live-title">Latest verified office updates</h3><p>Items that complete the staff publishing workflow appear here when their scheduled publication time arrives. Draft, Review, Approved and expired items remain off the public feed.</p></div><span class="v135-live-badge">STAFF PUBLISHING CHANNEL</span></div>
 <div class="v135-live-grid" id="v135-live-grid"><div class="v135-live-empty">No staff-published public updates are available yet.</div></div>
 <div class="v135-live-rule"><strong>Publication rule:</strong> public items should state what is confirmed, the current status, the last update date and the next public step where applicable. Personal resident data and internal political/electoral material must not be published here.</div>
 </section>
 </div>
 </section>
-<section aria-labelledby="v142p-title" id="v142-public-matters"><div class="wrap"><div class="v142p-head"><div><small>COMMUNITY MATTERS • PUBLIC FOLLOW-UP</small><h2 id="v142p-title">Broader concerns the office is following</h2><p>When several reports relate to the same community issue, staff may group them into one matter for coordinated follow-up. Only resident-safe information explicitly approved for public display appears here.</p></div><span class="v142p-badge">VERIFIED MATTER STATUS</span></div><div class="v142p-grid" id="v142p-grid"><div class="v142p-empty">No community matters are currently approved for public display.</div></div><div class="v142p-note"><strong>Privacy standard:</strong> individual residents, contact details and confidential case references are never displayed in this public matter view. The number of linked reports may be shown only as an aggregate count.</div></div></section><section aria-labelledby="v141p-title" id="v141-public-plans"><div class="wrap"><div class="v141p-head"><div><small>COMMUNITY PLANS &amp; INITIATIVES</small><h2 id="v141p-title">What the office is planning and following up</h2><p>Public summaries of town halls, community projects, partnerships and other initiatives appear here only when staff explicitly marks the record for public display.</p></div><span class="v141p-badge">PUBLIC STATUS VIEW</span></div><div class="v141p-grid" id="v141p-grid"><div class="v141p-empty">No staff-approved initiative summaries are currently published.</div></div><div class="v141p-note"><strong>Public-information standard:</strong> this section shows resident-safe summaries only. Internal planning notes, budgets, partner contact information, linked resident cases and staff-only action items remain restricted.</div></div></section>
-<section class="v18-engagement v132-civic-section v132-tone-light" id="community-engagement"><div aria-hidden="true" class="v20-section-marker">
+<section aria-labelledby="v142p-title" id="v142-public-matters"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="wrap"><div class="v142p-head"><div><small>COMMUNITY MATTERS • PUBLIC FOLLOW-UP</small><h2 id="v142p-title">Broader concerns the office is following</h2><p>When several reports relate to the same community issue, staff may group them into one matter for coordinated follow-up. Only resident-safe information explicitly approved for public display appears here.</p></div><span class="v142p-badge">VERIFIED MATTER STATUS</span></div><div class="v142p-grid" id="v142p-grid"><div class="v142p-empty">No community matters are currently approved for public display.</div></div><div class="v142p-note"><strong>Privacy standard:</strong> individual residents, contact details and confidential case references are never displayed in this public matter view. The number of linked reports may be shown only as an aggregate count.</div></div></section><section aria-labelledby="v141p-title" id="v141-public-plans"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div class="wrap"><div class="v141p-head"><div><small>COMMUNITY PLANS &amp; INITIATIVES</small><h2 id="v141p-title">What the office is planning and following up</h2><p>Public summaries of town halls, community projects, partnerships and other initiatives appear here only when staff explicitly marks the record for public display.</p></div><span class="v141p-badge">PUBLIC STATUS VIEW</span></div><div class="v141p-grid" id="v141p-grid"><div class="v141p-empty">No staff-approved initiative summaries are currently published.</div></div><div class="v141p-note"><strong>Public-information standard:</strong> this section shows resident-safe summaries only. Internal planning notes, budgets, partner contact information, linked resident cases and staff-only action items remain restricted.</div></div></section>
+<section class="v18-engagement v132-civic-section v132-tone-light" id="community-engagement"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div><div aria-hidden="true" class="v20-section-marker">
 <span>COMMUNITY PARTICIPATION</span><strong>Town Halls • Focus Group Areas • Community Partnerships</strong>
 </div>
 <div class="wrap"><div aria-hidden="true" class="v132-section-badge-row">
@@ -13888,7 +14621,7 @@ footer>*{position:relative;z-index:1;}
 </div>
 <div class="v72-note"><strong>Important:</strong> Focus Group areas do not define formal boundaries. Town Hall dates, venues and agendas should only be treated as published when confirmed by the District Office. Community project ideas do not imply funding, approval, commencement or completion.</div>
 <p class="v88-authentic-note">The participation photograph is supplied community-service imagery and is not labelled as a confirmed Scarborough / Mt. Grace Town Hall event.</p></div>
-</section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section aria-label="Public service environment" class="v22-office-vision">
+</section><div class="v70-back-directory"><button data-v70-target="#v70-info-directory" type="button">BACK TO DISTRICT INFORMATION ↑</button></div><section aria-label="Public service environment" class="v22-office-vision"><div class="v181-constellation-signature" aria-hidden="true"><svg viewBox="0 0 180 180" role="presentation" focusable="false"><circle class="v181-orbit" cx="90" cy="90" r="72"/><circle class="v181-orbit-2" cx="90" cy="90" r="56"/><circle class="v181-halo" cx="128" cy="116" r="11"/><path class="v181-line" d="M29 73 L58 48 L89 64 L118 42 L144 67 L128 116 L99 136 L70 112 L42 128"/><path class="v181-line-secondary" d="M58 48 L70 112 L128 116 M89 64 L99 136 M118 42 L99 136 M42 128 L29 73"/><circle class="v181-node" cx="29" cy="73" r="3.4"/><circle class="v181-node-small" cx="58" cy="48" r="2.5"/><circle class="v181-node" cx="89" cy="64" r="3.1"/><circle class="v181-node-small" cx="118" cy="42" r="2.4"/><circle class="v181-node" cx="144" cy="67" r="3.2"/><circle class="v181-node" cx="128" cy="116" r="3.6"/><circle class="v181-node-small" cx="99" cy="136" r="2.6"/><circle class="v181-node" cx="70" cy="112" r="3.2"/><circle class="v181-node-small" cx="42" cy="128" r="2.4"/><path class="v181-civic-star" d="M153 105 l2.2 5.2 5.5 .4 -4.2 3.6 1.3 5.4 -4.8 -2.9 -4.7 2.9 1.2 -5.4 -4.1 -3.6 5.5 -.4z"/></svg></div>
 <div class="wrap">
 <div class="v22-office-vision-grid">
 <div class="v22-office-vision-copy">
@@ -16254,6 +16987,31 @@ window.addEventListener('storage',e=>{if(e.key===KEY)render()});window.addEventL
   } else {
     apply();
   }
+})();
+</script>
+
+
+<script id="v182-constellation-viewport-motion">
+(function(){
+  const ids = [
+    'resident-start','activity-hub','community-compass','service-forms','enquiry',
+    'gallery','district-profile','documents','resident-programmes','community-engagement'
+  ];
+  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+  if (!sections.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    sections.forEach(section => section.classList.add('v182-in-view'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('v182-in-view', entry.isIntersecting);
+    });
+  }, { rootMargin: '140px 0px 140px 0px', threshold: 0.06 });
+
+  sections.forEach(section => observer.observe(section));
 })();
 </script>
 

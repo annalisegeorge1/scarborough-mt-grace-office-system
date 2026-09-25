@@ -1,0 +1,5 @@
+V182 — SELECTIVE ANIMATED CONSTELLATIONS
+
+Animated sections (10): Resident Start, Activity Hub, Community Compass, Forms, Enquiry, Gallery, District Profile, Documents, Resident Programmes, Community Engagement.
+
+All other section constellations remain static. Motion only runs while a selected section is near the viewport, reducing unnecessary animation work. Reduced-motion accessibility is respected. No public information, links, forms, images, or section layout was intentionally changed.
