@@ -218,6 +218,7 @@ function refreshActivityCounts(records){
   const notices=$$('.v26-notice',hub).filter(x=>!x.hidden&&x.style.display!=='none').length;
   const projects=$$('.v26-project',hub).filter(x=>!x.hidden&&x.style.display!=='none').length;
   if(summaries[0]){const n=$('.v26-summary-num',summaries[0]);if(n)n.textContent=String(notices).padStart(2,'0')}
+  if(summaries[2]){const n=$('.v26-summary-num',summaries[2]);if(n)n.textContent='06'}
   if(summaries[3]){const n=$('.v26-summary-num',summaries[3]);if(n)n.textContent=String(projects).padStart(2,'0')}
 
   const townhall=records.find(x=>{
