@@ -77,12 +77,15 @@ async function sendPublicIndex(req,res,next){
     if(!cachedPublicIndex||!config.production){
       const file=path.join(config.staticRoot,'index-self-contained.html');
       let html=await fs.readFile(file,'utf8');
-      const runtime='<script src="/assets/public-content-runtime.js" defer></script>';
+      const runtimeFile=path.join(config.staticRoot,'assets','public-content-runtime.js');
+      const runtimeVersion=crypto.createHash('sha256').update(await fs.readFile(runtimeFile)).digest('hex').slice(0,12);
+      const runtime=`<script src="/assets/public-content-runtime.js?v=${runtimeVersion}" defer></script>`;
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
       cachedPublicIndex=html;
     }
+    res.setHeader('Cache-Control','no-cache');
     res.type('html').send(cachedPublicIndex);
   }catch(e){next(e)}
 }
