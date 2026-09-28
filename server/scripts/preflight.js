@@ -15,7 +15,7 @@ add('Session idle limit reasonable',cfg.sessionIdleMinutes>=5&&cfg.sessionIdleMi
 add('Session absolute limit reasonable',cfg.sessionAbsoluteHours>=1&&cfg.sessionAbsoluteHours<=24,`${cfg.sessionAbsoluteHours} hours`);
 const storageReady=cfg.storageDriver!=='local'||cfg.allowLocalPrivateStorage;
 add('Private storage production-safe',storageReady,cfg.storageDriver==='local'?'local storage selected':'managed/object storage selected',cfg.uploadsEnabled);
-add('Malware scanning configured when required',!cfg.uploadsEnabled||!cfg.clamav.required||!!cfg.clamav.host,cfg.uploadsEnabled?(cfg.clamav.host||'scanner missing'):'uploads disabled',cfg.uploadsEnabled);
+add('Malware scanning configured for uploads',!cfg.uploadsEnabled||!!cfg.clamav.host,cfg.uploadsEnabled?(cfg.clamav.host||'scanner missing'):'uploads disabled',cfg.uploadsEnabled);
 add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-self-contained.html')),'index-self-contained.html');
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
