@@ -83,6 +83,15 @@ function safeMeta(v){
 }
 function has(obj,key){return Object.prototype.hasOwnProperty.call(obj,key)}
 function nullable(v){return v===''||v===undefined?null:v}
+function employmentError(x){
+  if(x.type!=='activity'||safeMeta(x.metadata).subtype!=='employment'||x.workflow!=='Published')return null;
+  const m=safeMeta(x.metadata),deadline=String(m.deadline||'');
+  if(!m.employer||!['THA','Community'].includes(m.employerType)||!/^\d{4}-\d{2}-\d{2}$/.test(deadline))return 'Employment notices require an employer, source and valid deadline.';
+  try{if(new URL(x.publicUrl).protocol!=='https:')return 'An HTTPS official vacancy link is required.';}catch{return 'An HTTPS official vacancy link is required.';}
+  const expires=Date.parse(x.expireOn);
+  if(!Number.isFinite(expires)||expires<=Date.now()||expires<Date.parse(`${deadline}T00:00:00-04:00`))return 'Employment notices must expire after the application deadline.';
+  return null;
+}
 
 router.get('/snapshot',requirePermission('content.write'),async(req,res,next)=>{
   try{res.json(await buildSnapshot())}catch(e){next(e)}
@@ -115,6 +124,7 @@ router.post('/',requirePermission('content.write'),async(req,res,next)=>{
     if(b.type==='form'&&workflow==='Published'&&!b.publicUrl&&!b.documentId){
       return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
     }
+    const vacancyError=employmentError({...b,workflow});if(vacancyError)return res.status(400).json({detail:vacancyError});
     const q=await db.query(`
       INSERT INTO public_content(
         type,section,category,title,summary,body,public_url,workflow,verified,
@@ -166,6 +176,7 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
     if(next.type==='form'&&next.workflow==='Published'&&!next.publicUrl&&!next.documentId){
       return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
     }
+    const vacancyError=employmentError(next);if(vacancyError)return res.status(400).json({detail:vacancyError});
     const q=await db.query(`
       UPDATE public_content SET
         type=$2,section=$3,category=$4,title=$5,summary=$6,body=$7,public_url=$8,
