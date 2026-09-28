@@ -177,6 +177,41 @@ function renderNotice(x){
     ${x.eventDate?`<div class="v202-public-date">DATE • ${escapeHtml(fmtDate(x.eventDate))}</div>`:''}`;
   host.appendChild(el);
 }
+function setupEmploymentTab(){
+  const hub=$('#activity-hub'),tabs=$('.v26-tabs',hub),panels=$('.v26-panels',hub);
+  if(!tabs||!panels||$('#v204-employment-tab'))return;
+  const tab=document.createElement('button');
+  tab.id='v204-employment-tab';tab.className='v26-tab';tab.type='button';tab.role='tab';tab.tabIndex=-1;
+  tab.dataset.v26Tab='employment';tab.setAttribute('aria-controls','employment');tab.setAttribute('aria-selected','false');
+  tab.innerHTML='<span>04</span><b>Employment Opportunities</b><small>THA &amp; community vacancies</small>';
+  tabs.appendChild(tab);
+  const panel=document.createElement('div');
+  panel.id='employment';panel.className='v26-panel';panel.role='tabpanel';panel.hidden=true;
+  panel.setAttribute('aria-labelledby',tab.id);
+  panel.innerHTML='<div class="v26-panel-head"><div><span>VERIFIED OPEN VACANCIES</span><h3>Employment Opportunities</h3></div><p>Apply directly through the employer’s official notice. The District Office does not receive applications here.</p></div><div class="v26-notice-grid v204-employment-grid"></div><p class="v204-employment-empty">There are no verified open vacancies listed at present. Check the <a href="https://www.tha.gov.tt/downloads/" target="_blank" rel="noopener noreferrer">THA employment notices</a> for additional opportunities.</p>';
+  panels.appendChild(panel);
+  const oldTabs=$$('.v26-tab',tabs).filter(b=>b!==tab);
+  oldTabs.forEach(b=>b.addEventListener('click',()=>{tab.classList.remove('is-active');tab.setAttribute('aria-selected','false');tab.tabIndex=-1;panel.hidden=true;panel.classList.remove('is-active')}));
+  tab.addEventListener('click',()=>{
+    oldTabs.forEach(b=>{b.classList.remove('is-active');b.setAttribute('aria-selected','false');b.tabIndex=-1});
+    $$('.v26-panel',panels).forEach(p=>{p.classList.toggle('is-active',p===panel);p.hidden=p!==panel});
+    tab.classList.add('is-active');tab.setAttribute('aria-selected','true');tab.tabIndex=0;
+  });
+  tab.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const target=e.key==='ArrowLeft'?oldTabs.at(-1):oldTabs[0];target.click();target.focus()}});
+  const style=document.createElement('style');style.id='v204-employment-css';
+  style.textContent='#activity-hub .v26-tabs{grid-template-columns:repeat(4,1fr)}#activity-hub .v204-employment-grid .v26-notice{min-width:0}#activity-hub .v204-employment-meta{display:grid;gap:5px;margin:11px 0;color:#244960;font-size:12px}#activity-hub .v204-employment-link{display:inline-flex;margin-top:10px;padding:9px 12px;border-radius:8px;background:#0b3553;color:#fff;font-size:12px;font-weight:800;text-decoration:none}#activity-hub .v204-employment-empty{font-size:13px;line-height:1.6;color:#244960}#activity-hub .v204-employment-empty a{color:#0b3553;font-weight:800}@media(max-width:950px){#activity-hub .v26-tabs{grid-template-columns:repeat(2,1fr)}}';
+  document.head.appendChild(style);
+}
+function renderEmployment(x){
+  const host=$('#activity-hub .v204-employment-grid');if(!host)return;
+  const m=meta(x.metadata),deadline=txt(m.deadline);
+  if(!m.employer||!/^\d{4}-\d{2}-\d{2}$/.test(deadline)||!x.publicUrl||!/^https:\/\//i.test(x.publicUrl))return;
+  if(Date.now()>Date.parse(`${deadline}T23:59:59-04:00`))return;
+  const el=document.createElement('article');el.className='v26-notice v202-managed-activity';
+  el.innerHTML=`<div class="v26-notice-top"><span class="v26-badge confirmed">OPEN VACANCY</span><small>${m.employerType==='THA'?'THA / Division':'Community Employer'}</small></div><h4>${escapeHtml(x.title)}</h4>${x.summary?`<p>${escapeHtml(x.summary)}</p>`:''}<div class="v204-employment-meta"><span><b>Employer:</b> ${escapeHtml(m.employer)}</span><span><b>Apply by:</b> ${escapeHtml(fmtDate(`${deadline}T12:00:00-04:00`))}</span></div><a class="v204-employment-link" href="${escapeAttr(x.publicUrl)}" target="_blank" rel="noopener noreferrer">VIEW OFFICIAL NOTICE →</a>`;
+  host.appendChild(el);
+  const empty=$('#activity-hub .v204-employment-empty');if(empty)empty.hidden=true;
+}
 function refreshActivityCounts(records){
   const hub=$('#activity-hub');if(!hub)return;
   const summaries=$$('.v26-summary article',hub);
@@ -214,7 +249,7 @@ function applyActivityContent(records){
   });
   records.filter(x=>x.type==='activity').forEach(x=>{
     const subtype=meta(x.metadata).subtype||'project';
-    subtype==='project'?renderProject(x):renderNotice(x);
+    subtype==='employment'?renderEmployment(x):subtype==='project'?renderProject(x):renderNotice(x);
   });
   refreshActivityCounts(records);
 }
@@ -309,6 +344,7 @@ async function init(){
   addStyles();
   clarifySupportingDocuments();
   improveActivityHubContrast();
+  setupEmploymentTab();
   const jobs=[];
   if($('#service-forms'))jobs.push(getContent('forms').then(applyFormContent).catch(()=>{}));
   if($('#activity-hub'))jobs.push(getContent('activity').then(applyActivityContent).catch(()=>{}));
