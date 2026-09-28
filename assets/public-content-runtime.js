@@ -252,12 +252,24 @@ function clarifySupportingDocuments(){
   style.textContent='#enquiry .v203-document-note{padding:14px 16px;border:1px solid rgba(11,53,83,.18);border-left:4px solid #c9a34a;border-radius:10px;background:#f8fbfc}#enquiry .v203-document-note .v48-form-help{margin:6px 0 0;color:#385669;font-size:13px;line-height:1.55}';
   document.head.appendChild(style);
 }
+function improveActivityHubContrast(){
+  if(!$('#activity-hub')||$('#v203-activity-contrast-css'))return;
+  const style=document.createElement('style');
+  style.id='v203-activity-contrast-css';
+  style.textContent=`
+    body:not(.v112-dark) #activity-hub .v26-hub-head h2{color:#0b2e48!important;text-shadow:none!important}
+    body:not(.v112-dark) #activity-hub .v26-hub-head .v26-eyebrow{color:#31546b!important}
+    body:not(.v112-dark) #activity-hub .v26-hub-head .v26-status-key span{color:#244960!important}
+  `;
+  document.head.appendChild(style);
+}
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#96;')}
 
 async function init(){
   addStyles();
   clarifySupportingDocuments();
+  improveActivityHubContrast();
   const jobs=[];
   if($('#service-forms'))jobs.push(getContent('forms').then(applyFormContent).catch(()=>{}));
   if($('#activity-hub'))jobs.push(getContent('activity').then(applyActivityContent).catch(()=>{}));
