@@ -233,7 +233,7 @@ function addStyles(){
   `;
   document.head.appendChild(s);
 }
-function clarifySupportingDocuments(){
+async function clarifySupportingDocuments(){
   const input=$('#supporting-files');
   if(!input||!input.disabled)return;
   const group=input.closest('.form-group');
@@ -257,6 +257,39 @@ function clarifySupportingDocuments(){
   style.id='v203-document-note-css';
   style.textContent='#enquiry .v203-document-note{display:block;padding:18px 20px;margin:20px 0;border:2px solid #244766;border-left:6px solid #b78b30;border-radius:10px;background:#f8fbfc}#enquiry .v203-document-note>label{display:block;margin:0 0 10px;color:#0b2e48;font-size:18px;font-weight:800;line-height:1.3}#enquiry .v203-document-status{display:block;margin-bottom:8px;color:#62470c;font-size:14px;line-height:1.4}#enquiry .v203-document-note .v48-form-help{display:block;margin:0;color:#244766;font-size:14px;line-height:1.6}';
   document.head.appendChild(style);
+  let ready=false;
+  try{const response=await fetch('/api/public/upload-status',{cache:'no-store'});ready=response.ok&&(await response.json()).enabled===true;}catch(e){}
+  if(!ready)return;
+  input.disabled=false;
+  input.hidden=false;
+  input.style.display='block';
+  input.removeAttribute('aria-hidden');
+  input.setAttribute('accept','.pdf,.jpg,.jpeg,.png');
+  if(label)label.setAttribute('for','supporting-files');
+  if(help)help.textContent='Attach up to three PDF, JPG or PNG files. Each file must be no larger than 12 MB. The files are stored privately with your enquiry for authorized District Office staff.';
+  const status=$('.v203-document-status',group);
+  if(status)status.textContent='Upload documents with your enquiry';
+  const form=$('#district-enquiry-form');
+  form?.addEventListener('submit',async event=>{
+    if(!input.files.length)return;
+    event.preventDefault();event.stopImmediatePropagation();
+    const result=$('#v33-form-result'),button=form.querySelector('button[type="submit"]');
+    if(!form.checkValidity()){form.reportValidity();return;}
+    const files=[...input.files];
+    if(files.length>3||files.some(f=>f.size>12*1024*1024||!['application/pdf','image/jpeg','image/png'].includes(f.type))){result.className='v33-form-result show error';result.textContent='Choose up to three PDF, JPG or PNG files, each 12 MB or smaller.';return;}
+    const value=id=>document.getElementById(id)?.value.trim()||'';
+    const enquiry={fullName:value('name'),phone:value('phone'),dob:value('dob'),email:value('email'),address:value('address'),type:value('enquiry-type'),communityArea:value('community-area'),preferred:value('preferred-contact'),notificationConsent:!!$('#v138-status-consent')?.checked,reminderConsent:!!$('#v138-reminder-consent')?.checked,message:value('message')};
+    const body=new FormData();body.append('enquiry',JSON.stringify(enquiry));files.forEach(file=>body.append('files',file));
+    if(button){button.disabled=true;button.textContent='UPLOADING DOCUMENTS…';}
+    try{
+      const response=await fetch('/api/public/enquiries-with-documents',{method:'POST',body});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.detail||'The enquiry and documents could not be submitted.');
+      form.reset();result.className='v33-form-result show ok';
+      result.textContent=`Enquiry ${data.reference} received with ${data.documentCount} document(s). Keep this reference number to track your enquiry.`;
+    }catch(error){result.className='v33-form-result show error';result.textContent=error.message||'Upload failed. Please try again.';}
+    finally{if(button){button.disabled=false;button.textContent='CREATE ENQUIRY →';}}
+  },true);
 }
 function improveActivityHubContrast(){
   if(!$('#activity-hub')||$('#v203-activity-contrast-css'))return;
