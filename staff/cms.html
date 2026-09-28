@@ -20,6 +20,7 @@
   .cm-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .cm-upload-note{padding:9px 11px;border-left:3px solid #c9a34a;background:#fffaf0;font-size:11px;line-height:1.45}
   .cm-subhead{margin:18px 0 8px;color:#0b3553}
+  .cm-employment[hidden]{display:none!important}
   @media(max-width:900px){.cm-two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -88,7 +89,7 @@
 <h2>Activity Hub editor</h2>
 <input type="hidden" id="activity-id"><input type="hidden" id="activity-static-key">
 <div class="formgrid">
-  <div class="f4"><label>Item type</label><select id="activity-subtype"><option value="project">Project / Follow-up</option><option value="notice">Notice</option><option value="townhall">Town Hall</option></select></div>
+  <div class="f4"><label>Item type</label><select id="activity-subtype"><option value="project">Project / Follow-up</option><option value="notice">Notice</option><option value="townhall">Town Hall</option><option value="employment">Employment Opportunity</option></select></div>
   <div class="f8"><label>Title</label><input id="activity-title"></div>
   <div class="f6"><label>Area / code</label><input id="activity-code" placeholder="e.g. GRU GRU PATCH / PROVIDENCE ROAD"></div>
   <div class="f6"><label>District Office role</label><input id="activity-role" placeholder="Request / Referral"></div>
@@ -108,6 +109,10 @@
   <div class="f4"><label>Display order</label><input id="activity-order" type="number" value="0"></div>
   <div class="f6"><label>Publish on</label><input id="activity-publish" type="datetime-local"></div>
   <div class="f6"><label>Expire on</label><input id="activity-expire" type="datetime-local"></div>
+  <div class="f4 cm-employment" hidden><label>Employer / THA division</label><input id="activity-employer" placeholder="Official employer name"></div>
+  <div class="f4 cm-employment" hidden><label>Source</label><select id="activity-employer-type"><option value="THA">THA / Division</option><option value="Community">Community employer</option></select></div>
+  <div class="f4 cm-employment" hidden><label>Application deadline</label><input id="activity-deadline" type="date"></div>
+  <div class="f12 cm-employment" hidden><label>Official vacancy / application link</label><input id="activity-source-url" type="url" placeholder="https://official-employer-site.example/vacancy"></div>
 </div>
 <div class="toolbar"><button class="btn gold" id="activity-save" type="button">Save Activity Hub item</button><button class="btn" id="activity-reset" type="button">Clear editor</button></div>
 </section>
@@ -276,10 +281,13 @@ async function restoreStaticForm(enc){
 }
 
 function clearActivity(){
-  ['activity-id','activity-static-key','activity-title','activity-code','activity-role','activity-summary','activity-note','activity-next','activity-date','activity-publish','activity-expire'].forEach(id=>SMG.set(id,''));
+  ['activity-id','activity-static-key','activity-title','activity-code','activity-role','activity-summary','activity-note','activity-next','activity-date','activity-publish','activity-expire','activity-employer','activity-deadline','activity-source-url'].forEach(id=>SMG.set(id,''));
   SMG.set('activity-subtype','project');SMG.set('activity-status','Planned');SMG.set('activity-workflow','Draft');SMG.set('activity-verified','false');SMG.set('activity-order','0');
+  showEmploymentFields();
 }
 $('activity-reset').onclick=clearActivity;
+function showEmploymentFields(){document.querySelectorAll('.cm-employment').forEach(el=>el.hidden=SMG.val('activity-subtype')!=='employment')}
+$('activity-subtype').addEventListener('change',showEmploymentFields);
 function fillActivity(x,staticKey=''){
   const m=meta(x.metadata);
   SMG.set('activity-id',x.id||'');SMG.set('activity-static-key',staticKey||m.staticKey||'');
@@ -288,6 +296,7 @@ function fillActivity(x,staticKey=''){
   SMG.set('activity-summary',x.summary||'');SMG.set('activity-note',x.status_note||x.statusNote||'');SMG.set('activity-next',x.body||m.nextStep||'');
   SMG.set('activity-date',dt(x.event_date||x.eventDate));SMG.set('activity-workflow',x.workflow||'Published');SMG.set('activity-verified',String(x.verified===undefined?true:!!x.verified));
   SMG.set('activity-order',String(x.sort_order||0));SMG.set('activity-publish',dt(x.publish_on));SMG.set('activity-expire',dt(x.expire_on));
+  SMG.set('activity-employer',m.employer||'');SMG.set('activity-employer-type',m.employerType||'THA');SMG.set('activity-deadline',m.deadline||'');SMG.set('activity-source-url',x.public_url||x.publicUrl||'');showEmploymentFields();
 }
 function editActivity(id){const x=data.find(r=>r.id===id);if(x){fillActivity(x);document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'})}}
 function editStaticActivity(enc){
@@ -298,11 +307,13 @@ function editStaticActivity(enc){
 }
 $('activity-save').onclick=async()=>{
   const id=SMG.val('activity-id'),staticKey=SMG.val('activity-static-key'),subtype=SMG.val('activity-subtype');
+  const employment=subtype==='employment',deadline=SMG.val('activity-deadline'),sourceUrl=SMG.val('activity-source-url');
+  if(employment&&(!SMG.val('activity-employer')||!deadline||!/^https:\/\//i.test(sourceUrl)))return SMG.msg('Employment notices need an employer, deadline and HTTPS official application link.','danger');
   const body={type:staticKey?'activity_override':'activity',section:'activity',category:subtype,title:SMG.val('activity-title'),summary:SMG.val('activity-summary'),
     body:SMG.val('activity-next'),publicStatus:SMG.val('activity-status'),statusNote:SMG.val('activity-note'),eventDate:SMG.val('activity-date')||null,
     workflow:SMG.val('activity-workflow'),verified:SMG.val('activity-verified')==='true',sortOrder:Number(SMG.val('activity-order'))||0,
-    publishOn:SMG.val('activity-publish')||null,expireOn:SMG.val('activity-expire')||null,
-    metadata:{staticKey:staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),action:'show'}};
+    publishOn:SMG.val('activity-publish')||null,expireOn:employment?`${deadline}T23:59:59-04:00`:(SMG.val('activity-expire')||null),publicUrl:employment?sourceUrl:null,
+    metadata:{staticKey:staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),employer:employment?SMG.val('activity-employer'):undefined,employerType:employment?SMG.val('activity-employer-type'):undefined,deadline:employment?deadline:undefined,action:'show'}};
   if(!body.title)return SMG.msg('Activity title is required.','danger');
   try{
     id?await SMG.api('/api/content/'+id,{method:'PATCH',body}):await SMG.api('/api/content',{method:'POST',body});
