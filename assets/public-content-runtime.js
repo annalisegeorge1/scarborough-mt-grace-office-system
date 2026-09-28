@@ -242,14 +242,20 @@ function clarifySupportingDocuments(){
   input.style.display='none';
   input.setAttribute('aria-hidden','true');
   const label=$('label[for="supporting-files"]',group);
-  if(label){label.removeAttribute('for');label.textContent='Supporting documents';}
+  if(label){label.removeAttribute('for');label.textContent='Supporting Documents (optional)';}
   const help=$('#v48-files-help',group);
-  if(help)help.textContent='Document upload is not available on this staging site. Submit your enquiry without attachments and keep your reference number. The District Office will advise how to provide any documents it needs through an approved secure method.';
+  if(help)help.textContent='Uploads are not available on this staging site. Submit your enquiry without attachments and keep your reference number. The District Office will advise how to provide any documents it needs through an approved secure method.';
   $('.v33-file-note',group)?.remove();
   group.classList.add('v203-document-note');
+  if(!$('.v203-document-status',group)){
+    const status=document.createElement('strong');
+    status.className='v203-document-status';
+    status.textContent='Document uploads are currently unavailable';
+    (label||input).after(status);
+  }
   const style=document.createElement('style');
   style.id='v203-document-note-css';
-  style.textContent='#enquiry .v203-document-note{padding:14px 16px;border:1px solid rgba(11,53,83,.18);border-left:4px solid #c9a34a;border-radius:10px;background:#f8fbfc}#enquiry .v203-document-note .v48-form-help{margin:6px 0 0;color:#385669;font-size:13px;line-height:1.55}';
+  style.textContent='#enquiry .v203-document-note{display:block;padding:18px 20px;margin:20px 0;border:2px solid #244766;border-left:6px solid #b78b30;border-radius:10px;background:#f8fbfc}#enquiry .v203-document-note>label{display:block;margin:0 0 10px;color:#0b2e48;font-size:18px;font-weight:800;line-height:1.3}#enquiry .v203-document-status{display:block;margin-bottom:8px;color:#62470c;font-size:14px;line-height:1.4}#enquiry .v203-document-note .v48-form-help{display:block;margin:0;color:#244766;font-size:14px;line-height:1.6}';
   document.head.appendChild(style);
 }
 function improveActivityHubContrast(){
