@@ -1,23 +1,120 @@
 'use strict';
-const path=require('path');const crypto=require('crypto');const express=require('express');const helmet=require('helmet');const cookieParser=require('cookie-parser');
-const config=require('./config');const {authMiddleware,requireCsrf}=require('./auth');
-const authRoutes=require('./routes/auth');const operationRoutes=require('./routes/operations');const automationRoutes=require('./routes/automation');const qualityRoutes=require('./routes/quality');const workspaceRoutes=require('./routes/workspace');const reportRoutes=require('./routes/reports');const auditRoutes=require('./routes/audit');const searchRoutes=require('./routes/search');const contentRoutes=require('./routes/content');const caseRoutes=require('./routes/cases');const applicationRoutes=require('./routes/applications');const recordRoutes=require('./routes/records');const feedbackRoutes=require('./routes/feedback');const publicRoutes=require('./routes/public');const healthRoutes=require('./routes/health');const uploadRoutes=require('./routes/uploads');const userRoutes=require('./routes/users');
-const app=express();app.disable('x-powered-by');if(config.trustProxy)app.set('trust proxy',config.trustProxy);
-app.use((req,res,next)=>{const id=req.get('X-Request-Id')||crypto.randomUUID();req.requestId=id;res.setHeader('X-Request-Id',id);res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=(), payment=(), usb=()');next();});
-app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],baseUri:["'self'"],objectSrc:["'none'"],frameAncestors:["'self'"],formAction:["'self'"],imgSrc:["'self'",'data:','blob:','https:'],fontSrc:["'self'",'data:'],styleSrc:["'self'","'unsafe-inline'"],scriptSrc:["'self'","'unsafe-inline'"],connectSrc:["'self'"],frameSrc:["'self'",'blob:','data:']}}}));
-app.use(express.json({limit:'1mb'}));app.use(express.urlencoded({extended:false,limit:'1mb'}));app.use(cookieParser());
+const path=require('path');
+const fs=require('fs/promises');
+const crypto=require('crypto');
+const express=require('express');
+const helmet=require('helmet');
+const cookieParser=require('cookie-parser');
+const config=require('./config');
+const {authMiddleware,requireCsrf}=require('./auth');
+const authRoutes=require('./routes/auth');
+const operationRoutes=require('./routes/operations');
+const automationRoutes=require('./routes/automation');
+const qualityRoutes=require('./routes/quality');
+const workspaceRoutes=require('./routes/workspace');
+const reportRoutes=require('./routes/reports');
+const auditRoutes=require('./routes/audit');
+const searchRoutes=require('./routes/search');
+const contentRoutes=require('./routes/content');
+const caseRoutes=require('./routes/cases');
+const applicationRoutes=require('./routes/applications');
+const recordRoutes=require('./routes/records');
+const feedbackRoutes=require('./routes/feedback');
+const publicRoutes=require('./routes/public');
+const healthRoutes=require('./routes/health');
+const uploadRoutes=require('./routes/uploads');
+const userRoutes=require('./routes/users');
+
+const app=express();
+app.disable('x-powered-by');
+if(config.trustProxy)app.set('trust proxy',config.trustProxy);
+
+app.use((req,res,next)=>{
+  const id=req.get('X-Request-Id')||crypto.randomUUID();
+  req.requestId=id;
+  res.setHeader('X-Request-Id',id);
+  res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+  next();
+});
+app.use(helmet({contentSecurityPolicy:{directives:{
+  defaultSrc:["'self'"],baseUri:["'self'"],objectSrc:["'none'"],frameAncestors:["'self'"],formAction:["'self'"],
+  imgSrc:["'self'",'data:','blob:','https:'],fontSrc:["'self'",'data:'],styleSrc:["'self'","'unsafe-inline'"],
+  scriptSrc:["'self'","'unsafe-inline'"],connectSrc:["'self'"],frameSrc:["'self'",'blob:','data:']
+}}}));
+app.use(express.json({limit:'1mb'}));
+app.use(express.urlencoded({extended:false,limit:'1mb'}));
+app.use(cookieParser());
 app.use('/api',(req,res,next)=>{res.setHeader('Cache-Control','no-store');res.setHeader('Pragma','no-cache');next();});
 app.use('/staff',(req,res,next)=>{res.setHeader('Cache-Control','no-store, private');res.setHeader('Pragma','no-cache');res.setHeader('X-Robots-Tag','noindex, nofollow, noarchive');next();});
 app.use(authMiddleware);
-app.use('/api/health',healthRoutes);app.use('/api/public',publicRoutes);app.use('/api/auth',authRoutes);
-app.use('/api/cases',requireCsrf,caseRoutes);app.use('/api/applications',requireCsrf,applicationRoutes);app.use('/api/records',requireCsrf,recordRoutes);app.use('/api/feedback',requireCsrf,feedbackRoutes);app.use('/api/uploads',requireCsrf,uploadRoutes);app.use('/api/users',requireCsrf,userRoutes);app.use('/api/audit',requireCsrf,auditRoutes);app.use('/api/search',requireCsrf,searchRoutes);app.use('/api/content',requireCsrf,contentRoutes);app.use('/api/ops',requireCsrf,operationRoutes);app.use('/api/automation',requireCsrf,automationRoutes);app.use('/api/quality',requireCsrf,qualityRoutes);app.use('/api/workspaces',requireCsrf,workspaceRoutes);app.use('/api/reports',requireCsrf,reportRoutes);
+
+app.use('/api/health',healthRoutes);
+app.use('/api/public',publicRoutes);
+app.use('/api/auth',authRoutes);
+app.use('/api/cases',requireCsrf,caseRoutes);
+app.use('/api/applications',requireCsrf,applicationRoutes);
+app.use('/api/records',requireCsrf,recordRoutes);
+app.use('/api/feedback',requireCsrf,feedbackRoutes);
+app.use('/api/uploads',requireCsrf,uploadRoutes);
+app.use('/api/users',requireCsrf,userRoutes);
+app.use('/api/audit',requireCsrf,auditRoutes);
+app.use('/api/search',requireCsrf,searchRoutes);
+app.use('/api/content',requireCsrf,contentRoutes);
+app.use('/api/ops',requireCsrf,operationRoutes);
+app.use('/api/automation',requireCsrf,automationRoutes);
+app.use('/api/quality',requireCsrf,qualityRoutes);
+app.use('/api/workspaces',requireCsrf,workspaceRoutes);
+app.use('/api/reports',requireCsrf,reportRoutes);
+
 const staticOpts={dotfiles:'deny',etag:true,maxAge:config.production?'1h':0,index:false};
+app.use('/assets',express.static(path.join(config.staticRoot,'assets'),staticOpts));
+
 app.get('/robots.txt',(req,res)=>res.type('text/plain').send('User-agent: *\nDisallow: /staff/\nDisallow: /api/\n'));
-app.get(['/', '/index.html','/index-self-contained.html'],(req,res)=>res.sendFile(path.join(config.staticRoot,'index-self-contained.html')));
-app.get('/staff/login.html',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','login.html')));app.get('/staff/production-ui.css',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','production-ui.css')));app.get('/staff/production-client.js',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','production-client.js')));const requireStaffPage=(req,res,next)=>{if(req.user)return next();const nextPath=encodeURIComponent(req.originalUrl);return res.redirect('/staff/login.html?next='+nextPath);};app.use('/staff',requireStaffPage,express.static(path.join(config.staticRoot,'staff'),staticOpts));app.use('/track',express.static(path.join(config.staticRoot,'track'),{...staticOpts,index:'index.html'}));app.use('/portals',express.static(path.join(config.staticRoot,'portals'),{...staticOpts,index:'index.html'}));app.use('/resident-guide',express.static(path.join(config.staticRoot,'resident-guide'),{...staticOpts,index:'index.html'}));
-app.get('/staff',(req,res)=>res.redirect(req.user?'/staff/index.html':'/staff/login.html'));app.get('/track',(req,res)=>res.redirect('/track/'));
+
+let cachedPublicIndex=null;
+async function sendPublicIndex(req,res,next){
+  try{
+    if(!cachedPublicIndex||!config.production){
+      const file=path.join(config.staticRoot,'index-self-contained.html');
+      let html=await fs.readFile(file,'utf8');
+      const runtime='<script src="/assets/public-content-runtime.js" defer></script>';
+      if(!html.includes('/assets/public-content-runtime.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
+      }
+      cachedPublicIndex=html;
+    }
+    res.type('html').send(cachedPublicIndex);
+  }catch(e){next(e)}
+}
+app.get(['/', '/index.html','/index-self-contained.html'],sendPublicIndex);
+
+app.get('/staff/login.html',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','login.html')));
+app.get('/staff/production-ui.css',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','production-ui.css')));
+app.get('/staff/production-client.js',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','production-client.js')));
+const requireStaffPage=(req,res,next)=>{
+  if(req.user)return next();
+  const nextPath=encodeURIComponent(req.originalUrl);
+  return res.redirect('/staff/login.html?next='+nextPath);
+};
+app.use('/staff',requireStaffPage,express.static(path.join(config.staticRoot,'staff'),staticOpts));
+app.use('/track',express.static(path.join(config.staticRoot,'track'),{...staticOpts,index:'index.html'}));
+app.use('/portals',express.static(path.join(config.staticRoot,'portals'),{...staticOpts,index:'index.html'}));
+app.use('/resident-guide',express.static(path.join(config.staticRoot,'resident-guide'),{...staticOpts,index:'index.html'}));
+
+app.get('/staff',(req,res)=>res.redirect(req.user?'/staff/index.html':'/staff/login.html'));
+app.get('/track',(req,res)=>res.redirect('/track/'));
 app.use('/server',(req,res)=>res.status(404).end());
-app.use((req,res)=>{if(req.path.startsWith('/api/'))return res.status(404).json({detail:'API endpoint not found.'});res.status(404).sendFile(path.join(config.staticRoot,'404.html'));});
-app.use((err,req,res,next)=>{console.error('[SERVER ERROR]',req.requestId||'-',err.message);if(res.headersSent)return next(err);res.status(err.code==='LIMIT_FILE_SIZE'?413:500).json({detail:config.production?'The request could not be completed.':err.message});});
-if(require.main===module){app.listen(config.port,()=>console.log(`Scarborough / Mt. Grace server listening on ${config.port}`));}
+
+app.use((req,res)=>{
+  if(req.path.startsWith('/api/'))return res.status(404).json({detail:'API endpoint not found.'});
+  res.status(404).sendFile(path.join(config.staticRoot,'404.html'));
+});
+app.use((err,req,res,next)=>{
+  console.error('[SERVER ERROR]',req.requestId||'-',err.message);
+  if(res.headersSent)return next(err);
+  res.status(err.code==='LIMIT_FILE_SIZE'?413:500).json({detail:config.production?'The request could not be completed.':err.message});
+});
+if(require.main===module){
+  app.listen(config.port,()=>console.log(`Scarborough / Mt. Grace server listening on ${config.port}`));
+}
 module.exports=app;
