@@ -233,11 +233,31 @@ function addStyles(){
   `;
   document.head.appendChild(s);
 }
+function clarifySupportingDocuments(){
+  const input=$('#supporting-files');
+  if(!input||!input.disabled)return;
+  const group=input.closest('.form-group');
+  if(!group)return;
+  input.hidden=true;
+  input.style.display='none';
+  input.setAttribute('aria-hidden','true');
+  const label=$('label[for="supporting-files"]',group);
+  if(label){label.removeAttribute('for');label.textContent='Supporting documents';}
+  const help=$('#v48-files-help',group);
+  if(help)help.textContent='Document upload is not available on this staging site. Submit your enquiry without attachments and keep your reference number. The District Office will advise how to provide any documents it needs through an approved secure method.';
+  $('.v33-file-note',group)?.remove();
+  group.classList.add('v203-document-note');
+  const style=document.createElement('style');
+  style.id='v203-document-note-css';
+  style.textContent='#enquiry .v203-document-note{padding:14px 16px;border:1px solid rgba(11,53,83,.18);border-left:4px solid #c9a34a;border-radius:10px;background:#f8fbfc}#enquiry .v203-document-note .v48-form-help{margin:6px 0 0;color:#385669;font-size:13px;line-height:1.55}';
+  document.head.appendChild(style);
+}
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#96;')}
 
 async function init(){
   addStyles();
+  clarifySupportingDocuments();
   const jobs=[];
   if($('#service-forms'))jobs.push(getContent('forms').then(applyFormContent).catch(()=>{}));
   if($('#activity-hub'))jobs.push(getContent('activity').then(applyActivityContent).catch(()=>{}));
