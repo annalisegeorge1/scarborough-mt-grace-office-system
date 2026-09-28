@@ -308,9 +308,10 @@ function editStaticActivity(enc){
 $('activity-save').onclick=async()=>{
   const id=SMG.val('activity-id'),staticKey=SMG.val('activity-static-key'),subtype=SMG.val('activity-subtype');
   const employment=subtype==='employment',deadline=SMG.val('activity-deadline'),sourceUrl=SMG.val('activity-source-url');
+  if(employment&&staticKey)return SMG.msg('Create employment opportunities as new items, not overrides of built-in notices.','danger');
   if(employment&&(!SMG.val('activity-employer')||!deadline||!/^https:\/\//i.test(sourceUrl)))return SMG.msg('Employment notices need an employer, deadline and HTTPS official application link.','danger');
   const body={type:staticKey?'activity_override':'activity',section:'activity',category:subtype,title:SMG.val('activity-title'),summary:SMG.val('activity-summary'),
-    body:SMG.val('activity-next'),publicStatus:SMG.val('activity-status'),statusNote:SMG.val('activity-note'),eventDate:SMG.val('activity-date')||null,
+    body:SMG.val('activity-next'),publicStatus:employment?'Open':SMG.val('activity-status'),statusNote:SMG.val('activity-note'),eventDate:SMG.val('activity-date')||null,
     workflow:SMG.val('activity-workflow'),verified:SMG.val('activity-verified')==='true',sortOrder:Number(SMG.val('activity-order'))||0,
     publishOn:SMG.val('activity-publish')||null,expireOn:employment?`${deadline}T23:59:59-04:00`:(SMG.val('activity-expire')||null),publicUrl:employment?sourceUrl:null,
     metadata:{staticKey:staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),employer:employment?SMG.val('activity-employer'):undefined,employerType:employment?SMG.val('activity-employer-type'):undefined,deadline:employment?deadline:undefined,action:'show'}};
