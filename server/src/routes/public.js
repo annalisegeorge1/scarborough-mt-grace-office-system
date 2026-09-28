@@ -1,8 +1,11 @@
 'use strict';
 const express=require('express');
 const rateLimit=require('express-rate-limit');
+const multer=require('multer');
 const db=require('../db');
 const storage=require('../storage');
+const config=require('../config');
+const virusScan=require('../virus-scan');
 const {audit}=require('../audit');
 const router=express.Router();
 
@@ -11,6 +14,15 @@ const publicLimit=rateLimit({
   message:{detail:'Too many requests. Please try again shortly.'}
 });
 router.use(publicLimit);
+const publicUpload=multer({storage:multer.memoryStorage(),limits:{fileSize:config.maxUploadMb*1024*1024,files:3,fields:1,fieldSize:12000}}).array('files',3);
+function uploadsReady(){return config.uploadsEnabled&&config.storageDriver==='s3'&&storage.readiness()&&virusScan.configured();}
+function uploadType(file){const b=file.buffer,m=file.mimetype;
+  if(m==='application/pdf'&&b.subarray(0,5).toString()==='%PDF-')return true;
+  if(m==='image/png'&&b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))return true;
+  if(m==='image/jpeg'&&b[0]===255&&b[1]===216&&b[2]===255)return true;
+  return false;
+}
+router.get('/upload-status',(req,res)=>res.json({enabled:uploadsReady(),maxFiles:3,maxFileMb:config.maxUploadMb,types:['PDF','JPG','PNG']}));
 
 const digits=s=>String(s||'').replace(/\D/g,'');
 async function matchedCase(reference,contact){
@@ -84,12 +96,35 @@ router.post('/enquiries',async(req,res,next)=>{
       type=String(b.type||'General Enquiry').trim().slice(0,200),message=String(b.message||'').trim().slice(0,8000);
     if(!name||!phone||!address||!message)return res.status(400).json({detail:'Name, phone, address and enquiry details are required.'});
     if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(400).json({detail:'Please enter a valid email address.'});
-    const docs=Array.isArray(b.documents)?b.documents.slice(0,20).map(d=>({name:String(d.name||'').slice(0,250),size:Number(d.size)||0,type:String(d.type||'').slice(0,120)})):[];
+    const docs=[];
     const q=await db.query(`INSERT INTO cases(status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,community_area,notification_consent,reminder_consent,submitted_document_metadata,public_status,public_update,public_next_step,public_updated_at,resident_visible) VALUES('New','Standard',$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,'Received',$13,$14,now(),true) RETURNING id,reference,created_at`,[name,phone,email||null,b.dob||null,address,type,String(b.preferred||'').slice(0,80)||null,message,String(b.communityArea||'').slice(0,200)||null,!!b.notificationConsent,!!b.reminderConsent,JSON.stringify(docs),'Your enquiry has been received by the District Office and is awaiting initial review.','The office will review your enquiry and determine the appropriate follow-up.']);
     await db.query(`INSERT INTO case_activity(case_id,activity_type,description,public_visible) VALUES($1,'public_intake','Enquiry received through the public website.',false)`,[q.rows[0].id]);
     await audit(db,{eventType:'case.public_create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference,hasEmail:!!email,documentMetadataCount:docs.length}});
     res.status(201).json({reference:q.rows[0].reference,receivedAt:q.rows[0].created_at});
   }catch(e){next(e)}
+});
+
+router.post('/enquiries-with-documents',(req,res,next)=>{
+  if(!uploadsReady())return res.status(503).json({detail:'Secure document upload is not configured. Please submit without files.'});
+  publicUpload(req,res,err=>err?res.status(400).json({detail:err.code==='LIMIT_FILE_SIZE'?`Each file must be no larger than ${config.maxUploadMb} MB.`:'Upload limit exceeded. Select at most three files.'}):next());
+},async(req,res,next)=>{
+  const saved=[];
+  try{
+    const b=JSON.parse(req.body.enquiry||'{}'),files=req.files||[];
+    const name=String(b.fullName||'').trim().slice(0,250),phone=String(b.phone||'').trim().slice(0,80),email=String(b.email||'').trim().toLowerCase().slice(0,250),address=String(b.address||'').trim().slice(0,1000),type=String(b.type||'General Enquiry').trim().slice(0,200),message=String(b.message||'').trim().slice(0,8000);
+    if(!name||!phone||!address||!message||!files.length)return res.status(400).json({detail:'Complete the required enquiry fields and select at least one file.'});
+    if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(400).json({detail:'Please enter a valid email address.'});
+    if(files.some(f=>!uploadType(f)))return res.status(415).json({detail:'Only valid PDF, JPG and PNG files are accepted.'});
+    for(const f of files){await virusScan.scanBuffer(f.buffer);saved.push({...await storage.saveBuffer(f.buffer,f.originalname,f.mimetype),filename:f.originalname.slice(0,250),mimeType:f.mimetype});}
+    const row=await db.tx(async client=>{
+      const q=await client.query(`INSERT INTO cases(status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,community_area,notification_consent,reminder_consent,submitted_document_metadata,public_status,public_update,public_next_step,public_updated_at,resident_visible) VALUES('New','Standard',$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,'Received',$13,$14,now(),true) RETURNING id,reference,created_at`,[name,phone,email||null,b.dob||null,address,type,String(b.preferred||'').slice(0,80)||null,message,String(b.communityArea||'').slice(0,200)||null,!!b.notificationConsent,!!b.reminderConsent,JSON.stringify([]),'Your enquiry has been received by the District Office and is awaiting initial review.','The office will review your enquiry and determine the appropriate follow-up.']);
+      for(const f of saved)await client.query(`INSERT INTO documents(title,document_type,sensitivity,storage_key,original_filename,mime_type,size_bytes,sha256,linked_type,linked_id,review_status) VALUES($1,'Supporting Document','Restricted',$2,$3,$4,$5,$6,'Case',$7,'Needs Review')`,[f.filename,f.key,f.filename,f.mimeType,f.sizeBytes,f.sha256,q.rows[0].id]);
+      await client.query(`INSERT INTO case_activity(case_id,activity_type,description,public_visible) VALUES($1,'public_intake','Enquiry received with supporting documents.',false)`,[q.rows[0].id]);
+      await audit(client,{eventType:'case.public_create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference,documentCount:saved.length}});
+      return q.rows[0];
+    });
+    res.status(201).json({reference:row.reference,receivedAt:row.created_at,documentCount:saved.length});
+  }catch(e){await Promise.allSettled(saved.map(f=>storage.deleteObject(f.key)));next(e);}
 });
 
 router.post('/track',async(req,res,next)=>{
