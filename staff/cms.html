@@ -186,30 +186,47 @@ function render(){
     const o=activeOverride('form_override',f.key),hidden=o&&meta(o.metadata).action==='hide';
     return `<tr><td><strong>${SMG.esc(f.title)}</strong><br><span class="small">${SMG.esc(f.pdf||'Built-in document')}</span></td>
       <td>${SMG.esc(f.category)}</td><td><span class="cm-status">${hidden?'Hidden':'Public'}</span></td>
-      <td>${actionButtons(`<button class="${hidden?'cm-restore':'cm-hide'}" onclick="${hidden?'restoreStaticForm':'hideStaticForm'}('${encodeURIComponent(f.key)}')">${hidden?'Restore':'Hide'}</button>`)}</td></tr>`
+      <td>${actionButtons(`<button type="button" class="${hidden?'cm-restore':'cm-hide'}" data-cm-action="${hidden?'restore-form':'hide-form'}" data-cm-key="${SMG.esc(f.key)}">${hidden?'Restore':'Hide'}</button>`)}</td></tr>`
   }).join('')||'<tr><td colspan="4" class="empty">No built-in forms detected.</td></tr>';
 
   const managedForms=data.filter(x=>x.type==='form');
   $('managed-forms').innerHTML=managedForms.map(x=>`<tr><td><strong>${SMG.esc(x.title)}</strong><br><span class="small">${SMG.esc(x.responsible_authority||'')}</span></td>
     <td>${SMG.esc(x.category||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td><td>${x.verified?'Yes':'No'}</td>
     <td>${x.original_filename?SMG.esc(x.original_filename):(x.public_url?'Public URL':'—')}</td>
-    <td>${actionButtons(`<button class="cm-edit" onclick="editForm('${x.id}')">Edit</button><button class="cm-archive" onclick="archiveRecord('${x.id}')">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No managed forms yet.</td></tr>';
+    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-form" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No managed forms yet.</td></tr>';
 
   $('static-activity').innerHTML=(snapshot.activity||[]).map(a=>{
     const o=activeOverride('activity_override',a.key),hidden=o&&meta(o.metadata).action==='hide';
     const status=hidden?'Hidden':(o?.public_status||a.status||'—');
     return `<tr><td><strong>${SMG.esc(a.title)}</strong><br><span class="small">${SMG.esc(a.code||a.category||'')}</span></td>
       <td><span class="cm-status">${SMG.esc(status)}</span></td><td>${SMG.esc(a.subtype)}</td>
-      <td>${actionButtons(`<button class="cm-edit" onclick="editStaticActivity('${encodeURIComponent(a.key)}')">Edit</button><button class="${hidden?'cm-restore':'cm-hide'}" onclick="${hidden?'restoreStaticActivity':'hideStaticActivity'}('${encodeURIComponent(a.key)}')">${hidden?'Restore':'Hide'}</button>`)}</td></tr>`
+      <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-static-activity" data-cm-key="${SMG.esc(a.key)}">Edit</button><button type="button" class="${hidden?'cm-restore':'cm-hide'}" data-cm-action="${hidden?'restore-activity':'hide-activity'}" data-cm-key="${SMG.esc(a.key)}">${hidden?'Restore':'Hide'}</button>`)}</td></tr>`
   }).join('')||'<tr><td colspan="4" class="empty">No built-in Activity Hub items detected.</td></tr>';
 
   const managedActivity=data.filter(x=>x.type==='activity'||x.type==='activity_override');
   $('managed-activity').innerHTML=managedActivity.map(x=>`<tr><td><strong>${SMG.esc(x.title)}</strong>${x.type==='activity_override'?'<br><span class="small">Built-in item override</span>':''}</td>
     <td>${SMG.esc(meta(x.metadata).subtype||'project')}</td><td>${SMG.esc(x.public_status||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td>
-    <td>${actionButtons(`<button class="cm-edit" onclick="editActivity('${x.id}')">Edit</button><button class="cm-archive" onclick="archiveRecord('${x.id}')">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">No managed Activity Hub records yet.</td></tr>';
+    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-activity" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">No managed Activity Hub records yet.</td></tr>';
 
   $('all-content').innerHTML=data.map(x=>`<tr><td>${SMG.esc(x.type)}</td><td><strong>${SMG.esc(x.title)}</strong></td><td>${SMG.esc(x.section||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td><td>${x.verified?'Yes':'No'}</td><td>${SMG.fmt(x.updated_at)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No content records.</td></tr>';
 }
+
+document.querySelectorAll('#static-forms, #managed-forms, #static-activity, #managed-activity').forEach(table=>{
+  table.addEventListener('click',event=>{
+    const button=event.target.closest('button[data-cm-action]');
+    if(!button||!table.contains(button))return;
+    const key=encodeURIComponent(button.dataset.cmKey||'');
+    const id=button.dataset.cmId;
+    const actions={
+      'hide-form':()=>hideStaticForm(key),'restore-form':()=>restoreStaticForm(key),
+      'edit-form':()=>editForm(id),'archive':()=>archiveRecord(id),
+      'edit-static-activity':()=>editStaticActivity(key),
+      'hide-activity':()=>hideStaticActivity(key),'restore-activity':()=>restoreStaticActivity(key),
+      'edit-activity':()=>editActivity(id)
+    };
+    actions[button.dataset.cmAction]?.();
+  });
+});
 
 function clearForm(){
   ['form-id','form-document-id','form-title','form-summary','form-authority','form-url','form-publish','form-expire'].forEach(id=>SMG.set(id,''));
