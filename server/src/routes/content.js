@@ -1,6 +1,189 @@
 'use strict';
-const express=require('express');const db=require('../db');const {requirePermission}=require('../rbac');const {audit}=require('../audit');const router=express.Router();
-router.get('/',requirePermission('content.write'),async(req,res,next)=>{try{res.json({content:(await db.query('SELECT * FROM public_content ORDER BY updated_at DESC LIMIT 1000')).rows});}catch(e){next(e)}});
-router.post('/',requirePermission('content.write'),async(req,res,next)=>{try{const b=req.body||{};if(!b.type||!b.title)return res.status(400).json({detail:'Type and title are required.'});if(b.workflow==='Published'&&!b.verified)return res.status(400).json({detail:'Content must be verified before it can be published.'});const q=await db.query(`INSERT INTO public_content(type,title,summary,body,public_url,workflow,verified,publish_on,expire_on,created_by,approved_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,[b.type,b.title,b.summary||null,b.body||null,b.publicUrl||null,b.workflow||'Draft',!!b.verified,b.publishOn||null,b.expireOn||null,req.user.id,['Approved','Published'].includes(b.workflow)?req.user.id:null]);await audit(db,{actorUserId:req.user.id,eventType:'content.create',objectType:'public_content',objectId:q.rows[0].id,metadata:{workflow:q.rows[0].workflow}});res.status(201).json({content:q.rows[0]});}catch(e){next(e)}});
-router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{try{const b=req.body||{};const cur=(await db.query('SELECT workflow,verified FROM public_content WHERE id=$1',[req.params.id])).rows[0];if(!cur)return res.status(404).json({detail:'Content record not found.'});const nextWorkflow=b.workflow||cur.workflow,nextVerified=b.verified===undefined?cur.verified:!!b.verified;if(nextWorkflow==='Published'&&!nextVerified)return res.status(400).json({detail:'Published content must be verified.'});const q=await db.query(`UPDATE public_content SET type=COALESCE($2,type),title=COALESCE($3,title),summary=COALESCE($4,summary),body=COALESCE($5,body),public_url=COALESCE($6,public_url),workflow=COALESCE($7,workflow),verified=COALESCE($8,verified),publish_on=$9,expire_on=$10,approved_by=CASE WHEN COALESCE($7,workflow) IN ('Approved','Published') THEN $11 ELSE approved_by END,updated_at=now() WHERE id=$1 RETURNING *`,[req.params.id,b.type||null,b.title||null,b.summary||null,b.body||null,b.publicUrl||null,b.workflow||null,b.verified===undefined?null:!!b.verified,b.publishOn||null,b.expireOn||null,req.user.id]);if(!q.rowCount)return res.status(404).json({detail:'Content record not found.'});await audit(db,{actorUserId:req.user.id,eventType:'content.update',objectType:'public_content',objectId:req.params.id,metadata:{workflow:q.rows[0].workflow}});res.json({content:q.rows[0]});}catch(e){next(e)}});
+const express=require('express');
+const fs=require('fs/promises');
+const path=require('path');
+const db=require('../db');
+const config=require('../config');
+const {requirePermission}=require('../rbac');
+const {audit}=require('../audit');
+const router=express.Router();
+
+const cleanText=(s='')=>String(s)
+  .replace(/<[^>]*>/g,' ')
+  .replace(/&amp;/g,'&').replace(/&nbsp;/g,' ')
+  .replace(/&#39;/g,"'").replace(/&quot;/g,'"')
+  .replace(/&ndash;|&#8211;/g,'–').replace(/&mdash;|&#8212;/g,'—')
+  .replace(/\s+/g,' ').trim();
+
+let snapshotCache=null;
+async function buildSnapshot(){
+  if(snapshotCache&&config.production)return snapshotCache;
+  const html=await fs.readFile(path.join(config.staticRoot,'index-self-contained.html'),'utf8');
+  const forms=[];
+  for(const m of html.matchAll(/<article class="v16-form-card"([^>]*)>([\s\S]*?)<\/article>/g)){
+    const attrs=m[1]||'',body=m[2]||'';
+    const category=(attrs.match(/data-v21-category="([^"]+)"/)||[])[1]||'other';
+    const pdf=(body.match(/data-v53-pdf="([^"]+)"/)||[])[1]||'';
+    const openTitle=(body.match(/data-v53-title="Open ([^"]+)"/)||[])[1]||'';
+    const h3=(body.match(/<h3[^>]*>([\s\S]*?)<\/h3>/)||[])[1]||'';
+    const strong=(body.match(/<strong[^>]*>([\s\S]*?)<\/strong>/)||[])[1]||'';
+    const title=cleanText(openTitle||h3||strong||pdf);
+    if(title)forms.push({key:pdf||title,title,category,pdf});
+  }
+  const projects=[];
+  for(const m of html.matchAll(/<article class="v26-project"([^>]*)>([\s\S]*?)<\/article>/g)){
+    const attrs=m[1]||'',body=m[2]||'';
+    const title=cleanText((body.match(/<h4[^>]*>([\s\S]*?)<\/h4>/)||[])[1]||'');
+    if(!title)continue;
+    const code=cleanText((body.match(/class="v26-project-code"[^>]*>([\s\S]*?)<\/div>/)||[])[1]||'');
+    const category=(attrs.match(/data-v26-category="([^"]+)"/)||[])[1]||'community';
+    const status=(body.match(/<small>PUBLIC STATUS<\/small>\s*<b>([\s\S]*?)<\/b>/)||[])[1]
+      ||(attrs.match(/data-v90-status="([^"]+)"/)||[])[1]||'';
+    const role=(body.match(/<small>DISTRICT OFFICE ROLE<\/small>\s*<b>([\s\S]*?)<\/b>/)||[])[1]||'';
+    const summary=(body.match(/<h4[^>]*>[\s\S]*?<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/)||[])[1]||'';
+    const note=(body.match(/class="v90-status-inline"[\s\S]*?<em>([\s\S]*?)<\/em>/)||[])[1]||'';
+    projects.push({
+      key:`project:${title}`,
+      subtype:'project',
+      title,
+      category,
+      code,
+      status:cleanText(status),
+      role:cleanText(role),
+      summary:cleanText(summary),
+      statusNote:cleanText(note)
+    });
+  }
+  const notices=[];
+  for(const m of html.matchAll(/<article class="v26-notice"([^>]*)>([\s\S]*?)<\/article>/g)){
+    const body=m[2]||'';
+    const title=cleanText((body.match(/<h4[^>]*>([\s\S]*?)<\/h4>/)||[])[1]||'');
+    if(!title)continue;
+    const status=cleanText((body.match(/class="v26-badge[^"]*"[^>]*>([\s\S]*?)<\/span>/)||[])[1]||'');
+    const label=cleanText((body.match(/class="v26-notice-top"[\s\S]*?<small[^>]*>([\s\S]*?)<\/small>/)||[])[1]||'');
+    const summary=cleanText((body.match(/<h4[^>]*>[\s\S]*?<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/)||[])[1]||'');
+    notices.push({
+      key:`notice:${title}`,
+      subtype:/town hall/i.test(label+title)?'townhall':'notice',
+      title,
+      category:label||'Notice',
+      status,
+      role:'',
+      code:'',
+      summary,
+      statusNote:''
+    });
+  }
+  snapshotCache={forms,activity:[...notices,...projects]};
+  return snapshotCache;
+}
+
+function safeMeta(v){
+  return v&&typeof v==='object'&&!Array.isArray(v)?v:{};
+}
+function has(obj,key){return Object.prototype.hasOwnProperty.call(obj,key)}
+function nullable(v){return v===''||v===undefined?null:v}
+
+router.get('/snapshot',requirePermission('content.write'),async(req,res,next)=>{
+  try{res.json(await buildSnapshot())}catch(e){next(e)}
+});
+
+router.get('/',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const q=await db.query(`
+      SELECT pc.*,
+             d.record_reference AS document_reference,
+             d.original_filename,
+             d.mime_type AS document_mime_type,
+             d.review_status AS document_review_status,
+             d.sensitivity AS document_sensitivity
+      FROM public_content pc
+      LEFT JOIN documents d ON d.id=pc.document_id
+      ORDER BY pc.updated_at DESC
+      LIMIT 1000
+    `);
+    res.json({content:q.rows});
+  }catch(e){next(e)}
+});
+
+router.post('/',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const b=req.body||{};
+    if(!b.type||!b.title)return res.status(400).json({detail:'Type and title are required.'});
+    const workflow=b.workflow||'Draft',verified=!!b.verified;
+    if(workflow==='Published'&&!verified)return res.status(400).json({detail:'Content must be verified before it can be published.'});
+    if(b.type==='form'&&workflow==='Published'&&!b.publicUrl&&!b.documentId){
+      return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
+    }
+    const q=await db.query(`
+      INSERT INTO public_content(
+        type,section,category,title,summary,body,public_url,workflow,verified,
+        publish_on,expire_on,public_status,status_note,responsible_authority,event_date,
+        sort_order,document_id,is_featured,metadata,created_by,approved_by
+      ) VALUES(
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19::jsonb,$20,$21
+      ) RETURNING *
+    `,[
+      b.type,b.section||null,b.category||null,b.title,b.summary||null,b.body||null,b.publicUrl||null,
+      workflow,verified,nullable(b.publishOn),nullable(b.expireOn),b.publicStatus||null,b.statusNote||null,
+      b.responsibleAuthority||null,nullable(b.eventDate),Number(b.sortOrder)||0,b.documentId||null,
+      !!b.isFeatured,JSON.stringify(safeMeta(b.metadata)),req.user.id,
+      ['Approved','Published'].includes(workflow)?req.user.id:null
+    ]);
+    await audit(db,{actorUserId:req.user.id,eventType:'content.create',objectType:'public_content',objectId:q.rows[0].id,metadata:{workflow:q.rows[0].workflow,type:q.rows[0].type,section:q.rows[0].section}});
+    res.status(201).json({content:q.rows[0]});
+  }catch(e){next(e)}
+});
+
+router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const b=req.body||{};
+    const cur=(await db.query('SELECT * FROM public_content WHERE id=$1',[req.params.id])).rows[0];
+    if(!cur)return res.status(404).json({detail:'Content record not found.'});
+    const next={
+      type:has(b,'type')?b.type:cur.type,
+      section:has(b,'section')?nullable(b.section):cur.section,
+      category:has(b,'category')?nullable(b.category):cur.category,
+      title:has(b,'title')?b.title:cur.title,
+      summary:has(b,'summary')?nullable(b.summary):cur.summary,
+      body:has(b,'body')?nullable(b.body):cur.body,
+      publicUrl:has(b,'publicUrl')?nullable(b.publicUrl):cur.public_url,
+      workflow:has(b,'workflow')?b.workflow:cur.workflow,
+      verified:has(b,'verified')?!!b.verified:cur.verified,
+      publishOn:has(b,'publishOn')?nullable(b.publishOn):cur.publish_on,
+      expireOn:has(b,'expireOn')?nullable(b.expireOn):cur.expire_on,
+      publicStatus:has(b,'publicStatus')?nullable(b.publicStatus):cur.public_status,
+      statusNote:has(b,'statusNote')?nullable(b.statusNote):cur.status_note,
+      responsibleAuthority:has(b,'responsibleAuthority')?nullable(b.responsibleAuthority):cur.responsible_authority,
+      eventDate:has(b,'eventDate')?nullable(b.eventDate):cur.event_date,
+      sortOrder:has(b,'sortOrder')?(Number(b.sortOrder)||0):cur.sort_order,
+      documentId:has(b,'documentId')?nullable(b.documentId):cur.document_id,
+      isFeatured:has(b,'isFeatured')?!!b.isFeatured:cur.is_featured,
+      metadata:has(b,'metadata')?safeMeta(b.metadata):safeMeta(cur.metadata)
+    };
+    if(!next.type||!next.title)return res.status(400).json({detail:'Type and title are required.'});
+    if(next.workflow==='Published'&&!next.verified)return res.status(400).json({detail:'Published content must be verified.'});
+    if(next.type==='form'&&next.workflow==='Published'&&!next.publicUrl&&!next.documentId){
+      return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
+    }
+    const q=await db.query(`
+      UPDATE public_content SET
+        type=$2,section=$3,category=$4,title=$5,summary=$6,body=$7,public_url=$8,
+        workflow=$9,verified=$10,publish_on=$11,expire_on=$12,public_status=$13,status_note=$14,
+        responsible_authority=$15,event_date=$16,sort_order=$17,document_id=$18,is_featured=$19,
+        metadata=$20::jsonb,
+        approved_by=CASE WHEN $9 IN ('Approved','Published') THEN $21 ELSE approved_by END,
+        updated_at=now()
+      WHERE id=$1 RETURNING *
+    `,[
+      req.params.id,next.type,next.section,next.category,next.title,next.summary,next.body,next.publicUrl,
+      next.workflow,next.verified,next.publishOn,next.expireOn,next.publicStatus,next.statusNote,
+      next.responsibleAuthority,next.eventDate,next.sortOrder,next.documentId,next.isFeatured,
+      JSON.stringify(next.metadata),req.user.id
+    ]);
+    await audit(db,{actorUserId:req.user.id,eventType:'content.update',objectType:'public_content',objectId:req.params.id,metadata:{workflow:q.rows[0].workflow,type:q.rows[0].type,section:q.rows[0].section}});
+    res.json({content:q.rows[0]});
+  }catch(e){next(e)}
+});
+
 module.exports=router;
