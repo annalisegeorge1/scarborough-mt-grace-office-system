@@ -39,25 +39,52 @@ async function getContent(section){
 }
 
 /* ---------------- Forms & Public Documents ---------------- */
+const collectionOffices={
+  community:{name:'Community Development and Social Protection',address:'#10 Montessori Drive\nGlen Road\nScarborough',phone:'(868) 639-4818'},
+  education:{name:'Education, Skills and Innovation',address:'Dutch Fort Plaza\nDutch Fort\nScarborough',phone:'(868) 299-0781'},
+  finance:{name:'Finance, Trade and the Economy',address:'The Victor E. Bruce Financial Complex\n6–10 Post Office Street\nScarborough',phone:'(868) 639-4412'},
+  food:{name:'Food Security',address:'Milshirv Administrative Complex\nCor. Milford & Shirvan Road\nTobago',phone:'(868) 639-1966'},
+  health:{name:'Health and Wellness',address:'#7 Montessori Drive\nGlen Road\nScarborough\nTobago',phone:'(868) 639-3395'},
+  infrastructure:{name:'Public Infrastructure and Transportation',address:'Old Government Farm Road\nShaw Park\nScarborough',phone:'(868) 639-1287'},
+  chief:{name:'Office of The Chief Secretary',address:'Naresh Persad Building\nBacolet Street\nScarborough',phone:'(868) 639-3421'},
+  housing:{name:'Housing, Settlements and Public Utilities',address:'D Colosseum Building #2\nCor. Airport Bypass & Milford Road\nCrown Point',phone:'(868) 639-6800'},
+  tourism:{name:'Tourism, Antiquities and Creative Industries',address:'#12 Sankar Building\nSangster’s Hill\nScarborough',phone:'(868) 639-2125'}
+};
+function collectionLink(key){
+  if(key==='district')return '<a class="v202-open-document" href="#contact">CONTACT DISTRICT OFFICE →</a>';
+  const office=collectionOffices[key];
+  return office?`<a class="v202-open-document" href="#v205-collection-offices">SEE OFFICE DETAILS →</a>`:'';
+}
+function showCollectionDirectory(){
+  const section=$('#service-forms');if(!section||$('#v205-collection-offices'))return;
+  const directory=document.createElement('section');directory.id='v205-collection-offices';directory.className='v205-collection';
+  directory.innerHTML=`<div class="v205-collection-head"><div><small>NO DOWNLOAD AVAILABLE?</small><h3>Where to collect a form in person</h3><p>Some forms are supplied by the responsible THA division or the District Office. Call the office before visiting to confirm the form is available and what you need to bring.</p></div></div><div class="v205-collection-grid">${Object.values(collectionOffices).map(o=>`<article><h4>${escapeHtml(o.name)}</h4><address>${escapeHtml(o.address)}</address><a href="tel:${o.phone.replace(/\D/g,'')}">${escapeHtml(o.phone)}</a></article>`).join('')}</div><p class="v205-collection-source">Division contact details: <a href="https://www.tha.gov.tt/contact/" target="_blank" rel="noopener noreferrer">Tobago House of Assembly directory</a>. Form availability varies by programme.</p>`;
+  const anchor=$('.v16-help-box',section);
+  anchor?anchor.before(directory):section.querySelector('.wrap')?.appendChild(directory);
+}
 function renderManagedForm(x){
   const host=$('#service-forms .v16-form-grid');
-  if(!host||!x.publicUrl)return;
+  const pickup=meta(x.metadata).delivery==='in_person';
+  if(!host||(!pickup&&!x.publicUrl))return;
+  const officeKey=meta(x.metadata).collectionOffice;
+  const office=collectionOffices[officeKey];
   const card=document.createElement('article');
   card.className='v16-form-card v202-managed-form';
   card.dataset.v21Category=x.category||'other';
   card.dataset.v27SearchAlias=[x.title,x.summary,x.category,x.responsibleAuthority].filter(Boolean).join(' ');
   card.innerHTML=`
-    <div class="v16-pdf-icon" aria-hidden="true">PDF</div>
+    <div class="v16-pdf-icon" aria-hidden="true">${pickup?'OFFICE':'PDF'}</div>
     <div class="v202-form-copy">
-      <small>PUBLIC DOCUMENT</small>
+      <small>${pickup?'COLLECT IN PERSON':'PUBLIC DOCUMENT'}</small>
       <h3>${escapeHtml(x.title)}</h3>
       ${x.summary?`<p>${escapeHtml(x.summary)}</p>`:''}
       ${x.responsibleAuthority?`<small class="v202-authority">Responsible authority: ${escapeHtml(x.responsibleAuthority)}</small>`:''}
-      <a class="v202-open-document" href="${escapeAttr(x.publicUrl)}" target="_blank" rel="noopener">OPEN DOCUMENT →</a>
+      ${pickup?`<small class="v202-authority">Collection office: ${escapeHtml(office?.name||'Scarborough / Mt. Grace District Office')}</small>${collectionLink(officeKey)}`:`<a class="v202-open-document" href="${escapeAttr(x.publicUrl)}" target="_blank" rel="noopener">OPEN DOCUMENT →</a>`}
     </div>`;
   host.appendChild(card);
 }
 function applyFormContent(records){
+  showCollectionDirectory();
   const overrides=new Map(records.filter(x=>x.type==='form_override').map(x=>[txt(meta(x.metadata).staticKey),x]));
   $$('#service-forms .v16-form-card').forEach(card=>{
     const o=overrides.get(formKey(card));
@@ -68,9 +95,10 @@ function applyFormContent(records){
   const cards=$$('#service-forms .v16-form-card').filter(x=>!x.hidden&&x.style.display!=='none');
   const n=cards.length;
   const count=$('#service-forms .v50-form-library-status > div:first-child strong');
-  if(count)count.textContent=`${n} PDF document${n===1?'':'s'}`;
+  if(count)count.textContent=`${n} available form${n===1?'':'s'}`;
   const intro=$('#service-forms .v12-section-head p');
-  if(intro)intro.textContent=intro.textContent.replace(/Browse the \d+ forms?/i,`Browse the ${n} forms`);
+  if(intro)intro.textContent=`Browse ${n} available forms and documents. Some can be opened online; others must be collected from the responsible office. Confirm the latest version and submission requirements with that office.`;
+  const label=$('#service-forms .v12-label');if(label)label.textContent='FORMS & COLLECTION';
 
   const search=$('#v21-form-search');
   const filters=$$('#service-forms .v21-filter');
@@ -265,6 +293,18 @@ function addStyles(){
     .v202-authority{display:block;margin-top:5px;color:#405b69}
     .v202-open-document{display:inline-flex;margin-top:8px;font-size:8px;font-weight:950;color:#0b3553;text-decoration:none}
     .v202-public-date{margin-top:8px;font-size:8px;font-weight:950;letter-spacing:.05em;color:#0b3553}
+    #service-forms .v205-collection{margin:30px 0;padding:22px;border:1px solid #d7e3e9;border-radius:18px;background:#f8fbfc;color:#17394e}
+    #service-forms .v205-collection-head h3{margin:5px 0 8px;color:#0b2e48;font:600 24px Georgia,serif}
+    #service-forms .v205-collection-head small{font-size:11px;font-weight:900;letter-spacing:.09em;color:#4b6171}
+    #service-forms .v205-collection-head p,#service-forms .v205-collection-source{font-size:13px;line-height:1.6;color:#385669}
+    #service-forms .v205-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:17px}
+    #service-forms .v205-collection-grid article{padding:15px;border:1px solid #dce6eb;border-radius:12px;background:#fff}
+    #service-forms .v205-collection-grid h4{margin:0 0 9px;color:#0b2e48;font-size:14px}
+    #service-forms .v205-collection-grid address{white-space:pre-line;font-style:normal;font-size:12px;line-height:1.5;color:#385669}
+    #service-forms .v205-collection-grid a,#service-forms .v205-collection-source a{display:inline-block;margin-top:8px;color:#0b3553;font-size:12px;font-weight:800}
+    #service-forms .v202-managed-form .v16-pdf-icon{font-size:8px}
+    @media(max-width:900px){#service-forms .v205-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:600px){#service-forms .v205-collection-grid{grid-template-columns:1fr}}
     body.v112-dark .v202-public-date,body.v112-dark .v202-open-document{color:#f0d895}
   `;
   document.head.appendChild(s);
@@ -343,6 +383,7 @@ function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#96;')}
 
 async function init(){
   addStyles();
+  showCollectionDirectory();
   clarifySupportingDocuments();
   improveActivityHubContrast();
   setupEmploymentTab();
