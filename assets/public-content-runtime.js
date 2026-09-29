@@ -357,6 +357,8 @@ function addStyles(){
     body.v112-dark #main-content #community-engagement .v18-calendar.v18-calendar :is(span,strong,small){color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
     body.v112-dark #main-content #v133-title{color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
     body:not(.v112-dark) #main-content #resident-programmes :is(.v17-head h2,.v17-start>strong,.v17-start-items span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
+    body:not(.v112-dark) #main-content #team .v32-team-banner strong{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;text-shadow:none!important}
+    body:not(.v112-dark) #main-content #team .v32-team-intro h2{color:#80621e!important;-webkit-text-fill-color:#80621e!important;text-shadow:none!important}
   `;
   document.head.appendChild(s);
 }
