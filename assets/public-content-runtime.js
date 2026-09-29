@@ -368,6 +368,7 @@ function addStyles(){
     body #main-content #team .member .v7-member-frame{border:1px solid rgba(201,163,74,.45)!important;box-shadow:none!important}
     body #main-content #team .member .v8-staff-meta{border-color:rgba(11,53,83,.1)!important}
     @media(prefers-reduced-motion:reduce){body #main-content #team .member{transition:none!important}body #main-content #team .member:hover{transform:none!important}}
+    body.v112-dark #main-content #resident-programmes .v17-card :is(ul,li,p:not(.v17-purpose),.v17-facts strong,.v17-facts small){color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
   `;
   document.head.appendChild(s);
 }
