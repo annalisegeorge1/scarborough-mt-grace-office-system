@@ -83,6 +83,13 @@ function safeMeta(v){
 }
 function has(obj,key){return Object.prototype.hasOwnProperty.call(obj,key)}
 function nullable(v){return v===''||v===undefined?null:v}
+const collectionOffices=new Set(['district','community','education','finance','food','health','infrastructure','chief','housing','tourism']);
+function formAvailabilityError(x){
+  if(x.type!=='form'||x.workflow!=='Published')return null;
+  const m=safeMeta(x.metadata);
+  if(m.delivery==='in_person')return collectionOffices.has(m.collectionOffice)&&!x.publicUrl&&!x.documentId?null:'Select a valid collection office and remove the PDF or URL for an in-person form.';
+  return x.publicUrl||x.documentId?null:'Published forms require a public URL, uploaded PDF, or a verified in-person collection office.';
+}
 function employmentError(x){
   if(x.type!=='activity'||safeMeta(x.metadata).subtype!=='employment'||x.workflow!=='Published')return null;
   const m=safeMeta(x.metadata),deadline=String(m.deadline||'');
@@ -121,9 +128,7 @@ router.post('/',requirePermission('content.write'),async(req,res,next)=>{
     if(!b.type||!b.title)return res.status(400).json({detail:'Type and title are required.'});
     const workflow=b.workflow||'Draft',verified=!!b.verified;
     if(workflow==='Published'&&!verified)return res.status(400).json({detail:'Content must be verified before it can be published.'});
-    if(b.type==='form'&&workflow==='Published'&&!b.publicUrl&&!b.documentId){
-      return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
-    }
+    const formError=formAvailabilityError({...b,workflow});if(formError)return res.status(400).json({detail:formError});
     const vacancyError=employmentError({...b,workflow});if(vacancyError)return res.status(400).json({detail:vacancyError});
     const q=await db.query(`
       INSERT INTO public_content(
@@ -173,9 +178,7 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
     };
     if(!next.type||!next.title)return res.status(400).json({detail:'Type and title are required.'});
     if(next.workflow==='Published'&&!next.verified)return res.status(400).json({detail:'Published content must be verified.'});
-    if(next.type==='form'&&next.workflow==='Published'&&!next.publicUrl&&!next.documentId){
-      return res.status(400).json({detail:'Published forms require either a public URL or an uploaded PDF.'});
-    }
+    const formError=formAvailabilityError(next);if(formError)return res.status(400).json({detail:formError});
     const vacancyError=employmentError(next);if(vacancyError)return res.status(400).json({detail:vacancyError});
     const q=await db.query(`
       UPDATE public_content SET
