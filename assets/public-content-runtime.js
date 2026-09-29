@@ -62,11 +62,12 @@ function showCollectionDirectory(){
   const anchor=$('.v16-help-box',section);
   anchor?anchor.before(directory):section.querySelector('.wrap')?.appendChild(directory);
   const rail=$('.v205-collection-rail',directory),cards=$$('.v205-office-card',rail),dots=$('.v205-dots',directory);
-  cards.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show collection office ${i+1}: ${collectionOffices[Object.keys(collectionOffices)[i]].name}`);dot.addEventListener('click',()=>cards[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));dots.appendChild(dot)});
+  const goTo=i=>rail.scrollTo({left:cards[i].offsetLeft-cards[0].offsetLeft,behavior:'smooth'});
+  cards.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show collection office ${i+1}: ${collectionOffices[Object.keys(collectionOffices)[i]].name}`);dot.addEventListener('click',()=>goTo(i));dots.appendChild(dot)});
   const current=()=>cards.reduce((best,card,i)=>Math.abs((card.offsetLeft-cards[0].offsetLeft)-rail.scrollLeft)<Math.abs((cards[best].offsetLeft-cards[0].offsetLeft)-rail.scrollLeft)?i:best,0);
   const update=()=>{$$('button',dots).forEach((dot,i)=>{dot.classList.toggle('is-active',i===current());dot.setAttribute('aria-current',i===current()?'true':'false')})};
-  $('.v205-prev',directory).addEventListener('click',()=>cards[Math.max(0,current()-1)].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));
-  $('.v205-next',directory).addEventListener('click',()=>cards[Math.min(cards.length-1,current()+1)].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));
+  $('.v205-prev',directory).addEventListener('click',()=>goTo(Math.max(0,current()-1)));
+  $('.v205-next',directory).addEventListener('click',()=>goTo(Math.min(cards.length-1,current()+1)));
   rail.addEventListener('scroll',update,{passive:true});update();
 }
 function renderManagedForm(x){
@@ -300,11 +301,11 @@ function addStyles(){
     .v202-authority{display:block;margin-top:5px;color:#405b69}
     .v202-open-document{display:inline-flex;margin-top:8px;font-size:8px;font-weight:950;color:#0b3553;text-decoration:none}
     .v202-public-date{margin-top:8px;font-size:8px;font-weight:950;letter-spacing:.05em;color:#0b3553}
-    #service-forms .v205-collection{margin:30px 0;padding:22px;border:1px solid #d7e3e9;border-radius:18px;background:#f8fbfc;color:#17394e}
+    #service-forms .v205-collection{box-sizing:border-box;max-width:100%;min-width:0;overflow:hidden;margin:30px 0;padding:22px;border:1px solid #d7e3e9;border-radius:18px;background:#f8fbfc;color:#17394e}
     #service-forms .v205-collection-head h3{margin:5px 0 8px;color:#0b2e48;font:600 24px Georgia,serif}
     #service-forms .v205-collection-head small{font-size:11px;font-weight:900;letter-spacing:.09em;color:#4b6171}
     #service-forms .v205-collection-head p,#service-forms .v205-collection-source{font-size:13px;line-height:1.6;color:#385669}
-    #service-forms .v205-collection-rail{display:flex;gap:11px;margin-top:17px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;padding:3px 2px 13px}
+    #service-forms .v205-collection-rail{box-sizing:border-box;display:flex;width:100%;max-width:100%;min-width:0;gap:11px;margin-top:17px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;padding:3px 2px 13px}
     #service-forms .v205-office-card{position:relative;overflow:hidden;flex:0 0 calc((100% - 22px)/3);min-height:250px;display:flex;flex-direction:column;scroll-snap-align:start;padding:17px;border:1px solid rgba(11,53,83,.12);border-radius:12px;background:linear-gradient(145deg,#fff,#faf8f1);box-shadow:0 12px 27px rgba(7,35,55,.062)}
     #service-forms .v205-office-card::after{content:'';position:absolute;right:-28px;top:-34px;width:82px;height:82px;border-radius:50%;border:1px solid rgba(23,79,116,.065);box-shadow:0 0 0 15px rgba(201,163,74,.018);pointer-events:none}
     #service-forms .v205-office-card>small{color:#8e7843;font-size:10px;font-weight:900;letter-spacing:.08em}
