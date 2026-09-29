@@ -301,6 +301,8 @@ function addStyles(){
     .v202-authority{display:block;margin-top:5px;color:#405b69}
     .v202-open-document{display:inline-flex;margin-top:8px;font-size:8px;font-weight:950;color:#0b3553;text-decoration:none}
     .v202-public-date{margin-top:8px;font-size:8px;font-weight:950;letter-spacing:.05em;color:#0b3553}
+    nav .v206-language-link{display:inline-flex;align-items:center;padding:7px 9px!important;border:1px solid #b9cbd5;border-radius:7px;color:#0b3553!important;background:#fff;font-size:11px!important;font-weight:900!important;text-decoration:none!important;white-space:nowrap}
+    nav .v206-language-link:focus-visible{outline:3px solid #c9a34a;outline-offset:2px}
     #service-forms .v205-collection{box-sizing:border-box;max-width:100%;min-width:0;overflow:hidden;margin:30px 0;padding:22px;border:1px solid #d7e3e9;border-radius:18px;background:#f8fbfc;color:#17394e}
     #service-forms .v205-collection-head h3{margin:5px 0 8px;color:#0b2e48;font:600 24px Georgia,serif}
     #service-forms .v205-collection-head small{font-size:11px;font-weight:900;letter-spacing:.09em;color:#4b6171}
@@ -403,6 +405,10 @@ function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#96;')}
 
 async function init(){
   addStyles();
+  const nav=$('nav[aria-label="Site navigation"] .nav-inner .links');
+  if(nav&&!$('.v206-language-link',nav)){
+    const link=document.createElement('a');link.className='v206-language-link';link.href='/es/';link.lang='es';link.hreflang='es';link.textContent='ESPAÑOL';link.setAttribute('aria-label','Orientación para residentes en español');nav.insertBefore(link,nav.firstChild);
+  }
   showCollectionDirectory();
   clarifySupportingDocuments();
   improveActivityHubContrast();
