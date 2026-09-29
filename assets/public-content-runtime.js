@@ -352,6 +352,8 @@ function addStyles(){
     body.v112-dark #main-content .v208-grey-effect{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important}
     body.v112-dark #main-content #resident-start .v55-office-today,
     body.v112-dark #main-content #resident-start .v55-office-today *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
+    body.v112-dark #main-content #privacy-accessibility .v88-rule,
+    body.v112-dark #main-content #privacy-accessibility .v88-rule *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
   `;
   document.head.appendChild(s);
 }
