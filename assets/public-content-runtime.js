@@ -301,7 +301,9 @@ function addStyles(){
     .v202-authority{display:block;margin-top:5px;color:#405b69}
     .v202-open-document{display:inline-flex;margin-top:8px;font-size:8px;font-weight:950;color:#0b3553;text-decoration:none}
     .v202-public-date{margin-top:8px;font-size:8px;font-weight:950;letter-spacing:.05em;color:#0b3553}
-    nav .v206-language-link{display:inline-flex;align-items:center;padding:7px 9px!important;border:1px solid #b9cbd5;border-radius:7px;color:#0b3553!important;background:#fff;font-size:11px!important;font-weight:900!important;text-decoration:none!important;white-space:nowrap}
+    nav .links a.v206-language-link{position:absolute;top:18px;left:20px;box-sizing:border-box;display:inline-flex!important;align-items:center;justify-content:center;width:auto!important;height:auto!important;min-height:32px;padding:7px 12px!important;margin:0!important;transform:none!important;border:1px solid rgba(201,163,74,.75)!important;border-radius:999px!important;color:#f5e3ae!important;background:#17364d!important;font-size:11px!important;font-weight:900!important;line-height:1.2!important;letter-spacing:.08em;text-decoration:none!important;white-space:nowrap;box-shadow:none!important}
+    nav .links a.v206-language-link:hover{background:#244b67!important;border-color:#f5e3ae!important;color:#fff!important}
+    @media(max-width:900px){nav .links a.v206-language-link{position:static;flex:0 0 auto;margin-right:10px!important}}
     nav .v206-language-link:focus-visible{outline:3px solid #c9a34a;outline-offset:2px}
     #service-forms .v205-collection{box-sizing:border-box;max-width:100%;min-width:0;overflow:hidden;margin:30px 0;padding:22px;border:1px solid #d7e3e9;border-radius:18px;background:#f8fbfc;color:#17394e}
     #service-forms .v205-collection-head h3{margin:5px 0 8px;color:#0b2e48;font:600 24px Georgia,serif}
