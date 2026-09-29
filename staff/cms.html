@@ -21,6 +21,7 @@
   .cm-upload-note{padding:9px 11px;border-left:3px solid #c9a34a;background:#fffaf0;font-size:11px;line-height:1.45}
   .cm-subhead{margin:18px 0 8px;color:#0b3553}
   .cm-employment[hidden]{display:none!important}
+  .cm-collection[hidden]{display:none!important}
   @media(max-width:900px){.cm-two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -58,6 +59,8 @@
   </div>
   <div class="f12"><label>Short description</label><textarea id="form-summary"></textarea></div>
   <div class="f12"><label>Responsible authority</label><input id="form-authority" placeholder="Division / Department / programme"></div>
+  <div class="f6"><label>How residents get this form</label><select id="form-delivery"><option value="download">Download / public link</option><option value="in_person">Collect in person</option></select></div>
+  <div class="f6 cm-collection" hidden><label>Collection office</label><select id="form-collection"><option value="district">Scarborough / Mt. Grace District Office</option><option value="community">Community Development and Social Protection</option><option value="education">Education, Skills and Innovation</option><option value="finance">Finance, Trade and the Economy</option><option value="food">Food Security</option><option value="health">Health and Wellness</option><option value="infrastructure">Public Infrastructure and Transportation</option><option value="chief">Office of The Chief Secretary</option><option value="housing">Housing, Settlements and Public Utilities</option><option value="tourism">Tourism, Antiquities and Creative Industries</option></select></div>
   <div class="f12"><label>Existing public URL (optional)</label><input id="form-url" placeholder="Use this if the PDF already has a public web address"></div>
   <div class="f12"><label>Upload new PDF (optional)</label><input id="form-file" type="file" accept="application/pdf"></div>
   <div class="f4"><label>Workflow</label><select id="form-workflow"><option>Draft</option><option>In Review</option><option>Approved</option><option>Published</option><option>Archived</option></select></div>
@@ -66,7 +69,7 @@
   <div class="f6"><label>Publish on</label><input id="form-publish" type="datetime-local"></div>
   <div class="f6"><label>Expire on</label><input id="form-expire" type="datetime-local"></div>
 </div>
-<div class="cm-upload-note">A new PDF can be uploaded here once secure document storage is enabled. Until then, you can publish a form using an existing public URL. Hiding or restoring the forms already built into the site works without uploading a new file.</div>
+<div class="cm-upload-note">For a downloadable form, provide an existing public URL or a securely uploaded PDF. For a form without a soft copy, choose <strong>Collect in person</strong> and the correct office. Confirm availability with that office before publishing. Hiding or restoring built-in forms works without uploading a new file.</div>
 <div class="toolbar"><button class="btn gold" id="form-save" type="button">Save form</button><button class="btn" id="form-reset" type="button">Clear editor</button></div>
 </section>
 
@@ -235,19 +238,22 @@ document.querySelectorAll('#static-forms, #managed-forms, #static-activity, #man
 
 function clearForm(){
   ['form-id','form-document-id','form-title','form-summary','form-authority','form-url','form-publish','form-expire'].forEach(id=>SMG.set(id,''));
-  SMG.set('form-category','housing');SMG.set('form-workflow','Draft');SMG.set('form-verified','false');SMG.set('form-featured','false');$('form-file').value='';
+  SMG.set('form-category','housing');SMG.set('form-workflow','Draft');SMG.set('form-verified','false');SMG.set('form-featured','false');SMG.set('form-delivery','download');SMG.set('form-collection','district');$('form-file').value='';showCollectionFields();
 }
 $('form-reset').onclick=clearForm;
+function showCollectionFields(){const pickup=SMG.val('form-delivery')==='in_person';document.querySelectorAll('.cm-collection').forEach(el=>el.hidden=!pickup);$('form-url').disabled=pickup;$('form-file').disabled=pickup}
+$('form-delivery').addEventListener('change',showCollectionFields);
 function editForm(id){
   const x=data.find(r=>r.id===id);if(!x)return;
   SMG.set('form-id',x.id);SMG.set('form-document-id',x.document_id||'');SMG.set('form-title',x.title);SMG.set('form-category',x.category||'other');
   SMG.set('form-summary',x.summary||'');SMG.set('form-authority',x.responsible_authority||'');SMG.set('form-url',x.public_url||'');
+  SMG.set('form-delivery',meta(x.metadata).delivery||'download');SMG.set('form-collection',meta(x.metadata).collectionOffice||'district');showCollectionFields();
   SMG.set('form-workflow',x.workflow);SMG.set('form-verified',String(!!x.verified));SMG.set('form-featured',String(!!x.is_featured));
   SMG.set('form-publish',dt(x.publish_on));SMG.set('form-expire',dt(x.expire_on));
   document.querySelector('[data-tab="forms"]').click();window.scrollTo({top:0,behavior:'smooth'});
 }
 $('form-save').onclick=async()=>{
-  const id=SMG.val('form-id'),file=$('form-file').files[0];let documentId=SMG.val('form-document-id')||null;
+  const id=SMG.val('form-id'),pickup=SMG.val('form-delivery')==='in_person',file=pickup?null:$('form-file').files[0];let documentId=pickup?null:(SMG.val('form-document-id')||null);
   try{
     if(file){
       if(file.type!=='application/pdf')throw new Error('Only PDF files can be published through the Forms Library.');
@@ -257,9 +263,9 @@ $('form-save').onclick=async()=>{
       await SMG.api('/api/records/'+documentId,{method:'PATCH',body:{sensitivity:'Public',reviewStatus:'Approved',documentType:'Public Form'}});
     }
     const body={type:'form',section:'forms',category:SMG.val('form-category'),title:SMG.val('form-title'),summary:SMG.val('form-summary'),
-      responsibleAuthority:SMG.val('form-authority'),publicUrl:SMG.val('form-url')||null,documentId,
+      responsibleAuthority:SMG.val('form-authority'),publicUrl:pickup?null:(SMG.val('form-url')||null),documentId,
       workflow:SMG.val('form-workflow'),verified:SMG.val('form-verified')==='true',isFeatured:SMG.val('form-featured')==='true',
-      publishOn:SMG.val('form-publish')||null,expireOn:SMG.val('form-expire')||null,metadata:{subtype:'form'}};
+      publishOn:SMG.val('form-publish')||null,expireOn:SMG.val('form-expire')||null,metadata:{subtype:'form',delivery:pickup?'in_person':'download',collectionOffice:pickup?SMG.val('form-collection'):null}};
     if(!body.title)throw new Error('Form title is required.');
     const saved=id?await SMG.api('/api/content/'+id,{method:'PATCH',body}):await SMG.api('/api/content',{method:'POST',body});
     if(documentId&&saved.content?.id)await SMG.api('/api/records/'+documentId,{method:'PATCH',body:{linkedType:'public_content',linkedId:saved.content.id,reviewStatus:'Approved',sensitivity:'Public'}});
