@@ -341,8 +341,43 @@ function addStyles(){
     body.v112-dark #main-content .v139-live-clock :is(span,strong,small,b,p){color:#fff!important}
     body.v112-dark #main-content .v139-live-clock .v139-clock-label{color:#e1c879!important}
     body.v112-dark #main-content .v205-office-card>a{color:#fff!important}
+    body.v112-dark #main-content .v207-on-light{color:#0b2e48!important}
+    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) .v207-on-light{color:#0b2e48!important}
+    body.v112-dark #main-content :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
+    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
   `;
   document.head.appendChild(s);
+}
+function markLightCardText(root){
+  const main=$('#main-content');if(!main)return;
+  const coloredSurface=element=>{
+    const style=getComputedStyle(element);
+    const colors=[...style.backgroundImage.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)].map(m=>[+m[1],+m[2],+m[3],m[4]===undefined?1:+m[4]]);
+    const solid=style.backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+    if(solid)colors.push([+solid[1],+solid[2],+solid[3],solid[4]===undefined?1:+solid[4]]);
+    return colors.find(c=>c[3]>=.5);
+  };
+  const nodes=root===main?[main,...main.querySelectorAll('*')]:[root,...root.querySelectorAll('*')];
+  for(const element of nodes){
+    if(!element.isConnected||!element.childNodes.length||![...element.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim()))continue;
+    let surface=element;
+    while(surface&&surface!==main.parentElement){
+      const color=coloredSurface(surface);
+      if(color){element.classList.toggle('v207-on-light',color[0]>=190&&color[1]>=190&&color[2]>=175);break;}
+      surface=surface.parentElement;
+    }
+  }
+}
+function setupLightCardContrast(){
+  const main=$('#main-content');if(!main)return;
+  markLightCardText(main);
+  new MutationObserver(records=>{
+    if(!document.body.classList.contains('v112-dark'))return;
+    for(const record of records)for(const node of record.addedNodes){
+      if(node.nodeType===Node.ELEMENT_NODE&&main.contains(node))markLightCardText(node);
+    }
+  }).observe(main,{childList:true,subtree:true});
+  new MutationObserver(()=>markLightCardText(main)).observe(document.body,{attributes:true,attributeFilter:['class']});
 }
 async function clarifySupportingDocuments(){
   const input=$('#supporting-files');
@@ -418,6 +453,7 @@ function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#96;')}
 
 async function init(){
   addStyles();
+  setupLightCardContrast();
   const nav=$('nav[aria-label="Site navigation"] .nav-inner .links');
   if(nav&&!$('.v206-language-link',nav)){
     const link=document.createElement('a');link.className='v206-language-link';link.href='/es/';link.lang='es';link.hreflang='es';link.textContent='ESPAÑOL';link.setAttribute('aria-label','Orientación para residentes en español');nav.insertBefore(link,nav.firstChild);
