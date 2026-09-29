@@ -359,6 +359,15 @@ function addStyles(){
     body:not(.v112-dark) #main-content #resident-programmes :is(.v17-head h2,.v17-start>strong,.v17-start-items span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
     body:not(.v112-dark) #main-content #team .v32-team-banner strong{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;text-shadow:none!important}
     body:not(.v112-dark) #main-content #team .v32-team-intro h2{color:#80621e!important;-webkit-text-fill-color:#80621e!important;text-shadow:none!important}
+    /* Team portraits share the Start Centre card treatment. */
+    body #main-content #team .member{position:relative!important;overflow:hidden!important;min-width:0!important;border:1px solid rgba(11,53,83,.12)!important;border-top:3px solid rgba(201,163,74,.7)!important;border-radius:16px!important;background:linear-gradient(145deg,#fff 0%,#f7faf9 72%,#f3ecdc 100%)!important;box-shadow:0 12px 27px rgba(7,35,55,.08)!important;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important}
+    body #main-content #team .member::after{content:'';position:absolute;right:-14px;bottom:-18px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(23,79,116,.08);box-shadow:0 0 0 10px rgba(201,163,74,.025);pointer-events:none}
+    body #main-content #team .member:hover{transform:translateY(-3px)!important;border-color:rgba(201,163,74,.75)!important;box-shadow:0 16px 32px rgba(7,35,55,.14)!important}
+    body #main-content #team .member :is(strong,span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;text-shadow:none!important}
+    body #main-content #team .member .v71-role-note{color:#80621e!important;-webkit-text-fill-color:#80621e!important;font-weight:900!important;letter-spacing:.08em!important}
+    body #main-content #team .member .v7-member-frame{border:1px solid rgba(201,163,74,.45)!important;box-shadow:none!important}
+    body #main-content #team .member .v8-staff-meta{border-color:rgba(11,53,83,.1)!important}
+    @media(prefers-reduced-motion:reduce){body #main-content #team .member{transition:none!important}body #main-content #team .member:hover{transform:none!important}}
   `;
   document.head.appendChild(s);
 }
