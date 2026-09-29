@@ -349,6 +349,9 @@ function addStyles(){
     body.v112-dark #main-content #v51-more-gateway .v51-more-card .v51-more-toggle{color:#fff!important}
     body.v112-dark #main-content #v51-more-gateway :is(.v70-info-card,.v21-finder-copy) :is(h2,h3,h4,p,span,small,strong,b,button){color:#0b2e48!important}
     body.v112-dark #main-content #v51-more-gateway .v70-info-card small{color:#927a42!important}
+    body.v112-dark #main-content .v208-grey-effect{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important}
+    body.v112-dark #main-content #resident-start .v55-office-today,
+    body.v112-dark #main-content #resident-start .v55-office-today *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
   `;
   document.head.appendChild(s);
 }
@@ -364,6 +367,12 @@ function markLightCardText(root){
   const nodes=root===main?[main,...main.querySelectorAll('*')]:[root,...root.querySelectorAll('*')];
   for(const element of nodes){
     if(!element.isConnected||!element.childNodes.length||![...element.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim()))continue;
+    const textStyle=getComputedStyle(element);
+    const hasGrey=value=>[...value.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)].some(m=>{
+      const rgb=[+m[1],+m[2],+m[3]],alpha=m[4]===undefined?1:+m[4];
+      return alpha>0&&Math.max(...rgb)-Math.min(...rgb)<=24&&rgb[0]>=40&&rgb[0]<=220;
+    });
+    element.classList.toggle('v208-grey-effect',element.classList.contains('v208-grey-effect')||hasGrey(textStyle.textShadow)||(parseFloat(textStyle.webkitTextStrokeWidth)>0&&hasGrey(textStyle.webkitTextStrokeColor)));
     let surface=element;
     while(surface&&surface!==main.parentElement){
       const color=coloredSurface(surface);
