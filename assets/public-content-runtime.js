@@ -345,6 +345,10 @@ function addStyles(){
     body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) .v207-on-light{color:#0b2e48!important}
     body.v112-dark #main-content :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
     body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
+    body.v112-dark #main-content #v51-more-gateway .v51-more-card :is(.eyebrow,h2,p,.v51-more-links button){color:#0b2e48!important}
+    body.v112-dark #main-content #v51-more-gateway .v51-more-card .v51-more-toggle{color:#fff!important}
+    body.v112-dark #main-content #v51-more-gateway :is(.v70-info-card,.v21-finder-copy) :is(h2,h3,h4,p,span,small,strong,b,button){color:#0b2e48!important}
+    body.v112-dark #main-content #v51-more-gateway .v70-info-card small{color:#927a42!important}
   `;
   document.head.appendChild(s);
 }
