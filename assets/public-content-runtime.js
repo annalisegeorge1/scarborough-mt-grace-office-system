@@ -354,8 +354,8 @@ function addStyles(){
     body.v112-dark #main-content #resident-start .v55-office-today *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
     body.v112-dark #main-content #privacy-accessibility .v88-rule,
     body.v112-dark #main-content #privacy-accessibility .v88-rule *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
-    body #main-content #community-engagement .v18-calendar.v18-calendar :is(span,strong,small){color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
-    body #main-content #v133-title{color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
+    body.v112-dark #main-content #community-engagement .v18-calendar.v18-calendar :is(span,strong,small){color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
+    body.v112-dark #main-content #v133-title{color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
   `;
   document.head.appendChild(s);
 }
