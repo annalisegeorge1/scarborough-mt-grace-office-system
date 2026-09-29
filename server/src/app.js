@@ -108,11 +108,13 @@ const requireStaffPage=(req,res,next)=>{
 };
 app.use('/staff',requireStaffPage,express.static(path.join(config.staticRoot,'staff'),staticOpts));
 app.use('/track',express.static(path.join(config.staticRoot,'track'),{...staticOpts,index:'index.html'}));
+app.use('/es',express.static(path.join(config.staticRoot,'es'),{...staticOpts,index:'index.html'}));
 app.use('/portals',express.static(path.join(config.staticRoot,'portals'),{...staticOpts,index:'index.html'}));
 app.use('/resident-guide',express.static(path.join(config.staticRoot,'resident-guide'),{...staticOpts,index:'index.html'}));
 
 app.get('/staff',(req,res)=>res.redirect(req.user?'/staff/index.html':'/staff/login.html'));
 app.get('/track',(req,res)=>res.redirect('/track/'));
+app.get('/es',(req,res)=>res.redirect('/es/'));
 app.use('/server',(req,res)=>res.status(404).end());
 
 app.use((req,res)=>{
