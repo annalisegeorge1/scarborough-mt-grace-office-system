@@ -58,9 +58,16 @@ function collectionLink(key){
 function showCollectionDirectory(){
   const section=$('#service-forms');if(!section||$('#v205-collection-offices'))return;
   const directory=document.createElement('section');directory.id='v205-collection-offices';directory.className='v205-collection';
-  directory.innerHTML=`<div class="v205-collection-head"><div><small>NO DOWNLOAD AVAILABLE?</small><h3>Where to collect a form in person</h3><p>Some forms are supplied by the responsible THA division or the District Office. Call the office before visiting to confirm the form is available and what you need to bring.</p></div></div><div class="v205-collection-grid">${Object.values(collectionOffices).map(o=>`<article><h4>${escapeHtml(o.name)}</h4><address>${escapeHtml(o.address)}</address><a href="tel:${o.phone.replace(/\D/g,'')}">${escapeHtml(o.phone)}</a></article>`).join('')}</div><p class="v205-collection-source">Division contact details: <a href="https://www.tha.gov.tt/contact/" target="_blank" rel="noopener noreferrer">Tobago House of Assembly directory</a>. Form availability varies by programme.</p>`;
+  directory.innerHTML=`<div class="v205-collection-head"><div><small>FIND YOUR COLLECTION OFFICE</small><h3>Where to collect a form in person</h3><p>Some forms are supplied by the responsible THA division or the District Office. Browse the offices below and call before visiting to confirm the form is available and what you need to bring.</p></div></div><div class="v205-collection-rail" aria-label="THA collection offices">${Object.values(collectionOffices).map((o,i)=>`<article class="v205-office-card"><small>COLLECTION OFFICE ${String(i+1).padStart(2,'0')}</small><h4>${escapeHtml(o.name)}</h4><address>${escapeHtml(o.address)}</address><div class="v205-office-status"><span>FORM AVAILABILITY</span><strong>Call to confirm before visiting</strong></div><a href="tel:${o.phone.replace(/\D/g,'')}" aria-label="Call ${escapeAttr(o.name)} at ${escapeAttr(o.phone)}">CALL ${escapeHtml(o.phone)} →</a></article>`).join('')}</div><div class="v205-collection-nav"><button type="button" class="v205-prev" aria-label="Previous collection office">‹</button><div class="v205-dots" aria-label="Collection office navigation"></div><button type="button" class="v205-next" aria-label="Next collection office">›</button></div><p class="v205-collection-source">Division contact details: <a href="https://www.tha.gov.tt/contact/" target="_blank" rel="noopener noreferrer">Tobago House of Assembly directory</a>. Form availability varies by programme.</p>`;
   const anchor=$('.v16-help-box',section);
   anchor?anchor.before(directory):section.querySelector('.wrap')?.appendChild(directory);
+  const rail=$('.v205-collection-rail',directory),cards=$$('.v205-office-card',rail),dots=$('.v205-dots',directory);
+  cards.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show collection office ${i+1}: ${collectionOffices[Object.keys(collectionOffices)[i]].name}`);dot.addEventListener('click',()=>cards[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));dots.appendChild(dot)});
+  const current=()=>cards.reduce((best,card,i)=>Math.abs((card.offsetLeft-cards[0].offsetLeft)-rail.scrollLeft)<Math.abs((cards[best].offsetLeft-cards[0].offsetLeft)-rail.scrollLeft)?i:best,0);
+  const update=()=>{$$('button',dots).forEach((dot,i)=>{dot.classList.toggle('is-active',i===current());dot.setAttribute('aria-current',i===current()?'true':'false')})};
+  $('.v205-prev',directory).addEventListener('click',()=>cards[Math.max(0,current()-1)].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));
+  $('.v205-next',directory).addEventListener('click',()=>cards[Math.min(cards.length-1,current()+1)].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}));
+  rail.addEventListener('scroll',update,{passive:true});update();
 }
 function renderManagedForm(x){
   const host=$('#service-forms .v16-form-grid');
@@ -297,14 +304,26 @@ function addStyles(){
     #service-forms .v205-collection-head h3{margin:5px 0 8px;color:#0b2e48;font:600 24px Georgia,serif}
     #service-forms .v205-collection-head small{font-size:11px;font-weight:900;letter-spacing:.09em;color:#4b6171}
     #service-forms .v205-collection-head p,#service-forms .v205-collection-source{font-size:13px;line-height:1.6;color:#385669}
-    #service-forms .v205-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:17px}
-    #service-forms .v205-collection-grid article{padding:15px;border:1px solid #dce6eb;border-radius:12px;background:#fff}
-    #service-forms .v205-collection-grid h4{margin:0 0 9px;color:#0b2e48;font-size:14px}
-    #service-forms .v205-collection-grid address{white-space:pre-line;font-style:normal;font-size:12px;line-height:1.5;color:#385669}
-    #service-forms .v205-collection-grid a,#service-forms .v205-collection-source a{display:inline-block;margin-top:8px;color:#0b3553;font-size:12px;font-weight:800}
+    #service-forms .v205-collection-rail{display:flex;gap:11px;margin-top:17px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;padding:3px 2px 13px}
+    #service-forms .v205-office-card{position:relative;overflow:hidden;flex:0 0 calc((100% - 22px)/3);min-height:250px;display:flex;flex-direction:column;scroll-snap-align:start;padding:17px;border:1px solid rgba(11,53,83,.12);border-radius:12px;background:linear-gradient(145deg,#fff,#faf8f1);box-shadow:0 12px 27px rgba(7,35,55,.062)}
+    #service-forms .v205-office-card::after{content:'';position:absolute;right:-28px;top:-34px;width:82px;height:82px;border-radius:50%;border:1px solid rgba(23,79,116,.065);box-shadow:0 0 0 15px rgba(201,163,74,.018);pointer-events:none}
+    #service-forms .v205-office-card>small{color:#8e7843;font-size:10px;font-weight:900;letter-spacing:.08em}
+    #service-forms .v205-office-card h4{margin:9px 0;color:#174f74;font:600 18px Georgia,serif;line-height:1.3}
+    #service-forms .v205-office-card address{white-space:pre-line;font-style:normal;font-size:12px;line-height:1.55;color:#385669}
+    #service-forms .v205-office-status{margin-top:auto;padding:9px 10px;border-top:1px solid rgba(11,53,83,.075);border-bottom:1px solid rgba(11,53,83,.075);background:rgba(237,244,246,.62)}
+    #service-forms .v205-office-status span{display:block;color:#617886;font-size:10px;font-weight:900;letter-spacing:.07em}
+    #service-forms .v205-office-status strong{display:block;margin-top:3px;color:#365c70;font-size:12px}
+    #service-forms .v205-office-card>a{display:block;margin-top:10px;padding:11px;border-radius:8px;background:#0b3553;color:#fff;text-align:center;text-decoration:none;font-size:12px;font-weight:900}
+    #service-forms .v205-office-card>a:focus-visible,#service-forms .v205-collection-nav button:focus-visible{outline:3px solid #c9a34a;outline-offset:2px}
+    #service-forms .v205-collection-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+    #service-forms .v205-collection-nav>button{width:34px;height:34px;border:1px solid #b9ccd6;border-radius:8px;background:#fff;color:#0b3553;font-size:22px;cursor:pointer}
+    #service-forms .v205-dots{display:flex;gap:5px}
+    #service-forms .v205-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#b5c8d2;cursor:pointer}
+    #service-forms .v205-dots button.is-active{background:#0b3553;box-shadow:0 0 0 2px #d2bb78}
+    #service-forms .v205-collection-source a{color:#0b3553;font-weight:800}
     #service-forms .v202-managed-form .v16-pdf-icon{font-size:8px}
-    @media(max-width:900px){#service-forms .v205-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:600px){#service-forms .v205-collection-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){#service-forms .v205-office-card{flex-basis:calc((100% - 11px)/2)}}
+    @media(max-width:600px){#service-forms .v205-office-card{flex-basis:min(85vw,305px)}}
     body.v112-dark .v202-public-date,body.v112-dark .v202-open-document{color:#f0d895}
   `;
   document.head.appendChild(s);
