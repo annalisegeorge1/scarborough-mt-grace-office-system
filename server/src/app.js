@@ -72,11 +72,18 @@ app.use('/assets',express.static(path.join(config.staticRoot,'assets'),staticOpt
 app.get('/robots.txt',(req,res)=>res.type('text/plain').send('User-agent: *\nDisallow: /staff/\nDisallow: /api/\n'));
 
 let cachedPublicIndex=null;
+function currentCalderHallNames(html){
+  return html
+    .replaceAll('Calder Hall Main Phases 1, 2 and 3','Calder Hall Main Road, Virgil Alley, Phases 2 and 3')
+    .replaceAll('Phases 1, 2 and 3','Virgil Alley, Phases 2 and 3')
+    .replaceAll('Phases 1, 2 &amp; 3','Virgil Alley, Phases 2 &amp; 3')
+    .replace('calder hall main road phases darrel spring','calder hall main road virgil alley phases 2 3 darrel spring');
+}
 async function sendPublicIndex(req,res,next){
   try{
     if(!cachedPublicIndex||!config.production){
       const file=path.join(config.staticRoot,'index-self-contained.html');
-      let html=await fs.readFile(file,'utf8');
+      let html=currentCalderHallNames(await fs.readFile(file,'utf8'));
       const runtimeFile=path.join(config.staticRoot,'assets','public-content-runtime.js');
       const runtimeVersion=crypto.createHash('sha256').update(await fs.readFile(runtimeFile)).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${runtimeVersion}" defer></script>`;
