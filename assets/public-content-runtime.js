@@ -398,6 +398,8 @@ function addStyles(){
     body.v112-dark #main-content #resident-programmes .v17-card :is(ul,li,p:not(.v17-purpose),.v17-facts strong,.v17-facts small){color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
     body.v112-dark #main-content #resident-programmes .v17-card.v17-card :is(.v98-source-detail,.v98-source-detail *,.v72-source-chip,.v17-facts,.v17-facts *){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
     body.v112-dark #main-content #resident-programmes :is(.v98-source-note,.v98-source-note *,.v72-source-banner,.v72-source-banner *,.v17-top b,.v17-card .v27-pdf-mini,.v17-start-items span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
+    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]{background:#128c4a!important;border-color:#128c4a!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]:hover{background:#0c713a!important;border-color:#0c713a!important}
   `;
   document.head.appendChild(s);
 }
