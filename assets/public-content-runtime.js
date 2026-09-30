@@ -404,8 +404,8 @@ function addStyles(){
     body.v112-dark #main-content #resident-programmes .v17-card :is(ul,li,p:not(.v17-purpose),.v17-facts strong,.v17-facts small){${whiteText}}
     body.v112-dark #main-content #resident-programmes .v17-card.v17-card :is(.v98-source-detail,.v98-source-detail *,.v72-source-chip,.v17-facts,.v17-facts *){${navyText}}
     body.v112-dark #main-content #resident-programmes :is(.v98-source-note,.v98-source-note *,.v72-source-banner,.v72-source-banner *,.v17-top b,.v17-card .v27-pdf-mini,.v17-start-items span){${navyText}}
-    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]{background:#128c4a!important;border-color:#128c4a!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]:hover{background:#0c713a!important;border-color:#0c713a!important}
+    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"],body #main-content #resident-start .v55-office-mini a[href^="https://wa.me/"]{background:#128c4a!important;border-color:#128c4a!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+    body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]:hover,body #main-content #resident-start .v55-office-mini a[href^="https://wa.me/"]:hover{background:#0c713a!important;border-color:#0c713a!important}
   `;
   document.head.appendChild(s);
 }
