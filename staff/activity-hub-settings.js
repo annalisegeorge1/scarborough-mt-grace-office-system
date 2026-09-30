@@ -14,6 +14,30 @@ function selectorFor(element,hub){
   }
   return '#activity-hub '+parts.join(' > ');
 }
+function describeField(element){
+  const tag=element.tagName.toLowerCase();
+  const part=tag==='strong'||tag==='b'?'Card title':tag==='small'?'Short description':tag==='span'?'Label':/^h[1-6]$/.test(tag)?'Heading':tag==='p'?'Description':tag==='label'?'Form field label':tag==='button'?'Button text':'Explanation';
+  const status=element.closest('.v90-status-overview article');
+  if(status){
+    const names={confirmed:'Confirmed information',planned:'Planned',development:'In development',followup:'Follow-up required'};
+    const name=Object.keys(names).find(k=>status.classList.contains(k));
+    return {group:'Status cards — the four cards below the Hub totals',label:(names[name]||'Status card')+' — '+(tag==='small'?'Status label':tag==='strong'?'Card title':'Explanation below the title'),help:'Changes this wording on the '+(names[name]||'status')+' card. The number is calculated automatically.'};
+  }
+  const summary=element.closest('.v26-summary article');
+  if(summary){const title=summary.querySelector('strong')?.textContent.trim()||'Hub total';return {group:'Hub totals — notices, Town Hall, areas and tracked matters',label:title+' — '+(tag==='strong'?'Title under the number':'Description under the title'),help:'Changes the wording below this total. It does not change the automatic count.'};}
+  const tab=element.closest('[data-v26-tab]');
+  if(tab)return {group:'Navigation tabs — the four buttons across the Hub',label:(tabNames[tab.dataset.v26Tab]||'Tab')+' — '+(tag==='b'?'Tab name':tag==='small'?'Description under the tab name':'Number shown on the tab'),help:'Changes text on this navigation button. It does not change the content items inside the tab.'};
+  if(element.closest('.v90-status-explainer'))return {group:'Status guide — “How to read these statuses”',label:tag==='strong'?'Status guide heading':'Status guide explanation',help:'Changes the public explanation of what Confirmed, Planned, In Development and Follow-up Required mean.'};
+  const detail=element.closest('.v26-townhall-status>div');
+  if(detail){const name=detail.querySelector('small')?.textContent.trim()||'Town Hall detail';return {group:'Town Hall — next meeting details',label:name+' — '+(tag==='small'?'Field label':'Value shown to residents'),help:'Use the confirmed date or venue, or keep “To be announced” until verified.'};}
+  if(element.closest('.v26-townhall-feature'))return {group:'Town Hall — programme introduction',label:element.matches('.v26-big-line')?'Meeting frequency wording':part,help:'Changes the fixed introduction in the Town Hall tab. Individual meeting announcements use the Activity Hub item editor.'};
+  if(element.closest('.v26-townhall-tool'))return {group:'Town Hall — resident discussion-note tool',label:part+(element.getAttribute('for')?' — '+element.getAttribute('for').replace('v26-','').replaceAll('-',' '):''),help:'Changes the instructions or labels in the tool residents use to prepare their discussion note.'};
+  if(element.closest('.v26-townhall-purpose'))return {group:'Town Hall — meeting purposes',label:(element.closest('article')?.querySelector('strong')?.textContent.trim()||'Purpose')+' — '+part,help:'Changes this meeting-purpose card.'};
+  const panel=element.closest('.v26-panel,[id="employment"]');
+  if(panel)return {group:(tabNames[panel.id]||panel.id)+' — section introduction',label:part,help:'Changes the heading or introduction above the items in this tab.'};
+  if(element.closest('.v26-hub-footer'))return {group:'Hub footer — contact and follow-up prompts',label:part,help:'Changes the contact prompt at the bottom of the Hub.'};
+  return {group:'Hub introduction — main heading and opening text',label:part,help:'Changes fixed wording near the top of the District Activity Hub.'};
+}
 async function reload(){
   try{
     const [response,html]=await Promise.all([SMG.api('/api/content'),fetch('/',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Cannot load public Hub defaults.');return r.text()})]);
@@ -31,15 +55,15 @@ async function reload(){
       nodes.forEach((node,index)=>{
         const selector=selectorFor(element,hub),original=node.textContent.trim();
         const existing=saved.find(x=>x.selector===selector&&(x.node||0)===index);
-        const panel=element.closest('.v26-panel,[id="employment"]');
-        fields.push({selector,node:index,value:existing?existing.value:original,original,group:panel?tabNames[panel.id]||panel.id:element.closest('.v26-tabs')?'Tab labels':'Hub heading, summaries & status guide'});
+        const description=describeField(element);
+        fields.push({selector,node:index,value:existing?existing.value:original,original,...description});
       });
     }
     const groups=[...new Set(fields.map(f=>f.group))];
-    root.innerHTML='<p class="notice">Changes appear publicly only when Published and Verified. Leave a field unchanged to retain its existing wording. Text is stored as plain text.</p><div class="formgrid"><div class="f6"><label>Find wording</label><input id="hub-word-search" placeholder="Search headings, venue, status…"></div><div class="f3"><label>Workflow</label><select id="hub-config-workflow"><option>Draft</option><option>In Review</option><option>Approved</option><option>Published</option></select></div><div class="f3"><label>Verified</label><select id="hub-config-verified"><option value="false">No</option><option value="true">Yes</option></select></div></div><h3>Public tabs</h3><p>Choose which tabs are visible and their order. Keep at least one visible.</p><div id="hub-tab-settings" class="formgrid">'+Object.entries(tabNames).map(([id,name],index)=>{
+    root.innerHTML='<p class="notice">Each field below names the public section it changes. Draft saves stay private; choose Published and confirm verification to show the changes on the website. Counts are automatic. Edit individual notices, projects and vacancies in the item editor below.</p><div class="formgrid"><div class="f6"><label>Find wording</label><input id="hub-word-search" placeholder="Search headings, venue, status…"></div><div class="f3"><label>Save as</label><select id="hub-config-workflow"><option>Draft</option><option>In Review</option><option>Approved</option><option>Published</option></select></div><div class="f3"><label>Have you checked this wording?</label><select id="hub-config-verified"><option value="false">Not checked yet</option><option value="true">Yes — checked and accurate</option></select></div></div><h3>Show and arrange the Hub tabs</h3><p>A checked box shows that tab on the public website. Order 1 appears first; order 4 appears last. Keep at least one tab visible.</p><div id="hub-tab-settings" class="formgrid">'+Object.entries(tabNames).map(([id,name],index)=>{
       const configured=record?.metadata?.tabs||[],tab=configured.find(t=>t.id===id);
-      return '<div class="f3"><label><input type="checkbox" data-hub-visible="'+id+'" '+(tab?.visible===false?'':'checked')+'> '+esc(name)+'</label><label>Order<input type="number" min="1" max="4" data-hub-order="'+id+'" value="'+(configured.findIndex(t=>t.id===id)>=0?configured.findIndex(t=>t.id===id)+1:index+1)+'"></label></div>';
-    }).join('')+'</div>'+groups.map(group=>'<details open class="hub-word-group"><summary><strong>'+esc(group)+'</strong></summary><div class="formgrid">'+fields.map((field,index)=>field.group===group?'<div class="f6 hub-word-field"><label for="hub-word-'+index+'">'+esc(field.original.slice(0,110))+'</label><textarea maxlength="4000" rows="2" id="hub-word-'+index+'" data-hub-field="'+index+'">'+esc(field.value)+'</textarea></div>':'').join('')+'</div></details>').join('')+'<div class="toolbar"><button type="button" class="btn gold" id="hub-config-save">Save Hub settings</button><button type="button" class="btn" id="hub-config-reload">Reload saved settings</button><button type="button" class="btn" id="hub-config-restore">Restore website defaults</button></div><p id="hub-config-result" role="status" aria-live="polite"></p>';
+      return '<div class="f3"><label><input type="checkbox" data-hub-visible="'+id+'" '+(tab?.visible===false?'':'checked')+'> Show '+esc(name)+'</label><label>Position on the website<input type="number" min="1" max="4" data-hub-order="'+id+'" value="'+(configured.findIndex(t=>t.id===id)>=0?configured.findIndex(t=>t.id===id)+1:index+1)+'"></label></div>';
+    }).join('')+'</div>'+groups.map(group=>'<details open class="hub-word-group"><summary><strong>'+esc(group)+'</strong></summary><div class="formgrid">'+fields.map((field,index)=>field.group===group?'<div class="f6 hub-word-field"><label for="hub-word-'+index+'">'+esc(field.label)+'</label><p class="small">'+esc(field.help)+'</p><p class="small"><strong>Website default:</strong> '+esc(field.original)+'</p><textarea maxlength="4000" rows="2" id="hub-word-'+index+'" data-hub-field="'+index+'">'+esc(field.value)+'</textarea></div>':'').join('')+'</div></details>').join('')+'<div class="toolbar"><button type="button" class="btn gold" id="hub-config-save">Save these Hub changes</button><button type="button" class="btn" id="hub-config-reload">Discard unsaved edits and reload</button><button type="button" class="btn" id="hub-config-restore">Restore all original Hub wording and tabs</button></div><p id="hub-config-result" role="status" aria-live="polite"></p>';
     document.getElementById('hub-config-workflow').value=record?.workflow||'Draft';
     document.getElementById('hub-config-verified').value=String(!!record?.verified);
     document.getElementById('hub-word-search').oninput=event=>{
