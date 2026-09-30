@@ -278,6 +278,32 @@ function refreshActivityCounts(records){
     }
   });
 }
+function applyHubSettings(records){
+  const settings=records.filter(x=>x.type==='activity_settings').sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')))[0];
+  if(!settings)return;
+  const m=meta(settings.metadata),hub=$('#activity-hub');if(!hub)return;
+  for(const field of Array.isArray(m.fields)?m.fields:[]){
+    if(typeof field.selector!=='string'||!field.selector.startsWith('#activity-hub ')||typeof field.value!=='string'||field.value.length>4000)continue;
+    try{
+      const element=document.querySelector(field.selector);
+      if(!element||!hub.contains(element)||element.closest('script,style,svg,input,select,textarea'))continue;
+      const nodes=[...element.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
+      if(nodes[field.node||0])nodes[field.node||0].textContent=field.value;
+    }catch{}
+  }
+  const tabs=$('.v26-tabs',hub),configured=Array.isArray(m.tabs)?m.tabs:[];
+  for(const item of configured){
+    if(!['notices','events','projects','employment'].includes(item.id))continue;
+    const tab=hub.querySelector('[data-v26-tab="'+item.id+'"]'),panel=hub.querySelector('#'+item.id);
+    if(tab){setHidden(tab,item.visible===false);tabs.appendChild(tab)}
+    if(panel&&item.visible===false)setHidden(panel,true);
+  }
+  const visible=$('.v26-tabs [data-v26-tab]',hub).filter(t=>!t.hidden);
+  if(visible.length&&!visible.some(t=>t.getAttribute('aria-selected')==='true'))visible[0].click();
+  if(tabs&&visible.length)tabs.style.gridTemplateColumns='repeat('+Math.min(visible.length,4)+',minmax(0,1fr))';
+  if(typeof window.markLightCardText==='function')window.markLightCardText(hub);
+}
+
 function applyActivityContent(records){
   const overrides=new Map(records.filter(x=>x.type==='activity_override').map(x=>[txt(meta(x.metadata).staticKey),x]));
   $$('#activity-hub .v26-project,#activity-hub .v26-notice').forEach(card=>{
@@ -289,6 +315,7 @@ function applyActivityContent(records){
     subtype==='employment'?renderEmployment(x):subtype==='project'?renderProject(x):renderNotice(x);
   });
   refreshActivityCounts(records);
+  applyHubSettings(records);
 }
 
 /* Small style additions for database-managed cards. */
