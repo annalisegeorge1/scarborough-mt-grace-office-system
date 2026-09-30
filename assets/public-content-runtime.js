@@ -235,7 +235,7 @@ function setupEmploymentTab(){
   });
   tab.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const target=e.key==='ArrowLeft'?oldTabs.at(-1):oldTabs[0];target.click();target.focus()}});
   const style=document.createElement('style');style.id='v204-employment-css';
-  style.textContent='#activity-hub .v26-tabs{grid-template-columns:repeat(4,1fr)}#activity-hub .v204-employment-grid .v26-notice{min-width:0}#activity-hub .v204-employment-meta{display:grid;gap:5px;margin:11px 0;color:#244960;font-size:12px}#activity-hub .v204-employment-link{display:inline-flex;margin-top:10px;padding:9px 12px;border-radius:8px;background:#0b3553;color:#fff;font-size:12px;font-weight:800;text-decoration:none}#activity-hub .v204-employment-empty{font-size:13px;line-height:1.6;color:#244960}#activity-hub .v204-employment-empty a{color:#0b3553;font-weight:800}@media(max-width:950px){#activity-hub .v26-tabs{grid-template-columns:repeat(2,1fr)}}';
+  style.textContent='#activity-hub .v26-tabs{grid-template-columns:repeat(var(--smg-hub-tab-columns,4),1fr)}#activity-hub .v204-employment-grid .v26-notice{min-width:0}#activity-hub .v204-employment-meta{display:grid;gap:5px;margin:11px 0;color:#244960;font-size:12px}#activity-hub .v204-employment-link{display:inline-flex;margin-top:10px;padding:9px 12px;border-radius:8px;background:#0b3553;color:#fff;font-size:12px;font-weight:800;text-decoration:none}#activity-hub .v204-employment-empty{font-size:13px;line-height:1.6;color:#244960}#activity-hub .v204-employment-empty a{color:#0b3553;font-weight:800}@media(max-width:950px){#activity-hub .v26-tabs{grid-template-columns:repeat(2,1fr)}}';
   document.head.appendChild(style);
 }
 function renderEmployment(x){
@@ -298,10 +298,10 @@ function applyHubSettings(records){
     if(tab){setHidden(tab,item.visible===false);tabs.appendChild(tab)}
     if(panel&&item.visible===false)setHidden(panel,true);
   }
-  const visible=$('.v26-tabs [data-v26-tab]',hub).filter(t=>!t.hidden);
+  const visible=$$('.v26-tabs [data-v26-tab]',hub).filter(t=>!t.hidden);
   if(visible.length&&!visible.some(t=>t.getAttribute('aria-selected')==='true'))visible[0].click();
-  if(tabs&&visible.length)tabs.style.gridTemplateColumns='repeat('+Math.min(visible.length,4)+',minmax(0,1fr))';
-  if(typeof window.markLightCardText==='function')window.markLightCardText(hub);
+  if(tabs&&visible.length)tabs.style.setProperty('--smg-hub-tab-columns',String(Math.min(visible.length,4)));
+  markLightCardText(hub);
 }
 
 function applyActivityContent(records){
@@ -321,6 +321,12 @@ function applyActivityContent(records){
 /* Small style additions for database-managed cards. */
 function addStyles(){
   if($('#v202-public-content-css'))return;
+  // Shared selectors retain their original specificity and cascade order.
+  const publicSections=':is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice)';
+  const lightCards=':is(.v55-start-main,.v55-start-grid,.v90-status-overview>article,.v205-collection,.v205-office-card,.v55-forms-help,.v88-privacy-panel,.v18-townhall,.v21-action-copy,.v170-island-map-card,.v170-island-map-note,.v26-townhall-tool,.v151-note)';
+  const copyElements=':is(h1,h2,h3,h4,h5,p,li,small,span,em,label,strong,b,dd,dt,td,th,address)';
+  const navyText='color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important';
+  const whiteText='color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important';
   const s=document.createElement('style');s.id='v202-public-content-css';
   s.textContent=`
     .v202-managed-form .v16-pdf-icon{display:grid;place-items:center;font-weight:950;color:#0b3553}
@@ -359,31 +365,31 @@ function addStyles(){
     body.v112-dark .v202-public-date,body.v112-dark .v202-open-document{color:#f0d895}
     /* Keep dark-mode copy crisp on navy, while retaining navy copy on light cards. */
     body.v112-dark{--v110-text:#fff;--v110-muted:#fff;--v110-soft:#fff;--v113-heading:#fff;--v113-strong:#fff;--v113-body:#fff;--v113-muted:#fff;--v113-faint:#fff}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(h1,h2,h3,h4,h5,p,li,small,span,em,label,strong,b,dd,dt,td,th,address){color:#fff!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v55-start-main,.v55-start-grid,.v90-status-overview>article,.v205-collection,.v205-office-card,.v55-forms-help,.v88-privacy-panel,.v18-townhall,.v21-action-copy,.v170-island-map-card,.v170-island-map-note,.v26-townhall-tool,.v151-note) :is(h1,h2,h3,h4,h5,p,li,small,span,em,label,strong,b,dd,dt,td,th,address){color:#0b2e48!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v3-eyebrow,.v26-eyebrow,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v205-office-card>small,.v139-clock-label) :is(span,small,strong,b),
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v3-eyebrow,.v26-eyebrow,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v205-office-card>small,.v139-clock-label){color:#e1c879!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v55-start-main,.v55-start-grid,.v90-status-overview>article,.v205-collection,.v205-office-card,.v55-forms-help,.v88-privacy-panel,.v18-townhall,.v21-action-copy,.v170-island-map-card,.v170-island-map-note,.v26-townhall-tool,.v151-note) :is(a,button){color:#0b2e48!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v55-start-main,.v55-start-grid,.v90-status-overview>article,.v205-collection,.v205-office-card,.v55-forms-help,.v88-privacy-panel,.v18-townhall,.v21-action-copy,.v170-island-map-card,.v170-island-map-note,.v26-townhall-tool,.v151-note) :is(a,button):is(.primary,.btn-primary,.v205-office-card>a){color:#fff!important}
+    body.v112-dark #main-content ${publicSections} ${copyElements}{color:#fff!important}
+    body.v112-dark #main-content ${publicSections} ${lightCards} ${copyElements}{color:#0b2e48!important}
+    body.v112-dark #main-content ${publicSections} :is(.v3-eyebrow,.v26-eyebrow,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v205-office-card>small,.v139-clock-label) :is(span,small,strong,b),
+    body.v112-dark #main-content ${publicSections} :is(.v3-eyebrow,.v26-eyebrow,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v205-office-card>small,.v139-clock-label){color:#e1c879!important}
+    body.v112-dark #main-content ${publicSections} ${lightCards} :is(a,button){color:#0b2e48!important}
+    body.v112-dark #main-content ${publicSections} ${lightCards} :is(a,button):is(.primary,.btn-primary,.v205-office-card>a){color:#fff!important}
     body.v112-dark #main-content .v139-live-clock :is(span,strong,small,b,p){color:#fff!important}
     body.v112-dark #main-content .v139-live-clock .v139-clock-label{color:#e1c879!important}
     body.v112-dark #main-content .v205-office-card>a{color:#fff!important}
     body.v112-dark #main-content .v207-on-light{color:#0b2e48!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) .v207-on-light{color:#0b2e48!important}
+    body.v112-dark #main-content ${publicSections} .v207-on-light{color:#0b2e48!important}
     body.v112-dark #main-content :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
-    body.v112-dark #main-content :is(#resident-start,#portal-hub,#activity-hub,#community-compass,#contact-us,#service-forms,#enquiry,#gallery,#v51-more-gateway,#services,#about,#team,#leadership,#district-profile,#how-we-help,#help-selector,#support-areas,#resident-guide,#resident-faq,#resources,#privacy-accessibility,#documents,#resident-programmes,#community-engagement,#v141-public-plans,#v142-public-matters,#v145-public-cms,#v151-resident-voice) :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
+    body.v112-dark #main-content ${publicSections} :is(.v3-eyebrow,.v26-eyebrow,.v26-summary-num,.v51-primary-label,.v12-label,.v17-purpose,.v106-track-kicker,.v59-section-marker,.v121-kicker,.v151-kicker,.v139-clock-label,.v205-office-card>small){color:#e1c879!important}
     body.v112-dark #main-content #v51-more-gateway .v51-more-card :is(.eyebrow,h2,p,.v51-more-links button){color:#0b2e48!important}
     body.v112-dark #main-content #v51-more-gateway .v51-more-card .v51-more-toggle{color:#fff!important}
     body.v112-dark #main-content #v51-more-gateway :is(.v70-info-card,.v21-finder-copy) :is(h2,h3,h4,p,span,small,strong,b,button){color:#0b2e48!important}
     body.v112-dark #main-content #v51-more-gateway .v70-info-card small{color:#927a42!important}
     body.v112-dark #main-content .v208-grey-effect{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important}
     body.v112-dark #main-content #resident-start .v55-office-today,
-    body.v112-dark #main-content #resident-start .v55-office-today *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
+    body.v112-dark #main-content #resident-start .v55-office-today *{${whiteText}}
     body.v112-dark #main-content #privacy-accessibility .v88-rule,
-    body.v112-dark #main-content #privacy-accessibility .v88-rule *{color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
+    body.v112-dark #main-content #privacy-accessibility .v88-rule *{${whiteText}}
     body.v112-dark #main-content #community-engagement .v18-calendar.v18-calendar :is(span,strong,small){color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
     body.v112-dark #main-content #v133-title{color:#c9a34a!important;-webkit-text-fill-color:#c9a34a!important;-webkit-text-stroke-color:#c9a34a!important}
-    body:not(.v112-dark) #main-content #resident-programmes :is(.v17-head h2,.v17-start>strong,.v17-start-items span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
+    body:not(.v112-dark) #main-content #resident-programmes :is(.v17-head h2,.v17-start>strong,.v17-start-items span){${navyText}}
     body:not(.v112-dark) #main-content #team .v32-team-banner strong{color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;text-shadow:none!important}
     body:not(.v112-dark) #main-content #team .v32-team-intro h2{color:#80621e!important;-webkit-text-fill-color:#80621e!important;text-shadow:none!important}
     /* Team portraits share the Start Centre card treatment. */
@@ -395,9 +401,9 @@ function addStyles(){
     body #main-content #team .member .v7-member-frame{border:1px solid rgba(201,163,74,.45)!important;box-shadow:none!important}
     body #main-content #team .member .v8-staff-meta{border-color:rgba(11,53,83,.1)!important}
     @media(prefers-reduced-motion:reduce){body #main-content #team .member{transition:none!important}body #main-content #team .member:hover{transform:none!important}}
-    body.v112-dark #main-content #resident-programmes .v17-card :is(ul,li,p:not(.v17-purpose),.v17-facts strong,.v17-facts small){color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-text-stroke-width:0!important;text-shadow:none!important}
-    body.v112-dark #main-content #resident-programmes .v17-card.v17-card :is(.v98-source-detail,.v98-source-detail *,.v72-source-chip,.v17-facts,.v17-facts *){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
-    body.v112-dark #main-content #resident-programmes :is(.v98-source-note,.v98-source-note *,.v72-source-banner,.v72-source-banner *,.v17-top b,.v17-card .v27-pdf-mini,.v17-start-items span){color:#0b2e48!important;-webkit-text-fill-color:#0b2e48!important;-webkit-text-stroke-color:#0b2e48!important;text-shadow:none!important}
+    body.v112-dark #main-content #resident-programmes .v17-card :is(ul,li,p:not(.v17-purpose),.v17-facts strong,.v17-facts small){${whiteText}}
+    body.v112-dark #main-content #resident-programmes .v17-card.v17-card :is(.v98-source-detail,.v98-source-detail *,.v72-source-chip,.v17-facts,.v17-facts *){${navyText}}
+    body.v112-dark #main-content #resident-programmes :is(.v98-source-note,.v98-source-note *,.v72-source-banner,.v72-source-banner *,.v17-top b,.v17-card .v27-pdf-mini,.v17-start-items span){${navyText}}
     body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]{background:#128c4a!important;border-color:#128c4a!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
     body #main-content #contact-us .v89-visit-actions a[href^="https://wa.me/"]:hover{background:#0c713a!important;border-color:#0c713a!important}
   `;
@@ -405,21 +411,29 @@ function addStyles(){
 }
 function markLightCardText(root){
   const main=$('#main-content');if(!main)return;
+  const styles=new WeakMap(),surfaces=new WeakMap();
+  const styleFor=element=>{
+    if(!styles.has(element))styles.set(element,getComputedStyle(element));
+    return styles.get(element);
+  };
   const coloredSurface=element=>{
-    const style=getComputedStyle(element);
+    if(surfaces.has(element))return surfaces.get(element);
+    const style=styleFor(element);
     const colors=[...style.backgroundImage.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)].map(m=>[+m[1],+m[2],+m[3],m[4]===undefined?1:+m[4]]);
     const solid=style.backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
     if(solid)colors.push([+solid[1],+solid[2],+solid[3],solid[4]===undefined?1:+solid[4]]);
-    return colors.find(c=>c[3]>=.5);
+    const color=colors.find(c=>c[3]>=.5);
+    surfaces.set(element,color);
+    return color;
   };
-  const nodes=root===main?[main,...main.querySelectorAll('*')]:[root,...root.querySelectorAll('*')];
-  for(const element of nodes){
-    if(!element.isConnected||!element.childNodes.length||![...element.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim()))continue;
-    const textStyle=getComputedStyle(element);
-    const hasGrey=value=>[...value.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)].some(m=>{
+  const hasGrey=value=>[...value.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)].some(m=>{
       const rgb=[+m[1],+m[2],+m[3]],alpha=m[4]===undefined?1:+m[4];
       return alpha>0&&Math.max(...rgb)-Math.min(...rgb)<=24&&rgb[0]>=40&&rgb[0]<=220;
     });
+  const nodes=root===main?[main,...main.querySelectorAll('*')]:[root,...root.querySelectorAll('*')];
+  for(const element of nodes){
+    if(!element.isConnected||!element.childNodes.length||![...element.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim()))continue;
+    const textStyle=styleFor(element);
     element.classList.toggle('v208-grey-effect',element.classList.contains('v208-grey-effect')||hasGrey(textStyle.textShadow)||(parseFloat(textStyle.webkitTextStrokeWidth)>0&&hasGrey(textStyle.webkitTextStrokeColor)));
     let surface=element;
     while(surface&&surface!==main.parentElement){
