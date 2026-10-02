@@ -1,0 +1,263 @@
+/* Scarborough / Mt. Grace District Office — V217 mobile polish
+   Screenshot-driven fixes for legacy contrast, duplicate masthead space, footer density
+   and floating-control collisions. No public or staff information is removed. */
+
+/* EXPLORE DRAWER — force every selected child and parent state to remain readable. */
+body .v202-drawer .v202-sub-link.is-active,
+body .v202-drawer .v202-sub-link[aria-current="page"],
+body .v202-drawer .v202-sub-link[aria-current="true"]{
+  background:#edf4f7!important;
+  color:#0b3553!important;
+  box-shadow:inset 3px 0 0 #174f74!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+body .v202-drawer .v202-sub-link.is-active::before,
+body .v202-drawer .v202-sub-link[aria-current="page"]::before,
+body .v202-drawer .v202-sub-link[aria-current="true"]::before{
+  background:#174f74!important;
+  box-shadow:0 0 0 3px rgba(23,79,116,.10)!important;
+}
+body .v202-drawer .v202-group:has(.v202-sub-link.is-active)>.v202-group-toggle{
+  background:linear-gradient(90deg,#fbfaf6,#fff)!important;
+  color:#0b3553!important;
+  box-shadow:inset 3px 0 0 #a78f5e,0 5px 14px rgba(7,35,55,.035)!important;
+}
+body .v202-drawer .v202-group:has(.v202-sub-link.is-active)>.v202-group-toggle .v202-group-copy strong{
+  color:#0b3553!important;
+}
+body .v202-drawer .v202-group:has(.v202-sub-link.is-active)>.v202-group-toggle .v202-group-copy span{
+  color:#6d838f!important;
+}
+body .v202-drawer .v202-group:has(.v202-sub-link.is-active)>.v202-group-toggle .v202-chevron{
+  color:#765f38!important;
+}
+
+/* RESIDENT PROGRAMMES — legacy V17 steps were designed for a dark parent.
+   Focused pages now place them on a pale panel, so convert them to high-contrast paper cards. */
+body:not(.v112-dark) #resident-programmes .v17-resident-path{
+  gap:10px!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-resident-path>div{
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid rgba(11,46,72,.10)!important;
+  box-shadow:0 8px 20px rgba(7,35,55,.04)!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-resident-path span{
+  background:#d4bb78!important;
+  color:#0b2e48!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-resident-path strong{
+  color:#173f58!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-resident-path small{
+  color:#617985!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-disclaimer{
+  background:#eef3f5!important;
+  border:1px solid rgba(11,46,72,.10)!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-disclaimer strong{
+  color:#806b3e!important;
+  opacity:1!important;
+}
+body:not(.v112-dark) #resident-programmes .v17-disclaimer p{
+  color:#536d7a!important;
+  opacity:1!important;
+}
+
+/* TEAM — preserve the navy editorial section, but restore light copy on its dark intro surfaces. */
+body:not(.v112-dark) #team.team-section .v132-section-badge-copy b{
+  color:#edf5f8!important;
+  opacity:1!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.14)!important;
+}
+body:not(.v112-dark) #team.team-section .v132-section-badge-copy small{
+  color:#bfd4de!important;
+  opacity:1!important;
+}
+body:not(.v112-dark) #team.team-section .v8-team-banner.v32-team-banner{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(216,199,160,.16)!important;
+}
+body:not(.v112-dark) #team.team-section .v8-team-banner.v32-team-banner span{
+  color:#d7e6ed!important;
+  opacity:1!important;
+}
+body:not(.v112-dark) #team.team-section .v8-team-banner.v32-team-banner strong{
+  color:#f5f9fb!important;
+  opacity:1!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.16)!important;
+}
+body:not(.v112-dark) #team.team-section .v32-team-intro .sub{
+  color:#c8d9e1!important;
+  opacity:1!important;
+}
+body:not(.v112-dark) #team.team-section .v32-team-intro h2{
+  color:#d7bc72!important;
+  opacity:1!important;
+  text-shadow:0 3px 16px rgba(0,0,0,.12)!important;
+}
+body:not(.v112-dark) #team.team-section .v32-group-head span{
+  color:#e1c879!important;
+  opacity:1!important;
+}
+body:not(.v112-dark) #team.team-section .v32-group-head strong{
+  color:#c5d6de!important;
+  opacity:1!important;
+}
+
+/* MOBILE/TABLET PUBLIC HEADER — the separate V125 rail already provides navigation.
+   Hide the legacy desktop nav container so it no longer creates an empty navy band. */
+@media(max-width:900px){
+  nav[aria-label="Site navigation"]{
+    display:none!important;
+  }
+  .v125-mobile-nav-shell{
+    margin-top:0!important;
+  }
+
+  /* Make the dedicated rail slightly more compact and reduce clipped-edge feeling. */
+  .v125-mobile-nav-shell{
+    grid-template-columns:38px minmax(0,1fr) 38px!important;
+    padding:6px 5px!important;
+  }
+  .v125-mobile-nav-arrow{
+    width:34px!important;
+    height:34px!important;
+    min-height:34px!important;
+  }
+  .v125-mobile-nav-rail{
+    gap:7px!important;
+    padding:2px 6px 4px!important;
+    scroll-padding-inline:10px!important;
+  }
+  .v125-mobile-nav-rail button[data-v51-go]{
+    min-height:38px!important;
+    padding:9px 13px!important;
+    font-size:12px!important;
+  }
+
+  /* Keep the accessibility controls available without sitting underneath Explore. */
+  .v8-accessibility{
+    left:auto!important;
+    right:10px!important;
+    bottom:76px!important;
+    z-index:5199!important;
+    gap:5px!important;
+  }
+  .v8-accessibility button{
+    width:32px!important;
+    height:32px!important;
+    border-radius:10px!important;
+  }
+  #v8-text-toggle .v87-size-badge{
+    right:-4px!important;
+    top:-6px!important;
+    min-width:22px!important;
+    height:14px!important;
+    font-size:6px!important;
+  }
+
+  /* Persistent actions should be useful, not dominate a tablet/phone viewport. */
+  .v7-mobile-dock{
+    left:10px!important;
+    right:10px!important;
+    bottom:7px!important;
+    min-height:60px!important;
+    border-radius:18px!important;
+  }
+  .v7-mobile-dock a,
+  .v7-mobile-dock button{
+    min-height:58px!important;
+    padding-top:5px!important;
+    padding-bottom:5px!important;
+  }
+  .v7-mobile-dock svg{
+    width:20px!important;
+    height:20px!important;
+  }
+  .v7-mobile-dock span{
+    font-size:8px!important;
+    letter-spacing:.08em!important;
+  }
+  .v202-menu-fab{
+    bottom:72px!important;
+    min-height:40px!important;
+  }
+
+  /* Footer: old footer padding + newer utility-link padding were stacking.
+     Keep one safe area for the fixed dock instead of two large empty zones. */
+  footer{
+    padding-bottom:78px!important;
+  }
+  footer .v88-footer-links{
+    margin-top:14px!important;
+    padding:12px 8px 10px!important;
+  }
+  footer .v6-footer-links{
+    margin-bottom:0!important;
+  }
+  footer .v170-footer-watermark{
+    bottom:76px!important;
+    width:100px!important;
+    opacity:.045!important;
+  }
+
+  /* Avoid oversized page-end whitespace now that the footer carries the dock clearance. */
+  body.v203-focused-view .v203-page-end{
+    padding-bottom:24px!important;
+  }
+}
+
+/* Narrow-screen programme steps become one clean card per row. */
+@media(max-width:620px){
+  body:not(.v112-dark) #resident-programmes .v17-resident-path{
+    grid-template-columns:1fr!important;
+  }
+  body:not(.v112-dark) #resident-programmes .v17-resident-path>div{
+    padding:13px!important;
+  }
+  body:not(.v112-dark) #resident-programmes .v17-disclaimer{
+    grid-template-columns:1fr!important;
+    padding:13px!important;
+  }
+
+  .identity-banner{
+    min-height:112px!important;
+  }
+  .identity-inner{
+    padding-top:13px!important;
+    padding-bottom:13px!important;
+  }
+  .identity-banner .brand img{
+    width:58px!important;
+  }
+
+  footer .v6-footer-links{
+    padding:18px 16px!important;
+  }
+}
+
+/* Extra-narrow phones: reduce fixed UI once more while preserving tap targets. */
+@media(max-width:390px){
+  .v7-mobile-dock{
+    min-height:56px!important;
+  }
+  .v7-mobile-dock a,
+  .v7-mobile-dock button{
+    min-height:54px!important;
+  }
+  .v202-menu-fab{
+    min-height:38px!important;
+    padding-inline:12px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v125-mobile-nav-rail{scroll-behavior:auto!important}
+}

@@ -1,0 +1,105 @@
+Scarborough / Mt. Grace District Office — V217
+
+SCREENSHOT-DRIVEN MOBILE POLISH
+
+V217 responds to the second live screenshot set after V216 and fixes remaining legacy-style conflicts without removing public information or staff functionality.
+
+Issues identified from screenshots:
+
+1. Empty navy masthead band on mobile/tablet
+Cause:
+- The legacy desktop navigation container remained visible on <=900px layouts even though the dedicated V125 mobile navigation rail was already present.
+- Its desktop link row was hidden, leaving a mostly empty navy block.
+Correction:
+- The legacy desktop nav is hidden only at <=900px.
+- The dedicated mobile navigation rail remains fully available.
+- Desktop navigation remains unchanged.
+
+2. Explore drawer active child links still white-on-pale
+Observed:
+- Contact Us
+- Resident Guide
+- Community Action Centre
+and similar active child links displayed pale backgrounds with pale/white text.
+Correction:
+- Active V202 sub-links now receive explicit navy text, blue active rule and dark bullet.
+- Parent groups containing an active child receive readable navy/grey text and restrained brass emphasis.
+- Existing open/close/search behaviour is unchanged.
+
+3. Resident Programmes four-step guidance contrast
+Observed:
+- Identify your need
+- Read the source document
+- Prepare your documents
+- Contact us if unsure
+were still using white/dim copy designed for a dark V17 background while the focused page now presents them on a pale panel.
+Correction:
+- Step cards become clean white/paper cards with navy headings and readable slate descriptions.
+- Gold numbered circles remain.
+- The programme disclaimer also receives readable dark copy on a light panel.
+- No programme guidance text is removed or changed.
+
+4. District Office Team dark-section contrast
+Observed:
+- District Office Team banner text and the compact-directory description were too dark against navy.
+- The team section’s introductory labels were partially disappearing.
+Correction:
+- District Office Team badge, banner, directory description, intro label and group headings receive explicit light/navy-section contrast.
+- “Meet the people behind the office” retains the stronger muted-gold editorial treatment.
+- White staff cards retain dark text; the fix does not turn all team content white.
+
+5. Footer vertical looseness
+Observed:
+- Legacy mobile footer bottom padding and newer utility-link padding stacked together.
+- This created a large empty navy area above the persistent mobile dock.
+Correction:
+- One controlled safe area now handles the dock clearance.
+- Footer secondary links use compact bottom padding.
+- Footer watermark is smaller, fainter and positioned closer to the bottom.
+- No footer information or links are removed.
+
+6. Fixed mobile controls
+Observed:
+- Call / WhatsApp / Enquiry / Track remained visually tall on the tablet/phone capture.
+- The 100% text-size badge was peeking from behind the Explore button.
+Correction:
+- Persistent action dock is reduced while retaining usable tap areas.
+- Explore FAB is slightly tighter.
+- Accessibility controls move to the lower right above the dock instead of underneath Explore.
+- Text-size controls remain fully available.
+
+7. Mobile navigation density
+- V125 arrows and pills are slightly smaller.
+- Scroll padding is added so edge items feel less clipped.
+- All Home / Office / Services / Community / Forms / Updates / Contact / Explore destinations remain available.
+
+Responsive scope:
+- Main corrections align with the site’s <=900px mobile/tablet breakpoint rather than only <=760px.
+- This better matches the actual device layout visible in the supplied screenshots.
+
+Preservation:
+- No public content removed.
+- No navigation destination removed.
+- No staff CMS changes.
+- No V215 progress-thread changes.
+- No forms, enquiry, tracking, authentication, database or publishing changes.
+- V217 is CSS-only.
+
+QA:
+- Server JavaScript syntax: pass.
+- V217 asset injection: pass.
+- V217 loads after V216: pass.
+- CSS brace balance: pass.
+- Drawer active-state selector: present.
+- Programme guidance selectors: present.
+- Team contrast selectors: present.
+- Mobile legacy-nav suppression: present.
+- Footer tightening selectors: present.
+- Accessibility-control repositioning: present.
+
+Files added:
+- assets/district-mobile-polish-v217.css
+- V217_NOTES.txt
+
+Files updated:
+- server/src/app.js
