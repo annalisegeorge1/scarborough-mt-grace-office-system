@@ -1,0 +1,61 @@
+Scarborough / Mt. Grace District Office — V212
+
+GLOBAL CHROME & NAVIGATION POLISH
+
+V212 finishes the pieces visitors see across every public page so the site reads as one intentional system.
+
+Navigation:
+- Replaces the old masthead language:
+  Home / Portals / Activity / Contact / Forms / Enquiry / Gallery / More
+  with the current public architecture:
+  Home / Office / Services / Community / Forms / Updates / Contact / Explore
+- Applies the same structure to desktop and mobile navigation.
+- Adds aria-current to the active public area.
+- Keeps Explore as the entry point to the V202 all-sections drawer.
+- Restyles the desktop masthead, mobile rail, active states and search field in the V210/V211 navy + muted-brass language.
+- Removes the visually noisy popular-search helper line from the masthead while keeping site search itself.
+
+Global interaction polish:
+- Adds a keyboard-accessible “Skip to main content” link.
+- Gives links, buttons, form controls and summaries a consistent focus-visible treatment.
+- Improves scroll-margin for anchored public sections.
+- Restyles the V202 Explore drawer so it visually belongs to the same civic/editorial design system.
+- Restyles the mobile quick-action dock and repositions Explore above it on small screens.
+
+Functional link cleanup:
+- Normalizes legacy relative links so focused routes do not produce broken nested URLs.
+- Corrects links under:
+  track/
+  resident-guide/
+  portals/
+  staff/
+- The current public source contains 24 such legacy relative links; all fall under those corrected route families.
+- Makes the mobile Enquiry quick action route to /forms/#enquiry when the local form is not present on a focused page.
+- Updates footer Resident FAQ to /services/#resident-faq.
+- Updates footer privacy/accessibility links to the homepage anchor.
+
+Footer:
+- Removes redundant repeated footer signature blocks from visual presentation.
+- Rebuilds the footer hierarchy around the main SMG signature, accessibility note, secure staff entry, office/contact/hours grid and utility links.
+- Uses the same navy editorial background, civic medallion treatment, fine brass rules and restrained typography as V210/V211.
+- Adds a named footer landmark for assistive technology.
+
+Search:
+- Uses a clearer accessible search label.
+- Shortens placeholder copy to “Search the District Office…”.
+- Restyles the search box and results to match the masthead.
+
+QA:
+- V212 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V212 CSS/JS injection: pass.
+- V212 loads after V211.
+- Current desktop and mobile navigation each contain exactly eight public controls, matching the V212 replacement map.
+- All 24 legacy relative public links belong to corrected route families.
+
+Files added:
+- assets/district-global-polish-v212.css
+- assets/district-global-polish-v212.js
+
+Files updated:
+- server/src/app.js

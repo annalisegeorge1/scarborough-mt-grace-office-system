@@ -1,0 +1,444 @@
+/* Scarborough / Mt. Grace District Office — V212 global chrome polish */
+
+:root{
+  --v212-navy:#071f33;
+  --v212-navy-2:#0b3553;
+  --v212-blue:#174f74;
+  --v212-brass:#a78f5e;
+  --v212-brass-soft:#d8c7a0;
+  --v212-paper:#f7fafb;
+  --v212-line:rgba(255,255,255,.10);
+}
+
+/* Accessible skip link */
+.v212-skip-link{
+  position:fixed;
+  top:10px;left:12px;
+  z-index:10000;
+  transform:translateY(-160%);
+  padding:10px 14px;
+  border-radius:10px;
+  background:#fff;
+  color:#0b3553;
+  border:2px solid #a78f5e;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  font:800 12px/1 system-ui;
+  text-decoration:none;
+  transition:transform .16s ease;
+}
+.v212-skip-link:focus{transform:none}
+
+/* GLOBAL DESKTOP NAV */
+nav[aria-label="Site navigation"]{
+  position:relative;
+  z-index:110;
+  border-bottom:1px solid rgba(216,199,160,.18)!important;
+  background:
+    radial-gradient(circle at 88% 0,rgba(216,199,160,.08),transparent 18rem),
+    linear-gradient(90deg,#061c2e 0%,#0a304a 52%,#0c3a58 100%)!important;
+  box-shadow:0 9px 24px rgba(3,22,36,.12);
+}
+nav[aria-label="Site navigation"] .nav-inner{
+  max-width:1460px!important;
+  margin:0 auto;
+  padding-inline:22px!important;
+  gap:16px!important;
+}
+nav[aria-label="Site navigation"] .v7-brandmark{
+  min-width:max-content;
+  gap:10px!important;
+}
+nav[aria-label="Site navigation"] .v7-seal{
+  position:relative;
+  width:46px!important;height:46px!important;
+  border-radius:50%;
+  padding:3px;
+  background:rgba(255,255,255,.025);
+  box-shadow:0 0 0 1px rgba(216,199,160,.20),0 8px 20px rgba(0,0,0,.12);
+}
+nav[aria-label="Site navigation"] .v7-seal:after{
+  content:"";
+  position:absolute;inset:4px;border-radius:50%;
+  border:1px dashed rgba(216,199,160,.24);
+  pointer-events:none;
+}
+nav[aria-label="Site navigation"] .v7-brandmark-copy strong{
+  color:#fff!important;
+  font:600 13px/1.15 Georgia,"Times New Roman",serif!important;
+  letter-spacing:.01em;
+}
+nav[aria-label="Site navigation"] .v7-brandmark-copy span{
+  color:#d9e5eb!important;
+  font-size:8px!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase;
+}
+nav[aria-label="Site navigation"] .links{
+  min-width:0;
+  gap:3px!important;
+  align-items:center;
+}
+nav[aria-label="Site navigation"] .links>.v51-nav-btn{
+  position:relative;
+  min-height:38px;
+  padding:0 10px!important;
+  border-radius:999px;
+  color:#e4edf1!important;
+  font:800 10px/1 system-ui!important;
+  letter-spacing:.02em!important;
+  transition:background .16s ease,color .16s ease,transform .16s ease;
+}
+nav[aria-label="Site navigation"] .links>.v51-nav-btn:hover,
+nav[aria-label="Site navigation"] .links>.v51-nav-btn:focus-visible{
+  background:rgba(255,255,255,.075)!important;
+  color:#fff!important;
+  transform:translateY(-1px);
+  outline:none;
+}
+nav[aria-label="Site navigation"] .links>.v51-nav-btn.v205-route-active,
+nav[aria-label="Site navigation"] .links>.v51-nav-btn[aria-current="page"]{
+  background:rgba(216,199,160,.095)!important;
+  color:#f6f0df!important;
+  box-shadow:inset 0 0 0 1px rgba(216,199,160,.15);
+}
+nav[aria-label="Site navigation"] .links>.v51-nav-btn.v205-route-active:after{
+  left:13px!important;right:13px!important;bottom:3px!important;
+  height:1px!important;
+  background:#d8c7a0!important;
+}
+
+/* Search becomes part of the masthead rather than a different component. */
+nav[aria-label="Site navigation"] .v27-site-search{
+  margin-left:5px;
+  min-width:220px;
+}
+nav[aria-label="Site navigation"] #v27-site-search-input{
+  min-height:38px!important;
+  border:1px solid rgba(216,199,160,.16)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.07)!important;
+  color:#fff!important;
+  padding-left:36px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+nav[aria-label="Site navigation"] #v27-site-search-input::placeholder{
+  color:rgba(226,236,241,.66)!important;
+}
+nav[aria-label="Site navigation"] #v27-site-search-input:focus{
+  border-color:rgba(216,199,160,.46)!important;
+  background:rgba(255,255,255,.10)!important;
+  box-shadow:0 0 0 3px rgba(216,199,160,.08)!important;
+  outline:none!important;
+}
+nav[aria-label="Site navigation"] .v27-search-symbol{
+  stroke:#d8c7a0!important;
+  opacity:.82;
+}
+nav[aria-label="Site navigation"] .v27-search-clear{
+  color:#d9e5eb!important;
+}
+nav[aria-label="Site navigation"] .v27-search-results{
+  border:1px solid rgba(11,46,72,.12)!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.98)!important;
+  box-shadow:0 18px 44px rgba(3,22,36,.18)!important;
+  overflow:hidden;
+}
+nav[aria-label="Site navigation"] .v89-search-prompts,
+nav[aria-label="Site navigation"] .v89-search-hint{
+  display:none!important;
+}
+
+/* Mobile primary navigation */
+.v125-mobile-nav-shell{
+  border-bottom:1px solid rgba(216,199,160,.17)!important;
+  background:linear-gradient(90deg,#061c2e,#0a304a 58%,#08283f)!important;
+  box-shadow:0 8px 20px rgba(3,22,36,.10);
+}
+.v125-mobile-nav-rail button[data-v51-go]{
+  border-color:rgba(216,199,160,.28)!important;
+  background:rgba(255,255,255,.055)!important;
+  color:#e8f0f3!important;
+}
+.v125-mobile-nav-rail button[data-v51-go]:hover,
+.v125-mobile-nav-rail button[data-v51-go]:focus-visible,
+.v125-mobile-nav-rail button[data-v51-go].v205-route-active,
+.v125-mobile-nav-rail button[data-v51-go][aria-current="page"]{
+  background:rgba(216,199,160,.10)!important;
+  color:#fff!important;
+  border-color:rgba(216,199,160,.46)!important;
+}
+.v125-mobile-nav-arrow{
+  border-color:rgba(216,199,160,.34)!important;
+  background:#08283f!important;
+  color:#d8c7a0!important;
+}
+.v125-mobile-nav-shell::after{
+  color:rgba(216,199,160,.72)!important;
+}
+
+/* District highlights ribbon */
+.v21-live-ribbon{
+  border-bottom:1px solid rgba(11,46,72,.08);
+  background:linear-gradient(90deg,#f5f8f9,#fff,#f5f8f9)!important;
+  color:#32566a!important;
+}
+.v21-live-ribbon .v21-ribbon-dot{
+  background:#a78f5e!important;
+  box-shadow:0 0 0 4px rgba(167,143,94,.08);
+}
+.v21-live-ribbon strong{
+  color:#173f58!important;
+  letter-spacing:.06em;
+}
+
+/* V202 Explore drawer joins the same material language. */
+.v202-drawer{
+  border:1px solid rgba(216,199,160,.16)!important;
+  background:
+    radial-gradient(circle at 100% 0,rgba(167,143,94,.07),transparent 12rem),
+    linear-gradient(180deg,#fbfcfc,#f2f6f8)!important;
+  box-shadow:0 25px 65px rgba(3,22,36,.24)!important;
+}
+.v202-drawer-head{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 96% 6%,rgba(216,199,160,.14),transparent 9rem),
+    linear-gradient(145deg,#071f33,#0d3d5d)!important;
+  color:#fff!important;
+}
+.v202-drawer-head:after{
+  content:"";
+  position:absolute;right:-55px;bottom:-72px;
+  width:150px;height:150px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.12);
+  box-shadow:0 0 0 21px rgba(255,255,255,.014);
+  pointer-events:none;
+}
+.v202-brand-mark{
+  border-radius:50%!important;
+  border:1px solid rgba(216,199,160,.55)!important;
+  background:radial-gradient(circle at 34% 28%,#1a5c82,#08283f 72%)!important;
+  color:#f0e8d5!important;
+  box-shadow:0 0 0 4px rgba(255,255,255,.05);
+}
+.v202-brand-copy strong{color:#fff!important;font-family:Georgia,"Times New Roman",serif!important}
+.v202-brand-copy span,.v202-drawer-intro{color:#cfe0e8!important}
+.v202-search-box{
+  border-color:rgba(11,46,72,.10)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:0 7px 18px rgba(7,35,55,.04);
+}
+.v202-group-toggle{
+  border-radius:14px!important;
+}
+.v202-group.is-open>.v202-group-toggle{
+  background:linear-gradient(90deg,#edf4f7,#fff)!important;
+  box-shadow:inset 2px 0 0 #a78f5e;
+}
+.v202-group-icon{
+  border:1px solid rgba(167,143,94,.18)!important;
+  background:#f7f4ed!important;
+  color:#76623f!important;
+}
+.v202-sub-link:hover,
+.v202-sub-link:focus-visible,
+.v202-sub-link.is-active{
+  background:#edf4f7!important;
+  color:#0b3553!important;
+}
+.v202-menu-fab{
+  border:1px solid rgba(216,199,160,.34)!important;
+  background:linear-gradient(145deg,#08283f,#0d3f5f)!important;
+  color:#fff!important;
+  box-shadow:0 12px 26px rgba(3,22,36,.20)!important;
+}
+.v202-menu-fab svg{stroke:#d8c7a0!important}
+
+/* Floating mobile quick actions */
+.v7-mobile-dock{
+  border-top:1px solid rgba(216,199,160,.16)!important;
+  background:rgba(6,28,46,.96)!important;
+  backdrop-filter:blur(12px);
+  box-shadow:0 -9px 25px rgba(3,22,36,.14);
+}
+.v7-mobile-dock a,
+.v7-mobile-dock button{
+  color:#e8f0f3!important;
+}
+.v7-mobile-dock svg{stroke:#d8c7a0!important;fill:none}
+.v7-mobile-dock .v27-wa-svg{fill:#d8c7a0!important;stroke:none!important}
+
+/* GLOBAL FOOTER — reduce duplication and turn it into one composed civic close. */
+footer{
+  position:relative;
+  overflow:hidden;
+  padding-top:0!important;
+  border-top:1px solid rgba(216,199,160,.18)!important;
+  background:
+    radial-gradient(circle at 90% 0,rgba(216,199,160,.07),transparent 22rem),
+    radial-gradient(circle at 5% 100%,rgba(23,79,116,.18),transparent 26rem),
+    linear-gradient(145deg,#051a2b 0%,#08283f 46%,#0c3855 100%)!important;
+  color:#dce8ed!important;
+}
+footer:before{
+  content:"";
+  position:absolute;
+  right:-180px;top:-210px;
+  width:430px;height:430px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.08);
+  box-shadow:0 0 0 42px rgba(255,255,255,.008),0 0 0 84px rgba(216,199,160,.008);
+  pointer-events:none;
+}
+footer .v48-launch-note,
+footer .v13-tobago-signature,
+footer .v5-footer-signature{
+  display:none!important;
+}
+footer .v20-footer-signature{
+  position:relative;
+  max-width:1200px;
+  margin:0 auto!important;
+  padding:34px 22px 26px!important;
+  border-bottom:1px solid rgba(216,199,160,.12);
+  background:transparent!important;
+}
+footer .v20-footer-monogram{
+  width:58px!important;height:58px!important;
+  border-radius:50%!important;
+  display:grid!important;place-items:center!important;
+  border:1px solid rgba(216,199,160,.56)!important;
+  background:radial-gradient(circle at 34% 28%,#1b5d83,#071f33 72%)!important;
+  color:#eee6d2!important;
+  box-shadow:0 0 0 5px rgba(255,255,255,.025),0 0 0 6px rgba(216,199,160,.12);
+}
+footer .v20-footer-signature span{
+  color:#d8c7a0!important;
+  letter-spacing:.12em!important;
+}
+footer .v20-footer-signature strong{
+  color:#fff!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:500!important;
+}
+footer .v20-footer-signature small{
+  color:#c2d2da!important;
+}
+footer .v20-footer-lines i{
+  background:#a78f5e!important;
+  opacity:.36;
+}
+footer .v14-access-note{
+  max-width:1200px;
+  margin:18px auto 0!important;
+  padding:14px 18px!important;
+  border:1px solid rgba(216,199,160,.10)!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+footer .v14-access-note strong{color:#f1ead8!important}
+footer .v14-access-note span{color:#b9ccd5!important}
+footer .v10-staff-entry{
+  max-width:1200px;
+  margin:14px auto 0!important;
+  border:1px solid rgba(216,199,160,.10)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.04)!important;
+  box-shadow:none!important;
+}
+footer .v10-staff-entry span{color:#d8c7a0!important}
+footer .v10-staff-entry strong{color:#fff!important}
+footer .v10-staff-entry small{color:#b7cbd4!important}
+footer .v10-staff-entry a{
+  border:1px solid rgba(216,199,160,.22)!important;
+  background:#f5f1e8!important;
+  color:#0b3553!important;
+  border-radius:999px!important;
+}
+footer .footer-inner{
+  max-width:1200px!important;
+  margin:22px auto 0!important;
+  padding:22px!important;
+  border-top:1px solid rgba(216,199,160,.10);
+}
+footer .footer-brand strong{color:#fff!important}
+footer .footer-brand span,
+footer .footer-brand a{color:#c8d7de!important}
+footer .v6-footer-links{
+  max-width:1200px!important;
+  margin:0 auto!important;
+  padding:18px 22px!important;
+  border-top:1px solid rgba(255,255,255,.055);
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+footer .v6-footer-links strong{color:#e8dfc6!important}
+footer .v6-footer-links span,
+footer .v6-footer-links a{color:#bfd0d8!important}
+footer .v6-footer-links a:hover{color:#fff!important}
+footer .v35-footer-track{
+  border:1px solid rgba(216,199,160,.20)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.05)!important;
+  color:#f4eedf!important;
+}
+footer .v88-footer-links{
+  max-width:1200px;
+  margin:0 auto;
+  padding:18px 22px 28px!important;
+  justify-content:center;
+  gap:16px!important;
+}
+footer .v88-footer-links a{
+  color:#aebfc8!important;
+  text-decoration:none;
+}
+footer .v88-footer-links a:hover,
+footer .v88-footer-links a:focus-visible{color:#fff!important}
+footer .v170-footer-watermark{opacity:.05!important}
+
+/* Global focus language */
+body :is(a,button,input,select,textarea,summary):focus-visible{
+  outline:2px solid #a78f5e!important;
+  outline-offset:3px!important;
+}
+body :is(a,button):not(.v212-skip-link){
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Keep anchored sections clear of sticky chrome. */
+main [id]{scroll-margin-top:92px}
+
+/* Tablet */
+@media(max-width:1180px){
+  nav[aria-label="Site navigation"] .nav-inner{padding-inline:14px!important}
+  nav[aria-label="Site navigation"] .links>.v51-nav-btn{padding-inline:8px!important;font-size:9.5px!important}
+  nav[aria-label="Site navigation"] .v27-site-search{min-width:190px}
+}
+
+/* Mobile */
+@media(max-width:760px){
+  footer .v20-footer-signature,
+  footer .v10-staff-entry,
+  footer .footer-inner,
+  footer .v6-footer-links,
+  footer .v88-footer-links,
+  footer .v14-access-note{
+    margin-left:12px!important;
+    margin-right:12px!important;
+  }
+  footer .v20-footer-signature{padding:26px 16px 20px!important}
+  footer .v20-footer-monogram{width:48px!important;height:48px!important}
+  footer .v10-staff-entry{padding:15px!important}
+  footer .footer-inner{padding:18px 8px!important}
+  footer .v6-footer-links{padding:16px 8px!important}
+  footer .v88-footer-links{padding:16px 8px 78px!important}
+  .v202-menu-fab{
+    bottom:76px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .v212-skip-link,
+  nav[aria-label="Site navigation"] .links>.v51-nav-btn{transition:none!important}
+}
