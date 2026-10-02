@@ -424,3 +424,33 @@ body.v203-focused-view #gallery.v204-content-card .v204-section-chip{
 @media(prefers-reduced-motion:reduce){
   body.v203-focused-view .v204-action-card{transition:none!important}
 }
+
+
+/* Small ceremonial details that echo the original civic-seal language. */
+.v210-summary-seal{
+  float:right;
+  width:46px;height:46px;margin:0 0 8px 14px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 34% 28%,#1b5b82,#0a2b44 70%);
+  border:1px solid rgba(216,199,160,.62);
+  box-shadow:0 0 0 4px rgba(255,255,255,.08),inset 0 0 0 5px rgba(255,255,255,.025);
+}
+.v210-summary-seal span{
+  color:#eee6d2;
+  font:900 8px/1 system-ui;
+  letter-spacing:.12em;
+}
+.v210-folio-no{
+  position:absolute;
+  left:17px;bottom:13px;
+  z-index:2;
+  color:rgba(11,46,72,.28);
+  font:850 8px/1 system-ui;
+  letter-spacing:.14em;
+  pointer-events:none;
+}
+body.v203-focused-view #gallery .v210-folio-no{color:rgba(255,255,255,.28)}
+@media(max-width:650px){
+  .v210-summary-seal{display:none}
+  .v210-folio-no{display:none}
+}
