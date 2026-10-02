@@ -1,0 +1,21 @@
+/* Scarborough / Mt. Grace District Office — V205 route integration */
+nav[aria-label="Site navigation"] .v51-nav-btn.v205-route-active{
+  position:relative;
+  color:#fff!important;
+}
+nav[aria-label="Site navigation"] .v51-nav-btn.v205-route-active:after{
+  content:"";
+  position:absolute;
+  left:10px;right:10px;bottom:4px;
+  height:2px;border-radius:999px;
+  background:currentColor;
+  opacity:.9;
+}
+.v125-mobile-nav-rail button.v205-route-active{
+  background:rgba(255,255,255,.13)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+}
+body.v203-focused-view nav[aria-label="Site navigation"] .v27-search-hint,
+body.v203-focused-view nav[aria-label="Site navigation"] .v89-search-prompts{
+  display:none!important;
+}
