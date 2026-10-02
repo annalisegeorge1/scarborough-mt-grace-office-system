@@ -67,8 +67,12 @@
   let lastFocus=null;
   let rebuildTimer=0;
 
-  function routeForAncestor(id){
-    if(routeBySection[id])return routeBySection[id];
+  function routeForElement(element){
+    let node=element;
+    while(node&&node!==document.body){
+      if(node.id&&routeBySection[node.id])return routeBySection[node.id];
+      node=node.parentElement;
+    }
     if(currentPath==="/office")return "/office/";
     if(currentPath==="/services")return "/services/";
     if(currentPath==="/community")return "/community/";
@@ -91,7 +95,7 @@
       const ancestor=heading.closest("section[id],article[id],div[id]");
       if(!ancestor?.id)return;
       const parentId=ancestor.id;
-      const route=routeForAncestor(parentId);
+      const route=routeForElement(heading);
       const key=slug(label)+"|"+route+"|"+parentId;
       if(seen.has(key))return;
       seen.add(key);
