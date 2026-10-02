@@ -25,6 +25,19 @@
   .cm-featured-row{border:1px solid rgba(201,163,74,.24);border-radius:10px;background:#fffaf0;padding:9px 10px}
   .cm-featured-row label{color:#755f34}
   .v214-pin-note{display:block;margin-top:6px;color:#6d818c;font-size:11px;line-height:1.45}
+  .cm-thread-card{border-top:3px solid #174f74}
+  .cm-thread-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .cm-thread-list{display:grid;gap:9px;margin-top:14px}
+  .cm-thread-entry{position:relative;padding:12px 13px 12px 35px;border:1px solid #d7e3e9;border-radius:12px;background:#f8fbfc}
+  .cm-thread-entry::before{content:'';position:absolute;left:16px;top:0;bottom:-10px;width:1px;background:#c9a34a}
+  .cm-thread-entry::after{content:'';position:absolute;left:12px;top:18px;width:7px;height:7px;border-radius:50%;background:#174f74;border:2px solid #fff;box-shadow:0 0 0 1px #c9a34a}
+  .cm-thread-entry:last-child::before{bottom:18px}
+  .cm-thread-entry small{display:block;color:#6a7d87;font-size:10px;font-weight:800}
+  .cm-thread-entry strong{display:block;margin:4px 0;color:#0b3553}
+  .cm-thread-entry p{margin:4px 0;color:#385669;font-size:12px;line-height:1.5}
+  .cm-thread-entry button{margin-top:6px;border:0;border-radius:7px;padding:6px 8px;background:#7a2531;color:#fff;font-size:10px;font-weight:850;cursor:pointer}
+  .cm-thread-empty{padding:13px;border:1px dashed #c8d8df;border-radius:10px;color:#5f7480;background:#fbfcfd;font-size:12px;line-height:1.5}
+  .cm-thread-count{display:inline-block;margin-left:6px;border-radius:999px;padding:3px 6px;background:#eef4f6;color:#174f74;font-size:9px;font-weight:900}
   @media(max-width:900px){.cm-two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -134,7 +147,31 @@
 
 <section class="card">
 <h2>Managed Activity Hub records</h2>
-<div class="tablewrap"><table><thead><tr><th>Title</th><th>Type</th><th>Public status</th><th>Pinned</th><th>Workflow</th><th>Actions</th></tr></thead><tbody id="managed-activity"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Title</th><th>Type</th><th>Public status</th><th>Pinned</th><th>Thread</th><th>Workflow</th><th>Actions</th></tr></thead><tbody id="managed-activity"></tbody></table></div>
+</section>
+
+<section class="card cm-thread-card" id="activity-progress-card">
+<h2>Public progress thread</h2>
+<p class="cm-help">Add dated public progress without replacing the original project or notice. Earlier entries remain visible as a history. The parent item must still be Published + Verified before any thread is public.</p>
+<div id="activity-progress-empty" class="cm-thread-empty">Choose <strong>Thread</strong> or <strong>Edit</strong> on a managed Activity Hub item to work with its public progress history. Built-in items can use a thread after they are first saved as a managed override.</div>
+<div id="activity-progress-editor" hidden>
+  <div class="formgrid">
+    <div class="f12"><label>Selected Activity Hub item</label><input id="progress-parent-title" disabled></div>
+    <div class="f4"><label>Progress status</label>
+      <select id="progress-status">
+        <option>Request Submitted</option><option>Referral Made</option><option>Follow-Up Required</option>
+        <option>Agency Response Received</option><option>Scheduled</option><option>In Progress</option>
+        <option>Completed</option><option>On Hold</option><option>Confirmed</option><option>Planned</option><option>In Development</option>
+      </select>
+    </div>
+    <div class="f4"><label>Progress date</label><input id="progress-date" type="datetime-local"></div>
+    <div class="f4"><label>Use as current public status</label><select id="progress-set-current"><option value="true">Yes</option><option value="false">No — history only</option></select></div>
+    <div class="f12"><label>Public progress update</label><textarea id="progress-summary" placeholder="State what happened or what changed. Keep this factual and public-safe."></textarea></div>
+    <div class="f12"><label>Optional public context</label><textarea id="progress-note" placeholder="Optional clarification, next step or agency context."></textarea></div>
+  </div>
+  <div class="cm-thread-toolbar"><button class="btn gold" id="progress-add" type="button">Add progress entry</button><button class="btn" id="progress-clear" type="button">Clear progress form</button></div>
+  <div id="progress-list" class="cm-thread-list"></div>
+</div>
 </section>
 </section>
 
@@ -217,9 +254,13 @@ function render(){
   }).join('')||'<tr><td colspan="4" class="empty">No built-in Activity Hub items detected.</td></tr>';
 
   const managedActivity=data.filter(x=>x.type==='activity'||x.type==='activity_override');
-  $('managed-activity').innerHTML=managedActivity.map(x=>`<tr><td><strong>${SMG.esc(x.title)}</strong>${x.type==='activity_override'?'<br><span class="small">Built-in item override</span>':''}</td>
-    <td>${SMG.esc(meta(x.metadata).subtype||'project')}</td><td>${SMG.esc(x.public_status||'—')}</td><td><span class="cm-status">${x.is_featured?'Pinned':'Standard'}</span></td><td><span class="badge">${SMG.esc(x.workflow)}</span></td>
-    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-activity" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No managed Activity Hub records yet.</td></tr>';
+  $('managed-activity').innerHTML=managedActivity.map(x=>{
+    const thread=Array.isArray(meta(x.metadata).progressHistory)?meta(x.metadata).progressHistory:[];
+    return `<tr><td><strong>${SMG.esc(x.title)}</strong>${x.type==='activity_override'?'<br><span class="small">Built-in item override</span>':''}</td>
+    <td>${SMG.esc(meta(x.metadata).subtype||'project')}</td><td>${SMG.esc(x.public_status||'—')}</td><td><span class="cm-status">${x.is_featured?'Pinned':'Standard'}</span></td>
+    <td><span class="cm-status">${thread.length} entr${thread.length===1?'y':'ies'}</span></td><td><span class="badge">${SMG.esc(x.workflow)}</span></td>
+    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-activity" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-edit" data-cm-action="edit-progress" data-cm-id="${SMG.esc(x.id)}">Thread</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`}).join('')||'<tr><td colspan="7" class="empty">No managed Activity Hub records yet.</td></tr>';
+  refreshProgressEditor();
 
   $('all-content').innerHTML=data.map(x=>`<tr><td>${SMG.esc(x.type)}</td><td><strong>${SMG.esc(x.title)}</strong></td><td>${SMG.esc(x.section||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td><td>${x.verified?'Yes':'No'}</td><td>${SMG.fmt(x.updated_at)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No content records.</td></tr>';
 }
@@ -235,7 +276,8 @@ document.querySelectorAll('#static-forms, #managed-forms, #static-activity, #man
       'edit-form':()=>editForm(id),'archive':()=>archiveRecord(id),
       'edit-static-activity':()=>editStaticActivity(key),
       'hide-activity':()=>hideStaticActivity(key),'restore-activity':()=>restoreStaticActivity(key),
-      'edit-activity':()=>editActivity(id)
+      'edit-activity':()=>editActivity(id),
+      'edit-progress':()=>selectProgressRecord(id,true)
     };
     actions[button.dataset.cmAction]?.();
   });
@@ -291,6 +333,49 @@ async function restoreStaticForm(enc){
   try{await SMG.api('/api/content/'+old.id,{method:'PATCH',body:{workflow:'Archived'}});SMG.msg('Built-in form restored.','ok');await load()}catch(e){SMG.msg(e.message,'danger')}
 }
 
+let selectedProgressId='';
+function localDateTimeNow(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function progressEntries(x){
+  const list=meta(x?.metadata).progressHistory;
+  return Array.isArray(list)?list.filter(v=>v&&typeof v==='object').slice().sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))):[];
+}
+function clearProgressForm(){
+  SMG.set('progress-summary','');SMG.set('progress-note','');
+  const x=data.find(r=>r.id===selectedProgressId);
+  SMG.set('progress-status',x?.public_status||'Follow-Up Required');
+  SMG.set('progress-set-current','true');
+  SMG.set('progress-date',localDateTimeNow());
+}
+function renderProgressEntries(x){
+  const list=$('progress-list');if(!list)return;
+  const entries=progressEntries(x);
+  list.innerHTML=entries.map(entry=>`<article class="cm-thread-entry">
+    <small>${SMG.esc(SMG.fmt(entry.date)||entry.date||'')}</small>
+    <strong>${SMG.esc(entry.status||'Progress update')}</strong>
+    <p>${SMG.esc(entry.summary||'')}</p>
+    ${entry.note?`<p><em>${SMG.esc(entry.note)}</em></p>`:''}
+    <button type="button" data-progress-remove="${SMG.esc(entry.id||'')}">Remove mistaken entry</button>
+  </article>`).join('')||'<div class="cm-thread-empty">No progress entries yet. The original Activity Hub item remains unchanged until you add the first dated update.</div>';
+}
+function refreshProgressEditor(){
+  const editor=$('activity-progress-editor'),empty=$('activity-progress-empty');
+  if(!editor||!empty)return;
+  const x=data.find(r=>r.id===selectedProgressId);
+  editor.hidden=!x;empty.hidden=!!x;
+  if(!x)return;
+  SMG.set('progress-parent-title',x.title||'');
+  renderProgressEntries(x);
+}
+function selectProgressRecord(id,scroll=false){
+  const x=data.find(r=>r.id===id);if(!x)return;
+  selectedProgressId=id;
+  refreshProgressEditor();
+  clearProgressForm();
+  if(scroll)$('activity-progress-card')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function clearActivity(){
   ['activity-id','activity-static-key','activity-title','activity-code','activity-role','activity-summary','activity-note','activity-next','activity-date','activity-publish','activity-expire','activity-employer','activity-deadline','activity-source-url'].forEach(id=>SMG.set(id,''));
   SMG.set('activity-subtype','project');SMG.set('activity-status','Planned');SMG.set('activity-workflow','Draft');SMG.set('activity-verified','false');SMG.set('activity-order','0');SMG.set('activity-featured','false');
@@ -309,15 +394,17 @@ function fillActivity(x,staticKey=''){
   SMG.set('activity-order',String(x.sort_order||0));SMG.set('activity-featured',String(!!(x.is_featured||x.isFeatured)));SMG.set('activity-publish',dt(x.publish_on));SMG.set('activity-expire',dt(x.expire_on));
   SMG.set('activity-employer',m.employer||'');SMG.set('activity-employer-type',m.employerType||'THA');SMG.set('activity-deadline',m.deadline||'');SMG.set('activity-source-url',x.public_url||x.publicUrl||'');showEmploymentFields();
 }
-function editActivity(id){const x=data.find(r=>r.id===id);if(x){fillActivity(x);document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'})}}
+function editActivity(id){const x=data.find(r=>r.id===id);if(x){fillActivity(x);selectProgressRecord(id,false);document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'})}}
 function editStaticActivity(enc){
   const key=decodeURIComponent(enc),s=(snapshot.activity||[]).find(x=>x.key===key);if(!s)return;
   const o=latestOverride('activity_override',key);
-  if(o)fillActivity(o,key);else fillActivity({...s,workflow:'Published',verified:true,metadata:{staticKey:key,subtype:s.subtype,code:s.code,role:s.role}},key);
+  if(o){fillActivity(o,key);selectProgressRecord(o.id,false)}
+  else{selectedProgressId='';refreshProgressEditor();fillActivity({...s,workflow:'Published',verified:true,metadata:{staticKey:key,subtype:s.subtype,code:s.code,role:s.role}},key)}
   document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'});
 }
 $('activity-save').onclick=async()=>{
   const id=SMG.val('activity-id'),staticKey=SMG.val('activity-static-key'),subtype=SMG.val('activity-subtype');
+  const current=id?data.find(r=>r.id===id):null,currentMeta=meta(current?.metadata);
   const employment=subtype==='employment',deadline=SMG.val('activity-deadline'),sourceUrl=SMG.val('activity-source-url');
   if(employment&&staticKey)return SMG.msg('Create employment opportunities as new items, not overrides of built-in notices.','danger');
   if(employment&&(!SMG.val('activity-employer')||!deadline||!/^https:\/\//i.test(sourceUrl)))return SMG.msg('Employment notices need an employer, deadline and HTTPS official application link.','danger');
@@ -325,7 +412,7 @@ $('activity-save').onclick=async()=>{
     body:SMG.val('activity-next'),publicStatus:employment?'Open':SMG.val('activity-status'),statusNote:SMG.val('activity-note'),eventDate:SMG.val('activity-date')||null,
     workflow:SMG.val('activity-workflow'),verified:SMG.val('activity-verified')==='true',sortOrder:Number(SMG.val('activity-order'))||0,isFeatured:SMG.val('activity-featured')==='true',
     publishOn:SMG.val('activity-publish')||null,expireOn:employment?`${deadline}T23:59:59-04:00`:(SMG.val('activity-expire')||null),publicUrl:employment?sourceUrl:null,
-    metadata:{staticKey:staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),employer:employment?SMG.val('activity-employer'):undefined,employerType:employment?SMG.val('activity-employer-type'):undefined,deadline:employment?deadline:undefined,action:'show'}};
+    metadata:{...currentMeta,staticKey:staticKey||currentMeta.staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),employer:employment?SMG.val('activity-employer'):null,employerType:employment?SMG.val('activity-employer-type'):null,deadline:employment?deadline:null,action:'show'}};
   if(!body.title)return SMG.msg('Activity title is required.','danger');
   try{
     id?await SMG.api('/api/content/'+id,{method:'PATCH',body}):await SMG.api('/api/content',{method:'POST',body});
@@ -336,7 +423,7 @@ async function hideStaticActivity(enc){
   const key=decodeURIComponent(enc),s=(snapshot.activity||[]).find(x=>x.key===key);if(!s)return;
   const old=latestOverride('activity_override',key),body={type:'activity_override',section:'activity',category:s.subtype,title:s.title,summary:s.summary,
     publicStatus:s.status||null,statusNote:s.statusNote||null,workflow:'Published',verified:true,
-    metadata:{staticKey:key,subtype:s.subtype,code:s.code,role:s.role,action:'hide'}};
+    metadata:{...meta(old?.metadata),staticKey:key,subtype:s.subtype,code:s.code,role:s.role,action:'hide'}};
   try{old?await SMG.api('/api/content/'+old.id,{method:'PATCH',body}):await SMG.api('/api/content',{method:'POST',body});SMG.msg('Activity item hidden from the public hub.','ok');await load()}catch(e){SMG.msg(e.message,'danger')}
 }
 async function restoreStaticActivity(enc){
@@ -346,6 +433,31 @@ async function restoreStaticActivity(enc){
 async function archiveRecord(id){
   try{await SMG.api('/api/content/'+id,{method:'PATCH',body:{workflow:'Archived'}});SMG.msg('Content archived and removed from public display.','ok');await load()}catch(e){SMG.msg(e.message,'danger')}
 }
+
+
+$('progress-clear').onclick=clearProgressForm;
+$('progress-add').onclick=async()=>{
+  const id=selectedProgressId,x=data.find(r=>r.id===id);
+  if(!x)return SMG.msg('Choose a managed Activity Hub item first.','danger');
+  const localDate=SMG.val('progress-date');
+  const body={status:SMG.val('progress-status'),date:localDate?new Date(localDate).toISOString():'',summary:SMG.val('progress-summary'),note:SMG.val('progress-note'),setCurrentStatus:SMG.val('progress-set-current')==='true'};
+  if(!localDate||!body.summary)return SMG.msg('Progress date and public update are required.','danger');
+  try{
+    await SMG.api('/api/content/'+id+'/progress',{method:'POST',body});
+    SMG.msg('Progress entry added. It will be public only while the parent item is Published + Verified.','ok');
+    await load();selectedProgressId=id;refreshProgressEditor();clearProgressForm();
+  }catch(e){SMG.msg(e.message,'danger')}
+};
+$('progress-list').addEventListener('click',async event=>{
+  const button=event.target.closest('[data-progress-remove]');if(!button||!selectedProgressId)return;
+  const progressId=button.dataset.progressRemove;if(!progressId)return;
+  if(!window.confirm('Remove this progress entry? The removal will be recorded in the audit log.'))return;
+  try{
+    await SMG.api('/api/content/'+selectedProgressId+'/progress/'+encodeURIComponent(progressId),{method:'DELETE'});
+    SMG.msg('Progress entry removed.','ok');
+    const id=selectedProgressId;await load();selectedProgressId=id;refreshProgressEditor();
+  }catch(e){SMG.msg(e.message,'danger')}
+});
 
 $('other-save').onclick=async()=>{
   const body={type:SMG.val('other-type'),section:'other',workflow:SMG.val('other-workflow'),verified:SMG.val('other-verified')==='true',

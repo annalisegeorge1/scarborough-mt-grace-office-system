@@ -1,0 +1,130 @@
+Scarborough / Mt. Grace District Office — V215
+
+THREADED PUBLIC PROGRESS + STAFF WORKFLOW EXTENSION
+
+V215 extends the staff Website & Content Manager and the public District Digital Feed without removing existing staff functionality.
+
+STAFF-SIDE PRESERVATION
+- Existing Forms & Documents editor remains unchanged.
+- Existing Activity Hub editor remains available with all prior fields.
+- Existing Hide / Restore / Edit / Archive actions remain available.
+- Existing Published + Verified workflow remains authoritative.
+- Existing Pin in District Digital Feed control remains available.
+- Existing Other Public Content editor remains available.
+- No existing staff route, staff page, database table or authentication flow is replaced.
+- No database migration is required.
+
+IMPORTANT DATA-PRESERVATION FIX
+Before V215, saving the Activity Hub editor rebuilt the metadata object.
+V215 now preserves existing metadata when staff make ordinary edits.
+This prevents progress-thread history and future metadata extensions from being erased by a later title/status/summary edit.
+Hiding a built-in Activity Hub override also preserves its existing metadata.
+
+NEW STAFF PROGRESS THREAD
+Managed Activity Hub records now show a Thread count and a Thread action.
+
+Selecting Thread or editing a managed Activity Hub item opens an additive Public Progress Thread editor with:
+- Selected Activity Hub item
+- Progress status
+- Progress date
+- “Use as current public status” Yes / No
+- Public progress update
+- Optional public context
+- Add progress entry
+- Remove mistaken entry
+
+Progress entries do not replace the original item.
+They are appended to metadata.progressHistory in chronological history.
+
+Progress entry examples:
+- Request Submitted
+- Referral Made
+- Follow-Up Required
+- Agency Response Received
+- Scheduled
+- In Progress
+- Completed
+- On Hold
+- Confirmed
+- Planned
+- In Development
+
+CURRENT-STATUS SYNC
+When staff add a progress entry they may choose:
+- Yes: also update the parent item’s current public status to the new progress status.
+- No — history only: append the progress history without changing the parent’s current status.
+
+This avoids forcing staff to update the status twice while preserving manual control.
+
+AUDIT & SAFETY
+New authenticated endpoints:
+- POST /api/content/:id/progress
+- DELETE /api/content/:id/progress/:progressId
+
+Both require the existing content.write permission.
+Both actions are recorded in the audit log.
+Progress entries contain no staff identity in public metadata.
+Public visibility still depends on the parent item being Published + Verified and inside its publication window.
+Progress history is capped at 100 retained entries per managed item.
+
+Date handling:
+- Staff enter the date/time in their browser.
+- The CMS converts that local value to an ISO timestamp before saving.
+- This avoids cloud-server timezone drift.
+
+PUBLIC PROGRESS THREADS
+For managed feed items with progress history:
+- District Digital Feed shows a progress-entry count.
+- A Progress Thread control expands the full dated history.
+- Entries are shown oldest -> newest.
+- The latest entry receives stronger visual emphasis.
+- Existing statuses retain their wording.
+- The original feed item remains above the thread.
+
+Activity Hub source cards also receive a collapsed Public Progress History disclosure when a matching managed item has thread history.
+This ensures the full source section contains the history as well as the Digital Feed.
+
+PERMALINK SUPPORT
+Existing V214 item permalinks continue to work.
+A URL using:
+  /updates/?post=<id>&thread=1
+will open the exact managed feed item and expand its progress thread.
+
+RSS
+The existing RSS feed now treats a progress addition as an update to the parent public item.
+When a thread has entries:
+- The RSS description uses the latest progress status + summary.
+- RSS ordering uses the record’s latest updated_at timestamp.
+This keeps one project/matter as one authoritative public record rather than creating duplicate RSS items.
+
+INFORMATION INTEGRITY
+- No progress date is invented.
+- No static item without managed thread history receives a fake thread.
+- The full source item remains authoritative.
+- A progress status does not imply completion unless staff explicitly publish Completed.
+- Earlier entries remain visible after later progress is added.
+- Removing a mistaken entry is audit-logged.
+
+QA
+- V215 public JavaScript syntax: pass.
+- Server app JavaScript syntax: pass.
+- Content-route JavaScript syntax: pass.
+- Public RSS-route JavaScript syntax: pass.
+- Staff CMS inline JavaScript syntax: pass.
+- V215 CSS/JS injection: pass.
+- V215 loads after V214.
+- New progress routes present: pass.
+- Activity metadata preservation wiring: pass.
+- Existing staff form/activity/other content controls remain present: pass.
+- SMG API client supports DELETE and CSRF-protected non-GET requests: verified.
+
+Files added:
+- assets/district-progress-threads-v215.css
+- assets/district-progress-threads-v215.js
+- V215_NOTES.txt
+
+Files updated:
+- staff/cms.html
+- server/src/routes/content.js
+- server/src/routes/public.js
+- server/src/app.js

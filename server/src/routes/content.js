@@ -1,5 +1,6 @@
 'use strict';
 const express=require('express');
+const crypto=require('crypto');
 const fs=require('fs/promises');
 const path=require('path');
 const db=require('../db');
@@ -83,6 +84,29 @@ function safeMeta(v){
 }
 function has(obj,key){return Object.prototype.hasOwnProperty.call(obj,key)}
 function nullable(v){return v===''||v===undefined?null:v}
+function progressHistory(meta){
+  const list=Array.isArray(safeMeta(meta).progressHistory)?safeMeta(meta).progressHistory:[];
+  return list.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)).slice(-100);
+}
+function cleanProgressInput(body={}){
+  const status=cleanText(body.status||'').slice(0,120);
+  const summary=cleanText(body.summary||'').slice(0,1200);
+  const note=cleanText(body.note||'').slice(0,1600);
+  const rawDate=String(body.date||'').trim();
+  if(!status||!summary)return {error:'Progress status and public update are required.'};
+  const parsed=Date.parse(rawDate);
+  if(!rawDate||!Number.isFinite(parsed))return {error:'A valid progress date is required.'};
+  return {
+    entry:{
+      id:crypto.randomUUID(),
+      status,
+      summary,
+      note:note||'',
+      date:new Date(parsed).toISOString(),
+      createdAt:new Date().toISOString()
+    }
+  };
+}
 const collectionOffices=new Set(['district','community','education','finance','food','health','infrastructure','chief','housing','tourism']);
 function formAvailabilityError(x){
   if(x.type!=='form'||x.workflow!=='Published')return null;
@@ -197,6 +221,35 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
     ]);
     await audit(db,{actorUserId:req.user.id,eventType:'content.update',objectType:'public_content',objectId:req.params.id,metadata:{workflow:q.rows[0].workflow,type:q.rows[0].type,section:q.rows[0].section}});
     res.json({content:q.rows[0]});
+  }catch(e){next(e)}
+});
+
+router.post('/:id/progress',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const cur=(await db.query('SELECT * FROM public_content WHERE id=$1',[req.params.id])).rows[0];
+    if(!cur)return res.status(404).json({detail:'Content record not found.'});
+    if(!['activity','activity_override'].includes(cur.type))return res.status(400).json({detail:'Progress threads are available only for Activity Hub items.'});
+    const parsed=cleanProgressInput(req.body||{});
+    if(parsed.error)return res.status(400).json({detail:parsed.error});
+    const setCurrentStatus=req.body?.setCurrentStatus!==false;
+    const metadata={...safeMeta(cur.metadata),progressHistory:[...progressHistory(cur.metadata).slice(-99),parsed.entry]};
+    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, public_status=CASE WHEN $3 THEN $4 ELSE public_status END, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata),setCurrentStatus,parsed.entry.status]);
+    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_add',objectType:'public_content',objectId:req.params.id,metadata:{progressId:parsed.entry.id,status:parsed.entry.status,date:parsed.entry.date,setCurrentStatus}});
+    res.status(201).json({content:q.rows[0],progress:parsed.entry});
+  }catch(e){next(e)}
+});
+
+router.delete('/:id/progress/:progressId',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const cur=(await db.query('SELECT * FROM public_content WHERE id=$1',[req.params.id])).rows[0];
+    if(!cur)return res.status(404).json({detail:'Content record not found.'});
+    if(!['activity','activity_override'].includes(cur.type))return res.status(400).json({detail:'Progress threads are available only for Activity Hub items.'});
+    const list=progressHistory(cur.metadata),entry=list.find(x=>String(x.id)===String(req.params.progressId));
+    if(!entry)return res.status(404).json({detail:'Progress entry not found.'});
+    const metadata={...safeMeta(cur.metadata),progressHistory:list.filter(x=>String(x.id)!==String(req.params.progressId))};
+    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata)]);
+    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_remove',objectType:'public_content',objectId:req.params.id,metadata:{progressId:entry.id,status:entry.status,date:entry.date}});
+    res.json({content:q.rows[0],removed:true});
   }catch(e){next(e)}
 });
 
