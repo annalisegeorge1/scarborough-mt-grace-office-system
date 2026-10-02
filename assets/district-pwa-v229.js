@@ -49,10 +49,7 @@
     }
   }
 
-  function applyConnectionState(announce=false){
-    const online=navigator.onLine!==false;
-    document.body.classList.toggle("v229-offline",!online);
-
+  function syncFreshnessText(online=navigator.onLine!==false){
     document.querySelectorAll(".v227-freshness,.v227-feed-freshness").forEach(el=>{
       if(!online){
         if(!el.dataset.v229OnlineText)el.dataset.v229OnlineText=el.textContent||"";
@@ -62,6 +59,12 @@
         delete el.dataset.v229OnlineText;
       }
     });
+  }
+
+  function applyConnectionState(announce=false){
+    const online=navigator.onLine!==false;
+    document.body.classList.toggle("v229-offline",!online);
+    syncFreshnessText(online);
 
     if(!online){
       showStatus("Offline mode · live updates, enquiries and tracking are unavailable.",{kind:"offline",persist:true});
@@ -230,7 +233,7 @@
       timer=window.setTimeout(()=>{
         addInstallOpeners();
         addOfflineNotes();
-        applyConnectionState(false);
+        syncFreshnessText();
       },100);
     }).observe(document.body,{childList:true,subtree:true});
   }
