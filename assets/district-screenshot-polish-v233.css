@@ -1,0 +1,183 @@
+/* Scarborough / Mt. Grace District Office — V233
+   Final screenshot polish after the V232 form-stability pass.
+   CSS-only: fixes the remaining nav/chip/floating-control issues. */
+
+/* ==========================================================================
+   1. PROGRAMME HELP CHIPS
+   These are spans, not buttons. V232 correctly fixed dark programme buttons,
+   but the “I need help with…” pills shown in the screenshot use .v17-start-items.
+   ========================================================================== */
+body:not(.v112-dark) #resident-programmes .v17-start-items span{
+  color:#244960!important;
+  -webkit-text-fill-color:#244960!important;
+  background:rgba(255,255,255,.88)!important;
+  border:1px solid rgba(11,46,72,.10)!important;
+  box-shadow:0 3px 10px rgba(7,35,55,.025)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+body:not(.v112-dark) #resident-programmes .v17-start>strong{
+  color:#173f58!important;
+  -webkit-text-fill-color:#173f58!important;
+  opacity:1!important;
+}
+
+body.v112-dark #resident-programmes .v17-start-items span{
+  color:#e6f0f4!important;
+  -webkit-text-fill-color:#e6f0f4!important;
+  background:#21485f!important;
+  border:1px solid rgba(216,199,160,.14)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+body.v112-dark #resident-programmes .v17-start>strong{
+  color:#f4f8fa!important;
+  -webkit-text-fill-color:#f4f8fa!important;
+  opacity:1!important;
+}
+
+/* ==========================================================================
+   2. SPANISH NAV SHORTCUT
+   public-content-runtime dynamically injects this link with absolute desktop
+   positioning. On touch-landscape it can overlap the SMG brand lockup.
+   Move it into the same scrollable link rail as the other destinations.
+   ========================================================================== */
+@media(orientation:landscape) and (pointer:coarse) and (min-width:761px){
+  body nav[aria-label="Site navigation"] .links > a.v206-language-link{
+    position:static!important;
+    inset:auto!important;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    order:90!important;
+    flex:0 0 auto!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    height:auto!important;
+    min-width:max-content!important;
+    min-height:38px!important;
+    max-width:none!important;
+    margin:0 2px!important;
+    padding:0 10px!important;
+    transform:none!important;
+    border-radius:999px!important;
+    font-size:9px!important;
+    line-height:1!important;
+    letter-spacing:.06em!important;
+    white-space:nowrap!important;
+    z-index:auto!important;
+  }
+
+  body nav[aria-label="Site navigation"] .v7-brandmark{
+    position:relative!important;
+    z-index:1!important;
+  }
+
+  body nav[aria-label="Site navigation"] .links{
+    position:relative!important;
+    z-index:2!important;
+  }
+}
+
+/* ==========================================================================
+   3. PORTRAIT MOBILE DOCK CLEARANCE
+   The fixed Call / WhatsApp / Enquiry / Track dock is useful, but the supplied
+   portrait screenshots show Explore and the accessibility tray crowding it.
+   Lift those controls and add real document clearance at the end of the page.
+   ========================================================================== */
+@media(max-width:900px) and (orientation:portrait){
+  html{
+    scroll-padding-bottom:calc(126px + env(safe-area-inset-bottom))!important;
+  }
+
+  main#main-content{
+    padding-bottom:24px!important;
+  }
+
+  footer{
+    padding-bottom:calc(116px + env(safe-area-inset-bottom))!important;
+  }
+
+  .v8-accessibility{
+    bottom:calc(112px + env(safe-area-inset-bottom))!important;
+    right:10px!important;
+  }
+
+  .v202-menu-fab{
+    bottom:calc(104px + env(safe-area-inset-bottom))!important;
+    left:14px!important;
+  }
+
+  .v7-mobile-dock{
+    bottom:max(7px,env(safe-area-inset-bottom))!important;
+    left:10px!important;
+    right:10px!important;
+    padding:5px!important;
+    border-radius:16px!important;
+  }
+
+  .v7-mobile-dock a,
+  .v7-mobile-dock button{
+    min-height:48px!important;
+  }
+}
+
+/* Very short portrait screens need a little more separation. */
+@media(max-width:900px) and (orientation:portrait) and (max-height:740px){
+  .v8-accessibility{
+    bottom:calc(106px + env(safe-area-inset-bottom))!important;
+    transform:scale(.90)!important;
+    transform-origin:right bottom!important;
+  }
+
+  .v202-menu-fab{
+    bottom:calc(99px + env(safe-area-inset-bottom))!important;
+    transform:scale(.90)!important;
+    transform-origin:left bottom!important;
+  }
+}
+
+/* ==========================================================================
+   4. KEEP SERVICE TOOL STACKS CLEAN IN DARK PORTRAIT
+   V228/V231 are useful but the screenshots show three consecutive utility
+   blocks. Tighten spacing without removing or hiding any system.
+   ========================================================================== */
+@media(max-width:900px){
+  body[data-district-view="services"] .v228-launcher,
+  body[data-district-view="services"] .v231-launcher{
+    margin-top:0!important;
+    margin-bottom:0!important;
+  }
+
+  body[data-district-view="services"] .v204-main-column{
+    gap:16px!important;
+  }
+}
+
+/* ==========================================================================
+   5. ACCESSIBILITY / FIXED CONTROLS MUST NOT COVER MODALS OR SHEETS
+   ========================================================================== */
+body.v224-command-open :is(.v8-accessibility,.v202-menu-fab),
+body.v225-journey-open :is(.v8-accessibility,.v202-menu-fab),
+body.v228-readiness-open :is(.v8-accessibility,.v202-menu-fab),
+body.v231-intel-open :is(.v8-accessibility,.v202-menu-fab){
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+/* ==========================================================================
+   6. PRINT
+   ========================================================================== */
+@media print{
+  .v8-accessibility,
+  .v202-menu-fab,
+  .v7-mobile-dock{
+    display:none!important;
+  }
+}
