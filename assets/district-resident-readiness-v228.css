@@ -11,6 +11,13 @@
 }
 
 body.v228-readiness-open{overflow:hidden!important}
+body.v228-readiness-open .v226-next-step,
+body.v228-readiness-open .v7-mobile-dock,
+body.v228-readiness-open .v202-menu-fab,
+body.v228-readiness-open .v8-accessibility{
+  opacity:0!important;
+  pointer-events:none!important;
+}
 
 .v228-root{
   position:fixed;
