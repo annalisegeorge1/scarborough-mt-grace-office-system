@@ -1,0 +1,95 @@
+Scarborough / Mt. Grace District Office — V226
+
+SMART NEXT STEP BAR
+
+V226 adds a context-aware guidance strip to focused public routes.
+
+1. Context awareness
+The bar reads the focused page's existing V204 content cards and tracks the section nearest the resident's reading position.
+
+It updates:
+- Current section title
+- Short contextual description
+- Section position (for example 3 / 9)
+- Progress indicator
+- Most relevant primary action
+
+2. Route-specific primary actions
+Examples:
+- Office -> Contact
+- Services -> Forms / Guide
+- Community -> Enquire / Activity
+- Forms -> Track / Guide
+- Updates -> Enquire / Community
+- Contact -> Enquire / Track
+
+Some actions change by the exact section being viewed.
+
+3. Next-section navigation
+A dedicated arrow moves to the next visible section.
+At the final section it becomes a return-to-top action.
+
+Collapsed V208/V209 content is skipped until it is actually opened.
+
+4. Command Center integration
+The bar can open the existing V224 Resident Command Center.
+
+5. Resident Journey integration
+The bar can open the existing V225 guided Resident Journey.
+
+6. Mobile behaviour
+- The bar stays inside the focused-page content flow and uses sticky positioning.
+- It does not replace the fixed Call / WhatsApp / Enquiry / Track dock.
+- Command and Journey reduce to compact icons on narrower screens.
+- Action row can horizontally scroll if space is constrained.
+- The bar hides itself while the mobile keyboard is open.
+
+7. Modal coexistence
+The Smart Next Step Bar recedes while:
+- Resident Command Center is open
+- Resident Journey is open
+- Mobile keyboard is open
+
+8. Dark mode
+Full dark-mode treatment follows the existing navy/brass system.
+
+9. Privacy
+- No localStorage
+- No sessionStorage
+- No fetch/API request
+- No resident tracking
+- No profile
+- No personal information
+
+10. Preservation
+- No public content removed
+- No route removed
+- No staff CMS change
+- No V215 progress-thread change
+- No enquiry/tracker/auth/database/publishing changes
+
+QA
+- V226 JavaScript syntax: pass
+- Server JavaScript syntax: pass
+- CSS brace balance: pass
+- V226 CSS/JS injection: pass
+- V226 loads after V225: pass
+- Focused-route-only guard: present
+- IntersectionObserver section tracking: present
+- Route-aware actions: present
+- Command Center integration: present
+- Resident Journey integration: present
+- Next-section navigation: present
+- Dark mode: present
+- Mobile treatment: present
+- Print suppression: present
+- No localStorage/sessionStorage: verified
+- No API/fetch: verified
+
+Files added:
+- assets/district-smart-next-step-v226.css
+- assets/district-smart-next-step-v226.js
+- V226_NOTES.txt
+
+Files updated:
+- server/src/app.js
