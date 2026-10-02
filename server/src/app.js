@@ -69,7 +69,150 @@ app.use('/api/reports',requireCsrf,reportRoutes);
 const staticOpts={dotfiles:'deny',etag:true,maxAge:config.production?'1h':0,index:false};
 app.use('/assets',express.static(path.join(config.staticRoot,'assets'),staticOpts));
 
-app.get('/robots.txt',(req,res)=>res.type('text/plain').send('User-agent: *\nDisallow: /staff/\nDisallow: /api/\n'));
+const PUBLIC_ROUTE_META={
+  '/':{
+    title:'Scarborough / Mt. Grace District Office',
+    description:'Public information, resident services, forms, community updates, enquiries and contact details for the Scarborough / Mt. Grace District Office.'
+  },
+  '/office/':{
+    title:'Your District Office — Scarborough / Mt. Grace',
+    description:'Meet the District Office team, review office information and hours, and learn about the Scarborough / Mt. Grace District Office.'
+  },
+  '/services/':{
+    title:'Resident Services — Scarborough / Mt. Grace District Office',
+    description:'Find resident services, assistance pathways, programme information, guidance and resources from the Scarborough / Mt. Grace District Office.'
+  },
+  '/community/':{
+    title:'Community — Scarborough / Mt. Grace District Office',
+    description:'Explore community projects, participation opportunities, public matters, activities and district information for Scarborough / Mt. Grace.'
+  },
+  '/forms/':{
+    title:'Forms & Portals — Scarborough / Mt. Grace District Office',
+    description:'Find public forms and service portals, submit an enquiry and access tracking tools from the Scarborough / Mt. Grace District Office.'
+  },
+  '/updates/':{
+    title:'Updates & Information — Scarborough / Mt. Grace District Office',
+    description:'Follow published District Office updates, notices, projects, public progress and community information for Scarborough / Mt. Grace.'
+  },
+  '/contact/':{
+    title:'Contact & Enquiries — Scarborough / Mt. Grace District Office',
+    description:'Find office hours and contact details, reach the office by phone or WhatsApp, submit an enquiry or track an existing matter.'
+  }
+};
+
+function publicOrigin(){
+  return String(config.publicOrigin||'').replace(/\/+$/,'');
+}
+function normalizePublicPath(value){
+  const raw=String(value||'/').split('?')[0];
+  if(raw==='/'||raw==='/index.html'||raw==='/index-self-contained.html')return '/';
+  const clean='/'+raw.replace(/^\/+|\/+$/g,'');
+  return PUBLIC_ROUTE_META[clean+'/']?clean+'/':clean;
+}
+function escapeHtml(value){
+  return String(value??'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function safeJson(value){
+  return JSON.stringify(value).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');
+}
+function applyPublicMetadata(html,req){
+  const route=normalizePublicPath(req.path);
+  const meta=PUBLIC_ROUTE_META[route]||PUBLIC_ROUTE_META['/'];
+  const origin=publicOrigin();
+  const canonical=origin+(route==='/'?'/':route);
+  const siteName='Scarborough / Mt. Grace District Office';
+  const cleaned=html
+    .replace(/<title\b[^>]*>[\s\S]*?<\/title>/gi,'')
+    .replace(/<meta\b[^>]*(?:name|property)=["'](?:description|robots|og:title|og:description|og:type|og:url|og:site_name|og:locale|twitter:card|twitter:title|twitter:description)["'][^>]*>/gi,'')
+    .replace(/<link\b[^>]*rel=["']canonical["'][^>]*>/gi,'')
+    .replace(/<link\b[^>]*rel=["']alternate["'][^>]*hreflang=["']en-TT["'][^>]*>/gi,'')
+    .replace(/<script\b[^>]*data-v223-structured[^>]*>[\s\S]*?<\/script>/gi,'');
+
+  const structured=[
+    {
+      '@context':'https://schema.org',
+      '@type':'WebSite',
+      name:siteName,
+      url:origin+'/',
+      inLanguage:'en-TT'
+    },
+    {
+      '@context':'https://schema.org',
+      '@type':'GovernmentOffice',
+      name:siteName,
+      url:origin+'/',
+      telephone:'+1-868-610-6314',
+      email:'smgofficestaff@yahoo.com',
+      address:{
+        '@type':'PostalAddress',
+        streetAddress:'Harmony Hall, Mt. Grace Plaza',
+        addressLocality:'Scarborough',
+        addressRegion:'Tobago',
+        addressCountry:'TT'
+      }
+    },
+    {
+      '@context':'https://schema.org',
+      '@type':'WebPage',
+      name:meta.title,
+      description:meta.description,
+      url:canonical,
+      isPartOf:{'@type':'WebSite',name:siteName,url:origin+'/'},
+      inLanguage:'en-TT'
+    }
+  ];
+
+  const tags=[
+    '<title>'+escapeHtml(meta.title)+'</title>',
+    '<meta name="description" content="'+escapeHtml(meta.description)+'">',
+    '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">',
+    '<link rel="canonical" href="'+escapeHtml(canonical)+'">',
+    '<link rel="alternate" hreflang="en-TT" href="'+escapeHtml(canonical)+'">',
+    '<meta property="og:type" content="website">',
+    '<meta property="og:site_name" content="'+escapeHtml(siteName)+'">',
+    '<meta property="og:locale" content="en_TT">',
+    '<meta property="og:title" content="'+escapeHtml(meta.title)+'">',
+    '<meta property="og:description" content="'+escapeHtml(meta.description)+'">',
+    '<meta property="og:url" content="'+escapeHtml(canonical)+'">',
+    '<meta name="twitter:card" content="summary">',
+    '<meta name="twitter:title" content="'+escapeHtml(meta.title)+'">',
+    '<meta name="twitter:description" content="'+escapeHtml(meta.description)+'">',
+    '<script type="application/ld+json" data-v223-structured>'+safeJson(structured)+'</script>'
+  ].join('');
+  return /<\/head>/i.test(cleaned)?cleaned.replace(/<\/head>/i,tags+'</head>'):tags+cleaned;
+}
+
+app.get('/robots.txt',(req,res)=>{
+  const lines=[
+    'User-agent: *',
+    'Disallow: /staff/',
+    'Disallow: /api/',
+    'Disallow: /server/',
+    'Sitemap: '+publicOrigin()+'/sitemap.xml',
+    ''
+  ];
+  res.type('text/plain').send(lines.join('\n'));
+});
+
+app.get('/sitemap.xml',(req,res)=>{
+  const origin=publicOrigin();
+  const paths=[
+    '/',
+    '/office/',
+    '/services/',
+    '/community/',
+    '/forms/',
+    '/updates/',
+    '/contact/',
+    '/track/',
+    '/resident-guide/'
+  ];
+  const urls=paths.map(p=>'<url><loc>'+escapeHtml(origin+p)+'</loc></url>').join('');
+  res.setHeader('Cache-Control','public, max-age=3600');
+  res.type('application/xml').send('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls+'</urlset>');
+});
 
 let cachedPublicIndex=null;
 function currentCalderHallNames(html){
@@ -124,7 +267,8 @@ async function sendPublicIndex(req,res,next){
       const darkDesktopJsFile=path.join(config.staticRoot,'assets','district-dark-desktop-v221.js');
       const componentCohesionCssFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.css');
       const componentCohesionJsFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer]=await Promise.all([
+      const publicDiscoveryCssFile=path.join(config.staticRoot,'assets','district-public-discovery-v223.css');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -164,7 +308,8 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(darkDesktopCssFile),
         fs.readFile(darkDesktopJsFile),
         fs.readFile(componentCohesionCssFile),
-        fs.readFile(componentCohesionJsFile)
+        fs.readFile(componentCohesionJsFile),
+        fs.readFile(publicDiscoveryCssFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -207,6 +352,7 @@ async function sendPublicIndex(req,res,next){
       const darkDesktopJs=`<script src="/assets/district-dark-desktop-v221.js?v=${versionFor(darkDesktopJsBuffer)}" defer></script>`;
       const componentCohesionCss=`<link rel="stylesheet" href="/assets/district-component-cohesion-v222.css?v=${versionFor(componentCohesionCssBuffer)}">`;
       const componentCohesionJs=`<script src="/assets/district-component-cohesion-v222.js?v=${versionFor(componentCohesionJsBuffer)}" defer></script>`;
+      const publicDiscoveryCss=`<link rel="stylesheet" href="/assets/district-public-discovery-v223.css?v=${versionFor(publicDiscoveryCssBuffer)}">`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -271,6 +417,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-component-cohesion-v222.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,componentCohesionCss+'</head>'):componentCohesionCss+html;
       }
+      if(!html.includes('/assets/district-public-discovery-v223.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,publicDiscoveryCss+'</head>'):publicDiscoveryCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -333,8 +482,9 @@ async function sendPublicIndex(req,res,next){
       }
       cachedPublicIndex=html;
     }
+    const responseHtml=applyPublicMetadata(cachedPublicIndex,req);
     res.setHeader('Cache-Control','no-cache');
-    res.type('html').send(cachedPublicIndex);
+    res.type('html').send(responseHtml);
   }catch(e){next(e)}
 }
 app.get([
@@ -376,6 +526,7 @@ app.use('/server',(req,res)=>res.status(404).end());
 
 app.use((req,res)=>{
   if(req.path.startsWith('/api/'))return res.status(404).json({detail:'API endpoint not found.'});
+  res.setHeader('X-Robots-Tag','noindex, nofollow, noarchive');
   res.status(404).sendFile(path.join(config.staticRoot,'404.html'));
 });
 app.use((err,req,res,next)=>{
