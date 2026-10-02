@@ -1,0 +1,149 @@
+/* Scarborough / Mt. Grace District Office — V209 light hierarchy for remaining focused pages */
+
+.v209-more-hub{
+  border:1px solid rgba(var(--v207-accent-rgb),.14);
+  border-radius:20px;
+  background:linear-gradient(150deg,#fff 0%,var(--v207-accent-soft) 150%);
+  box-shadow:0 10px 28px rgba(8,42,63,.055);
+  overflow:hidden;
+}
+.v209-more-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:14px;
+  align-items:center;
+  padding:16px 17px 14px;
+  border-bottom:1px solid rgba(11,46,72,.11);
+}
+.v209-more-head small{
+  display:block;
+  margin-bottom:4px;
+  color:var(--v207-accent);
+  font:850 8.5px/1 system-ui;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.v209-more-head strong{
+  display:block;
+  color:#17384b;
+  font:650 17px/1.16 Georgia,"Times New Roman",serif;
+}
+.v209-more-head p{
+  margin:5px 0 0;
+  color:#6a818e;
+  font:600 10px/1.45 system-ui;
+}
+.v209-more-count{
+  min-width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;
+  background:var(--v207-accent);
+  color:#fff;
+  font:900 10px/1 system-ui;
+  box-shadow:0 7px 16px rgba(var(--v207-accent-rgb),.17);
+}
+.v209-more-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  padding:11px;
+}
+.v209-more-btn{
+  min-height:58px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 18px;
+  gap:8px;
+  align-items:center;
+  padding:10px 11px;
+  border:1px solid rgba(11,46,72,.11);
+  border-radius:13px;
+  background:#fff;
+  color:#17384b;
+  text-align:left;
+  cursor:pointer;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.v209-more-btn:hover,
+.v209-more-btn:focus-visible{
+  transform:translateY(-1px);
+  border-color:rgba(var(--v207-accent-rgb),.28);
+  box-shadow:0 7px 16px rgba(8,42,63,.055);
+  outline:none;
+}
+.v209-more-btn[aria-expanded="true"]{
+  background:var(--v207-accent-soft);
+  border-color:rgba(var(--v207-accent-rgb),.25);
+}
+.v209-more-copy strong{
+  display:block;
+  font:800 10.5px/1.18 system-ui;
+}
+.v209-more-copy span{
+  display:block;
+  margin-top:4px;
+  color:#738a95;
+  font:600 9px/1.32 system-ui;
+}
+.v209-more-arrow{
+  color:#98aab4;
+  font-size:17px;
+  transition:transform .16s ease;
+}
+.v209-more-btn[aria-expanded="true"] .v209-more-arrow{
+  transform:rotate(90deg);
+  color:var(--v207-accent);
+}
+.v209-secondary{
+  transition:max-height .26s ease,opacity .2s ease,margin .2s ease,transform .2s ease;
+  transform-origin:top;
+}
+.v209-secondary.v209-collapsed{
+  max-height:0!important;
+  min-height:0!important;
+  height:0!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border-width:0!important;
+  opacity:0;
+  visibility:hidden;
+  overflow:hidden!important;
+  transform:translateY(-4px);
+  pointer-events:none;
+}
+.v209-secondary:not(.v209-collapsed){
+  max-height:none;
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+.v209-primary-note{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin:0 0 9px;
+  padding:6px 9px;
+  border-radius:999px;
+  background:var(--v207-accent-soft);
+  color:var(--v207-accent-ink);
+  font:850 8px/1 system-ui;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.v209-primary-note:before{
+  content:"";
+  width:5px;height:5px;border-radius:50%;
+  background:var(--v207-accent);
+}
+@media(max-width:720px){
+  .v209-more-head{grid-template-columns:1fr}
+  .v209-more-count{display:none}
+  .v209-more-list{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .v209-more-copy span{display:none}
+  .v209-more-btn{min-height:52px}
+}
+@media(prefers-reduced-motion:reduce){
+  .v209-secondary,.v209-more-btn,.v209-more-arrow{transition:none!important}
+}
