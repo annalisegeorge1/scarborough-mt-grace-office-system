@@ -1,0 +1,268 @@
+Scarborough / Mt. Grace District Office — V231
+
+SERVICE INTELLIGENCE
+
+V231 connects the public Resident Services catalogue with the existing Published + Verified public-content stream and the resident guidance tools already built in V224–V228.
+
+CORE PRINCIPLE
+Service Intelligence is a contextual briefing layer only.
+
+It does NOT determine:
+- eligibility
+- entitlement
+- approval
+- completeness
+- whether a form definitely applies
+- whether a current notice changes a programme rule
+
+Published source material and the responsible authority remain authoritative.
+
+1. Services-route only
+V231 runs only on:
+- /services/
+
+No other public route receives the service-card intelligence controls.
+
+2. Dynamic service discovery
+V231 discovers service/programme/support cards already present inside:
+- #services
+- #how-we-help
+- #support-areas
+- #resident-programmes
+
+It reuses:
+- card title
+- description
+- published list points
+- existing card DOM/source
+
+No duplicate service catalogue is created.
+
+3. Published + Verified context
+V231 reads:
+GET /api/public/content
+
+This is the same public-safe endpoint used by V227.
+
+The endpoint already restricts content to staff-published / verified public records.
+
+V231 performs no write request.
+
+4. Matching model
+Each service card is compared with current public records using:
+- service title
+- service description
+- service list points
+- record title
+- record summary
+- record body/status note
+- category
+- public status
+- responsible authority
+- public metadata subtype/role
+- V215 progress history
+- recency
+- featured state
+
+Generic terms such as:
+service, services, assistance, resident, programme, office, district, Tobago, etc.
+are removed from the token set so they cannot create a false contextual match by themselves.
+
+A minimum correlation score is required before a record is shown.
+
+5. Conservative no-match state
+When there is no sufficiently strong current public match, V231 states:
+
+“No specific current match found.”
+
+It explicitly explains that this does not mean the service is unavailable.
+
+The resident is directed back to:
+- the published service source
+- Forms Library
+- public enquiry route
+
+6. Service Intelligence side sheet
+The contextual briefing opens as:
+- right-side sheet on larger screens
+- bottom sheet on mobile
+
+The original service page remains underneath.
+
+The sheet shows:
+- published service source/description
+- current verified context
+- content type
+- public status
+- update date
+- public summary
+- latest V215 progress update where available
+- source links
+- resident next actions
+
+7. Directory mode
+The main “Open Service Intelligence” launcher opens a service directory.
+
+Each discovered service displays the number of currently matched Published + Verified records.
+
+The match count is informational only.
+
+8. Per-card launch
+Each discovered service/programme card receives:
+“Service briefing”
+
+This opens V231 directly for that exact service card.
+
+9. V228 Resident Readiness integration
+From a service briefing:
+“Review readiness”
+
+closes Service Intelligence and opens the existing V228 readiness checklist for that exact service card.
+
+No readiness state is duplicated.
+
+10. V225 Resident Journey integration
+From a service briefing:
+“Build a resident path”
+
+closes Service Intelligence and opens the existing V225 Resident Journey.
+
+11. V226 Smart Next Step integration
+The Services Smart Next Step action row receives:
+“Briefing”
+
+This opens the service briefing for the service card nearest the resident’s current viewport position.
+
+If no service card is detected, V231 opens the generic service directory.
+
+12. V224 Command Center integration
+The Resident Command Center receives:
+“Open Service Intelligence”
+
+This opens the V231 service directory.
+
+13. Public source return
+A briefing can return directly to its service card.
+
+Where the service card sits inside V208/V209 collapsed guidance:
+- the containing section is expanded first
+- the card scrolls into view
+- V222 destination highlighting is reused
+
+14. Public record destinations
+Forms:
+- direct publicUrl when present
+- otherwise Forms Library
+
+Activity / notice / newsletter:
+- existing Updates permalink with ?post=<id>
+
+Other records:
+- publicUrl where available
+- otherwise Updates
+
+15. V215 progress integration
+If a matched public record has metadata.progressHistory:
+- latest status can be displayed
+- latest progress summary appears separately
+
+Original public source summary remains distinct.
+
+16. Privacy
+V231:
+- uses no localStorage
+- uses no sessionStorage
+- reads no resident enquiry fields
+- creates no resident profile
+- performs only a GET to /api/public/content
+- sends no resident choices or personal data
+- performs no POST/PATCH/DELETE
+
+17. Modal coexistence
+Opening V231 closes:
+- V224 Command Center
+- V225 Resident Journey
+- V228 Resident Readiness
+
+While V231 is open:
+- V226 Smart Next Step recedes
+- mobile action dock recedes
+- Explore FAB recedes
+- accessibility floating control recedes
+
+18. Accessibility
+- role=dialog
+- aria-modal=true
+- Escape closes
+- keyboard focus trap
+- focus returns to opener
+- standard link/button semantics
+- mobile bottom-sheet presentation
+
+19. Visual system
+V231 follows the existing:
+- navy civic palette
+- muted brass accents
+- paper/light editorial surfaces
+- dark mode
+- reduced-motion support
+- mobile layout
+- print suppression
+
+20. Staff-side preservation
+No changes to:
+- staff CMS
+- authentication
+- staff publishing workflow
+- verification requirements
+- V215 progress editor
+- enquiry processing
+- resident tracker
+- database schema
+- public service content
+- public record content
+- V224 Command Center logic
+- V225 Resident Journey logic
+- V226 Smart Next Step logic
+- V227 District Pulse logic
+- V228 Readiness state logic
+- V229 PWA/service worker
+- V230 landscape correction behavior
+
+QA
+- V231 JavaScript syntax: pass
+- Server JavaScript syntax: pass
+- CSS brace balance: pass
+- V231 CSS/JS injection: pass
+- V231 CSS loads after V230: pass
+- V231 JS loads after V229: pass
+- Services-route-only guard: present
+- Dynamic service discovery: present
+- Published + Verified endpoint integration: present
+- Conservative scoring/threshold: present
+- Directory mode: present
+- Per-card briefing: present
+- V228 readiness integration: present
+- V225 Journey integration: present
+- V224 Command Center integration: present
+- V226 Smart Next Step integration: present
+- V215 progress awareness: present
+- source-return/highlight behavior: present
+- focus trap: present
+- dark mode: present
+- mobile sheet: present
+- print suppression: present
+- no localStorage/sessionStorage: verified
+- no POST request: verified
+- no resident personal-field access: verified
+
+Files added:
+- assets/district-service-intelligence-v231.css
+- assets/district-service-intelligence-v231.js
+- V231_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V231 has passed code-level syntax, injection, load-order, privacy and integration checks. A fresh live-device screenshot pass after Render deployment is still recommended for final visual verification.
