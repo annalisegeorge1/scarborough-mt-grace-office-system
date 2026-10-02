@@ -69,6 +69,21 @@ app.use('/api/reports',requireCsrf,reportRoutes);
 const staticOpts={dotfiles:'deny',etag:true,maxAge:config.production?'1h':0,index:false};
 app.use('/assets',express.static(path.join(config.staticRoot,'assets'),staticOpts));
 
+app.get('/manifest.webmanifest',(req,res)=>{
+  res.setHeader('Cache-Control','public, max-age=3600');
+  res.type('application/manifest+json').sendFile(path.join(config.staticRoot,'manifest.webmanifest'));
+});
+app.get('/sw.js',(req,res)=>{
+  res.setHeader('Cache-Control','no-cache, no-store, must-revalidate');
+  res.setHeader('Service-Worker-Allowed','/');
+  res.type('application/javascript').sendFile(path.join(config.staticRoot,'sw.js'));
+});
+app.get('/offline.html',(req,res)=>{
+  res.setHeader('Cache-Control','public, max-age=3600');
+  res.setHeader('X-Robots-Tag','noindex, nofollow, noarchive');
+  res.type('html').sendFile(path.join(config.staticRoot,'offline.html'));
+});
+
 const PUBLIC_ROUTE_META={
   '/':{
     title:'Scarborough / Mt. Grace District Office',
@@ -278,7 +293,9 @@ async function sendPublicIndex(req,res,next){
       const livingPulseJsFile=path.join(config.staticRoot,'assets','district-living-pulse-v227.js');
       const residentReadinessCssFile=path.join(config.staticRoot,'assets','district-resident-readiness-v228.css');
       const residentReadinessJsFile=path.join(config.staticRoot,'assets','district-resident-readiness-v228.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer]=await Promise.all([
+      const pwaCssFile=path.join(config.staticRoot,'assets','district-pwa-v229.css');
+      const pwaJsFile=path.join(config.staticRoot,'assets','district-pwa-v229.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -329,7 +346,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(livingPulseCssFile),
         fs.readFile(livingPulseJsFile),
         fs.readFile(residentReadinessCssFile),
-        fs.readFile(residentReadinessJsFile)
+        fs.readFile(residentReadinessJsFile),
+        fs.readFile(pwaCssFile),
+        fs.readFile(pwaJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -383,6 +402,9 @@ async function sendPublicIndex(req,res,next){
       const livingPulseJs=`<script src="/assets/district-living-pulse-v227.js?v=${versionFor(livingPulseJsBuffer)}" defer></script>`;
       const residentReadinessCss=`<link rel="stylesheet" href="/assets/district-resident-readiness-v228.css?v=${versionFor(residentReadinessCssBuffer)}">`;
       const residentReadinessJs=`<script src="/assets/district-resident-readiness-v228.js?v=${versionFor(residentReadinessJsBuffer)}" defer></script>`;
+      const pwaCss=`<link rel="stylesheet" href="/assets/district-pwa-v229.css?v=${versionFor(pwaCssBuffer)}">`;
+      const pwaJs=`<script src="/assets/district-pwa-v229.js?v=${versionFor(pwaJsBuffer)}" defer></script>`;
+      const pwaHead='<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="/assets/district-app-icon-v229.svg"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SMG Office">';
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -465,6 +487,12 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-resident-readiness-v228.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentReadinessCss+'</head>'):residentReadinessCss+html;
       }
+      if(!html.includes('/assets/district-pwa-v229.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaCss+'</head>'):pwaCss+html;
+      }
+      if(!html.includes('/manifest.webmanifest')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaHead+'</head>'):pwaHead+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -539,6 +567,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-resident-readiness-v228.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,residentReadinessJs+'</body>'):html+residentReadinessJs;
+      }
+      if(!html.includes('/assets/district-pwa-v229.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pwaJs+'</body>'):html+pwaJs;
       }
       cachedPublicIndex=html;
     }
