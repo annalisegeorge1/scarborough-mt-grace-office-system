@@ -1,0 +1,225 @@
+/* Scarborough / Mt. Grace District Office — V229
+   Progressive Web App + connection-state presentation. */
+
+.v229-network-status{
+  position:fixed;
+  top:max(10px,env(safe-area-inset-top));
+  left:50%;
+  z-index:14000;
+  max-width:min(92vw,520px);
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 11px;
+  border:1px solid rgba(11,46,72,.12);
+  border-radius:999px;
+  background:rgba(248,251,252,.96);
+  color:#173f58;
+  box-shadow:0 12px 32px rgba(3,22,36,.16);
+  backdrop-filter:blur(11px);
+  -webkit-backdrop-filter:blur(11px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translate(-50%,-9px);
+  transition:opacity .18s ease,transform .18s ease,visibility .18s ease;
+  font:800 8px/1.25 system-ui;
+}
+.v229-network-status.is-visible{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%,0);
+}
+.v229-network-dot{
+  flex:0 0 8px;
+  width:8px;height:8px;
+  border-radius:50%;
+  background:#2b7569;
+  box-shadow:0 0 0 4px rgba(43,117,105,.08);
+}
+.v229-network-status.is-offline{
+  border-color:rgba(148,89,66,.22);
+  background:rgba(255,248,244,.97);
+  color:#734f43;
+}
+.v229-network-status.is-offline .v229-network-dot{
+  background:#a05f49;
+  box-shadow:0 0 0 4px rgba(160,95,73,.08);
+}
+.v229-network-status.is-update{
+  border-color:rgba(167,143,94,.24);
+  background:rgba(250,247,239,.97);
+  color:#6e613f;
+}
+.v229-network-status.is-update .v229-network-dot{
+  background:#a78f5e;
+  box-shadow:0 0 0 4px rgba(167,143,94,.08);
+}
+.v229-network-action{
+  min-height:26px;
+  margin-left:4px;
+  padding:0 8px;
+  border:1px solid currentColor;
+  border-radius:999px;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  font:900 6.5px/1 system-ui;
+}
+.v229-network-action:hover,
+.v229-network-action:focus-visible{
+  background:rgba(255,255,255,.55);
+  outline:none;
+}
+
+.v229-install-control{
+  width:100%;
+  min-height:48px;
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:9px;
+  padding:9px 11px;
+  border:1px solid rgba(167,143,94,.20);
+  border-radius:13px;
+  background:
+    radial-gradient(circle at 95% 10%,rgba(216,199,160,.08),transparent 7rem),
+    linear-gradient(145deg,#fffdf7,#f3f8fa);
+  color:#123f59;
+  cursor:pointer;
+  text-align:left;
+}
+.v229-install-control.is-available{display:flex}
+.v229-install-control:hover,
+.v229-install-control:focus-visible{
+  border-color:rgba(167,143,94,.38);
+  background:#faf7ef;
+  outline:none;
+}
+.v229-install-copy strong{
+  display:block;
+  color:#123f59;
+  font:850 8.8px/1.2 system-ui;
+}
+.v229-install-copy small{
+  display:block;
+  margin-top:3px;
+  color:#718793;
+  font:700 7.2px/1.3 system-ui;
+}
+.v229-install-mark{
+  flex:0 0 30px;
+  width:30px;height:30px;
+  display:grid;place-items:center;
+  border-radius:10px;
+  background:#0b3553;
+  color:#fff;
+  font:900 12px/1 system-ui;
+}
+
+.v229-command-install{
+  width:calc(100% - 40px);
+  margin:9px 20px 0;
+}
+.v229-command-install .v229-install-control{
+  margin:0;
+}
+
+.v229-offline-inline{
+  display:none;
+  margin-top:8px;
+  padding:8px 10px;
+  border:1px solid rgba(160,95,73,.18);
+  border-radius:10px;
+  background:#fff8f4;
+  color:#7a584d;
+  font:700 7.5px/1.4 system-ui;
+}
+body.v229-offline .v229-offline-inline{display:block}
+
+/* Current/public freshness components should visually acknowledge offline state. */
+body.v229-offline .v227-freshness,
+body.v229-offline .v227-feed-freshness{
+  border-color:rgba(160,95,73,.16)!important;
+  background:#fff8f4!important;
+  color:#815f54!important;
+}
+body.v229-offline .v227-freshness:before,
+body.v229-offline .v227-feed-freshness:before{
+  background:#a05f49!important;
+}
+
+/* Installed standalone mode gets slightly safer bottom spacing on devices with
+   gesture/navigation bars. */
+@media(display-mode:standalone){
+  body{
+    padding-bottom:max(0px,env(safe-area-inset-bottom));
+  }
+  .v7-mobile-dock{
+    padding-bottom:max(5px,env(safe-area-inset-bottom))!important;
+  }
+}
+
+/* Dark mode */
+body.v112-dark .v229-network-status{
+  border-color:rgba(255,255,255,.09);
+  background:rgba(10,38,55,.96);
+  color:#deeaee;
+}
+body.v112-dark .v229-network-status.is-offline{
+  border-color:rgba(214,143,116,.16);
+  background:rgba(55,38,34,.97);
+  color:#e2c2b6;
+}
+body.v112-dark .v229-network-status.is-update{
+  border-color:rgba(216,199,160,.18);
+  background:rgba(48,45,36,.97);
+  color:#e4d5af;
+}
+body.v112-dark .v229-install-control{
+  border-color:rgba(216,199,160,.16);
+  background:#123247;
+  color:#fff;
+}
+body.v112-dark .v229-install-control:hover{
+  background:#173a4e;
+}
+body.v112-dark .v229-install-copy strong{color:#fff}
+body.v112-dark .v229-install-copy small{color:#aac0ca}
+body.v112-dark .v229-install-mark{
+  background:#d8c7a0;
+  color:#0b3553;
+}
+body.v112-dark .v229-offline-inline{
+  border-color:rgba(214,143,116,.14);
+  background:#372622;
+  color:#e0beb1;
+}
+
+@media(max-width:700px){
+  .v229-network-status{
+    top:max(7px,env(safe-area-inset-top));
+    min-height:36px;
+    padding:7px 9px;
+    font-size:7.5px;
+  }
+  .v229-command-install{
+    width:calc(100% - 24px);
+    margin:8px 12px 0;
+  }
+}
+
+@media print{
+  .v229-network-status,
+  .v229-install-control,
+  .v229-offline-inline{
+    display:none!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v229-network-status{transition:none!important}
+}
