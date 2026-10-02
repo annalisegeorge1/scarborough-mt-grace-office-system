@@ -1,0 +1,163 @@
+Scarborough / Mt. Grace District Office — V228
+
+RESIDENT READINESS WORKSPACE
+
+V228 adds a privacy-preserving service-review workspace to the focused Resident Services route.
+
+CORE PRINCIPLE
+V228 does NOT determine eligibility, approval, entitlement, completeness or acceptance.
+A checked box means only:
+“I reviewed this published point.”
+
+1. Dynamic service discovery
+V228 discovers public service/programme/support cards already present in:
+- #services
+- #how-we-help
+- #support-areas
+- #resident-programmes
+
+It reuses the published service title and description instead of maintaining a duplicate service catalogue.
+
+2. Published review points
+If a service card contains published list items, V228 turns those existing points into a temporary review checklist.
+
+Each item is explicitly described as a published point to review.
+
+V228 does not reinterpret the point as:
+- an eligibility rule
+- an approval condition
+- proof that a resident qualifies
+- proof that a resident has every required document
+
+3. Safe fallback checklist
+When a service card has no usable list items, V228 uses neutral process-review steps:
+- Read the full published service information
+- Check the Resident Guide and Forms Library
+- Confirm the responsible source and current instructions
+- Ask the District Office if anything remains unclear
+
+These are navigation/review steps, not programme requirements.
+
+4. Review progress
+The workspace shows:
+- reviewed count
+- total count
+- a visual completion bar
+
+The progress indicator measures only review completion.
+
+5. Useful next actions
+Every readiness workspace keeps direct public links to:
+- Resident Guide
+- Forms Library
+- Public Enquiry
+
+6. Service source
+Residents can return directly to the service card they were reviewing.
+When necessary V208/V209 collapsed content is expanded first.
+V222 destination highlighting is reused.
+
+7. Copy review list
+Residents can copy the temporary checklist.
+
+Copied output contains:
+- service title
+- checked / unchecked review points
+- disclaimer
+- public service URL
+
+It does not include resident name, phone, address, DOB, enquiry content or other personal information.
+
+8. In-memory privacy
+Checklist state is kept only in a JavaScript Map for the current page session.
+
+V228 uses:
+- no localStorage
+- no sessionStorage
+- no cookie
+- no fetch/API request
+- no server write
+
+Refreshing the page or navigating away clears the review state.
+
+9. Launch points
+V228 can be opened from:
+- the Resident Services page launcher
+- individual discovered service/programme cards
+- the V226 Smart Next Step Bar
+- the V224 Resident Command Center
+
+Existing launchers and navigation remain available.
+
+10. Modal coexistence
+Opening V228 closes the Command Center or Resident Journey if one is open.
+While V228 is open:
+- Smart Next Step Bar recedes
+- fixed mobile dock recedes
+- Explore FAB recedes
+- accessibility tray recedes
+
+11. Accessibility
+- role=dialog
+- aria-modal=true
+- focus trap
+- Escape closes
+- focus returns to opener
+- checkbox state is native keyboard-accessible
+- source and next actions remain standard links/buttons
+
+12. Visual system
+V228 follows the established civic design:
+- navy rail
+- muted brass
+- teal reviewed state
+- editorial serif headings
+- dark mode
+- responsive mobile layout
+- reduced-motion support
+
+13. Print/PDF
+The interactive readiness workspace and launch controls are excluded from print output.
+Existing V223 public print content remains authoritative.
+
+14. Staff-side preservation
+V228 changes no:
+- Staff CMS
+- public-content publishing workflow
+- verification controls
+- V215 progress threads
+- enquiry endpoint
+- resident tracker
+- authentication
+- database schema
+- staff publishing actions
+
+QA
+- V228 JavaScript syntax: pass
+- Server JavaScript syntax: pass
+- CSS brace balance: pass
+- V228 CSS/JS injection: pass
+- V228 loads after V227: pass
+- Services-route-only guard: present
+- Dynamic service discovery: present
+- Published-point extraction: present
+- Safe fallback checklist: present
+- In-memory Map only: present
+- No localStorage/sessionStorage: verified
+- No fetch/API call: verified
+- Non-eligibility wording: present
+- Per-card launch controls: present
+- Smart Next Step integration: present
+- Command Center integration: present
+- Focus trap: present
+- Dark mode: present
+- Mobile layout: present
+- Print suppression: present
+
+Files added:
+- assets/district-resident-readiness-v228.css
+- assets/district-resident-readiness-v228.js
+- V228_NOTES.txt
+
+Files updated:
+- server/src/app.js
