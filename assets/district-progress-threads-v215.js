@@ -133,7 +133,7 @@
       const details=document.createElement("details");
       details.className="v215-source-thread";
       details.innerHTML=
-        '<summary><span>Public progress history <span class="cm-thread-count">'+entries.length+'</span></span></summary>'+
+        '<summary><span>Public progress history <span class="v215-source-count">'+entries.length+'</span></span></summary>'+
         threadMarkup(record,true);
       card.appendChild(details);
     });
@@ -146,8 +146,9 @@
     enhanceFeed();
     enhanceSourceCards();
     applying=false;
-    const watchTarget=document.querySelector(".v213-feed-list")||activityHub;
-    if(watchTarget)observer?.observe(watchTarget,{childList:true,subtree:true});
+    const feedList=document.querySelector(".v213-feed-list");
+    if(feedList)observer?.observe(feedList,{childList:true,subtree:true});
+    if(activityHub)observer?.observe(activityHub,{childList:true,subtree:true});
   }
 
   if(shell){
