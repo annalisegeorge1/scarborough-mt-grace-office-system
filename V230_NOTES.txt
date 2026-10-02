@@ -1,0 +1,163 @@
+Scarborough / Mt. Grace District Office — V230
+
+LANDSCAPE + VISUAL-DENSITY CORRECTION PASS
+
+V230 is a screenshot-driven presentation correction focused on the tablet-landscape / small-desktop problems visible in the October 2 review images.
+
+1. Resident Programmes contrast
+The Programmes & Assistance section had several legacy text/button treatments that became too pale on the light editorial background.
+
+V230 restores readable contrast for:
+- paragraphs
+- list items
+- labels
+- headings
+- buttons / role=button controls
+
+Programme chips/buttons now use a visible white surface, navy text and restrained borders.
+
+This changes presentation only; no programme wording, eligibility guidance, source note or service information is removed or rewritten.
+
+2. Team section dark-surface contrast
+The Team section’s navy editorial intro had copy that could remain dark/low-contrast despite earlier V217 fixes.
+
+V230 expands the light-text correction across:
+- team banner paragraphs
+- spans
+- strong text
+- small labels
+- intro copy
+
+The gold editorial Team heading remains preserved.
+
+3. Gallery hero readability
+The Community Gallery screenshot showed dark title text over a dark photograph.
+
+V230 forces gallery-hero headings and supporting copy to use light text with a restrained image text shadow.
+
+4. Gallery control collision
+Gallery category/filter controls could collide with the decorative heading/badge area.
+
+V230 normalizes known tab/filter containers:
+- role=tablist
+- .gallery-tabs
+- .gallery-filters
+- gallery-* tab/filter class patterns
+
+These controls now:
+- return to normal document flow
+- clear absolute/inset positioning
+- avoid transforms that pull them over the header
+- receive spacing above/below
+- horizontally scroll when necessary
+- hide the scrollbar visually
+
+5. Touch-landscape focused pages
+On coarse-pointer landscape devices, the desktop two-column focused layout could reserve a right-side navigation column and leave a large dead area beside the content.
+
+V230 switches focused routes on touch-landscape to a full-width single-column shell.
+
+The V204 side navigation is preserved, but becomes:
+- non-sticky
+- compact
+- horizontally scrollable
+- positioned before the main content
+
+The side action row remains available.
+
+6. Full-width focused content
+On touch landscape:
+- V204 main column uses the full available width
+- identity strip expands
+- Smart Next Step expands
+- Living District Pulse expands
+- Resident Readiness launcher expands
+- V208/V209 support hubs expand
+
+No component is removed.
+
+7. Quick-action deck
+Touch-landscape focused pages use four quick-action columns where space allows.
+
+For narrower landscape devices (<=1100 CSS px), the action deck safely drops to two columns.
+
+8. Smart Next Step on narrow landscape
+At <=1100 CSS px in touch landscape, the V226 Smart Next Step bar becomes non-sticky to avoid crowding the short landscape viewport.
+
+9. Homepage long-form width
+The homepage’s expanded #v51-more-content container is allowed to use the full viewport width on touch landscape.
+
+Long-form sections such as:
+- About
+- Team
+- Leadership
+- District Profile
+- Resident Guide
+- Resident Programmes
+- Community Action Centre
+- Resources
+- Documents
+
+are centered within a wide civic frame rather than ending early and leaving a large empty right-hand field.
+
+10. Desktop-style navigation on touch landscape
+The main Site Navigation can horizontally scroll on touch-landscape devices instead of hiding later destinations when space is tight.
+
+.v51-nav-btn controls remain reachable.
+
+The existing site-search input receives a smaller responsive width in that mode so it does not consume most of the navigation row.
+
+11. Explore button
+The floating Explore trigger is reduced slightly in touch landscape so it blocks less page content.
+
+12. Landscape masthead density
+The identity banner and logo receive a more compact landscape treatment to reduce the vertical stack before useful content starts.
+
+13. Preservation
+V230 is CSS-only.
+
+No changes to:
+- staff CMS
+- authentication
+- publishing / verification
+- V213 Digital Feed
+- V215 progress threads
+- enquiry APIs
+- resident tracking
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step logic
+- V227 Living District Pulse logic
+- V228 Resident Readiness logic
+- V229 PWA/service worker
+- database schema
+- public content
+
+14. QA
+Passed:
+- server JavaScript syntax
+- V230 CSS brace balance
+- V230 stylesheet injection
+- V230 loads after V229
+- Programmes contrast target present
+- Team contrast target present
+- Gallery hero target present
+- Gallery tab/filter normalization present
+- touch-landscape media query present
+- focused single-column touch-landscape rule present
+- compact side-navigation rule present
+- homepage width correction present
+- top-navigation overflow rule present
+- search-width correction present
+- Explore compacting rule present
+- Smart Next Step / Readiness width corrections present
+
+Files added:
+- assets/district-landscape-corrections-v230.css
+- V230_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V230 is based directly on the supplied screenshots plus source-level CSS/DOM architecture review. It is a code-level responsive correction pass; no claim is made that a new live-device screenshot run has already been completed after deployment.
