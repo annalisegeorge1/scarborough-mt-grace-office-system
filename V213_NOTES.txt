@@ -1,0 +1,92 @@
+Scarborough / Mt. Grace District Office — V213
+
+DISTRICT DIGITAL FEED
+
+V213 adds a modern short-form public-information layer inspired by the clarity and immediacy of microblogging systems, while preserving every existing source section and the District Office civic/editorial design.
+
+Core rule:
+- No existing information is removed.
+- The feed is a summary/navigation layer, not a replacement for full source content.
+- Every feed item links back to its complete source section.
+
+Updates page:
+- Adds a full District Digital Feed near the top of /updates/.
+- Pulls from:
+  * Staff-published public updates
+  * District Activity Hub notices
+  * Tracked projects and follow-up matters
+  * What We Heard community matters
+  * Public Action & Progress
+  * Community Gallery
+- Staff-published items with dates are prioritised by date.
+- Undated current public information remains grouped by source/priority rather than receiving invented timestamps.
+- Adds category filters:
+  * All
+  * Office updates
+  * Notices
+  * Projects
+  * Community
+  * Progress
+- Adds in-feed search.
+- Adds status pills using existing public statuses such as Confirmed, Planned, In Development and Follow-up Required.
+- Adds location/context metadata when already available in the source.
+- Adds:
+  * Open full information
+  * Copy link
+  * Share
+- Native mobile sharing is used when supported; Copy link remains available everywhere.
+- Live staff-published content is watched with MutationObserver so newly rendered public items automatically appear in the feed.
+
+Community page:
+- Adds a Community Stream using the same digital system.
+- Limits the stream to notices, projects and community information.
+- Keeps the full Community page content and Explore More hierarchy below it.
+- Links back to the full underlying section for each item.
+
+Homepage:
+- Adds a compact District Pulse immediately after the District Activity Hub.
+- Shows up to four current public items.
+- Keeps the V211 chapter narrative intact.
+- Links each preview into the correct focused public section.
+- Automatically refreshes if staff-published updates appear after page load.
+
+Existing live update cards:
+- Remain fully present.
+- Receive a visual refresh so they match the new feed language.
+- The original publication workflow and public-content runtime are not replaced.
+
+Information integrity:
+- V213 does not invent dates.
+- V213 does not imply an agency completed work when the source only records District Office advocacy/follow-up.
+- Existing status wording is preserved.
+- Repeated exact titles are de-duplicated in the feed, but the original source sections remain untouched.
+- Empty public-plan/public-matter states are not turned into fake feed posts.
+- Gallery content remains contextualised as community/District Office imagery rather than evidence of an event unless the source states otherwise.
+
+Accessibility and interaction:
+- Feed filters are keyboard-accessible buttons.
+- Search has an accessible hidden label and visible placeholder.
+- Feed results use semantic article markup and aria-live updates.
+- Copy/share actions work without removing access to the source.
+- Reduced-motion preferences remain respected through the site-wide styling system.
+
+QA:
+- Current source provides:
+  * 3 static notices
+  * 3 tracked project cards
+  * 4 What We Heard cards
+  * Public Action & Progress
+  * Community Gallery
+  * Dynamic staff-published update grid
+- V213 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V213 CSS/JS injection: pass.
+- V213 loads after V212 so global navigation/link corrections are already active.
+- Dynamic staff updates are observed after initial render.
+
+Files added:
+- assets/district-digital-feed-v213.css
+- assets/district-digital-feed-v213.js
+
+Files updated:
+- server/src/app.js
