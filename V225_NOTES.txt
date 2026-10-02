@@ -1,0 +1,189 @@
+Scarborough / Mt. Grace District Office — V225
+
+RESIDENT JOURNEY
+
+V225 adds a guided resident-navigation system on top of the existing Services, Forms, Enquiry, Tracker, Community, Contact and Command Center layers.
+
+CORE PRINCIPLE
+Resident Journey does not make eligibility, approval or entitlement decisions.
+It organizes existing public information into a practical next-step sequence.
+
+1. Three-step guided flow
+Step 1 — Your need
+Residents choose:
+- Find help or a service
+- Get a form or document
+- Send a new enquiry
+- Track something already submitted
+- Follow a community matter
+- Contact or visit the office
+
+Step 2 — A little more detail
+The second step narrows the route based on the selected goal.
+
+Step 3 — Your resident path
+The system produces a short sequence of existing public actions, such as:
+- review published service information
+- check the forms library
+- submit an enquiry
+- track after a reference is issued
+- review project/public-progress information
+- contact the office
+
+2. Dynamic service choices
+For “Find help or a service”, V225 reads service/programme/support cards that are already present in:
+- #services
+- #how-we-help
+- #support-areas
+- #resident-programmes
+
+It uses the existing published titles/descriptions rather than maintaining a duplicate service catalogue.
+
+If those cards are not available, V225 falls back safely to:
+- Resident Services Hub
+- Services & Assistance
+- Programmes
+- Resident Guide
+
+V225 does not invent eligibility rules, required documents or programme conditions.
+
+3. Deterministic service anchors
+Where an existing service card does not have an ID, V225 assigns a deterministic browser-side anchor.
+This allows a generated journey to link directly to the relevant service card.
+The same anchor is recreated on the destination Services page.
+
+4. Resident path examples
+
+Forms — knows the form:
+- Open Service Forms
+- Read the source guidance
+- Contact the office if unsure
+
+Forms — not sure:
+- Open Resident Guide
+- Browse Service Forms
+- Send an enquiry if needed
+
+New service enquiry:
+- Review Resident Services
+- Submit a new enquiry
+- Track after a reference is issued
+
+Existing enquiry with reference:
+- Open Resident Tracker
+- Contact office if additional help is needed
+
+Community project:
+- Activity Hub
+- Public Action & Progress
+- Enquiry if clarification is needed
+
+Contact:
+- Call
+- WhatsApp
+- Visit / office hours
+- Email
+
+5. Existing-system integration
+V225 adds launch points in:
+- Resident Services focused page
+- Resident Command Center
+- Explore drawer
+
+No existing navigation is removed.
+
+6. V224 Command Center integration
+A new Command Center action reads:
+“Build a guided resident path”
+It closes the Command Center cleanly and opens Resident Journey.
+
+7. Same-page / cross-page navigation
+If a journey step exists on the current focused route:
+- Resident Journey closes
+- V208/V209 supporting content is expanded when necessary
+- The destination scrolls into view
+- V222 destination highlighting is reused
+
+Cross-route steps use the existing focused public URLs.
+
+8. Copy path
+The final step can copy the generic journey sequence to the clipboard.
+Copied content contains:
+- Step labels
+- Public destination URLs
+- A navigation-guidance disclaimer
+
+No resident answers, names, addresses, phone numbers, DOBs or enquiry text are included.
+
+9. Privacy
+Resident Journey:
+- Stores choices only in JavaScript memory while the page is open
+- Uses no localStorage
+- Uses no sessionStorage
+- Makes no fetch/API request
+- Creates no resident profile
+- Sends no journey choices to an external service
+
+10. Accessibility
+- Dialog semantics with aria-modal
+- Three-step visible progress indicator
+- Keyboard-accessible choices
+- Focus is trapped while the journey is open
+- Escape closes the journey
+- Focus returns to the control that opened it
+- Back and Start over are always available when appropriate
+
+11. Visual system
+Resident Journey follows the established public identity:
+- Navy civic rail
+- Brass progression line
+- Paper/light surfaces
+- Editorial serif headings
+- Dark-mode treatment
+- Responsive mobile layout
+- Reduced-motion support
+
+12. Print/PDF
+Resident Journey controls are excluded from print/PDF output.
+The existing V223 print presentation remains authoritative.
+
+13. Preservation
+- No public information removed
+- No public route removed
+- No Explore or Command Center function removed
+- No staff CMS change
+- No V215 progress-thread change
+- No enquiry endpoint change
+- No tracking logic change
+- No authentication change
+- No database change
+- No publishing workflow change
+
+QA
+- V225 JavaScript syntax: pass
+- Server JavaScript syntax: pass
+- CSS brace balance: pass
+- V225 CSS/JS injection: pass
+- V225 loads after V224: pass
+- Three-step flow: present
+- Dynamic service-card discovery: present
+- Safe service fallback: present
+- Command Center integration: present
+- Services-page launcher: present
+- Explore integration: present
+- Copy-path action: present
+- Same-route reveal/highlight: present
+- Focus trap: present
+- Dark mode: present
+- Mobile layout: present
+- Print suppression: present
+- No localStorage/sessionStorage: verified
+- No public-data fetch/API call: verified
+
+Files added:
+- assets/district-resident-journey-v225.css
+- assets/district-resident-journey-v225.js
+- V225_NOTES.txt
+
+Files updated:
+- server/src/app.js
