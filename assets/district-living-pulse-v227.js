@@ -162,7 +162,7 @@
 
     let score=0;
     if(cfg.sections?.some(x=>section===slug(x)))score+=90;
-    if(cfg.types?.some(x=>type===slug(x)))score+=72;
+    if(cfg.types?.some(x=>type===slug(x)))score+=(path==="/office"||path==="/contact"?26:72);
 
     const words=slug(cfg.keywords).split(" ").filter(Boolean);
     let hits=0;
@@ -181,8 +181,9 @@
     else if(age<=365)score+=5;
 
     if(path==="/services"&&section==="forms")score+=18;
-    if(path==="/office"&&section==="activity"&&hits===0)score-=25;
-    if(path==="/contact"&&section==="activity"&&hits===0)score-=32;
+    if((path==="/office"||path==="/contact")&&hits===0)score-=35;
+    if(path==="/office"&&section==="activity"&&hits===0)score-=10;
+    if(path==="/contact"&&section==="activity"&&hits===0)score-=12;
     if(path==="/forms"&&section!=="forms"&&!type.includes("form"))score-=100;
 
     return score;
