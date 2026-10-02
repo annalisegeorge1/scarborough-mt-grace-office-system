@@ -1,0 +1,48 @@
+Scarborough / Mt. Grace District Office — V211
+
+HOMEPAGE AESTHETIC BRIDGE
+
+V211 reconnects the public homepage to the V210 civic/editorial language so the landing page and focused subpages feel like one visual system.
+
+Homepage changes:
+- Restyles the main hero with layered navy/blue civic depth, muted brass accents, concentric rings and stronger editorial typography.
+- Adds a small "District Office • Public Service" masthead detail beneath the hero quote.
+- Adds six chapter-style visual transitions through the homepage:
+  01 Resident access
+  02 Service directory
+  03 District life
+  04 Office access
+  05 Community record
+  06 Explore more
+- Adds two prominent homepage gateway cards:
+  * Your District Office -> /office/
+  * Community Action -> /community/
+- Uses civic medallions, fine rules, radial backgrounds and constellation details to connect those gateways visually to V210.
+- Restyles Resident Start, Portal Hub, Activity Hub, Contact, Service Forms, Gallery, District Office and Community Action sections so they share the same material language.
+- Gives the Activity Hub and Gallery deeper navy editorial framing.
+- Strengthens the hidden/expanded District Office section with framed office imagery and a softer editorial information panel.
+- Restores visible constellation linework throughout the homepage.
+- Restyles the More gateway as a deliberate final chapter rather than a generic reveal control.
+- Adds small decorative folio numbers to major homepage chapters.
+
+Design principles:
+- Navy/blue remains the dominant District Office identity.
+- Metallic detail stays muted brass/champagne rather than bright yellow.
+- Decorative devices are secondary to service information and navigation.
+- Mobile removes or reduces excess rings, folio numbers and ornament.
+- No public content, forms, enquiry logic, tracking logic, staff authentication or database behaviour is changed.
+
+QA:
+- Homepage controller JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V211 CSS/JS injection: pass.
+- V211 loads after V210.
+- All 11 homepage section IDs used by V211 resolve in the current public document.
+- Hero text, District Office image frame and District Office information panel selectors resolve.
+
+Files added:
+- assets/district-homepage-aesthetic-v211.css
+- assets/district-homepage-aesthetic-v211.js
+
+Files updated:
+- server/src/app.js
