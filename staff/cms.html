@@ -22,6 +22,9 @@
   .cm-subhead{margin:18px 0 8px;color:#0b3553}
   .cm-employment[hidden]{display:none!important}
   .cm-collection[hidden]{display:none!important}
+  .cm-featured-row{border:1px solid rgba(201,163,74,.24);border-radius:10px;background:#fffaf0;padding:9px 10px}
+  .cm-featured-row label{color:#755f34}
+  .v214-pin-note{display:block;margin-top:6px;color:#6d818c;font-size:11px;line-height:1.45}
   @media(max-width:900px){.cm-two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -111,6 +114,7 @@
   <div class="f4"><label>Workflow</label><select id="activity-workflow"><option>Draft</option><option>In Review</option><option>Approved</option><option>Published</option><option>Archived</option></select></div>
   <div class="f4"><label>Verified</label><select id="activity-verified"><option value="false">No</option><option value="true">Yes</option></select></div>
   <div class="f4"><label>Display order</label><input id="activity-order" type="number" value="0"></div>
+  <div class="f4 cm-featured-row"><label>Pin in District Digital Feed</label><select id="activity-featured"><option value="false">No</option><option value="true">Yes</option></select><span class="v214-pin-note">Use sparingly for urgent or priority public information. Pinned items remain at the top of the feed until unpinned or archived.</span></div>
   <div class="f6"><label>Publish on</label><input id="activity-publish" type="datetime-local"></div>
   <div class="f6"><label>Expire on</label><input id="activity-expire" type="datetime-local"></div>
   <div class="f4 cm-employment" hidden><label>Employer / THA division</label><input id="activity-employer" placeholder="Official employer name"></div>
@@ -130,7 +134,7 @@
 
 <section class="card">
 <h2>Managed Activity Hub records</h2>
-<div class="tablewrap"><table><thead><tr><th>Title</th><th>Type</th><th>Public status</th><th>Workflow</th><th>Actions</th></tr></thead><tbody id="managed-activity"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Title</th><th>Type</th><th>Public status</th><th>Pinned</th><th>Workflow</th><th>Actions</th></tr></thead><tbody id="managed-activity"></tbody></table></div>
 </section>
 </section>
 
@@ -214,8 +218,8 @@ function render(){
 
   const managedActivity=data.filter(x=>x.type==='activity'||x.type==='activity_override');
   $('managed-activity').innerHTML=managedActivity.map(x=>`<tr><td><strong>${SMG.esc(x.title)}</strong>${x.type==='activity_override'?'<br><span class="small">Built-in item override</span>':''}</td>
-    <td>${SMG.esc(meta(x.metadata).subtype||'project')}</td><td>${SMG.esc(x.public_status||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td>
-    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-activity" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">No managed Activity Hub records yet.</td></tr>';
+    <td>${SMG.esc(meta(x.metadata).subtype||'project')}</td><td>${SMG.esc(x.public_status||'—')}</td><td><span class="cm-status">${x.is_featured?'Pinned':'Standard'}</span></td><td><span class="badge">${SMG.esc(x.workflow)}</span></td>
+    <td>${actionButtons(`<button type="button" class="cm-edit" data-cm-action="edit-activity" data-cm-id="${SMG.esc(x.id)}">Edit</button><button type="button" class="cm-archive" data-cm-action="archive" data-cm-id="${SMG.esc(x.id)}">Archive</button>`)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No managed Activity Hub records yet.</td></tr>';
 
   $('all-content').innerHTML=data.map(x=>`<tr><td>${SMG.esc(x.type)}</td><td><strong>${SMG.esc(x.title)}</strong></td><td>${SMG.esc(x.section||'—')}</td><td><span class="badge">${SMG.esc(x.workflow)}</span></td><td>${x.verified?'Yes':'No'}</td><td>${SMG.fmt(x.updated_at)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No content records.</td></tr>';
 }
@@ -289,7 +293,7 @@ async function restoreStaticForm(enc){
 
 function clearActivity(){
   ['activity-id','activity-static-key','activity-title','activity-code','activity-role','activity-summary','activity-note','activity-next','activity-date','activity-publish','activity-expire','activity-employer','activity-deadline','activity-source-url'].forEach(id=>SMG.set(id,''));
-  SMG.set('activity-subtype','project');SMG.set('activity-status','Planned');SMG.set('activity-workflow','Draft');SMG.set('activity-verified','false');SMG.set('activity-order','0');
+  SMG.set('activity-subtype','project');SMG.set('activity-status','Planned');SMG.set('activity-workflow','Draft');SMG.set('activity-verified','false');SMG.set('activity-order','0');SMG.set('activity-featured','false');
   showEmploymentFields();
 }
 $('activity-reset').onclick=clearActivity;
@@ -302,7 +306,7 @@ function fillActivity(x,staticKey=''){
   SMG.set('activity-role',m.role||x.role||'');SMG.set('activity-status',x.public_status||x.publicStatus||x.status||'Planned');
   SMG.set('activity-summary',x.summary||'');SMG.set('activity-note',x.status_note||x.statusNote||'');SMG.set('activity-next',x.body||m.nextStep||'');
   SMG.set('activity-date',dt(x.event_date||x.eventDate));SMG.set('activity-workflow',x.workflow||'Published');SMG.set('activity-verified',String(x.verified===undefined?true:!!x.verified));
-  SMG.set('activity-order',String(x.sort_order||0));SMG.set('activity-publish',dt(x.publish_on));SMG.set('activity-expire',dt(x.expire_on));
+  SMG.set('activity-order',String(x.sort_order||0));SMG.set('activity-featured',String(!!(x.is_featured||x.isFeatured)));SMG.set('activity-publish',dt(x.publish_on));SMG.set('activity-expire',dt(x.expire_on));
   SMG.set('activity-employer',m.employer||'');SMG.set('activity-employer-type',m.employerType||'THA');SMG.set('activity-deadline',m.deadline||'');SMG.set('activity-source-url',x.public_url||x.publicUrl||'');showEmploymentFields();
 }
 function editActivity(id){const x=data.find(r=>r.id===id);if(x){fillActivity(x);document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'})}}
@@ -319,7 +323,7 @@ $('activity-save').onclick=async()=>{
   if(employment&&(!SMG.val('activity-employer')||!deadline||!/^https:\/\//i.test(sourceUrl)))return SMG.msg('Employment notices need an employer, deadline and HTTPS official application link.','danger');
   const body={type:staticKey?'activity_override':'activity',section:'activity',category:subtype,title:SMG.val('activity-title'),summary:SMG.val('activity-summary'),
     body:SMG.val('activity-next'),publicStatus:employment?'Open':SMG.val('activity-status'),statusNote:SMG.val('activity-note'),eventDate:SMG.val('activity-date')||null,
-    workflow:SMG.val('activity-workflow'),verified:SMG.val('activity-verified')==='true',sortOrder:Number(SMG.val('activity-order'))||0,
+    workflow:SMG.val('activity-workflow'),verified:SMG.val('activity-verified')==='true',sortOrder:Number(SMG.val('activity-order'))||0,isFeatured:SMG.val('activity-featured')==='true',
     publishOn:SMG.val('activity-publish')||null,expireOn:employment?`${deadline}T23:59:59-04:00`:(SMG.val('activity-expire')||null),publicUrl:employment?sourceUrl:null,
     metadata:{staticKey:staticKey||undefined,subtype,code:SMG.val('activity-code'),role:SMG.val('activity-role'),employer:employment?SMG.val('activity-employer'):undefined,employerType:employment?SMG.val('activity-employer-type'):undefined,deadline:employment?deadline:undefined,action:'show'}};
   if(!body.title)return SMG.msg('Activity title is required.','danger');
