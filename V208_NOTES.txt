@@ -1,0 +1,63 @@
+Scarborough / Mt. Grace District Office — V208
+
+CONTENT HIERARCHY / EXPANDABLE SUPPORTING INFORMATION
+
+V208 reduces page length on the two most task-heavy public routes: Resident Services and Forms & Portals.
+
+Resident Services:
+Primary content remains visible:
+- Start Here
+- Services & Assistance
+- Programmes
+
+Supporting information becomes expandable:
+- Public Service Paths
+- Service Finder
+- Top Resident Tasks
+- Service Overview
+- Quick Route
+- How We Help
+- Help Selector
+- Support Areas
+- Resident Guide
+- Frequently Asked Questions
+- Resources
+
+Forms & Portals:
+Primary content remains visible:
+- Portal Hub
+- Service Forms
+- Submit an Enquiry
+
+Supporting information becomes expandable:
+- Documents
+- Case Tracking Guide
+- Resident Journey
+
+Behaviour:
+- Supporting sections start collapsed.
+- Residents can open only the guidance they need.
+- Multiple supporting sections may be open at the same time.
+- "Collapse all" closes all supporting sections.
+- Existing deep links remain functional.
+- Sidebar links that point to collapsed supporting content reveal that content before scrolling to it.
+- Supporting sections are removed from the always-visible right-side page index to keep that index concise.
+- Primary sections are reordered to appear immediately after the page quick actions.
+
+Accessibility:
+- Expand controls expose aria-expanded and aria-controls.
+- Collapsed content uses aria-hidden.
+- Reduced-motion preferences are respected.
+
+QA:
+- All 20 V208 primary/secondary selectors resolve in the current public document.
+- Hierarchy JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V208 CSS/JS injection: pass.
+
+Files added:
+- assets/district-content-hierarchy-v208.css
+- assets/district-content-hierarchy-v208.js
+
+Files updated:
+- server/src/app.js
