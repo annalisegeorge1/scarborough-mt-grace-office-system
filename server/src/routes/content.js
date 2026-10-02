@@ -231,9 +231,10 @@ router.post('/:id/progress',requirePermission('content.write'),async(req,res,nex
     if(!['activity','activity_override'].includes(cur.type))return res.status(400).json({detail:'Progress threads are available only for Activity Hub items.'});
     const parsed=cleanProgressInput(req.body||{});
     if(parsed.error)return res.status(400).json({detail:parsed.error});
-    const metadata={...safeMeta(cur.metadata),progressHistory:[...progressHistory(cur.metadata),parsed.entry]};
-    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata)]);
-    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_add',objectType:'public_content',objectId:req.params.id,metadata:{progressId:parsed.entry.id,status:parsed.entry.status,date:parsed.entry.date}});
+    const setCurrentStatus=req.body?.setCurrentStatus!==false;
+    const metadata={...safeMeta(cur.metadata),progressHistory:[...progressHistory(cur.metadata).slice(-99),parsed.entry]};
+    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, public_status=CASE WHEN $3 THEN $4 ELSE public_status END, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata),setCurrentStatus,parsed.entry.status]);
+    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_add',objectType:'public_content',objectId:req.params.id,metadata:{progressId:parsed.entry.id,status:parsed.entry.status,date:parsed.entry.date,setCurrentStatus}});
     res.status(201).json({content:q.rows[0],progress:parsed.entry});
   }catch(e){next(e)}
 });
