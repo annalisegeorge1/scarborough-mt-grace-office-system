@@ -1,0 +1,33 @@
+Scarborough / Mt. Grace District Office — V203
+
+FOCUSED PUBLIC SUBPAGES
+
+V203 converts the V202 sidebar from jump-only navigation into a focused public page system without duplicating the large self-contained homepage.
+
+New public routes:
+- /office/
+- /services/
+- /community/
+- /forms/
+- /updates/
+- /contact/
+
+How it works:
+- All routes are served from the existing production public document.
+- district-focused-pages-v203.js detects the route and presents only the relevant existing public sections.
+- Each focused page receives its own civic page header, breadcrumb, short description, "On this page" summary and horizontal quick-navigation pills.
+- Existing forms, service logic, live public content, tracking, gallery and other components remain the same components used by the homepage.
+- The homepage remains unchanged as the broad overview.
+- V202 sidebar targets now route visitors into the correct focused page and smooth-scroll within that page when appropriate.
+- Mobile and desktop navigation remain supported.
+
+Maintenance benefit:
+The site does not maintain six separate copies of the 17 MB public HTML file. Content remains single-source, so future staff/content updates stay consistent across the homepage and subpages.
+
+Files added:
+- assets/district-focused-pages-v203.css
+- assets/district-focused-pages-v203.js
+
+Files updated:
+- assets/district-sidebar-v202.js
+- server/src/app.js
