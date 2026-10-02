@@ -1,0 +1,49 @@
+{
+  "id": "/",
+  "name": "Scarborough / Mt. Grace District Office",
+  "short_name": "SMG Office",
+  "description": "Resident services, forms, community updates, enquiries and contact information for the Scarborough / Mt. Grace District Office.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#061d30",
+  "theme_color": "#0b3553",
+  "lang": "en-TT",
+  "dir": "ltr",
+  "categories": ["government", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/assets/district-app-icon-v229.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Resident Services",
+      "short_name": "Services",
+      "description": "Open resident services and assistance information.",
+      "url": "/services/"
+    },
+    {
+      "name": "Forms & Portals",
+      "short_name": "Forms",
+      "description": "Open public forms and resident portals.",
+      "url": "/forms/"
+    },
+    {
+      "name": "Track an Enquiry",
+      "short_name": "Track",
+      "description": "Open the resident enquiry tracker.",
+      "url": "/track/"
+    },
+    {
+      "name": "Contact the Office",
+      "short_name": "Contact",
+      "description": "Open office contact and enquiry information.",
+      "url": "/contact/"
+    }
+  ]
+}
