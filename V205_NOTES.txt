@@ -1,0 +1,23 @@
+Scarborough / Mt. Grace District Office — V205
+
+PUBLIC ROUTE INTEGRATION
+
+V205 connects the site's existing navigation controls to the V203/V204 focused public pages.
+
+Changes:
+- Main desktop navigation now routes into the focused pages.
+- Mobile navigation follows the same focused page structure.
+- Homepage Resident Services, Team, Contact, Portals, Activity, Forms, Enquiry and Gallery controls now open the relevant focused page.
+- The homepage "Six clear public pathways" links now route to the corresponding focused pages.
+- "More" opens the V202 Explore drawer instead of pointing to a hidden homepage section on focused pages.
+- Focused pages receive page-specific browser titles.
+- Current route is visually indicated in desktop and mobile navigation.
+- Search helper clutter is reduced on focused pages.
+- Existing same-page scrolling remains available when the visitor is already on the correct focused page.
+
+Files added:
+- assets/public-route-integration-v205.css
+- assets/public-route-integration-v205.js
+
+Files updated:
+- server/src/app.js
