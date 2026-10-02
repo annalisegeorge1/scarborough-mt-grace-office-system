@@ -81,14 +81,16 @@ router.get('/feed.xml',async(req,res,next)=>{
           OR type IN ('notice','important','newsletter')
         )
         AND COALESCE(metadata->>'action','show') <> 'hide'
-      ORDER BY is_featured DESC, COALESCE(publish_on,updated_at) DESC, updated_at DESC
+      ORDER BY is_featured DESC, updated_at DESC, COALESCE(publish_on,updated_at) DESC
       LIMIT 50
     `);
     const origin=String(config.publicOrigin||'').replace(/\/$/,'');
     const items=q.rows.map(row=>{
       const link=`${origin}/updates/?post=${encodeURIComponent(row.id)}`;
-      const description=row.summary||row.body||row.status_note||row.public_status||'';
-      const published=row.publish_on||row.updated_at;
+      const history=Array.isArray(row.metadata?.progressHistory)?row.metadata.progressHistory.filter(x=>x&&typeof x==='object'&&x.summary):[];
+      const latest=history.sort((a,b)=>Date.parse(b.date||0)-Date.parse(a.date||0))[0];
+      const description=latest?`${latest.status||'Progress update'}: ${latest.summary}`:(row.summary||row.body||row.status_note||row.public_status||'');
+      const published=row.updated_at||row.publish_on;
       return `<item>
 <title>${xml(row.title)}</title>
 <link>${xml(link)}</link>
