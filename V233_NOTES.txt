@@ -1,0 +1,107 @@
+Scarborough / Mt. Grace District Office — V233
+
+SCREENSHOT POLISH
+
+V233 completes the remaining screenshot-driven fixes after the V232 form-stability pass.
+
+1. Programme help-chip contrast
+The “I need help with…” items inside Resident Programmes are spans, not buttons.
+
+V232 improved programme buttons, but those exact chips could remain low-contrast.
+
+V233 gives the chips explicit readable treatment in:
+- light mode
+- dark mode
+
+No programme wording or eligibility information is changed.
+
+2. Spanish navigation shortcut
+The Spanish shortcut is dynamically injected by public-content-runtime with absolute desktop positioning.
+
+On touch-landscape tablets it could overlap the Scarborough / Mt. Grace brand lockup.
+
+V233 moves ESPAÑOL into normal navigation flow in touch landscape:
+- static positioning
+- normal rail order
+- compact pill sizing
+- no brand overlap
+- remains horizontally reachable with the rest of the navigation
+
+3. Portrait mobile dock clearance
+The fixed resident dock remains available, but V233 reduces crowding around it.
+
+On portrait screens <=900px:
+- Explore sits above the dock
+- accessibility controls sit above the dock
+- footer gains bottom clearance
+- mobile dock padding is reduced slightly
+- mobile dock action height is reduced slightly
+- scroll padding accounts for the fixed resident dock
+
+4. Short portrait screens
+On shorter portrait displays:
+- Explore scales down slightly
+- accessibility controls scale down slightly
+
+5. Services tool-stack spacing
+V228 Resident Readiness and V231 Service Intelligence remain fully available.
+
+Their spacing is tightened on smaller screens so the Services page does not feel like consecutive oversized utility panels.
+
+No launcher or feature is removed.
+
+6. Modal/sheet coexistence
+Explore and accessibility floating controls recede while the following are open:
+- V224 Command Center
+- V225 Resident Journey
+- V228 Resident Readiness
+- V231 Service Intelligence
+
+This reduces visual overlap and competing controls.
+
+7. Preservation
+V233 is CSS-only.
+
+No changes to:
+- staff CMS
+- authentication
+- staff publishing
+- public verification
+- enquiry submission
+- document-upload logic
+- tracker
+- database
+- V215 progress threads
+- V224 Command Center logic
+- V225 Resident Journey logic
+- V226 Smart Next Step logic
+- V227 District Pulse logic
+- V228 Readiness logic
+- V229 PWA/service worker
+- V231 Service Intelligence logic
+- V232 enquiry form stability logic
+
+8. QA
+Passed:
+- server JavaScript syntax
+- CSS brace balance
+- V233 stylesheet injection
+- V233 loads after V232
+- light programme-chip rule present
+- dark programme-chip rule present
+- Spanish-link static-flow override present
+- portrait dock-clearance rules present
+- footer dock clearance present
+- dock compaction present
+- Services tool spacing present
+- modal/sheet floating-control suppression present
+
+Files added:
+- assets/district-screenshot-polish-v233.css
+- V233_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V233 is a source-level screenshot correction pass. Final confirmation should still come from a fresh deployed tablet screenshot after Render completes the latest build.
