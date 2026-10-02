@@ -1,0 +1,403 @@
+/* Scarborough / Mt. Grace District Office — V232
+   Screenshot-driven form + responsive stability pass.
+   Fixes legacy layout rules still fighting the focused public system. */
+
+/* ==========================================================================
+   1. ENQUIRY FORM: remove the obsolete two-column contact layout.
+   The enquiry section now contains one primary form workflow, not a form + aside.
+   ========================================================================== */
+#enquiry .contact-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:18px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .contact-grid > *,
+#enquiry .v51-primary-label,
+#enquiry .v9-contact-process,
+#enquiry .form-area,
+#enquiry .v54-section-end{
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .form-area{
+  margin:0!important;
+  overflow:visible!important;
+}
+
+#enquiry #district-enquiry-form,
+#enquiry #district-enquiry-form > *,
+#enquiry .form-grid,
+#enquiry .form-group{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+#enquiry #district-enquiry-form{
+  width:100%!important;
+}
+
+/* Restore a useful two-column form on roomy screens now that the form itself
+   owns the full content width. */
+@media(min-width:901px){
+  #enquiry .form-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:14px 16px!important;
+  }
+
+  #enquiry .form-group.textarea,
+  #enquiry #v138-notification-preferences,
+  #enquiry .v39-community-note,
+  #enquiry .v69-review,
+  #enquiry .form-btn,
+  #enquiry .form-group:has(#supporting-files){
+    grid-column:1 / -1!important;
+  }
+
+  #enquiry .v69-review-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+
+  #enquiry .v69-review-message{
+    grid-column:1 / -1!important;
+  }
+}
+
+/* Tablet widths should never squeeze the review cards into word-by-word columns. */
+@media(min-width:681px) and (max-width:1100px){
+  #enquiry .v69-review-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+/* Strong anti-crush protection for every enquiry summary/control. */
+#enquiry :is(
+  .v69-review-grid > div,
+  .v69-stage,
+  .v55-before-submit,
+  .v35-track-box,
+  .v54-enquiry-action,
+  #v138-notification-preferences,
+  .v39-community-note
+){
+  min-width:0!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+#enquiry :is(
+  .v105-review-label,
+  .v105-review-value,
+  .v48-form-help,
+  .v33-file-note,
+  .v39-community-note,
+  #v138-notification-preferences label,
+  #v138-notification-preferences small
+){
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* A disabled upload field should look intentionally unavailable instead of broken. */
+#enquiry #supporting-files:disabled{
+  opacity:.72!important;
+  cursor:not-allowed!important;
+  background:#eef3f5!important;
+  color:#526b78!important;
+}
+
+/* ==========================================================================
+   2. TOUCH-LANDSCAPE ENQUIRY DENSITY.
+   ========================================================================== */
+@media(orientation:landscape) and (pointer:coarse){
+  body[data-district-view="forms"] #enquiry{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  body[data-district-view="forms"] #enquiry > .wrap{
+    width:100%!important;
+    max-width:none!important;
+    padding-left:clamp(16px,2.4vw,30px)!important;
+    padding-right:clamp(16px,2.4vw,30px)!important;
+  }
+
+  body[data-district-view="forms"] #enquiry .form-area{
+    width:100%!important;
+    max-width:none!important;
+    padding:clamp(18px,2.4vw,28px)!important;
+  }
+
+  body[data-district-view="forms"] #district-enquiry-form{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  body[data-district-view="forms"] #enquiry .v69-enquiry-stage{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+
+  body[data-district-view="forms"] #enquiry .v69-stage{
+    min-height:118px!important;
+    height:auto!important;
+  }
+}
+
+/* ==========================================================================
+   3. DARK PROGRAMME FILTERS / CHIPS.
+   V230 corrected the light version; the supplied dark screenshot exposed the
+   remaining low-contrast dark state.
+   ========================================================================== */
+body.v112-dark #resident-programmes button:not(.v228-card-button):not(.v231-service-button),
+body.v112-dark #resident-programmes [role="button"]{
+  border:1px solid rgba(216,199,160,.18)!important;
+  background:#173a4e!important;
+  color:#edf5f8!important;
+  opacity:1!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+
+body.v112-dark #resident-programmes button:not(.v228-card-button):not(.v231-service-button) *,
+body.v112-dark #resident-programmes [role="button"] *{
+  color:#edf5f8!important;
+  opacity:1!important;
+}
+
+body.v112-dark #resident-programmes button:not(.v228-card-button):not(.v231-service-button):hover,
+body.v112-dark #resident-programmes button:not(.v228-card-button):not(.v231-service-button):focus-visible,
+body.v112-dark #resident-programmes [role="button"]:hover,
+body.v112-dark #resident-programmes [role="button"]:focus-visible{
+  border-color:rgba(216,199,160,.42)!important;
+  background:#204b63!important;
+  color:#fff!important;
+  outline:none!important;
+}
+
+/* ==========================================================================
+   4. TOP NAV ON TOUCH LANDSCAPE.
+   Legacy V27 hides buttons 5+ at <=1100px. Touch tablets need all destinations,
+   so restore them and let the button row scroll.
+   ========================================================================== */
+@media(orientation:landscape) and (pointer:coarse) and (min-width:761px){
+  nav[aria-label="Site navigation"] .nav-inner{
+    display:grid!important;
+    grid-template-columns:minmax(230px,.72fr) minmax(0,1.8fr)!important;
+    align-items:center!important;
+    gap:12px!important;
+    max-width:none!important;
+    padding:10px 16px!important;
+  }
+
+  nav[aria-label="Site navigation"] .links{
+    display:flex!important;
+    min-width:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    gap:7px!important;
+    align-items:center!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:visible!important;
+    scrollbar-width:none!important;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:3px 2px!important;
+  }
+
+  nav[aria-label="Site navigation"] .links::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  /* Override the old V27 nth-of-type(n+5){display:none}. */
+  nav[aria-label="Site navigation"] .links > .v14-nav-label:nth-of-type(n+5){
+    display:inline-flex!important;
+  }
+
+  nav[aria-label="Site navigation"] .links > .v51-nav-btn{
+    flex:0 0 auto!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:38px!important;
+    padding:0 11px!important;
+    white-space:nowrap!important;
+  }
+
+  /* Search becomes a compact icon-sized control until the resident focuses it.
+     This gives Forms / Updates / Contact / Explore room to stay reachable. */
+  nav[aria-label="Site navigation"] .v27-site-search{
+    flex:0 0 44px!important;
+    width:44px!important;
+    min-width:44px!important;
+    margin-left:1px!important;
+    transition:width .16s ease,flex-basis .16s ease!important;
+  }
+
+  nav[aria-label="Site navigation"] .v27-site-search:not(:focus-within) #v27-site-search-input{
+    width:44px!important;
+    padding-left:36px!important;
+    padding-right:8px!important;
+    color:transparent!important;
+    cursor:pointer!important;
+  }
+
+  nav[aria-label="Site navigation"] .v27-site-search:not(:focus-within) #v27-site-search-input::placeholder{
+    color:transparent!important;
+  }
+
+  nav[aria-label="Site navigation"] .v27-site-search:not(:focus-within) .v27-search-clear{
+    display:none!important;
+  }
+
+  nav[aria-label="Site navigation"] .v27-site-search:focus-within{
+    flex:0 0 clamp(190px,25vw,270px)!important;
+    width:clamp(190px,25vw,270px)!important;
+  }
+
+  nav[aria-label="Site navigation"] .v27-site-search:focus-within #v27-site-search-input{
+    width:100%!important;
+    color:#061724!important;
+  }
+
+  nav[aria-label="Site navigation"] .v89-search-prompts,
+  nav[aria-label="Site navigation"] .v89-search-hint{
+    display:none!important;
+  }
+}
+
+/* ==========================================================================
+   5. SMART NEXT STEP — compact landscape treatment.
+   ========================================================================== */
+@media(orientation:landscape) and (pointer:coarse){
+  body.v203-focused-view .v226-next-step{
+    min-height:64px!important;
+    padding:9px 10px 9px 13px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:10px!important;
+    border-radius:16px!important;
+  }
+
+  body.v203-focused-view .v226-context{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:9px!important;
+  }
+
+  body.v203-focused-view .v226-context-copy span{
+    max-width:70ch!important;
+  }
+
+  body.v203-focused-view .v226-actions{
+    max-width:none!important;
+    overflow-x:auto!important;
+    scrollbar-width:none!important;
+  }
+
+  body.v203-focused-view .v226-actions::-webkit-scrollbar{
+    display:none!important;
+  }
+}
+
+/* ==========================================================================
+   6. SERVICES TOOL LAUNCHERS — reduce vertical repetition without removing
+   Readiness or Service Intelligence.
+   ========================================================================== */
+@media(min-width:431px) and (max-width:780px){
+  body[data-district-view="services"] .v228-launcher,
+  body[data-district-view="services"] .v231-launcher{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:10px!important;
+    padding:10px 12px!important;
+    min-height:78px!important;
+  }
+
+  body[data-district-view="services"] .v228-launcher{
+    flex-direction:initial!important;
+  }
+
+  body[data-district-view="services"] .v228-launcher > div > span,
+  body[data-district-view="services"] .v231-launcher-copy > span{
+    display:none!important;
+  }
+
+  body[data-district-view="services"] .v228-launcher strong,
+  body[data-district-view="services"] .v231-launcher-copy strong{
+    font-size:15px!important;
+    line-height:1.18!important;
+  }
+
+  body[data-district-view="services"] .v228-launcher button,
+  body[data-district-view="services"] .v231-launcher button{
+    width:auto!important;
+    min-width:142px!important;
+    min-height:38px!important;
+    padding-inline:10px!important;
+  }
+}
+
+/* ==========================================================================
+   7. FLOATING CONTROL COLLISION SAFETY.
+   Keep controls above the bottom dock but out of form content on short
+   landscape viewports.
+   ========================================================================== */
+@media(orientation:landscape) and (pointer:coarse) and (max-height:760px){
+  .v202-menu-fab{
+    bottom:14px!important;
+  }
+
+  .v8-accessibility{
+    bottom:14px!important;
+  }
+
+  body[data-district-view="forms"] .v3-contact-rail{
+    transform:scale(.86)!important;
+    transform-origin:right center!important;
+    right:8px!important;
+  }
+}
+
+@media(max-width:680px){
+  #enquiry .form-grid{
+    grid-template-columns:1fr!important;
+  }
+  #enquiry .v69-review-grid{
+    grid-template-columns:1fr!important;
+  }
+  #enquiry .v69-review-message{
+    grid-column:auto!important;
+  }
+}
+
+@media print{
+  nav[aria-label="Site navigation"] .links{
+    overflow:visible!important;
+  }
+}
+
+
+/* Dark enquiry sub-surfaces added by the later resident-notification/form work. */
+body.v112-dark #enquiry #supporting-files:disabled{
+  background:#173a4e!important;
+  color:#b9ccd5!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+body.v112-dark #enquiry #v138-notification-preferences > div{
+  background:#102f42!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+body.v112-dark #enquiry #v138-notification-preferences :is(label,span,small){
+  color:#c5d6de!important;
+  opacity:1!important;
+}
