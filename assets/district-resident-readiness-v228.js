@@ -125,7 +125,7 @@
         '<h2>Review before you move to the next step.</h2>'+
         '<p>This workspace turns published service information into a temporary review list. It does not determine eligibility or approval.</p>'+
         '<div class="v228-meter"><div class="v228-meter-label"><span>Reviewed</span><span id="v228-meter-count">0 / 0</span></div><div class="v228-meter-track"><div class="v228-meter-fill"></div></div></div>'+
-        '<div class="v228-side-note">Nothing in this checklist is submitted to the District Office. Closing or refreshing the page clears the review state.</div>'+
+        '<div class="v228-side-note">Nothing in this checklist is submitted to the District Office. Checks exist only while this page is open and clear on refresh or navigation.</div>'+
       '</aside>'+
       '<div class="v228-main">'+
         '<header class="v228-head">'+
