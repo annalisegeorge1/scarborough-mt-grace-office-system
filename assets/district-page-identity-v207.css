@@ -1,0 +1,231 @@
+/* Scarborough / Mt. Grace District Office — V207 route identities */
+body.v203-focused-view{
+  --v207-accent:#1f668b;
+  --v207-accent-rgb:31,102,139;
+  --v207-accent-dark:#124b69;
+  --v207-accent-soft:#edf6fa;
+  --v207-accent-ink:#123f58;
+}
+
+/* Route-specific identity palettes remain restrained and civic. */
+body[data-district-view="office"]{
+  --v207-accent:#4b6d80;--v207-accent-rgb:75,109,128;--v207-accent-dark:#354f60;--v207-accent-soft:#eef3f5;--v207-accent-ink:#304b5a;
+}
+body[data-district-view="services"]{
+  --v207-accent:#17678f;--v207-accent-rgb:23,103,143;--v207-accent-dark:#0d4b6d;--v207-accent-soft:#eaf5fa;--v207-accent-ink:#0d4664;
+}
+body[data-district-view="community"]{
+  --v207-accent:#2b7569;--v207-accent-rgb:43,117,105;--v207-accent-dark:#1e584f;--v207-accent-soft:#edf7f4;--v207-accent-ink:#245d54;
+}
+body[data-district-view="forms"]{
+  --v207-accent:#4c5f8e;--v207-accent-rgb:76,95,142;--v207-accent-dark:#35456f;--v207-accent-soft:#f0f2f9;--v207-accent-ink:#3d4f79;
+}
+body[data-district-view="updates"]{
+  --v207-accent:#6c5d82;--v207-accent-rgb:108,93,130;--v207-accent-dark:#504461;--v207-accent-soft:#f4f1f7;--v207-accent-ink:#594c6d;
+}
+body[data-district-view="contact"]{
+  --v207-accent:#386f7c;--v207-accent-rgb:56,111,124;--v207-accent-dark:#285461;--v207-accent-soft:#edf6f7;--v207-accent-ink:#2b5b66;
+}
+
+/* Give each page header a subtle identity while staying inside the office brand. */
+body[data-district-view="office"] .v203-page-header{
+  background:linear-gradient(120deg,#0a2b44 0%,#36596d 58%,#58788a 100%);
+}
+body[data-district-view="services"] .v203-page-header{
+  background:linear-gradient(120deg,#082d47 0%,#125c82 56%,#267da3 100%);
+}
+body[data-district-view="community"] .v203-page-header{
+  background:linear-gradient(120deg,#0b3441 0%,#23695f 58%,#43877b 100%);
+}
+body[data-district-view="forms"] .v203-page-header{
+  background:linear-gradient(120deg,#172d4c 0%,#3f527f 58%,#6575a3 100%);
+}
+body[data-district-view="updates"] .v203-page-header{
+  background:linear-gradient(120deg,#1b2f49 0%,#584c70 58%,#776889 100%);
+}
+body[data-district-view="contact"] .v203-page-header{
+  background:linear-gradient(120deg,#0b3045 0%,#2f6672 58%,#4b818a 100%);
+}
+
+/* Route identity strip */
+.v207-identity-strip{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:center;
+  padding:17px 18px;
+  border:1px solid rgba(var(--v207-accent-rgb),.2);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 94% 18%,rgba(var(--v207-accent-rgb),.08) 0 2px,transparent 3px),
+    linear-gradient(145deg,#fff 0%,var(--v207-accent-soft) 100%);
+  box-shadow:0 9px 24px rgba(8,42,63,.055);
+}
+.v207-identity-strip:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:5px;
+  background:var(--v207-accent);
+}
+.v207-identity-main{display:flex;align-items:center;gap:13px;min-width:0}
+.v207-identity-mark{
+  width:42px;height:42px;flex:0 0 42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:var(--v207-accent);color:#fff;
+  box-shadow:0 8px 18px rgba(var(--v207-accent-rgb),.2);
+  font:900 10px/1 system-ui;letter-spacing:.07em;
+}
+.v207-identity-copy{min-width:0}
+.v207-identity-copy small{
+  display:block;margin-bottom:4px;color:var(--v207-accent);
+  font:850 9px/1 system-ui;letter-spacing:.13em;text-transform:uppercase;
+}
+.v207-identity-copy strong{
+  display:block;color:#17384b;font:650 16px/1.18 Georgia,"Times New Roman",serif;
+}
+.v207-identity-copy p{
+  margin:5px 0 0;color:#647e8b;font:600 10.5px/1.45 system-ui;
+}
+.v207-principles{
+  display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;max-width:360px;
+}
+.v207-principle{
+  padding:7px 9px;border:1px solid rgba(var(--v207-accent-rgb),.18);border-radius:999px;
+  background:rgba(255,255,255,.8);color:var(--v207-accent-ink);
+  font:800 8.5px/1 system-ui;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;
+}
+
+/* Route accents across existing V204 framework. */
+body.v203-focused-view .v204-action-card{
+  border-top:3px solid rgba(var(--v207-accent-rgb),.7);
+}
+body.v203-focused-view .v204-action-card:hover,
+body.v203-focused-view .v204-action-card:focus-visible{
+  border-color:rgba(var(--v207-accent-rgb),.35);
+  border-top-color:var(--v207-accent);
+}
+body.v203-focused-view .v204-action-icon{
+  background:var(--v207-accent-soft);
+  color:var(--v207-accent);
+}
+body.v203-focused-view .v204-action-card:hover:after,
+body.v203-focused-view .v204-action-card:focus-visible:after{
+  color:var(--v207-accent);
+}
+body.v203-focused-view .v204-side-head{
+  background:linear-gradient(145deg,var(--v207-accent-dark),var(--v207-accent));
+}
+body.v203-focused-view .v204-side-nav a.is-active{
+  background:var(--v207-accent-soft);
+  color:var(--v207-accent-ink);
+}
+body.v203-focused-view .v204-side-nav a.is-active .v204-side-num{
+  background:var(--v207-accent);
+}
+body.v203-focused-view .v204-section-chip{
+  border-color:rgba(var(--v207-accent-rgb),.17);
+  color:var(--v207-accent-ink);
+}
+body.v203-focused-view .v204-content-card{
+  border-color:rgba(var(--v207-accent-rgb),.16)!important;
+}
+body.v203-focused-view .v204-content-card:after{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:3px;
+  background:linear-gradient(180deg,var(--v207-accent),transparent 45%);
+  opacity:.65;
+  z-index:2;
+  pointer-events:none;
+}
+body.v203-focused-view .v203-page-tab:hover,
+body.v203-focused-view .v203-page-tab:focus-visible{
+  color:var(--v207-accent-dark);
+}
+body.v203-focused-view .v203-breadcrumb a:hover{color:#fff}
+
+/* Distinct page behaviours */
+body[data-district-view="services"] .v204-action-deck{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+body[data-district-view="services"] #services .service-card{
+  position:relative;
+  padding-left:22px!important;
+}
+body[data-district-view="services"] #services .service-card:before{
+  content:"";
+  position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:99px;
+  background:var(--v207-accent);
+  opacity:.7;
+}
+
+body[data-district-view="forms"] .v204-action-card{
+  background:linear-gradient(155deg,#fff,#f4f5fa);
+}
+body[data-district-view="forms"] .v204-action-card strong{
+  font-size:12.5px;
+}
+body[data-district-view="forms"] #service-forms,
+body[data-district-view="forms"] #enquiry{
+  box-shadow:0 18px 44px rgba(var(--v207-accent-rgb),.09);
+}
+
+body[data-district-view="community"] #gallery,
+body[data-district-view="community"] #activity-hub{
+  box-shadow:0 17px 44px rgba(var(--v207-accent-rgb),.08);
+}
+body[data-district-view="community"] .v204-content-card:after{
+  width:4px;
+}
+
+body[data-district-view="updates"] .v204-content-card{
+  background-image:linear-gradient(180deg,rgba(var(--v207-accent-rgb),.018),transparent 180px);
+}
+body[data-district-view="updates"] .v204-section-chip{
+  background:var(--v207-accent-soft);
+}
+
+body[data-district-view="office"] #team,
+body[data-district-view="office"] #about{
+  background-image:linear-gradient(155deg,rgba(var(--v207-accent-rgb),.025),transparent 45%);
+}
+body[data-district-view="office"] .v204-action-card{
+  min-height:110px;
+}
+
+body[data-district-view="contact"] .v204-action-deck .v204-action-card:nth-child(2){
+  border-top-color:#2e8a5a;
+}
+body[data-district-view="contact"] .v204-action-deck .v204-action-card:nth-child(2) .v204-action-icon{
+  background:#edf8f1;color:#2e7b51;
+}
+body[data-district-view="contact"] #contact-us{
+  box-shadow:0 17px 44px rgba(var(--v207-accent-rgb),.09);
+}
+
+/* Header pill identity. */
+.v207-header-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-top:13px;padding:7px 10px;
+  border:1px solid rgba(255,255,255,.2);border-radius:999px;
+  background:rgba(255,255,255,.08);backdrop-filter:blur(8px);
+  color:#edf7fb;font:800 8.5px/1 system-ui;letter-spacing:.08em;text-transform:uppercase;
+}
+.v207-header-dot{width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.1)}
+
+@media(max-width:900px){
+  .v207-identity-strip{grid-template-columns:1fr;padding:14px 15px}
+  .v207-principles{justify-content:flex-start;max-width:none}
+}
+@media(max-width:650px){
+  .v207-identity-strip{border-radius:16px}
+  .v207-identity-mark{width:38px;height:38px;flex-basis:38px}
+  .v207-identity-copy strong{font-size:15px}
+  .v207-identity-copy p{display:none}
+  .v207-principles{gap:5px}
+  .v207-principle{font-size:7.8px;padding:6px 8px}
+}
