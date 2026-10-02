@@ -1,0 +1,186 @@
+Scarborough / Mt. Grace District Office — V232
+
+FORM + LANDSCAPE STABILITY PASS
+
+V232 is a screenshot-driven correction pass based on the October 2 tablet screenshots supplied after V231.
+
+PRIMARY ISSUE FOUND
+The focused enquiry page was still inheriting the original legacy contact layout:
+
+.contact-grid { grid-template-columns: 2fr 1fr; }
+
+That layout made sense when the section contained two independent contact columns.
+The modern enquiry section now contains one full resident form workflow.
+
+On tablet landscape this legacy rule could place the enquiry form/review content into a narrow column, producing:
+- large empty space on the left
+- extremely narrow form/review cards on the right
+- labels breaking letter-by-letter
+- Supporting Documents and Review Your Details becoming difficult to use
+
+V232 removes that conflict.
+
+1. Enquiry becomes a true single-column workflow
+#enquiry .contact-grid now uses:
+- one minmax(0,1fr) column
+- full-width content children
+- full-width form-area
+- full-width district-enquiry-form
+
+The section label, process strip, form area and section-end control all occupy the full available row.
+
+2. Useful form columns preserved
+Once the form itself owns the full page width:
+- screens >=901px use two form-field columns
+- wide review panels can use three summary columns
+- medium tablets use two review columns
+- phones use one column
+
+This uses screen width without crushing the controls.
+
+3. Full-row form content
+Long/structural form elements span the whole form width:
+- Message textarea
+- Resident Update Preferences
+- Community note
+- Supporting Documents
+- Review Your Details
+- submission/consent area
+
+4. Anti-crush text protection
+Enquiry cards, stages, review values, upload guidance and notification copy receive explicit:
+- min-width:0
+- normal word breaking
+- safe overflow wrapping
+
+This prevents labels such as:
+BEST CONTACT
+PREFERRED CONTACT
+COMMUNITY AREA
+
+from collapsing into vertical letter stacks.
+
+5. Supporting Documents treatment
+The currently disabled upload field is visually presented as intentionally unavailable rather than looking broken.
+
+Dark mode receives its own disabled-upload treatment.
+
+6. Resident Update Preferences
+The V138 notification-preference panel receives dark-mode surfaces and readable dark-mode copy.
+
+No preference behavior or notification logic is changed.
+
+7. Touch-landscape form use
+On coarse-pointer landscape:
+- focused Forms / Enquiry uses the full available width
+- internal wrap width limits are removed
+- form padding becomes responsive
+- the four enquiry process stages can display as four usable columns where space allows
+
+8. Dark Programmes & Assistance chips
+The supplied dark screenshot showed the “I need help with…” programme buttons with very low contrast.
+
+V232 gives dark-mode programme buttons:
+- dark slate surface
+- light readable text
+- brass-aware border
+- clear hover/focus state
+
+No programme wording or eligibility guidance is changed.
+
+9. Touch-landscape top navigation
+An older V27 rule explicitly hid navigation buttons 5 onward at <=1100 CSS pixels.
+
+V232 overrides that rule on touch-landscape so:
+- Forms
+- Updates
+- Contact
+- Explore
+
+remain reachable.
+
+The main navigation row horizontally scrolls when necessary.
+
+10. Compact search on landscape tablets
+The site search now occupies an icon-sized slot when not focused on touch-landscape.
+
+When focused:
+- it expands to a usable search field
+- search behavior remains unchanged
+- result dropdown remains available
+
+This gives the main navigation buttons more room.
+
+11. Smart Next Step landscape density
+V226 Smart Next Step becomes more compact in touch-landscape:
+- reduced padding/height
+- contextual copy remains
+- action row stays horizontally accessible
+- no action is removed
+
+12. Services launchers
+On medium portrait/tablet widths, V228 Readiness and V231 Service Intelligence launchers become more compact:
+- two-column internal layout
+- supporting paragraph hidden
+- action remains visible
+- all functionality preserved
+
+On very narrow phones the existing stacked pattern remains.
+
+13. Floating-control collision safety
+On short touch-landscape screens:
+- Explore stays compact
+- accessibility control remains clear of content
+- the legacy right contact rail is slightly reduced on focused Forms pages
+
+14. Preservation
+V232 is CSS-only.
+
+No changes to:
+- staff CMS
+- authentication
+- publishing/verification
+- V138 preference logic
+- enquiry submission logic
+- resident tracker
+- V213 Digital Feed
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step logic
+- V227 Living District Pulse
+- V228 Resident Readiness
+- V229 PWA/service worker
+- V230 landscape architecture
+- V231 Service Intelligence
+- database schema
+- public content
+
+15. QA
+Passed:
+- server JavaScript syntax
+- V232 CSS brace balance
+- stylesheet injection
+- V232 loads after V231
+- enquiry single-column workflow rule present
+- full-width district enquiry form rule present
+- desktop two-column form fields present
+- wide three-column review summary present
+- medium two-column review summary present
+- Supporting Documents full-row rule present
+- dark programme-chip correction present
+- old hidden-nav rule override present
+- compact touch-landscape search present
+- Smart Next Step landscape compaction present
+- V228/V231 launcher compaction present
+- dark upload / V138 panel safeguards present
+
+Files added:
+- assets/district-form-landscape-v232.css
+- V232_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V232 was designed directly against the supplied screenshots and the current source CSS/DOM. It has passed source-level responsive and load-order checks. A new post-deploy tablet screenshot pass remains the final visual confirmation.
