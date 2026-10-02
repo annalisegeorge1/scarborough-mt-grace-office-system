@@ -1,0 +1,251 @@
+/* Scarborough / Mt. Grace District Office — V219
+   Live screenshot contrast + accessibility-tray corrections.
+   Fixes dark-section text leaks and reduces floating-control obstruction without
+   removing any resident or staff function. */
+
+/* DISTRICT OFFICE TODAY — preserve the dark card, restore readable hierarchy. */
+#resident-start .v55-office-today h3{
+  color:#fff!important;
+  opacity:1!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.12)!important;
+}
+#resident-start .v55-office-today #v55-office-next{
+  color:#d7e5eb!important;
+  opacity:1!important;
+  font-weight:650!important;
+  line-height:1.45!important;
+}
+#resident-start .v55-office-today .v55-status{
+  color:#f4f8fa!important;
+}
+#resident-start .v55-office-today .v55-status strong{
+  color:#f4f8fa!important;
+  opacity:1!important;
+}
+
+/* ACTIVITY HUB — later light-surface rules were leaking dark ink back into the
+   dark civic intro. Make the dark and light zones explicit. */
+#activity-hub .v26-hub-head .v26-eyebrow{
+  color:#d8c7a0!important;
+  opacity:1!important;
+}
+#activity-hub .v26-hub-head h2{
+  color:#fff!important;
+  opacity:1!important;
+  text-shadow:0 4px 18px rgba(0,0,0,.16)!important;
+}
+#activity-hub .v26-hub-head p{
+  color:#c8dbe4!important;
+  opacity:1!important;
+}
+#activity-hub .v26-status-key,
+#activity-hub .v26-status-key span{
+  color:#c6d9e2!important;
+  opacity:1!important;
+}
+
+/* The tab cards sit on a dark field. Give every tab its own readable paper surface
+   instead of relying on inherited white/dark text from older generations. */
+#activity-hub .v26-tabs{
+  gap:10px!important;
+}
+#activity-hub .v26-tab{
+  background:linear-gradient(155deg,#fff,#f4f8f9)!important;
+  color:#0b3553!important;
+  border:1px solid rgba(216,199,160,.20)!important;
+  box-shadow:0 9px 20px rgba(3,22,36,.08)!important;
+}
+#activity-hub .v26-tab>span{
+  color:rgba(23,79,116,.34)!important;
+}
+#activity-hub .v26-tab b,
+#activity-hub .v26-tab strong{
+  color:#123f59!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+#activity-hub .v26-tab small{
+  color:#667f8c!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+#activity-hub .v26-tab.is-active{
+  background:linear-gradient(155deg,#fffdf8,#f7f1e3)!important;
+  border-color:rgba(167,143,94,.55)!important;
+  box-shadow:inset 0 3px 0 #a78f5e,0 10px 23px rgba(3,22,36,.10)!important;
+}
+#activity-hub .v26-tab.is-active>span{
+  color:#8d7444!important;
+}
+
+/* Activity summary cards should remain light cards with dark readable content. */
+#activity-hub .v26-summary article{
+  background:linear-gradient(150deg,#fff,#f5f8f9)!important;
+  border-color:rgba(216,199,160,.16)!important;
+}
+#activity-hub .v26-summary article strong{
+  color:#123f59!important;
+  opacity:1!important;
+}
+#activity-hub .v26-summary article small{
+  color:#6e8591!important;
+  opacity:1!important;
+}
+#activity-hub .v26-summary-num{
+  color:#876f43!important;
+}
+
+/* Existing V90 status overview is already a light-card system; reinforce it so
+   future global theme changes cannot make its body copy disappear. */
+#activity-hub .v90-status-overview article{
+  background:#fff!important;
+}
+#activity-hub .v90-status-overview article strong{
+  color:#123f59!important;
+  opacity:1!important;
+}
+#activity-hub .v90-status-overview article>span:not(.v90-status-count){
+  color:#607985!important;
+  opacity:1!important;
+}
+
+/* Focused-page quick action icon labels were still too faint in the live capture. */
+body.v203-focused-view .v204-action-icon{
+  background:#e5eff4!important;
+  color:#0b3553!important;
+  border-color:rgba(23,79,116,.18)!important;
+  font-weight:900!important;
+  opacity:1!important;
+}
+
+/* MOBILE ACCESSIBILITY TRAY
+   Keep text-size + dark-mode features, but collapse them behind one compact trigger
+   so they no longer permanently cover page content. */
+.v219-access-trigger{
+  display:none;
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  border:1px solid rgba(167,143,94,.30);
+  background:linear-gradient(145deg,#082f4b,#0b3f5f);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(3,22,36,.16);
+  font:900 9px/1 system-ui;
+  cursor:pointer;
+}
+.v219-access-trigger span{
+  font-size:8px!important;
+  letter-spacing:-.03em!important;
+}
+
+@media(max-width:900px){
+  .v8-accessibility{
+    right:9px!important;
+    left:auto!important;
+    bottom:73px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:5px!important;
+    z-index:5200!important;
+  }
+
+  .v219-access-trigger{
+    display:grid!important;
+    place-items:center!important;
+    flex:0 0 36px;
+  }
+
+  .v8-accessibility:not(.v219-access-open)>.v87-text-control,
+  .v8-accessibility:not(.v219-access-open)>#v8-contrast-toggle{
+    display:none!important;
+  }
+
+  .v8-accessibility.v219-access-open>.v87-text-control,
+  .v8-accessibility.v219-access-open>#v8-contrast-toggle{
+    display:inline-flex!important;
+  }
+
+  .v8-accessibility.v219-access-open{
+    padding:4px;
+    border:1px solid rgba(11,46,72,.10);
+    border-radius:14px;
+    background:rgba(248,251,253,.95);
+    box-shadow:0 10px 26px rgba(3,22,36,.14);
+    backdrop-filter:blur(8px);
+  }
+
+  .v8-accessibility.v219-access-open .v219-access-trigger{
+    background:#0b3553!important;
+    border-color:#0b3553!important;
+  }
+
+  .v8-accessibility .v87-text-menu{
+    left:auto!important;
+    right:0!important;
+    bottom:44px!important;
+  }
+
+  /* Preserve a clean hit target while keeping the open tray compact. */
+  .v8-accessibility #v8-text-toggle,
+  .v8-accessibility #v8-contrast-toggle{
+    width:34px!important;
+    height:34px!important;
+    border-radius:10px!important;
+  }
+
+  /* Activity Hub tabs become a clean swipe rail instead of squeezed columns. */
+  #activity-hub .v26-tabs{
+    display:flex!important;
+    width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x proximity!important;
+    scroll-padding-inline:4px!important;
+    scrollbar-width:none!important;
+    padding:4px 0 8px!important;
+  }
+  #activity-hub .v26-tabs::-webkit-scrollbar{display:none!important}
+  #activity-hub .v26-tab{
+    flex:0 0 min(72vw,300px)!important;
+    min-height:88px!important;
+    scroll-snap-align:start!important;
+  }
+
+  #activity-hub .v26-hub-head{
+    align-items:flex-start!important;
+    gap:14px!important;
+  }
+  #activity-hub .v26-hub-head h2{
+    font-size:30px!important;
+  }
+  #activity-hub .v26-hub-head p{
+    font-size:9.5px!important;
+    line-height:1.55!important;
+  }
+
+  #resident-start .v55-office-today #v55-office-next{
+    font-size:9px!important;
+  }
+}
+
+@media(max-width:620px){
+  #activity-hub .v26-hub-head{
+    display:block!important;
+  }
+  #activity-hub .v26-status-key{
+    margin-top:12px!important;
+  }
+  #activity-hub .v26-tab{
+    flex-basis:min(82vw,280px)!important;
+  }
+
+  .v219-access-trigger{
+    width:34px!important;
+    height:34px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #activity-hub .v26-tabs{scroll-behavior:auto!important}
+}
