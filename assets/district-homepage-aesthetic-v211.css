@@ -1,0 +1,493 @@
+/* Scarborough / Mt. Grace District Office — V211 homepage aesthetic bridge
+   Reconnects the landing page with the V210 civic/editorial language without changing
+   the homepage information architecture or resident-service logic. */
+
+body.v211-home-aesthetic{
+  --v211-navy:#08283f;
+  --v211-navy-2:#0d3b59;
+  --v211-blue:#174f74;
+  --v211-paper:#f8fbfb;
+  --v211-brass:#a78f5e;
+  --v211-brass-soft:#d8c7a0;
+  --v211-line:rgba(11,46,72,.12);
+  background:
+    radial-gradient(circle at 4% 12%,rgba(23,79,116,.035),transparent 18rem),
+    linear-gradient(180deg,#f8fbfc 0%,#fff 34%,#f7fafb 100%);
+}
+
+/* HOME MASTHEAD */
+body.v211-home-aesthetic #v51-home{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border-bottom:1px solid rgba(167,143,94,.18);
+  box-shadow:0 22px 58px rgba(7,35,55,.07);
+  background:
+    radial-gradient(circle at 84% 18%,rgba(23,79,116,.09),transparent 22rem),
+    radial-gradient(circle at 12% 86%,rgba(167,143,94,.065),transparent 18rem),
+    linear-gradient(145deg,#fbfcfc 0%,#f3f8fa 52%,#eef4f6 100%);
+}
+body.v211-home-aesthetic #v51-home:before{
+  content:"";
+  position:absolute;
+  width:620px;height:620px;
+  right:-290px;top:-310px;
+  border-radius:50%;
+  border:1px solid rgba(11,46,72,.055);
+  box-shadow:
+    0 0 0 58px rgba(167,143,94,.018),
+    0 0 0 116px rgba(23,79,116,.012);
+  z-index:-1;
+  pointer-events:none;
+}
+body.v211-home-aesthetic #v51-home:after{
+  content:"";
+  position:absolute;
+  left:-150px;bottom:-180px;
+  width:340px;height:340px;
+  border-radius:50%;
+  border:1px solid rgba(167,143,94,.09);
+  box-shadow:0 0 0 34px rgba(23,79,116,.015),0 0 0 70px rgba(167,143,94,.01);
+  z-index:-1;
+  pointer-events:none;
+}
+body.v211-home-aesthetic #v51-home .hero-text h1{
+  color:#0b3553;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:500;
+  letter-spacing:-.035em;
+  text-wrap:balance;
+}
+body.v211-home-aesthetic #v51-home .kicker{
+  color:#8e7447;
+  letter-spacing:.16em;
+}
+body.v211-home-aesthetic #v51-home .quote{
+  position:relative;
+  padding-left:18px;
+  border-left:2px solid rgba(167,143,94,.5);
+  color:#536b78;
+}
+body.v211-home-aesthetic #v51-home .executive-label{
+  border-color:rgba(167,143,94,.22)!important;
+  background:rgba(255,255,255,.72)!important;
+  color:#765f38!important;
+  box-shadow:0 7px 18px rgba(7,35,55,.045);
+}
+body.v211-home-aesthetic #v51-home .v166-ring{
+  border-color:rgba(167,143,94,.16)!important;
+}
+body.v211-home-aesthetic #v51-home .v166-dot{
+  background:#a78f5e!important;
+  box-shadow:0 0 0 4px rgba(167,143,94,.07);
+}
+body.v211-home-aesthetic #v51-home .v23-orbit{
+  border-color:rgba(167,143,94,.20)!important;
+}
+body.v211-home-aesthetic #v51-home .v23-community-mark{
+  border:1px solid rgba(167,143,94,.26);
+  box-shadow:0 16px 36px rgba(7,35,55,.08);
+}
+.v211-home-edition{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:15px;
+  padding:7px 10px;
+  border:1px solid rgba(167,143,94,.20);
+  border-radius:999px;
+  background:rgba(255,255,255,.70);
+  color:#786640;
+  font:850 8.5px/1 system-ui;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.v211-home-edition:before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:#a78f5e;
+  box-shadow:0 0 0 4px rgba(167,143,94,.08);
+}
+
+/* VISUAL CHAPTER DIVIDERS */
+.v211-home-chapter{
+  width:min(1180px,calc(100% - 36px));
+  margin:18px auto 10px;
+  display:grid;
+  grid-template-columns:minmax(30px,1fr) auto minmax(30px,1fr);
+  align-items:center;
+  gap:14px;
+  color:#6d7d84;
+  pointer-events:none;
+}
+.v211-home-chapter:before,
+.v211-home-chapter:after{
+  content:"";
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(11,46,72,.15),rgba(167,143,94,.20));
+}
+.v211-home-chapter:after{
+  background:linear-gradient(90deg,rgba(167,143,94,.20),rgba(11,46,72,.15),transparent);
+}
+.v211-home-chapter-core{
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;
+}
+.v211-home-chapter-no{
+  width:31px;height:31px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid rgba(167,143,94,.38);
+  background:#fff;
+  color:#876f43;
+  box-shadow:0 0 0 4px rgba(167,143,94,.055);
+  font:900 8px/1 system-ui;
+}
+.v211-home-chapter-copy small{
+  display:block;margin-bottom:3px;
+  color:#9a8150;
+  font:850 7.5px/1 system-ui;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.v211-home-chapter-copy strong{
+  display:block;
+  color:#173f58;
+  font:600 13px/1.1 Georgia,"Times New Roman",serif;
+}
+
+/* HOMEPAGE GATEWAYS */
+.v211-gateway-pair{
+  width:min(1180px,calc(100% - 36px));
+  margin:22px auto 30px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.v211-gateway-card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:160px;
+  padding:22px;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 96% 10%,rgba(167,143,94,.08),transparent 10rem),
+    linear-gradient(150deg,#fff,#f4f8f9);
+  color:#173f58;
+  text-decoration:none;
+  box-shadow:0 14px 34px rgba(7,35,55,.065);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.v211-gateway-card:hover,
+.v211-gateway-card:focus-visible{
+  transform:translateY(-3px);
+  border-color:rgba(167,143,94,.30);
+  box-shadow:0 19px 42px rgba(7,35,55,.10);
+  outline:none;
+}
+.v211-gateway-card:before{
+  content:"";
+  position:absolute;right:-62px;top:-75px;
+  width:190px;height:190px;border-radius:50%;
+  border:1px solid rgba(11,46,72,.07);
+  box-shadow:0 0 0 23px rgba(167,143,94,.018),0 0 0 47px rgba(23,79,116,.012);
+  z-index:-1;
+}
+.v211-gateway-card:after{
+  content:"→";
+  position:absolute;right:19px;bottom:17px;
+  color:#947a49;
+  font:700 20px/1 Georgia,"Times New Roman",serif;
+}
+.v211-gateway-kicker{
+  display:block;
+  margin-bottom:9px;
+  color:#8c7448;
+  font:850 8.5px/1 system-ui;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.v211-gateway-card strong{
+  display:block;
+  max-width:78%;
+  color:#0c3854;
+  font:500 24px/1.08 Georgia,"Times New Roman",serif;
+  letter-spacing:-.02em;
+}
+.v211-gateway-card p{
+  max-width:78%;
+  margin:9px 0 0;
+  color:#667f8c;
+  font:600 11px/1.5 system-ui;
+}
+.v211-gateway-seal{
+  position:absolute;right:26px;top:26px;
+  width:46px;height:46px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid rgba(167,143,94,.52);
+  background:radial-gradient(circle at 34% 28%,#1a5c82,#0a2b44 70%);
+  color:#eee5d0;
+  box-shadow:0 0 0 4px rgba(255,255,255,.8),0 0 0 5px rgba(167,143,94,.16);
+  font:900 7px/1 system-ui;
+  letter-spacing:.10em;
+}
+.v211-gateway-card.v211-community{
+  background:
+    radial-gradient(circle at 93% 12%,rgba(43,117,105,.075),transparent 10rem),
+    linear-gradient(150deg,#fff,#f2f8f6);
+}
+.v211-gateway-card.v211-community .v211-gateway-seal{
+  background:radial-gradient(circle at 34% 28%,#2c796d,#12433c 72%);
+}
+
+/* MAJOR HOME SECTIONS — SAME MATERIAL LANGUAGE AS V210 */
+body.v211-home-aesthetic #resident-start,
+body.v211-home-aesthetic #portal-hub,
+body.v211-home-aesthetic #contact-us,
+body.v211-home-aesthetic #service-forms,
+body.v211-home-aesthetic #gallery,
+body.v211-home-aesthetic #about,
+body.v211-home-aesthetic #community-action-centre{
+  position:relative;
+  isolation:isolate;
+}
+body.v211-home-aesthetic #resident-start{
+  background:
+    radial-gradient(circle at 93% 10%,rgba(167,143,94,.06),transparent 14rem),
+    radial-gradient(circle at 8% 90%,rgba(23,79,116,.035),transparent 17rem),
+    linear-gradient(180deg,#fbfcfc,#f5f8f9)!important;
+  border-top:1px solid rgba(167,143,94,.12);
+  border-bottom:1px solid rgba(11,46,72,.08);
+}
+body.v211-home-aesthetic #resident-start:after{
+  content:"";
+  position:absolute;right:-85px;bottom:-110px;
+  width:245px;height:245px;border-radius:50%;
+  border:1px solid rgba(167,143,94,.07);
+  box-shadow:0 0 0 27px rgba(23,79,116,.012);
+  z-index:-1;
+}
+body.v211-home-aesthetic #resident-start .v55-start-kicker,
+body.v211-home-aesthetic #portal-hub small,
+body.v211-home-aesthetic #about .kicker{
+  color:#8b7448!important;
+}
+body.v211-home-aesthetic #resident-start h2,
+body.v211-home-aesthetic #portal-hub h2,
+body.v211-home-aesthetic #about h2,
+body.v211-home-aesthetic #community-action-centre h2,
+body.v211-home-aesthetic #gallery h2{
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:500!important;
+  letter-spacing:-.025em;
+  text-wrap:balance;
+}
+body.v211-home-aesthetic #resident-start .v132-section-badge-core,
+body.v211-home-aesthetic #services .v132-section-badge-core{
+  border:1px solid rgba(167,143,94,.30);
+  box-shadow:0 0 0 4px rgba(167,143,94,.055);
+}
+body.v211-home-aesthetic #portal-hub{
+  background:
+    radial-gradient(circle at 4% 12%,rgba(23,79,116,.045),transparent 13rem),
+    linear-gradient(160deg,#f7fafb,#fff);
+  border-top:1px solid rgba(11,46,72,.07);
+  border-bottom:1px solid rgba(11,46,72,.07);
+}
+body.v211-home-aesthetic #portal-hub .v60-portal-card{
+  border-color:rgba(11,46,72,.10)!important;
+  box-shadow:0 10px 24px rgba(7,35,55,.055);
+}
+body.v211-home-aesthetic #portal-hub .v60-portal-card:hover{
+  border-color:rgba(167,143,94,.28)!important;
+  box-shadow:0 15px 30px rgba(7,35,55,.09);
+}
+body.v211-home-aesthetic #activity-hub{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 88% 8%,rgba(216,199,160,.08),transparent 16rem),
+    linear-gradient(135deg,#0a2b44,#164e70)!important;
+  border-top:1px solid rgba(216,199,160,.16);
+  border-bottom:1px solid rgba(216,199,160,.12);
+}
+body.v211-home-aesthetic #activity-hub:after{
+  content:"";
+  position:absolute;right:-110px;top:-135px;
+  width:310px;height:310px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.10);
+  box-shadow:0 0 0 38px rgba(255,255,255,.012),0 0 0 76px rgba(216,199,160,.01);
+  pointer-events:none;
+}
+body.v211-home-aesthetic #activity-hub .v181-orbit,
+body.v211-home-aesthetic #activity-hub .v181-orbit-2,
+body.v211-home-aesthetic #activity-hub .v181-line,
+body.v211-home-aesthetic #activity-hub .v181-line-secondary{
+  stroke:rgba(216,199,160,.34)!important;
+}
+body.v211-home-aesthetic #contact-us{
+  background:
+    radial-gradient(circle at 91% 8%,rgba(167,143,94,.055),transparent 13rem),
+    linear-gradient(180deg,#fff,#f4f8f9)!important;
+}
+body.v211-home-aesthetic #service-forms{
+  background:
+    radial-gradient(circle at 10% 90%,rgba(23,79,116,.035),transparent 13rem),
+    linear-gradient(150deg,#f7fafb,#fff);
+}
+body.v211-home-aesthetic #gallery{
+  background:
+    radial-gradient(circle at 88% 7%,rgba(216,199,160,.07),transparent 14rem),
+    linear-gradient(135deg,#071f33,#0d3855)!important;
+  border-top:1px solid rgba(216,199,160,.15);
+  border-bottom:1px solid rgba(216,199,160,.12);
+}
+body.v211-home-aesthetic #gallery .v51-primary-label,
+body.v211-home-aesthetic #gallery .kicker{
+  color:#d8c7a0!important;
+}
+body.v211-home-aesthetic #gallery h2,
+body.v211-home-aesthetic #gallery p{
+  color:#fff;
+}
+body.v211-home-aesthetic #gallery .gallery-hero{
+  border:1px solid rgba(216,199,160,.16);
+  box-shadow:0 20px 48px rgba(3,22,36,.22);
+}
+
+/* Hidden/expanded District Office and Community Action sections keep the same language. */
+body.v211-home-aesthetic #about{
+  background:
+    radial-gradient(circle at 94% 10%,rgba(167,143,94,.06),transparent 14rem),
+    linear-gradient(155deg,#fff,#f5f8f9);
+}
+body.v211-home-aesthetic #about .office-img{
+  position:relative;
+  padding:7px;
+  border:1px solid rgba(167,143,94,.24);
+  border-radius:26px;
+  background:#fff;
+  box-shadow:0 18px 42px rgba(7,35,55,.09);
+}
+body.v211-home-aesthetic #about .office-img:before{
+  content:"";
+  position:absolute;inset:13px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:19px;
+  pointer-events:none;
+  z-index:2;
+}
+body.v211-home-aesthetic #about .office-img img{
+  border-radius:19px!important;
+}
+body.v211-home-aesthetic #about .office-info{
+  position:relative;
+  padding:24px;
+  border:1px solid rgba(11,46,72,.09);
+  border-radius:24px;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 13px 30px rgba(7,35,55,.05);
+}
+body.v211-home-aesthetic #community-action-centre{
+  background:
+    radial-gradient(circle at 89% 10%,rgba(43,117,105,.07),transparent 15rem),
+    radial-gradient(circle at 8% 88%,rgba(167,143,94,.04),transparent 14rem),
+    linear-gradient(150deg,#fbfdfc,#f3f8f6);
+  border-top:1px solid rgba(43,117,105,.10);
+}
+body.v211-home-aesthetic #community-action-centre .v181-constellation-signature{
+  opacity:.48!important;
+}
+
+/* Consistent constellation visibility on homepage */
+body.v211-home-aesthetic main .v181-constellation-signature{
+  opacity:.40!important;
+}
+body.v211-home-aesthetic main .v181-orbit{
+  stroke:rgba(167,143,94,.26)!important;
+}
+body.v211-home-aesthetic main .v181-line{
+  stroke:rgba(167,143,94,.42)!important;
+}
+body.v211-home-aesthetic main .v181-node{
+  fill:#a78f5e!important;
+}
+
+/* More gateway now reads as a deliberate chapter ending. */
+body.v211-home-aesthetic #v51-more-gateway{
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid rgba(167,143,94,.16);
+  background:
+    radial-gradient(circle at 90% 10%,rgba(167,143,94,.08),transparent 12rem),
+    linear-gradient(145deg,#0a2b44,#103f5d)!important;
+  color:#fff;
+}
+body.v211-home-aesthetic #v51-more-gateway:after{
+  content:"";
+  position:absolute;right:-70px;top:-90px;
+  width:210px;height:210px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.12);
+  box-shadow:0 0 0 25px rgba(255,255,255,.014);
+  pointer-events:none;
+}
+
+/* Home folio markers — tiny, editorial, decorative only. */
+.v211-home-folio{
+  position:absolute;
+  left:18px;bottom:14px;
+  z-index:3;
+  color:rgba(11,46,72,.26);
+  font:850 8px/1 system-ui;
+  letter-spacing:.16em;
+  pointer-events:none;
+}
+body.v211-home-aesthetic #activity-hub .v211-home-folio,
+body.v211-home-aesthetic #gallery .v211-home-folio,
+body.v211-home-aesthetic #v51-more-gateway .v211-home-folio{
+  color:rgba(255,255,255,.28);
+}
+
+@media(min-width:1180px){
+  .v211-home-chapter,
+  .v211-gateway-pair{
+    padding-left:58px;
+  }
+}
+@media(max-width:850px){
+  .v211-gateway-pair{grid-template-columns:1fr}
+  .v211-gateway-card{min-height:145px}
+  .v211-home-chapter{width:calc(100% - 28px)}
+}
+@media(max-width:620px){
+  body.v211-home-aesthetic #v51-home:before,
+  body.v211-home-aesthetic #v51-home:after{opacity:.55}
+  .v211-home-edition{font-size:7.8px}
+  .v211-home-chapter{
+    grid-template-columns:22px auto 1fr;
+    gap:9px;
+    margin-top:12px;
+  }
+  .v211-home-chapter:before{display:none}
+  .v211-home-chapter-core{white-space:normal}
+  .v211-home-chapter-copy strong{font-size:12px}
+  .v211-gateway-pair{
+    width:calc(100% - 24px);
+    margin:16px auto 24px;
+  }
+  .v211-gateway-card{
+    min-height:132px;
+    padding:18px;
+    border-radius:19px;
+  }
+  .v211-gateway-card strong,
+  .v211-gateway-card p{max-width:72%}
+  .v211-gateway-card strong{font-size:20px}
+  .v211-gateway-card p{font-size:10px}
+  .v211-gateway-seal{width:40px;height:40px;right:18px;top:18px}
+  body.v211-home-aesthetic #about .office-info{padding:18px}
+  .v211-home-folio{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .v211-gateway-card{transition:none!important}
+}
