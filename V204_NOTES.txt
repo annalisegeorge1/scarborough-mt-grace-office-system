@@ -1,0 +1,36 @@
+Scarborough / Mt. Grace District Office — V204
+
+FOCUSED-PAGE SPATIAL LAYOUT
+
+V204 builds on V203 by using desktop space more efficiently inside each focused public page.
+
+Main improvements:
+- Adds a two-column focused-page shell on larger screens.
+- Keeps public content in the main column and adds a sticky right-side page navigator.
+- Adds four route-specific quick-action cards at the top of every focused page.
+- Adds numbered section navigation with active-section highlighting.
+- Adds permanent quick access to New Enquiry, Track, Call and WhatsApp.
+- Converts wide homepage grids into two-column focused-page grids where appropriate.
+- Rebalances Office, Team, Contact and Resident Start layouts for the narrower content column.
+- Groups each major existing section into a rounded, contained content card.
+- Reduces repeated decorative constellation marks inside focused views so the page feels cleaner.
+- Collapses safely to a single-column mobile layout.
+- Keeps the homepage unchanged.
+
+Focused views improved:
+- /office/
+- /services/
+- /community/
+- /forms/
+- /updates/
+- /contact/
+
+Architecture:
+V204 does not duplicate the public HTML. It rearranges the relevant live sections after V203 has selected them, so forms, content, tracking logic and public information remain single-source.
+
+Files added:
+- assets/district-focused-layout-v204.css
+- assets/district-focused-layout-v204.js
+
+Files updated:
+- server/src/app.js
