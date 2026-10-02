@@ -1,0 +1,90 @@
+Scarborough / Mt. Grace District Office — V216
+
+SCREENSHOT-DRIVEN MOBILE VISUAL CORRECTIONS
+
+V216 responds directly to live mobile/tablet screenshots supplied after V215.
+
+Issues observed and corrected:
+
+1. Explore drawer active-state contrast
+Observed:
+- Home displayed as white text/icon on a pale selected card.
+- Expanded Resident Services header also became pale with pale/white text.
+Correction:
+- Active Home now uses dark navy text and blue icon on the pale surface.
+- Expanded/active section headers now use navy primary text, readable grey secondary text, blue/brass icon treatment and a restrained brass active rule.
+- Search focus outline is softened so it does not overpower the drawer.
+
+2. Focused-page quick action card contrast
+Observed on Resident Services:
+- Find a Service / Service Forms / Programmes / Send an Enquiry text became very faint on near-white cards.
+Correction:
+- Action titles, explanatory text, icons and arrows receive explicit readable focused-page colours with higher-specificity overrides.
+- Mobile cards are also slightly more compact without removing any action or explanation.
+
+3. Redundant mobile “Focused Page” panel
+Observed on Community and Forms:
+- The V204 side panel repeated the page name.
+- Its New enquiry / Track / Call / WhatsApp actions duplicated the persistent mobile action dock.
+- It consumed a large amount of vertical space before the real page content.
+Correction:
+- The V204 side panel is hidden only at phone widths (<=760px).
+- Desktop/tablet focused-page navigation remains unchanged.
+- Mobile retains:
+  * the main focused-page hero and tabs
+  * the page-specific quick action deck
+  * the Explore drawer
+  * the persistent Call / WhatsApp / Enquiry / Track dock
+- No navigation destination is removed.
+
+4. Community Stream dark-on-dark heading
+Observed:
+- “Community activity in one stream” had insufficient contrast on the navy/green feed header.
+Correction:
+- Feed headings are explicitly white.
+- Supporting copy is explicitly pale blue-white.
+- The gold/brass eyebrow remains visible.
+- This applies to both District Digital Feed and Community Stream headings.
+
+5. Active focused-page tabs
+Observed:
+- A selected tab could become a pale/white pill while retaining pale text.
+Correction:
+- Active/aria-current focused-page tabs now use dark navy text on the pale selected state.
+
+6. Large blank patterned area below Explore More
+Cause:
+- V208/V209 collapsed content was reduced to zero height but remained as flex children.
+- The V210 main column uses flex gap, so every invisible collapsed child still created an empty gap.
+Correction:
+- Collapsed V208/V209 supporting sections now use display:none.
+- Opening a section restores its full unchanged content.
+- This removes the accumulated blank vertical space without deleting content.
+
+7. Fixed mobile controls
+Observed:
+- Explore and the persistent action dock occupied a large portion of the viewport and could visually crowd content.
+Correction:
+- Explore FAB is slightly smaller.
+- Bottom dock receives tighter mobile dimensions and positioning.
+- Focused page end sections receive enough bottom clearance to scroll final actions above the fixed dock.
+
+Preservation:
+- No public information is removed.
+- No V215 progress-thread functionality is changed.
+- No staff CMS, staff workflow, authentication, forms, enquiries, tracking, publishing or database functionality is changed.
+- V216 is CSS-only.
+
+QA:
+- Server JavaScript syntax: pass.
+- V216 stylesheet injection: pass.
+- V216 loads after V215: pass.
+- CSS brace balance: pass.
+- Target selectors for drawer, action deck, feed, collapsed support content, mobile side panel and dock: present.
+
+Files added:
+- assets/district-mobile-corrections-v216.css
+- V216_NOTES.txt
+
+Files updated:
+- server/src/app.js

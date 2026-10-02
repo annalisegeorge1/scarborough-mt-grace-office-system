@@ -1,0 +1,227 @@
+/* Scarborough / Mt. Grace District Office — V216 screenshot-driven mobile corrections
+   Fixes contrast, duplication, collapsed-spacing and fixed-control issues observed on live mobile/tablet captures. */
+
+/* EXPLORE DRAWER — active/open states must remain readable on pale surfaces. */
+.v202-home-link.is-active,
+.v202-home-link[aria-current="page"]{
+  background:#f7fafb!important;
+  color:#0b3553!important;
+  box-shadow:inset 0 0 0 1px rgba(167,143,94,.20);
+}
+.v202-home-link.is-active svg,
+.v202-home-link[aria-current="page"] svg{
+  color:#174f74!important;
+  stroke:currentColor!important;
+}
+.v202-group.is-open>.v202-group-toggle,
+.v202-group-toggle.is-active,
+.v202-group-toggle[aria-expanded="true"]{
+  background:linear-gradient(90deg,#fbfaf6,#fff)!important;
+  color:#0b3553!important;
+  box-shadow:inset 3px 0 0 #a78f5e,0 5px 14px rgba(7,35,55,.035)!important;
+}
+.v202-group.is-open>.v202-group-toggle .v202-group-copy strong,
+.v202-group-toggle.is-active .v202-group-copy strong,
+.v202-group-toggle[aria-expanded="true"] .v202-group-copy strong{
+  color:#0b3553!important;
+}
+.v202-group.is-open>.v202-group-toggle .v202-group-copy span,
+.v202-group-toggle.is-active .v202-group-copy span,
+.v202-group-toggle[aria-expanded="true"] .v202-group-copy span{
+  color:#6d838f!important;
+}
+.v202-group.is-open>.v202-group-toggle .v202-group-icon,
+.v202-group-toggle[aria-expanded="true"] .v202-group-icon{
+  background:#f5f1e7!important;
+  color:#174f74!important;
+  border-color:rgba(167,143,94,.22)!important;
+}
+.v202-group.is-open>.v202-group-toggle .v202-chevron,
+.v202-group-toggle[aria-expanded="true"] .v202-chevron{
+  color:#765f38!important;
+}
+.v202-search:focus{
+  border-color:rgba(167,143,94,.52)!important;
+  box-shadow:0 0 0 2px rgba(167,143,94,.14)!important;
+}
+
+/* FOCUSED-PAGE QUICK ACTIONS — force readable ink on pale cards. */
+body.v203-focused-view .v204-action-card{
+  color:#0b3553!important;
+  background:
+    radial-gradient(circle at 92% 12%,rgba(167,143,94,.055),transparent 6rem),
+    linear-gradient(150deg,#fff,#f5f8f9)!important;
+}
+body.v203-focused-view .v204-action-card strong{
+  color:#103c57!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body.v203-focused-view .v204-action-card>span:not(.v204-action-icon){
+  color:#667f8d!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body.v203-focused-view .v204-action-icon{
+  background:#edf4f7!important;
+  color:#174f74!important;
+  border-color:rgba(167,143,94,.22)!important;
+  opacity:1!important;
+}
+body.v203-focused-view .v204-action-card:after{
+  color:#78909c!important;
+}
+
+/* Focused header tab active states observed as white-on-white in mobile captures. */
+body.v203-focused-view .v203-page-tab.is-active,
+body.v203-focused-view .v203-page-tab.active,
+body.v203-focused-view .v203-page-tab[aria-current="page"],
+body.v203-focused-view .v203-page-tab[aria-current="true"]{
+  background:#f7f4ed!important;
+  color:#0b3553!important;
+  border-color:rgba(216,199,160,.48)!important;
+  box-shadow:0 5px 14px rgba(3,22,36,.08)!important;
+}
+
+/* DISTRICT DIGITAL FEED / COMMUNITY STREAM — keep editorial text legible on dark heads. */
+.v213-feed-head .v213-feed-heading h2,
+.v213-feed-head .v213-feed-heading h3,
+body[data-district-view="community"] .v213-feed-head .v213-feed-heading h2,
+body[data-district-view="community"] .v213-feed-head .v213-feed-heading h3{
+  color:#fff!important;
+  opacity:1!important;
+  text-shadow:0 5px 18px rgba(0,0,0,.15)!important;
+}
+.v213-feed-head .v213-feed-heading p,
+body[data-district-view="community"] .v213-feed-head .v213-feed-heading p{
+  color:#d8e5ea!important;
+  opacity:1!important;
+}
+.v213-feed-head .v213-feed-heading small{
+  color:#d8c7a0!important;
+}
+
+/* A collapsed flex child still creates parent flex gaps. Remove collapsed support sections
+   from layout completely; opening them restores the original content unchanged. */
+body.v203-focused-view .v208-secondary.v208-collapsed,
+body.v203-focused-view .v209-secondary.v209-collapsed{
+  display:none!important;
+}
+body.v203-focused-view .v208-secondary:not(.v208-collapsed),
+body.v203-focused-view .v209-secondary:not(.v209-collapsed){
+  display:block!important;
+}
+
+/* MOBILE — the fixed bottom dock already provides enquiry/track/call/WhatsApp.
+   Remove the duplicate V204 Focused Page side panel on phones to recover viewport space. */
+@media(max-width:760px){
+  body.v203-focused-view .v204-side-panel{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v204-focus-shell{
+    display:block!important;
+    padding-top:12px!important;
+    padding-bottom:20px!important;
+  }
+
+  body.v203-focused-view .v204-main-column{
+    gap:18px!important;
+  }
+
+  body.v203-focused-view .v204-action-deck{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+
+  body.v203-focused-view .v204-action-card{
+    min-height:96px!important;
+    padding:13px!important;
+    border-radius:16px!important;
+  }
+  body.v203-focused-view .v204-action-icon{
+    width:30px!important;
+    height:30px!important;
+    margin-bottom:10px!important;
+    font-size:9px!important;
+  }
+  body.v203-focused-view .v204-action-card strong{
+    font-size:11px!important;
+    line-height:1.2!important;
+  }
+  body.v203-focused-view .v204-action-card>span:not(.v204-action-icon){
+    margin-top:4px!important;
+    font-size:8.8px!important;
+    line-height:1.35!important;
+  }
+
+  /* Give final controls enough scroll clearance above the persistent dock without
+     adding large empty space between content sections. */
+  body.v203-focused-view .v203-page-end{
+    padding-bottom:92px!important;
+  }
+
+  .v202-menu-fab{
+    left:10px!important;
+    bottom:78px!important;
+    min-height:42px!important;
+    padding:0 14px!important;
+    font-size:10.5px!important;
+    letter-spacing:.06em!important;
+  }
+  .v202-menu-fab svg{
+    width:18px!important;
+    height:18px!important;
+  }
+
+  .v7-mobile-dock{
+    left:9px!important;
+    right:9px!important;
+    bottom:7px!important;
+    min-height:66px!important;
+    border-radius:20px!important;
+  }
+  .v7-mobile-dock a,
+  .v7-mobile-dock button{
+    min-height:64px!important;
+    padding-top:7px!important;
+    padding-bottom:7px!important;
+  }
+}
+
+/* Narrow phones keep the action cards useful but compact. */
+@media(max-width:390px){
+  body.v203-focused-view .v204-action-card{
+    min-height:90px!important;
+    padding:11px!important;
+  }
+  body.v203-focused-view .v204-action-card>span:not(.v204-action-icon){
+    display:none!important;
+  }
+}
+
+/* Drawer sizing: use more of a phone screen but avoid touching browser/system edges. */
+@media(max-width:520px){
+  .v202-drawer{
+    inset:8px auto 8px 8px!important;
+    width:min(92vw,390px)!important;
+  }
+  .v202-drawer-head{
+    padding:15px 14px 12px!important;
+  }
+  .v202-brand-copy strong{
+    font-size:14px!important;
+  }
+  .v202-search-wrap{
+    padding:10px 12px 7px!important;
+  }
+  .v202-search{
+    height:39px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v202-home-link,
+  .v202-group-toggle,
+  .v204-action-card{transition:none!important}
+}
