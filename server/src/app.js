@@ -118,7 +118,9 @@ async function sendPublicIndex(req,res,next){
       const mobileNavigationJsFile=path.join(config.staticRoot,'assets','district-mobile-navigation-v218.js');
       const contrastAccessibilityCssFile=path.join(config.staticRoot,'assets','district-contrast-accessibility-v219.css');
       const contrastAccessibilityJsFile=path.join(config.staticRoot,'assets','district-contrast-accessibility-v219.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer]=await Promise.all([
+      const performanceInteractionCssFile=path.join(config.staticRoot,'assets','district-performance-interaction-v220.css');
+      const performanceInteractionJsFile=path.join(config.staticRoot,'assets','district-performance-interaction-v220.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -152,7 +154,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(mobileNavigationCssFile),
         fs.readFile(mobileNavigationJsFile),
         fs.readFile(contrastAccessibilityCssFile),
-        fs.readFile(contrastAccessibilityJsFile)
+        fs.readFile(contrastAccessibilityJsFile),
+        fs.readFile(performanceInteractionCssFile),
+        fs.readFile(performanceInteractionJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -189,6 +193,8 @@ async function sendPublicIndex(req,res,next){
       const mobileNavigationJs=`<script src="/assets/district-mobile-navigation-v218.js?v=${versionFor(mobileNavigationJsBuffer)}" defer></script>`;
       const contrastAccessibilityCss=`<link rel="stylesheet" href="/assets/district-contrast-accessibility-v219.css?v=${versionFor(contrastAccessibilityCssBuffer)}">`;
       const contrastAccessibilityJs=`<script src="/assets/district-contrast-accessibility-v219.js?v=${versionFor(contrastAccessibilityJsBuffer)}" defer></script>`;
+      const performanceInteractionCss=`<link rel="stylesheet" href="/assets/district-performance-interaction-v220.css?v=${versionFor(performanceInteractionCssBuffer)}">`;
+      const performanceInteractionJs=`<script src="/assets/district-performance-interaction-v220.js?v=${versionFor(performanceInteractionJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -244,6 +250,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-contrast-accessibility-v219.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,contrastAccessibilityCss+'</head>'):contrastAccessibilityCss+html;
       }
+      if(!html.includes('/assets/district-performance-interaction-v220.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,performanceInteractionCss+'</head>'):performanceInteractionCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -294,6 +303,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-contrast-accessibility-v219.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,contrastAccessibilityJs+'</body>'):html+contrastAccessibilityJs;
+      }
+      if(!html.includes('/assets/district-performance-interaction-v220.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,performanceInteractionJs+'</body>'):html+performanceInteractionJs;
       }
       cachedPublicIndex=html;
     }
