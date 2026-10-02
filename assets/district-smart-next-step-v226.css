@@ -1,0 +1,287 @@
+/* Scarborough / Mt. Grace District Office — V226 Smart Next Step Bar
+   Context-aware public guidance inside focused routes. It complements the fixed
+   mobile dock, Command Center and Resident Journey instead of competing with them. */
+
+:root{
+  --v226-navy:#0b3553;
+  --v226-blue:#174f74;
+  --v226-brass:#a78f5e;
+  --v226-brass-soft:#d8c7a0;
+  --v226-line:rgba(11,46,72,.10);
+}
+
+.v226-next-step{
+  position:sticky;
+  top:10px;
+  z-index:145;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+  min-height:68px;
+  padding:10px 11px 10px 15px;
+  border:1px solid rgba(11,46,72,.11);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 96% 0,rgba(216,199,160,.065),transparent 9rem),
+    rgba(250,252,252,.94);
+  box-shadow:0 14px 34px rgba(7,35,55,.10);
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+}
+.v226-context{
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+}
+.v226-context-copy{
+  min-width:0;
+}
+.v226-context-copy small{
+  display:block;
+  margin-bottom:4px;
+  color:#8a7448;
+  font:900 6.5px/1 system-ui;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.v226-context-copy strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#113e59;
+  font:850 10.5px/1.2 system-ui;
+}
+.v226-context-copy span{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  margin-top:3px;
+  color:#718793;
+  font:650 7.5px/1.25 system-ui;
+}
+.v226-progress{
+  display:grid;
+  grid-template-columns:54px auto;
+  gap:7px;
+  align-items:center;
+}
+.v226-progress-track{
+  position:relative;
+  width:54px;height:3px;
+  overflow:hidden;
+  border-radius:99px;
+  background:#dde7eb;
+}
+.v226-progress-fill{
+  position:absolute;
+  inset:0 auto 0 0;
+  width:0;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#174f74,#a78f5e);
+  transition:width .22s ease;
+}
+.v226-progress-label{
+  color:#7d929c;
+  font:850 6.5px/1 system-ui;
+  white-space:nowrap;
+}
+
+.v226-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.v226-action{
+  min-height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:0 10px;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:11px;
+  background:#fff;
+  color:#174f74;
+  text-decoration:none;
+  cursor:pointer;
+  font:850 7.5px/1 system-ui;
+  white-space:nowrap;
+  transition:transform .15s ease,border-color .15s ease,background .15s ease,color .15s ease;
+}
+.v226-action:hover,
+.v226-action:focus-visible{
+  transform:translateY(-1px);
+  border-color:rgba(167,143,94,.35);
+  background:#faf7ef;
+  color:#0b3553;
+  outline:none;
+}
+.v226-action-primary{
+  border-color:#0b3553;
+  background:#0b3553;
+  color:#fff;
+}
+.v226-action-primary:hover,
+.v226-action-primary:focus-visible{
+  background:#174f74;
+  color:#fff;
+}
+.v226-action-icon{
+  font-size:10px;
+  line-height:1;
+}
+.v226-next{
+  min-width:39px;
+  width:39px;
+  padding:0;
+}
+.v226-next.is-last .v226-action-icon{
+  transform:rotate(180deg);
+}
+
+.v226-next-step.is-compact{
+  grid-template-columns:minmax(0,1fr) auto;
+}
+.v226-next-step.is-compact .v226-context-copy span,
+.v226-next-step.is-compact .v226-progress{
+  display:none;
+}
+
+/* When a modal/tool is open, the contextual layer should recede. */
+body.v224-command-open .v226-next-step,
+body.v225-journey-open .v226-next-step,
+body.v220-keyboard-open .v226-next-step{
+  opacity:0!important;
+  pointer-events:none!important;
+  transform:translateY(-8px)!important;
+}
+
+/* Dark mode */
+body.v112-dark .v226-next-step{
+  border-color:rgba(255,255,255,.09);
+  background:
+    radial-gradient(circle at 96% 0,rgba(216,199,160,.055),transparent 9rem),
+    rgba(10,38,55,.94);
+  box-shadow:0 16px 38px rgba(0,0,0,.22);
+}
+body.v112-dark .v226-context-copy small{color:#dfc98f}
+body.v112-dark .v226-context-copy strong{color:#fff}
+body.v112-dark .v226-context-copy span{color:#abc0ca}
+body.v112-dark .v226-progress-track{background:#244458}
+body.v112-dark .v226-progress-label{color:#a7bdc7}
+body.v112-dark .v226-action{
+  border-color:rgba(255,255,255,.08);
+  background:#123247;
+  color:#d9e6eb;
+}
+body.v112-dark .v226-action:hover,
+body.v112-dark .v226-action:focus-visible{
+  border-color:rgba(216,199,160,.24);
+  background:#173b50;
+  color:#fff;
+}
+body.v112-dark .v226-action-primary{
+  border-color:#d8c7a0;
+  background:#d8c7a0;
+  color:#0b3553;
+}
+body.v112-dark .v226-action-primary:hover,
+body.v112-dark .v226-action-primary:focus-visible{
+  background:#eadfbf;
+  color:#0b3553;
+}
+
+@media(max-width:900px){
+  .v226-next-step{
+    top:6px;
+    min-height:58px;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px;
+    padding:8px 8px 8px 11px;
+    border-radius:15px;
+  }
+  .v226-context{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .v226-progress{
+    display:none;
+  }
+  .v226-context-copy small{
+    font-size:6px;
+    margin-bottom:3px;
+  }
+  .v226-context-copy strong{
+    font-size:9.5px;
+  }
+  .v226-context-copy span{
+    display:none;
+  }
+  .v226-actions{
+    max-width:58vw;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    padding:1px;
+  }
+  .v226-actions::-webkit-scrollbar{display:none}
+  .v226-action{
+    flex:0 0 auto;
+    min-height:36px;
+    padding:0 9px;
+    font-size:7px;
+  }
+  .v226-action[data-v226-command] span:last-child,
+  .v226-action[data-v226-journey] span:last-child{
+    display:none;
+  }
+  .v226-action[data-v226-command],
+  .v226-action[data-v226-journey]{
+    width:36px;
+    padding:0;
+  }
+}
+
+@media(max-width:520px){
+  .v226-next-step{
+    margin-left:-2px;
+    margin-right:-2px;
+  }
+  .v226-actions{
+    max-width:52vw;
+    gap:5px;
+  }
+  .v226-action-primary{
+    max-width:104px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
+
+@media(min-width:901px) and (max-width:1160px){
+  .v226-next-step{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .v226-actions{
+    justify-content:flex-end;
+  }
+}
+
+@media print{
+  .v226-next-step{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v226-progress-fill,
+  .v226-action,
+  .v226-next-step{
+    transition:none!important;
+  }
+}
