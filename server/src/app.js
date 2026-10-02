@@ -87,17 +87,26 @@ async function sendPublicIndex(req,res,next){
       const runtimeFile=path.join(config.staticRoot,'assets','public-content-runtime.js');
       const sidebarCssFile=path.join(config.staticRoot,'assets','district-sidebar-v202.css');
       const sidebarJsFile=path.join(config.staticRoot,'assets','district-sidebar-v202.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer]=await Promise.all([
+      const focusedCssFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.css');
+      const focusedJsFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
-        fs.readFile(sidebarJsFile)
+        fs.readFile(sidebarJsFile),
+        fs.readFile(focusedCssFile),
+        fs.readFile(focusedJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
       const sidebarCss=`<link rel="stylesheet" href="/assets/district-sidebar-v202.css?v=${versionFor(sidebarCssBuffer)}">`;
       const sidebarJs=`<script src="/assets/district-sidebar-v202.js?v=${versionFor(sidebarJsBuffer)}" defer></script>`;
+      const focusedCss=`<link rel="stylesheet" href="/assets/district-focused-pages-v203.css?v=${versionFor(focusedCssBuffer)}">`;
+      const focusedJs=`<script src="/assets/district-focused-pages-v203.js?v=${versionFor(focusedJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
+      }
+      if(!html.includes('/assets/district-focused-pages-v203.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedCss+'</head>'):focusedCss+html;
       }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
@@ -105,13 +114,32 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-sidebar-v202.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,sidebarJs+'</body>'):html+sidebarJs;
       }
+      if(!html.includes('/assets/district-focused-pages-v203.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,focusedJs+'</body>'):html+focusedJs;
+      }
       cachedPublicIndex=html;
     }
     res.setHeader('Cache-Control','no-cache');
     res.type('html').send(cachedPublicIndex);
   }catch(e){next(e)}
 }
-app.get(['/', '/index.html','/index-self-contained.html'],sendPublicIndex);
+app.get([
+  '/',
+  '/index.html',
+  '/index-self-contained.html',
+  '/office',
+  '/office/',
+  '/services',
+  '/services/',
+  '/community',
+  '/community/',
+  '/forms',
+  '/forms/',
+  '/updates',
+  '/updates/',
+  '/contact',
+  '/contact/'
+],sendPublicIndex);
 
 app.get('/staff/login.html',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','login.html')));
 app.get('/staff/production-ui.css',(req,res)=>res.sendFile(path.join(config.staticRoot,'staff','production-ui.css')));
