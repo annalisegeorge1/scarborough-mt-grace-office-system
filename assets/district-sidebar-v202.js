@@ -124,9 +124,28 @@
     });
   });
 
+  const routeByTarget={
+    'v51-home':'/',
+    'about':'/office/','team':'/office/','leadership':'/office/','district-profile':'/office/',
+    'office-hours':'/contact/','contact-us':'/contact/',
+    'resident-start':'/services/','services':'/services/','resident-guide':'/services/','resident-faq':'/services/','resident-programmes':'/services/','resources':'/services/','how-we-help':'/services/','help-selector':'/services/','support-areas':'/services/',
+    'community-action-centre':'/community/','community-engagement':'/community/','projects':'/community/','events':'/community/','activity-hub':'/community/','gallery':'/community/',
+    'portal-hub':'/forms/','service-forms':'/forms/','enquiry':'/forms/','track-enquiry':'/forms/','documents':'/forms/',
+    'v135-live-updates':'/updates/','v133-public-action':'/updates/','v142-public-matters':'/updates/','v141-public-plans':'/updates/'
+  };
+  const normalizePath=(value)=>(value||'/').replace(/\/+$/,'')||'/';
   function navigateTo(target){
+    const destination=routeByTarget[target]||'/';
+    const current=normalizePath(location.pathname);
+    const destinationPath=normalizePath(destination);
     const el=document.getElementById(target);
-    if(!el){window.location.href='/#'+encodeURIComponent(target);return}
+    const hidden=el?.closest?.('.v203-focus-hidden');
+
+    if(destinationPath!==current||!el||hidden){
+      window.location.href=destination+(target==='v51-home'?'':'#'+encodeURIComponent(target));
+      return;
+    }
+
     const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
     try{history.replaceState(null,'','#'+target)}catch(_e){}
@@ -180,5 +199,15 @@
   }
 
   const initial=decodeURIComponent((location.hash||'').replace(/^#/,''));
-  markActive(initial&&document.getElementById(initial)?initial:'v51-home');
+  const routeDefault={
+    '/':'v51-home',
+    '/office':'about',
+    '/services':'resident-start',
+    '/community':'community-action-centre',
+    '/forms':'portal-hub',
+    '/updates':'v135-live-updates',
+    '/contact':'contact-us'
+  };
+  const currentPath=normalizePath(location.pathname);
+  markActive(initial&&document.getElementById(initial)?initial:(routeDefault[currentPath]||'v51-home'));
 })();
