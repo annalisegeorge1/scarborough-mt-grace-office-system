@@ -1,0 +1,341 @@
+/* Scarborough / Mt. Grace District Office — V232
+   Screenshot-driven form rescue, landscape navigation cleanup and floating-control discipline.
+   Presentation only. No staff/public data workflow changes. */
+
+/* ==========================================================================
+   1. ENQUIRY FORM RESCUE
+   The legacy contact-grid was designed for a simple two-column contact section.
+   The modern enquiry section now contains labels, process guidance, a full form
+   and review blocks. Keep that modern content on one stable column.
+   ========================================================================== */
+#enquiry > .wrap.contact-grid,
+#enquiry .contact-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:16px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .contact-grid > .v51-primary-label,
+#enquiry .contact-grid > .v9-contact-process,
+#enquiry .contact-grid > .form-area,
+#enquiry .contact-grid > .v54-section-end{
+  grid-column:1/-1!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .form-area{
+  width:min(1120px,100%)!important;
+  max-width:1120px!important;
+  min-width:0!important;
+  margin:0 auto!important;
+  overflow:visible!important;
+}
+
+#enquiry #district-enquiry-form{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #district-enquiry-form .form-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #district-enquiry-form .form-group{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #district-enquiry-form :is(input,select,textarea){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #district-enquiry-form :is(
+  .form-group.textarea,
+  #v138-notification-preferences,
+  .v203-document-note,
+  .v39-community-note,
+  .v69-review,
+  .form-btn
+){
+  grid-column:1/-1!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .v69-review-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry .v69-review-grid > div,
+#enquiry .v69-review-grid :is(.v105-review-label,.v105-review-value){
+  min-width:0!important;
+  max-width:100%!important;
+  word-break:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
+#enquiry .v203-document-note{
+  box-sizing:border-box!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+#enquiry .v54-section-end{
+  justify-self:stretch!important;
+}
+
+/* The process strip is useful but should never force the form wider. */
+#enquiry .v9-contact-process,
+#enquiry .v69-enquiry-stage{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+}
+#enquiry .v9-contact-process::-webkit-scrollbar,
+#enquiry .v69-enquiry-stage::-webkit-scrollbar{display:none!important}
+
+/* ==========================================================================
+   2. TOUCH LANDSCAPE — enquiry remains comfortably readable.
+   ========================================================================== */
+@media (orientation:landscape) and (pointer:coarse){
+  #enquiry{
+    overflow:visible!important;
+  }
+
+  #enquiry > .wrap.contact-grid{
+    padding-left:clamp(16px,2.4vw,32px)!important;
+    padding-right:clamp(16px,2.4vw,32px)!important;
+  }
+
+  #enquiry .form-area{
+    width:min(1180px,100%)!important;
+    max-width:1180px!important;
+    padding:clamp(20px,2.2vw,30px)!important;
+  }
+
+  #enquiry #district-enquiry-form .form-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:14px 16px!important;
+  }
+
+  #enquiry .v69-review-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+/* Phone/small-tablet forms return to one simple column. */
+@media(max-width:760px){
+  #enquiry #district-enquiry-form .form-grid,
+  #enquiry .v69-review-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  #enquiry .form-area{
+    padding:18px!important;
+  }
+}
+
+/* ==========================================================================
+   3. PROGRAMMES — the help chips live on a permanently dark section, even when
+   the overall site is in light mode. Keep their text readable in every theme.
+   ========================================================================== */
+#resident-programmes .v17-start-items span{
+  color:#dceaf0!important;
+  -webkit-text-fill-color:#dceaf0!important;
+  background:rgba(255,255,255,.095)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+#resident-programmes .v17-start>strong{
+  color:#f3f8fa!important;
+  -webkit-text-fill-color:#f3f8fa!important;
+  opacity:1!important;
+}
+body.v112-dark #resident-programmes .v17-start-items span{
+  color:#e4eff3!important;
+  -webkit-text-fill-color:#e4eff3!important;
+  background:#234a60!important;
+  border-color:rgba(216,199,160,.13)!important;
+}
+
+/* ==========================================================================
+   4. TOUCH-LANDSCAPE TOP NAVIGATION
+   The Spanish shortcut was absolutely positioned on desktop and could sit over
+   the brand lockup. Move it into the same swipeable navigation rail and reduce
+   the search footprint so Forms/Updates/Contact remain reachable.
+   ========================================================================== */
+@media (orientation:landscape) and (pointer:coarse){
+  nav .nav-inner{
+    display:grid!important;
+    grid-template-columns:minmax(210px,290px) minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:10px!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    padding:7px 12px!important;
+    overflow:hidden!important;
+  }
+
+  nav .v7-brandmark{
+    width:auto!important;
+    max-width:290px!important;
+    min-width:0!important;
+    margin-right:0!important;
+  }
+
+  nav .v7-brandmark-copy{
+    min-width:0!important;
+  }
+
+  nav .v7-brandmark-copy strong,
+  nav .v7-brandmark-copy span{
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  nav .links{
+    position:relative!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:7px!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:4px 2px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-x:contain!important;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  nav .links::-webkit-scrollbar{display:none!important}
+
+  nav .links > .v51-nav-btn{
+    flex:0 0 auto!important;
+    min-height:34px!important;
+    padding:7px 10px!important;
+    font-size:11px!important;
+    white-space:nowrap!important;
+  }
+
+  body nav .links a.v206-language-link{
+    position:static!important;
+    inset:auto!important;
+    order:90!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:34px!important;
+    margin:0 3px 0 0!important;
+    padding:7px 10px!important;
+    transform:none!important;
+    font-size:9px!important;
+    letter-spacing:.06em!important;
+    white-space:nowrap!important;
+  }
+
+  nav .v27-site-search{
+    order:100!important;
+    flex:0 0 clamp(145px,17vw,190px)!important;
+    width:clamp(145px,17vw,190px)!important;
+    min-width:145px!important;
+    max-width:190px!important;
+    margin-left:2px!important;
+  }
+
+  nav .v27-site-search input{
+    min-width:0!important;
+    width:100%!important;
+  }
+}
+
+/* ==========================================================================
+   5. FIXED CONTROL DISCIPLINE
+   Leave enough document space below the fixed resident dock, and keep the
+   accessibility tray above it instead of on top of it.
+   ========================================================================== */
+@media(max-width:900px){
+  main#main-content{
+    padding-bottom:calc(118px + env(safe-area-inset-bottom))!important;
+  }
+
+  .v8-accessibility{
+    bottom:calc(112px + env(safe-area-inset-bottom))!important;
+    right:12px!important;
+  }
+
+  .v202-menu-fab{
+    bottom:calc(103px + env(safe-area-inset-bottom))!important;
+  }
+}
+
+/* Short landscape viewports need compact fixed controls, not giant overlays. */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:700px){
+  .v202-menu-fab{
+    transform:scale(.82)!important;
+    transform-origin:left bottom!important;
+  }
+
+  .v8-accessibility{
+    transform:scale(.86)!important;
+    transform-origin:right bottom!important;
+  }
+}
+
+/* ==========================================================================
+   6. FORMS/CONTACT FOCUSED ROUTES — prevent any inherited width cap from
+   recreating the narrow-column problem inside V204.
+   ========================================================================== */
+body.v203-focused-view[data-district-view="forms"] #enquiry,
+body.v203-focused-view[data-district-view="contact"] #enquiry{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+
+body.v203-focused-view[data-district-view="forms"] #enquiry .wrap,
+body.v203-focused-view[data-district-view="contact"] #enquiry .wrap{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+
+/* Print remains document-first; fixed UI corrections are irrelevant there. */
+@media print{
+  #enquiry .contact-grid{
+    display:block!important;
+  }
+  .v8-accessibility,.v202-menu-fab{display:none!important}
+}
