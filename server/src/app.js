@@ -106,7 +106,9 @@ async function sendPublicIndex(req,res,next){
       const homeAestheticJsFile=path.join(config.staticRoot,'assets','district-homepage-aesthetic-v211.js');
       const globalPolishCssFile=path.join(config.staticRoot,'assets','district-global-polish-v212.css');
       const globalPolishJsFile=path.join(config.staticRoot,'assets','district-global-polish-v212.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer]=await Promise.all([
+      const digitalFeedCssFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.css');
+      const digitalFeedJsFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -128,7 +130,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(homeAestheticCssFile),
         fs.readFile(homeAestheticJsFile),
         fs.readFile(globalPolishCssFile),
-        fs.readFile(globalPolishJsFile)
+        fs.readFile(globalPolishJsFile),
+        fs.readFile(digitalFeedCssFile),
+        fs.readFile(digitalFeedJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -153,6 +157,8 @@ async function sendPublicIndex(req,res,next){
       const homeAestheticJs=`<script src="/assets/district-homepage-aesthetic-v211.js?v=${versionFor(homeAestheticJsBuffer)}" defer></script>`;
       const globalPolishCss=`<link rel="stylesheet" href="/assets/district-global-polish-v212.css?v=${versionFor(globalPolishCssBuffer)}">`;
       const globalPolishJs=`<script src="/assets/district-global-polish-v212.js?v=${versionFor(globalPolishJsBuffer)}" defer></script>`;
+      const digitalFeedCss=`<link rel="stylesheet" href="/assets/district-digital-feed-v213.css?v=${versionFor(digitalFeedCssBuffer)}">`;
+      const digitalFeedJs=`<script src="/assets/district-digital-feed-v213.js?v=${versionFor(digitalFeedJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -186,6 +192,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-global-polish-v212.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,globalPolishCss+'</head>'):globalPolishCss+html;
       }
+      if(!html.includes('/assets/district-digital-feed-v213.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,digitalFeedCss+'</head>'):digitalFeedCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -218,6 +227,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-global-polish-v212.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,globalPolishJs+'</body>'):html+globalPolishJs;
+      }
+      if(!html.includes('/assets/district-digital-feed-v213.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,digitalFeedJs+'</body>'):html+digitalFeedJs;
       }
       cachedPublicIndex=html;
     }
