@@ -274,7 +274,9 @@ async function sendPublicIndex(req,res,next){
       const residentJourneyJsFile=path.join(config.staticRoot,'assets','district-resident-journey-v225.js');
       const smartNextStepCssFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.css');
       const smartNextStepJsFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer]=await Promise.all([
+      const livingPulseCssFile=path.join(config.staticRoot,'assets','district-living-pulse-v227.css');
+      const livingPulseJsFile=path.join(config.staticRoot,'assets','district-living-pulse-v227.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -321,7 +323,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(residentJourneyCssFile),
         fs.readFile(residentJourneyJsFile),
         fs.readFile(smartNextStepCssFile),
-        fs.readFile(smartNextStepJsFile)
+        fs.readFile(smartNextStepJsFile),
+        fs.readFile(livingPulseCssFile),
+        fs.readFile(livingPulseJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -371,6 +375,8 @@ async function sendPublicIndex(req,res,next){
       const residentJourneyJs=`<script src="/assets/district-resident-journey-v225.js?v=${versionFor(residentJourneyJsBuffer)}" defer></script>`;
       const smartNextStepCss=`<link rel="stylesheet" href="/assets/district-smart-next-step-v226.css?v=${versionFor(smartNextStepCssBuffer)}">`;
       const smartNextStepJs=`<script src="/assets/district-smart-next-step-v226.js?v=${versionFor(smartNextStepJsBuffer)}" defer></script>`;
+      const livingPulseCss=`<link rel="stylesheet" href="/assets/district-living-pulse-v227.css?v=${versionFor(livingPulseCssBuffer)}">`;
+      const livingPulseJs=`<script src="/assets/district-living-pulse-v227.js?v=${versionFor(livingPulseJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -447,6 +453,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-smart-next-step-v226.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,smartNextStepCss+'</head>'):smartNextStepCss+html;
       }
+      if(!html.includes('/assets/district-living-pulse-v227.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,livingPulseCss+'</head>'):livingPulseCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -515,6 +524,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-smart-next-step-v226.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,smartNextStepJs+'</body>'):html+smartNextStepJs;
+      }
+      if(!html.includes('/assets/district-living-pulse-v227.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,livingPulseJs+'</body>'):html+livingPulseJs;
       }
       cachedPublicIndex=html;
     }

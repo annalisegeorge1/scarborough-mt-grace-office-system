@@ -1,0 +1,160 @@
+Scarborough / Mt. Grace District Office — V227
+
+LIVING DISTRICT PULSE
+
+V227 makes focused public pages feel current by surfacing the newest relevant records from the existing public publishing workflow.
+
+SOURCE OF TRUTH
+V227 reads:
+GET /api/public/content
+
+That endpoint already exposes only:
+- Published content
+- Verified content
+- Records inside their publication window
+- Public-safe fields
+
+V227 does not create a second content store or bypass staff publishing controls.
+
+1. Focused-page District Pulse
+On:
+- /office/
+- /services/
+- /forms/
+- /contact/
+
+V227 can insert a compact “District Pulse · Published + Verified” panel when relevant staff-published records exist.
+
+The panel shows up to three relevant items with:
+- Content type/category
+- Current public status
+- Relative update date
+- Title
+- Public summary
+- Latest V215 progress entry when available
+- Open source action
+- Copy link action
+
+If no sufficiently relevant verified records exist, the Pulse stays hidden rather than filling the page with unrelated information.
+
+2. Route-aware relevance
+V227 ranks already-public records using:
+- Public section
+- Public content type
+- Category/title/summary keywords
+- Featured state
+- V215 progress history
+- Recency
+
+Examples:
+Forms strongly favors:
+- section=forms
+- form / form_override
+
+Services can surface:
+- service-related forms
+- programme/support/assistance information
+- recently relevant public records
+
+Office / Contact use a stricter threshold so a generic community activity does not appear as office/contact information merely because it is recent.
+
+3. Updates and Community
+/updates/ and /community/ already contain the full V213 Digital Feed / Community Stream.
+
+V227 deliberately does NOT add a second duplicate Pulse panel there.
+
+Instead it adds a compact verified-public-information freshness badge to the existing feed heading.
+
+4. V215 progress integration
+When a public record has metadata.progressHistory:
+- The newest progress status can become the displayed current status.
+- The original public item summary remains the main description.
+- The newest progress entry is shown separately as “Latest progress.”
+
+This prevents progress text from replacing or duplicating the original source description.
+
+5. Open-source behavior
+- Published forms with a public document/URL can open that source directly.
+- Other forms route to the public Forms Library.
+- Activity / notice / newsletter records route to the existing Updates permalink using ?post=<id>.
+- Existing V214/V215 permalink/thread behavior remains authoritative.
+
+6. Freshness
+The panel displays relative freshness such as:
+- Updated today
+- Updated yesterday
+- Updated 3 days ago
+- Updated 2 Oct 2026
+
+A manual refresh control is provided.
+
+V227 reuses its current data for five minutes and only refreshes after the page becomes visible again if that data is older than five minutes.
+
+This avoids aggressive polling against the public endpoint.
+
+7. Mobile
+On phones the three Pulse records become a horizontal snap rail rather than a long vertical block.
+
+8. Dark mode
+Full dark-mode treatment follows the existing navy / brass civic design.
+
+9. Print / PDF
+Pulse content remains printable as public information.
+Interactive refresh/copy controls are removed from print output.
+
+10. Privacy
+V227:
+- Uses no localStorage
+- Uses no sessionStorage
+- Reads no enquiry form fields
+- Creates no resident profile
+- Sends no resident information
+- Performs only a public GET request to /api/public/content
+- Does not POST/PATCH/DELETE anything
+
+The word “phone” exists only as a route-relevance keyword for contact notices.
+
+11. Staff-side preservation
+Staff continue using the existing Website & Content Manager exactly as before.
+
+V227 changes no:
+- Staff CMS control
+- Publishing workflow
+- Verification requirement
+- V215 progress editor
+- Form editor
+- Activity Hub editor
+- Authentication
+- Database schema
+- Enquiry workflow
+- Tracking workflow
+
+Staff publication remains the source of truth; V227 is only a public presentation layer.
+
+QA
+- V227 JavaScript syntax: pass
+- Server JavaScript syntax: pass
+- CSS brace balance: pass
+- V227 CSS/JS injection: pass
+- V227 loads after V226: pass
+- Public-content GET integration: present
+- Route-aware relevance: present
+- Forms route handling: present
+- Services route handling: present
+- Feed freshness enhancement: present
+- V215 progress awareness: present
+- Five-minute refresh guard: present
+- No localStorage/sessionStorage: verified
+- No resident form-field access: verified
+- No POST/PATCH/DELETE request: verified
+- Dark mode: present
+- Mobile snap rail: present
+- Print treatment: present
+
+Files added:
+- assets/district-living-pulse-v227.css
+- assets/district-living-pulse-v227.js
+- V227_NOTES.txt
+
+Files updated:
+- server/src/app.js
