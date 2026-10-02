@@ -144,3 +144,11 @@
   .v215-thread-list:before{left:19px}
   .v215-thread-entry:before{left:-19px}
 }
+
+.v215-source-count{
+  display:inline-grid;place-items:center;
+  min-width:18px;height:18px;margin-left:5px;padding:0 4px;
+  border-radius:999px;
+  background:#edf4f6;color:#174f74;
+  font:900 7px/1 system-ui;
+}
