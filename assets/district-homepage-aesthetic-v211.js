@@ -32,12 +32,10 @@
     chapter.className='v211-home-chapter';
     chapter.setAttribute('aria-hidden','true');
     chapter.innerHTML=`
-      <span></span>
       <div class="v211-home-chapter-core">
         <span class="v211-home-chapter-no">${no}</span>
         <span class="v211-home-chapter-copy"><small>${kicker}</small><strong>${title}</strong></span>
-      </div>
-      <span></span>`;
+      </div>`;
     target.parentNode.insertBefore(chapter,target);
   });
 
