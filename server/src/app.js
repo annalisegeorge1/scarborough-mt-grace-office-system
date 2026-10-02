@@ -89,12 +89,16 @@ async function sendPublicIndex(req,res,next){
       const sidebarJsFile=path.join(config.staticRoot,'assets','district-sidebar-v202.js');
       const focusedCssFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.css');
       const focusedJsFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer]=await Promise.all([
+      const focusedLayoutCssFile=path.join(config.staticRoot,'assets','district-focused-layout-v204.css');
+      const focusedLayoutJsFile=path.join(config.staticRoot,'assets','district-focused-layout-v204.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
         fs.readFile(focusedCssFile),
-        fs.readFile(focusedJsFile)
+        fs.readFile(focusedJsFile),
+        fs.readFile(focusedLayoutCssFile),
+        fs.readFile(focusedLayoutJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -102,11 +106,16 @@ async function sendPublicIndex(req,res,next){
       const sidebarJs=`<script src="/assets/district-sidebar-v202.js?v=${versionFor(sidebarJsBuffer)}" defer></script>`;
       const focusedCss=`<link rel="stylesheet" href="/assets/district-focused-pages-v203.css?v=${versionFor(focusedCssBuffer)}">`;
       const focusedJs=`<script src="/assets/district-focused-pages-v203.js?v=${versionFor(focusedJsBuffer)}" defer></script>`;
+      const focusedLayoutCss=`<link rel="stylesheet" href="/assets/district-focused-layout-v204.css?v=${versionFor(focusedLayoutCssBuffer)}">`;
+      const focusedLayoutJs=`<script src="/assets/district-focused-layout-v204.js?v=${versionFor(focusedLayoutJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
       if(!html.includes('/assets/district-focused-pages-v203.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedCss+'</head>'):focusedCss+html;
+      }
+      if(!html.includes('/assets/district-focused-layout-v204.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedLayoutCss+'</head>'):focusedLayoutCss+html;
       }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
@@ -116,6 +125,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-focused-pages-v203.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,focusedJs+'</body>'):html+focusedJs;
+      }
+      if(!html.includes('/assets/district-focused-layout-v204.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,focusedLayoutJs+'</body>'):html+focusedLayoutJs;
       }
       cachedPublicIndex=html;
     }
