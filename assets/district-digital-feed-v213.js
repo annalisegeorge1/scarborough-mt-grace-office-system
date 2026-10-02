@@ -241,6 +241,7 @@
         '<div class="v213-item-actions">'+
           '<button class="v213-item-action v213-open" type="button" data-v213-open="'+esc(item.sourceId)+'"><span aria-hidden="true">↗</span> Open full information</button>'+
           '<button class="v213-item-action" type="button" data-v213-copy="'+esc(item.sourceId)+'"><span aria-hidden="true">⌁</span> Copy link</button>'+
+          '<button class="v213-item-action" type="button" data-v213-share="'+esc(item.sourceId)+'" data-v213-share-title="'+esc(item.title)+'"><span aria-hidden="true">↥</span> Share</button>'+
         '</div>'+
       '</div>'+
     '</article>';
@@ -275,7 +276,7 @@
           '<button type="button" class="v213-feed-filter" data-v213-filter="community">Community</button>'+
           (isCommunity?"":'<button type="button" class="v213-feed-filter" data-v213-filter="progress">Progress</button>')+
         '</div>'+
-        '<label class="v213-feed-search"><span class="sr-only">Search this feed</span><input type="search" placeholder="Search this feed…" aria-label="Search this feed"></label>'+
+        '<label class="v213-feed-search"><span class="v213-visually-hidden">Search this feed</span><input type="search" placeholder="Search this feed…" aria-label="Search this feed"></label>'+
       '</div>'+
       '<div class="v213-feed-list" aria-live="polite"></div>'+
       '<div class="v213-feed-empty">No items match this filter. The full information sections remain available below.</div>'+
@@ -331,7 +332,18 @@
       const open=e.target.closest("[data-v213-open]");
       if(open){goToSource(open.dataset.v213Open,mode==="community"?"/community":"/updates");return}
       const copy=e.target.closest("[data-v213-copy]");
-      if(copy){copySource(copy.dataset.v213Copy,mode==="community"?"/community":"/updates",copy)}
+      if(copy){copySource(copy.dataset.v213Copy,mode==="community"?"/community":"/updates",copy);return}
+      const share=e.target.closest("[data-v213-share]");
+      if(share){
+        const context=mode==="community"?"/community":"/updates";
+        const url=new URL(routeForSource(share.dataset.v213Share,context),location.origin).href;
+        const title=share.dataset.v213ShareTitle||"District Office update";
+        if(navigator.share){
+          navigator.share({title,url}).catch(()=>{});
+        }else{
+          copySource(share.dataset.v213Share,context,share);
+        }
+      }
     });
     search.addEventListener("input",()=>{
       query=slug(search.value);
