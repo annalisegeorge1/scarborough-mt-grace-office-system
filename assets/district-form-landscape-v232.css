@@ -385,3 +385,19 @@ body.v112-dark #resident-programmes [role="button"]:focus-visible{
     overflow:visible!important;
   }
 }
+
+
+/* Dark enquiry sub-surfaces added by the later resident-notification/form work. */
+body.v112-dark #enquiry #supporting-files:disabled{
+  background:#173a4e!important;
+  color:#b9ccd5!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+body.v112-dark #enquiry #v138-notification-preferences > div{
+  background:#102f42!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+body.v112-dark #enquiry #v138-notification-preferences :is(label,span,small){
+  color:#c5d6de!important;
+  opacity:1!important;
+}
