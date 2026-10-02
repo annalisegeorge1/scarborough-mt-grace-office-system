@@ -7,6 +7,8 @@ const RUNTIME_CACHE='smg-public-runtime-'+VERSION;
 
 const PUBLIC_SHELL_PATHS=new Set([
   '/',
+  '/index.html',
+  '/index-self-contained.html',
   '/office',
   '/office/',
   '/services',
