@@ -162,25 +162,15 @@ body.v203-focused-view .v203-page-end a{
 .v222-deep-link-target{
   position:relative!important;
   scroll-margin-top:104px!important;
-}
-.v222-deep-link-target:before{
-  content:"";
-  position:absolute;
-  inset:4px;
-  z-index:40;
-  pointer-events:none;
-  border:2px solid rgba(167,143,94,.78);
-  border-radius:inherit;
-  box-shadow:
-    0 0 0 5px rgba(167,143,94,.08),
-    0 12px 32px rgba(7,35,55,.10);
+  outline:2px solid rgba(167,143,94,.78)!important;
+  outline-offset:4px!important;
   animation:v222-target-pulse 2.4s ease both;
 }
 @keyframes v222-target-pulse{
-  0%{opacity:0;transform:scale(.995)}
-  14%{opacity:1;transform:none}
-  72%{opacity:.84}
-  100%{opacity:0}
+  0%{outline-color:transparent;box-shadow:none}
+  14%{outline-color:rgba(167,143,94,.82);box-shadow:0 0 0 5px rgba(167,143,94,.08),0 12px 32px rgba(7,35,55,.10)}
+  72%{outline-color:rgba(167,143,94,.68);box-shadow:0 0 0 4px rgba(167,143,94,.05)}
+  100%{outline-color:transparent;box-shadow:none}
 }
 
 /* HORIZONTAL OVERFLOW CUES
@@ -203,11 +193,8 @@ body.v203-focused-view .v203-page-end a{
 }
 
 /* Keep overflow indicators subtle in dark mode. */
-body.v112-dark .v222-deep-link-target:before{
-  border-color:rgba(216,199,160,.82);
-  box-shadow:
-    0 0 0 5px rgba(216,199,160,.07),
-    0 14px 34px rgba(0,0,0,.24);
+body.v112-dark .v222-deep-link-target{
+  outline-color:rgba(216,199,160,.82)!important;
 }
 
 /* Desktop/laptop refinement */
@@ -284,9 +271,6 @@ body.v112-dark .v222-deep-link-target:before{
     min-height:130px;
   }
 
-  .v222-deep-link-target:before{
-    inset:2px;
-  }
 }
 
 /* No decorative target pulse when motion is reduced. The destination still receives an outline. */
@@ -300,8 +284,8 @@ body.v112-dark .v222-deep-link-target:before{
     .v213-feed-filter
   ){transition:none!important}
 
-  .v222-deep-link-target:before{
+  .v222-deep-link-target{
     animation:none!important;
-    opacity:.85;
+    outline-color:rgba(167,143,94,.78)!important;
   }
 }
