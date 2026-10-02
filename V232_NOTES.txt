@@ -1,0 +1,145 @@
+Scarborough / Mt. Grace District Office — V232
+
+FORM RESCUE + OVERLAY DISCIPLINE
+
+V232 is a screenshot-driven correction pass based on the October 2 tablet captures showing the enquiry form collapsing into a narrow right-hand column and several remaining fixed-control/navigation issues.
+
+1. Root enquiry-layout correction
+The enquiry section inherited the original .contact-grid layout:
+- desktop: 2fr / 1fr
+- mobile: 1fr
+
+That structure was created for an older, simpler contact layout. The current enquiry section now contains:
+- section label
+- four-step process strip
+- enquiry action choices
+- tracking guidance
+- privacy guidance
+- resident process cards
+- full enquiry form
+- supporting document note
+- review details
+- submit controls
+- section-end control
+
+Keeping that modern content inside the old two-column auto-placement system allowed the form/review area to collapse into a narrow column on landscape tablets.
+
+V232 changes #enquiry .contact-grid to one stable content column at all screen sizes.
+
+2. Form width preservation
+V232 explicitly sets:
+- #enquiry .form-area to a centered full-width content frame
+- #district-enquiry-form to full width
+- all fields/controls to min-width:0 and max-width:100%
+- modern form grid to repeat(2,minmax(0,1fr)) where space permits
+
+This prevents controls from forcing or inheriting narrow fixed widths.
+
+3. Full-width form blocks
+The following now span both field columns:
+- textarea/message area
+- Resident Update Preferences
+- Supporting Documents status/note
+- Community-area explanatory note
+- Review Your Details panel
+- final form action/submission block
+
+4. Review Details correction
+Review Your Details remains a two-column grid on wider screens and becomes one column on small screens.
+
+Labels and values use safe wrapping rather than letter-by-letter breaking.
+
+5. Small-screen form behavior
+At <=760px:
+- field grid becomes one column
+- review grid becomes one column
+- form-area padding is reduced appropriately
+
+6. Touch-landscape form behavior
+On coarse-pointer landscape devices:
+- enquiry wrapper receives safe horizontal padding
+- form area can use up to 1180px while remaining fluid
+- form fields remain two columns where room exists
+- review panel remains two columns
+
+7. Programme help-chip contrast
+The “I need help with…” chips inside Resident Programmes sit on a permanently dark editorial section.
+
+V232 forces those chip labels to remain light and readable in both normal and v112 dark mode.
+
+8. Touch-landscape navigation
+The Spanish shortcut was dynamically injected with absolute desktop positioning and could overlap the Scarborough / Mt. Grace brand lockup.
+
+In touch-landscape V232 now:
+- moves ESPAÑOL into normal nav flow
+- places it near the end of the swipe rail
+- reduces its footprint
+- keeps navigation buttons horizontally scrollable
+- reduces search width
+- keeps later destinations reachable
+- protects the brand lockup from overlap
+
+9. Fixed control discipline
+On <=900px:
+- main content receives bottom clearance for the fixed resident dock
+- accessibility controls are raised above the fixed dock
+- Explore is raised to a consistent dock-safe position
+
+On short touch-landscape screens:
+- Explore is reduced slightly
+- accessibility control is reduced slightly
+
+10. Focused Forms / Contact safeguards
+When #enquiry appears inside the focused Forms or Contact route:
+- #enquiry itself cannot inherit a narrow max-width
+- its .wrap cannot inherit a narrow max-width
+- the form remains full-width inside the V204/V230 focused layout
+
+11. Preservation
+V232 is CSS-only.
+
+No changes to:
+- enquiry submission JavaScript
+- enquiry API
+- supporting-document upload logic
+- resident tracker
+- staff CMS
+- authentication
+- publishing / verification
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness Workspace
+- V229 PWA/service worker
+- V231 Service Intelligence
+
+12. QA
+Passed:
+- server JavaScript syntax
+- CSS brace balance
+- V232 stylesheet injection
+- V232 loads after V231
+- enquiry single-column root layout rule present
+- two-column field grid rule present
+- full-width review rule present
+- full-width supporting-document note rule present
+- mobile one-column rule present
+- programme-chip contrast rule present
+- Spanish-nav static-flow rule present
+- touch-landscape nav scrolling rule present
+- accessibility dock-clearance rule present
+- main content bottom dock-clearance rule present
+- focused Forms safeguard present
+
+Files added:
+- assets/district-form-overlay-rescue-v232.css
+- V232_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V232 is based directly on the user-supplied live tablet screenshots and source-level inspection of the current enquiry/contact grid architecture. Code-level validation is complete. A post-deploy screenshot pass is still the final visual confirmation step.
