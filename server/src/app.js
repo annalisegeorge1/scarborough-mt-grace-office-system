@@ -113,7 +113,8 @@ async function sendPublicIndex(req,res,next){
       const progressThreadsCssFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.css');
       const progressThreadsJsFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.js');
       const mobileCorrectionsCssFile=path.join(config.staticRoot,'assets','district-mobile-corrections-v216.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer]=await Promise.all([
+      const mobilePolishCssFile=path.join(config.staticRoot,'assets','district-mobile-polish-v217.css');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -142,7 +143,8 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(feedPublishingJsFile),
         fs.readFile(progressThreadsCssFile),
         fs.readFile(progressThreadsJsFile),
-        fs.readFile(mobileCorrectionsCssFile)
+        fs.readFile(mobileCorrectionsCssFile),
+        fs.readFile(mobilePolishCssFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -174,6 +176,7 @@ async function sendPublicIndex(req,res,next){
       const progressThreadsCss=`<link rel="stylesheet" href="/assets/district-progress-threads-v215.css?v=${versionFor(progressThreadsCssBuffer)}">`;
       const progressThreadsJs=`<script src="/assets/district-progress-threads-v215.js?v=${versionFor(progressThreadsJsBuffer)}" defer></script>`;
       const mobileCorrectionsCss=`<link rel="stylesheet" href="/assets/district-mobile-corrections-v216.css?v=${versionFor(mobileCorrectionsCssBuffer)}">`;
+      const mobilePolishCss=`<link rel="stylesheet" href="/assets/district-mobile-polish-v217.css?v=${versionFor(mobilePolishCssBuffer)}">`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -219,6 +222,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-mobile-corrections-v216.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobileCorrectionsCss+'</head>'):mobileCorrectionsCss+html;
+      }
+      if(!html.includes('/assets/district-mobile-polish-v217.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobilePolishCss+'</head>'):mobilePolishCss+html;
       }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
