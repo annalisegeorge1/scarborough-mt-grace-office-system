@@ -104,7 +104,9 @@ async function sendPublicIndex(req,res,next){
       const aestheticJsFile=path.join(config.staticRoot,'assets','district-aesthetic-restoration-v210.js');
       const homeAestheticCssFile=path.join(config.staticRoot,'assets','district-homepage-aesthetic-v211.css');
       const homeAestheticJsFile=path.join(config.staticRoot,'assets','district-homepage-aesthetic-v211.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer]=await Promise.all([
+      const globalPolishCssFile=path.join(config.staticRoot,'assets','district-global-polish-v212.css');
+      const globalPolishJsFile=path.join(config.staticRoot,'assets','district-global-polish-v212.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -124,7 +126,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(aestheticCssFile),
         fs.readFile(aestheticJsFile),
         fs.readFile(homeAestheticCssFile),
-        fs.readFile(homeAestheticJsFile)
+        fs.readFile(homeAestheticJsFile),
+        fs.readFile(globalPolishCssFile),
+        fs.readFile(globalPolishJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -147,6 +151,8 @@ async function sendPublicIndex(req,res,next){
       const aestheticJs=`<script src="/assets/district-aesthetic-restoration-v210.js?v=${versionFor(aestheticJsBuffer)}" defer></script>`;
       const homeAestheticCss=`<link rel="stylesheet" href="/assets/district-homepage-aesthetic-v211.css?v=${versionFor(homeAestheticCssBuffer)}">`;
       const homeAestheticJs=`<script src="/assets/district-homepage-aesthetic-v211.js?v=${versionFor(homeAestheticJsBuffer)}" defer></script>`;
+      const globalPolishCss=`<link rel="stylesheet" href="/assets/district-global-polish-v212.css?v=${versionFor(globalPolishCssBuffer)}">`;
+      const globalPolishJs=`<script src="/assets/district-global-polish-v212.js?v=${versionFor(globalPolishJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -177,6 +183,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-homepage-aesthetic-v211.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,homeAestheticCss+'</head>'):homeAestheticCss+html;
       }
+      if(!html.includes('/assets/district-global-polish-v212.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,globalPolishCss+'</head>'):globalPolishCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -206,6 +215,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-homepage-aesthetic-v211.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,homeAestheticJs+'</body>'):html+homeAestheticJs;
+      }
+      if(!html.includes('/assets/district-global-polish-v212.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,globalPolishJs+'</body>'):html+globalPolishJs;
       }
       cachedPublicIndex=html;
     }
