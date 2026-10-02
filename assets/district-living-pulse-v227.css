@@ -461,3 +461,32 @@ body.v112-dark .v227-pulse-foot a{color:#d8c7a0}
     animation:none!important;
   }
 }
+
+
+/* Updates/Community already have the full V213 stream; V227 adds freshness there
+   instead of duplicating the feed with a second pulse panel. */
+.v227-feed-freshness{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:25px;
+  padding:0 8px;
+  margin-top:7px;
+  border:1px solid rgba(47,117,106,.15);
+  border-radius:999px;
+  background:rgba(238,247,244,.92);
+  color:#3d746a;
+  font:850 6.3px/1 system-ui;
+  letter-spacing:.025em;
+}
+.v227-feed-freshness:before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:#2f756a;
+  box-shadow:0 0 0 3px rgba(47,117,106,.08);
+}
+body.v112-dark .v227-feed-freshness{
+  border-color:rgba(83,162,143,.18);
+  background:#163b35;
+  color:#acd7cb;
+}
