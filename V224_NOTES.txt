@@ -1,0 +1,154 @@
+Scarborough / Mt. Grace District Office — V224
+
+RESIDENT COMMAND CENTER
+
+V224 introduces a futuristic universal public-navigation layer without replacing the existing navigation, Explore drawer, forms, tracker, feed, or staff system.
+
+1. Resident Command Center
+Adds a global command palette for the public website.
+
+Residents can search:
+- Main public areas
+- Resident services
+- Forms and portals
+- Programmes
+- Resident Guide
+- FAQs and resources
+- Staff/team information
+- Office hours and contact information
+- Community projects and engagement
+- Activity Hub
+- Live updates
+- Public Action & Progress
+- Gallery
+- Public headings already present in the site DOM
+
+The Command Center searches both:
+- A curated public-navigation catalogue
+- Dynamically indexed H2/H3/H4 headings from the public website
+
+2. Fast access
+Open the Command Center with:
+- Ctrl + K
+- Cmd + K
+- / when not typing in a field
+- The new Command Center control inside Explore
+- The new desktop side-rail search/command control
+
+The existing Explore menu remains available and unchanged.
+
+3. Search behaviour
+The Command Center uses client-side fuzzy ranking based on:
+- Exact label match
+- Label prefix
+- Label contains
+- Alias terms
+- Supporting description
+- Multiple search words
+
+Examples of useful searches:
+- forms
+- track
+- team
+- programme
+- project
+- gallery
+- office hours
+- contact
+- service
+- updates
+
+No external AI service or resident profile is required.
+
+4. Dynamic public-content indexing
+V224 indexes public page headings and creates deterministic anchors when needed.
+This allows residents to jump directly to detailed public subsections rather than only to broad route pages.
+
+Dynamic route discovery walks the heading’s ancestor structure and maps it to the correct focused public route.
+
+5. Quick resident actions
+The Command Center includes four always-visible fast actions:
+- Enquire
+- Track
+- Call
+- WhatsApp
+
+These use the existing public contact and resident-action destinations.
+
+6. Keyboard accessibility
+- Arrow Down / Arrow Up moves through search results.
+- Enter opens the selected result.
+- Escape closes the Command Center.
+- Tab remains trapped inside the modal while it is open.
+- Focus returns to the control that opened the Command Center.
+
+7. Same-page navigation
+When a result already exists on the current route:
+- V224 closes the Command Center.
+- Opens the relevant V208/V209 collapsed supporting section when necessary.
+- Scrolls to the destination.
+- Reuses the V222 deep-link highlight for orientation.
+
+Cross-route results use their normal public route URL.
+
+8. Existing public search
+The existing site search remains available.
+Pressing Enter in that search field can hand the current query to the Resident Command Center for broader navigation.
+
+9. Privacy
+The Command Center:
+- Does not store search history.
+- Does not use localStorage or sessionStorage.
+- Does not collect names, phone numbers, addresses, enquiry details, or other personal information.
+- Does not send search terms to an external service.
+
+10. Visual system
+The Command Center follows the existing District Office visual language:
+- Deep navy
+- Muted brass/champagne
+- Civic/editorial typography
+- Soft layered surfaces
+- Dark-mode support
+- Mobile full-height adaptation
+
+It deliberately avoids generic neon or “sci-fi dashboard” styling.
+
+11. Print/PDF
+Command Center controls are hidden in print/PDF output.
+
+12. Preservation
+- No public information removed.
+- No route removed.
+- No existing Explore destination removed.
+- No staff CMS changes.
+- No V215 progress-thread changes.
+- No enquiry endpoint changes.
+- No tracking changes.
+- No authentication changes.
+- No database changes.
+- No publishing workflow changes.
+
+QA
+- V224 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V224 CSS/JS injection: pass.
+- V224 loads after V223: pass.
+- Ctrl/Cmd+K shortcut: present.
+- Slash shortcut: present.
+- Fuzzy search function: present.
+- Dynamic heading index: present.
+- Explore opener: present.
+- Desktop side-rail opener: present.
+- Quick resident actions: present.
+- Focus trap: present.
+- No localStorage/sessionStorage use: verified.
+- Print suppression: present.
+
+Files added:
+- assets/district-command-center-v224.css
+- assets/district-command-center-v224.js
+- V224_NOTES.txt
+
+Files updated:
+- server/src/app.js

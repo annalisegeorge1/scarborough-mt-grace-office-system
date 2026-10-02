@@ -268,7 +268,9 @@ async function sendPublicIndex(req,res,next){
       const componentCohesionCssFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.css');
       const componentCohesionJsFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.js');
       const publicDiscoveryCssFile=path.join(config.staticRoot,'assets','district-public-discovery-v223.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer]=await Promise.all([
+      const commandCenterCssFile=path.join(config.staticRoot,'assets','district-command-center-v224.css');
+      const commandCenterJsFile=path.join(config.staticRoot,'assets','district-command-center-v224.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -309,7 +311,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(darkDesktopJsFile),
         fs.readFile(componentCohesionCssFile),
         fs.readFile(componentCohesionJsFile),
-        fs.readFile(publicDiscoveryCssFile)
+        fs.readFile(publicDiscoveryCssFile),
+        fs.readFile(commandCenterCssFile),
+        fs.readFile(commandCenterJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -353,6 +357,8 @@ async function sendPublicIndex(req,res,next){
       const componentCohesionCss=`<link rel="stylesheet" href="/assets/district-component-cohesion-v222.css?v=${versionFor(componentCohesionCssBuffer)}">`;
       const componentCohesionJs=`<script src="/assets/district-component-cohesion-v222.js?v=${versionFor(componentCohesionJsBuffer)}" defer></script>`;
       const publicDiscoveryCss=`<link rel="stylesheet" href="/assets/district-public-discovery-v223.css?v=${versionFor(publicDiscoveryCssBuffer)}">`;
+      const commandCenterCss=`<link rel="stylesheet" href="/assets/district-command-center-v224.css?v=${versionFor(commandCenterCssBuffer)}">`;
+      const commandCenterJs=`<script src="/assets/district-command-center-v224.js?v=${versionFor(commandCenterJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -420,6 +426,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-public-discovery-v223.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,publicDiscoveryCss+'</head>'):publicDiscoveryCss+html;
       }
+      if(!html.includes('/assets/district-command-center-v224.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,commandCenterCss+'</head>'):commandCenterCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -479,6 +488,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-component-cohesion-v222.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,componentCohesionJs+'</body>'):html+componentCohesionJs;
+      }
+      if(!html.includes('/assets/district-command-center-v224.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,commandCenterJs+'</body>'):html+commandCenterJs;
       }
       cachedPublicIndex=html;
     }
