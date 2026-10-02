@@ -553,3 +553,12 @@ body.v112-dark .v224-explore-command kbd{
     transition:none!important;
   }
 }
+
+
+@media print{
+  .v224-command-root,
+  .v224-explore-command,
+  .v224-rail-command{
+    display:none!important;
+  }
+}
