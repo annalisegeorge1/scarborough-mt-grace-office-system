@@ -1,0 +1,98 @@
+Scarborough / Mt. Grace District Office — V222
+
+COMPONENT COHESION + DEEP-LINK ORIENTATION
+
+V222 is a public-side finishing pass that makes the additive components introduced across V202–V221 feel like one design system.
+
+1. Component rhythm
+- Standardizes radius, border, shadow and transition language across:
+  * focused-page route identity cards
+  * quick-action cards
+  * V208 supporting-information controls
+  * V209 Explore More controls
+  * District Digital Feed controls
+  * focused-page end actions
+- Keeps route-specific accent colours intact.
+- Does not flatten the existing civic/editorial aesthetic.
+
+2. Typography
+- Balances major modern headings.
+- Applies a more consistent reading width to modern explanatory copy.
+- Uses text-wrap:pretty for paragraphs/list content where supported.
+- Does not edit wording.
+
+3. Action-card alignment
+- Focused quick-action cards now align more consistently in rows.
+- Desktop/tablet action decks keep equal visual weight.
+- Progressive-disclosure buttons also align cleanly across grid rows.
+
+4. Forms and interactive controls
+- Public enquiry inputs/select/textarea use a consistent radius.
+- Textarea remains resizable and receives a sensible minimum height.
+- Submit control keeps a stable tap/click height.
+- Existing V220 busy state, message counter and keyboard awareness remain unchanged.
+
+5. Deep-link orientation
+- Direct hash links now briefly outline the exact destination.
+- This helps residents understand where a copied/shared service, form, project or section link landed within a long page.
+- If a target is inside a collapsed V208/V209 supporting section, that parent is opened first.
+- V222 does not intercept or replace existing navigation behavior.
+- Hash-change and same-page clicks can trigger the orientation highlight.
+- Reduced-motion users receive a static orientation outline instead of the pulse animation.
+
+6. Horizontal overflow cues
+V222 watches:
+- mobile primary navigation rail
+- focused-page section tabs
+- District Digital Feed filters
+- Activity Hub tab rail
+
+When more content exists off-screen, the rail receives a subtle edge fade showing that it can be swiped/scrolled.
+- Right edge only when more content exists to the right.
+- Left edge only after the user has moved right.
+- Both edges when content remains in both directions.
+- Fade disappears when there is no overflow.
+- ResizeObserver keeps the cue accurate after layout changes.
+
+7. Desktop/tablet polish
+- Quick actions, V208 controls and V209 controls retain aligned heights.
+- Hover-capable desktops receive restrained component lift.
+- Tablet action density is kept compact.
+- No hover-only behavior is relied upon for navigation.
+
+8. Focused-page ending
+- Page-end route links are integrated more closely with the focused-page material language.
+- On phones the final route actions distribute more cleanly across available width.
+
+9. Dark mode
+- Deep-link orientation uses the existing dark-mode brass language.
+- V221 dark-mode surfaces remain authoritative.
+
+Preservation
+- No public information removed.
+- No route or navigation destination removed.
+- No staff CMS changes.
+- No staff workflow changes.
+- No V215 progress-thread behavior changes.
+- No enquiry endpoint, tracker, authentication, database or publishing changes.
+- No existing click/navigation behavior is prevented by V222.
+
+QA
+- V222 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V222 CSS/JS injection: pass.
+- V222 loads after V221: pass.
+- Horizontal rail edge-state controller: present.
+- Deep-link highlighting controller: present.
+- Collapsed-parent reveal support: present.
+- Existing navigation is not preventDefault-intercepted: verified.
+- Reduced-motion support: present.
+
+Files added:
+- assets/district-component-cohesion-v222.css
+- assets/district-component-cohesion-v222.js
+- V222_NOTES.txt
+
+Files updated:
+- server/src/app.js

@@ -1,0 +1,291 @@
+/* Scarborough / Mt. Grace District Office — V222
+   Component cohesion + deep-link orientation + horizontal overflow cues.
+   Additive public-side polish; no information or staff functionality removed. */
+
+:root{
+  --v222-radius-lg:24px;
+  --v222-radius-md:16px;
+  --v222-radius-sm:11px;
+  --v222-line:rgba(11,46,72,.11);
+  --v222-shadow-soft:0 10px 28px rgba(7,35,55,.06);
+  --v222-shadow-hover:0 17px 38px rgba(7,35,55,.10);
+  --v222-brass:#a78f5e;
+  --v222-brass-soft:#d8c7a0;
+  --v222-navy:#0b3553;
+}
+
+/* TYPOGRAPHIC RHYTHM
+   Keep newer public components from drifting into different line lengths and weights. */
+body.v203-focused-view :is(
+  .v203-page-header h1,
+  .v207-identity-copy strong,
+  .v208-support-head strong,
+  .v209-more-head strong,
+  .v213-feed-heading h2,
+  .v215-thread-head strong
+){
+  text-wrap:balance;
+}
+body.v203-focused-view :is(
+  .v203-intro,
+  .v207-identity-copy p,
+  .v208-support-head p,
+  .v209-more-head p,
+  .v213-feed-heading p
+){
+  max-width:72ch;
+}
+body.v203-focused-view .v204-content-card :is(p,li){
+  text-wrap:pretty;
+}
+
+/* COMPONENT MATERIAL
+   Keep border/shadow/radius language consistent across the additive public system. */
+body.v203-focused-view :is(
+  .v207-identity-strip,
+  .v208-support-hub,
+  .v209-more-hub,
+  .v213-feed-shell
+){
+  border-radius:var(--v222-radius-lg)!important;
+}
+body.v203-focused-view :is(
+  .v204-action-card,
+  .v208-support-toggle,
+  .v209-more-btn
+){
+  border-radius:var(--v222-radius-md)!important;
+}
+body.v203-focused-view :is(
+  .v204-action-card,
+  .v208-support-toggle,
+  .v209-more-btn,
+  .v203-page-end a,
+  .v213-item-action,
+  .v213-feed-filter
+){
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    background-color .16s ease,
+    box-shadow .16s ease,
+    color .16s ease!important;
+}
+body.v203-focused-view :is(
+  .v204-action-card,
+  .v208-support-toggle,
+  .v209-more-btn
+):focus-visible{
+  outline:2px solid var(--v222-brass)!important;
+  outline-offset:3px!important;
+}
+
+/* Equal visual weight for action decks on desktop/tablet. */
+body.v203-focused-view .v204-action-deck{
+  align-items:stretch;
+}
+body.v203-focused-view .v204-action-card{
+  height:100%;
+  display:flex!important;
+  flex-direction:column;
+}
+body.v203-focused-view .v204-action-card>span:not(.v204-action-icon){
+  flex:0 0 auto;
+}
+body.v203-focused-view .v204-action-card:after{
+  margin-top:auto;
+}
+
+/* Pill controls and section tabs share one density. */
+body.v203-focused-view :is(
+  .v203-page-tab,
+  .v207-principle,
+  .v208-priority-ribbon,
+  .v209-primary-note,
+  .v213-feed-filter
+){
+  min-height:34px;
+}
+body.v203-focused-view .v207-principle{
+  display:inline-flex;
+  align-items:center;
+}
+
+/* Page-end close should feel like part of the focused route, not a separate old footer strip. */
+body.v203-focused-view .v203-page-end{
+  position:relative;
+  overflow:hidden;
+}
+body.v203-focused-view .v203-page-end:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 92% 0,rgba(167,143,94,.045),transparent 10rem),
+    linear-gradient(90deg,rgba(23,79,116,.018),transparent 45%);
+  pointer-events:none;
+}
+body.v203-focused-view .v203-page-end .v203-wrap{
+  position:relative;
+  z-index:1;
+}
+body.v203-focused-view .v203-page-end a{
+  min-height:40px;
+  padding-inline:15px;
+}
+
+/* FORM/UI cohesion */
+#district-enquiry-form :is(input,select,textarea){
+  border-radius:11px!important;
+}
+#district-enquiry-form textarea{
+  min-height:150px;
+  resize:vertical;
+}
+#district-enquiry-form .btn-send{
+  min-height:44px;
+  border-radius:12px!important;
+}
+
+/* Feed controls should retain stable tap/click targets. */
+.v213-feed-filter,
+.v213-item-action,
+.v215-thread-toggle{
+  min-height:34px;
+}
+.v213-feed-search input{
+  min-height:38px;
+}
+
+/* DEEP-LINK ORIENTATION
+   When a direct link lands inside a long route, briefly mark the actual destination. */
+.v222-deep-link-target{
+  position:relative!important;
+  scroll-margin-top:104px!important;
+  outline:2px solid rgba(167,143,94,.78)!important;
+  outline-offset:4px!important;
+  animation:v222-target-pulse 2.4s ease both;
+}
+@keyframes v222-target-pulse{
+  0%{outline-color:transparent;box-shadow:none}
+  14%{outline-color:rgba(167,143,94,.82);box-shadow:0 0 0 5px rgba(167,143,94,.08),0 12px 32px rgba(7,35,55,.10)}
+  72%{outline-color:rgba(167,143,94,.68);box-shadow:0 0 0 4px rgba(167,143,94,.05)}
+  100%{outline-color:transparent;box-shadow:none}
+}
+
+/* HORIZONTAL OVERFLOW CUES
+   JS sets data-v222-edges so swipeable rails signal that more content exists. */
+[data-v222-edges="right"]{
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(90deg,#000 0%,#000 92%,transparent 100%);
+}
+[data-v222-edges="left"]{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 100%);
+}
+[data-v222-edges="both"]{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+}
+[data-v222-edges="none"]{
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+
+/* Keep overflow indicators subtle in dark mode. */
+body.v112-dark .v222-deep-link-target{
+  outline-color:rgba(216,199,160,.82)!important;
+}
+
+/* Desktop/laptop refinement */
+@media(min-width:901px){
+  body.v203-focused-view .v204-action-card{
+    min-height:122px;
+  }
+  body.v203-focused-view .v204-action-card strong{
+    min-height:2.35em;
+    display:flex;
+    align-items:flex-end;
+  }
+
+  body.v203-focused-view .v208-support-list,
+  body.v203-focused-view .v209-more-list{
+    align-items:stretch;
+  }
+  body.v203-focused-view .v208-support-toggle,
+  body.v203-focused-view .v209-more-btn{
+    height:100%;
+  }
+
+  @media(hover:hover) and (pointer:fine){
+    body.v203-focused-view .v204-action-card:hover,
+    body.v203-focused-view .v208-support-toggle:hover,
+    body.v203-focused-view .v209-more-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--v222-shadow-hover);
+    }
+    body.v203-focused-view .v203-page-end a:hover{
+      transform:translateY(-1px);
+    }
+  }
+}
+
+/* Tablet: keep two-column utility cards aligned without becoming oversized. */
+@media(min-width:701px) and (max-width:1160px){
+  body.v203-focused-view .v204-action-card{
+    min-height:112px!important;
+  }
+  body.v203-focused-view .v208-support-toggle,
+  body.v203-focused-view .v209-more-btn{
+    min-height:60px;
+  }
+}
+
+/* Mobile cohesion */
+@media(max-width:700px){
+  body.v203-focused-view :is(
+    .v207-identity-strip,
+    .v208-support-hub,
+    .v209-more-hub,
+    .v213-feed-shell
+  ){
+    border-radius:18px!important;
+  }
+
+  body.v203-focused-view .v204-action-card{
+    border-radius:15px!important;
+  }
+
+  body.v203-focused-view .v203-page-end .v203-wrap{
+    align-items:flex-start!important;
+  }
+  body.v203-focused-view .v203-page-end-actions{
+    width:100%;
+  }
+  body.v203-focused-view .v203-page-end-actions a{
+    flex:1 1 140px;
+    justify-content:center;
+  }
+
+  #district-enquiry-form textarea{
+    min-height:130px;
+  }
+
+}
+
+/* No decorative target pulse when motion is reduced. The destination still receives an outline. */
+@media(prefers-reduced-motion:reduce){
+  body.v203-focused-view :is(
+    .v204-action-card,
+    .v208-support-toggle,
+    .v209-more-btn,
+    .v203-page-end a,
+    .v213-item-action,
+    .v213-feed-filter
+  ){transition:none!important}
+
+  .v222-deep-link-target{
+    animation:none!important;
+    outline-color:rgba(167,143,94,.78)!important;
+  }
+}
