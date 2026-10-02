@@ -1,0 +1,463 @@
+/* Scarborough / Mt. Grace District Office — V227 Living District Pulse
+   Surfaces the newest Published + Verified public records relevant to each focused
+   route. This layer reads the existing public content endpoint only. */
+
+:root{
+  --v227-navy:#0b3553;
+  --v227-blue:#174f74;
+  --v227-teal:#2b7569;
+  --v227-brass:#a78f5e;
+  --v227-brass-soft:#d8c7a0;
+  --v227-line:rgba(11,46,72,.10);
+  --v227-paper:#f8fbfc;
+}
+
+.v227-pulse{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--v227-line);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 96% 3%,rgba(216,199,160,.07),transparent 12rem),
+    radial-gradient(circle at 1% 100%,rgba(23,79,116,.055),transparent 14rem),
+    linear-gradient(155deg,#fff,#f5f9fa);
+  box-shadow:0 11px 28px rgba(7,35,55,.055);
+}
+.v227-pulse:before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,#a78f5e,#174f74 74%,transparent);
+}
+.v227-pulse-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding:15px 16px 12px 19px;
+  border-bottom:1px solid rgba(11,46,72,.075);
+}
+.v227-pulse-title-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  min-width:0;
+}
+.v227-live-dot{
+  flex:0 0 10px;
+  width:10px;height:10px;
+  margin-top:4px;
+  border-radius:50%;
+  background:#2f756a;
+  box-shadow:0 0 0 5px rgba(47,117,106,.08);
+}
+.v227-live-dot.is-refreshing{
+  animation:v227-live-pulse 1s ease-in-out infinite;
+}
+@keyframes v227-live-pulse{
+  0%,100%{opacity:.45;transform:scale(.86)}
+  50%{opacity:1;transform:scale(1)}
+}
+.v227-pulse-copy{
+  min-width:0;
+}
+.v227-pulse-copy small{
+  display:block;
+  margin-bottom:4px;
+  color:#8b7448;
+  font:900 6.5px/1 system-ui;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.v227-pulse-copy strong{
+  display:block;
+  color:#123f59;
+  font:600 19px/1.15 Georgia,"Times New Roman",serif;
+  text-wrap:balance;
+}
+.v227-pulse-copy span{
+  display:block;
+  max-width:680px;
+  margin-top:4px;
+  color:#6f8590;
+  font:650 8.5px/1.45 system-ui;
+}
+.v227-pulse-head-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+}
+.v227-freshness{
+  min-height:29px;
+  display:inline-flex;
+  align-items:center;
+  padding:0 8px;
+  border:1px solid rgba(47,117,106,.15);
+  border-radius:999px;
+  background:#eef7f4;
+  color:#3d746a;
+  font:850 6.5px/1 system-ui;
+  white-space:nowrap;
+}
+.v227-refresh{
+  width:31px;height:31px;
+  display:grid;place-items:center;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:10px;
+  background:#fff;
+  color:#607b88;
+  cursor:pointer;
+  font:850 12px/1 system-ui;
+}
+.v227-refresh:hover,
+.v227-refresh:focus-visible{
+  border-color:rgba(167,143,94,.35);
+  color:#0b3553;
+  background:#faf7ef;
+  outline:none;
+}
+.v227-refresh.is-refreshing{
+  cursor:wait;
+}
+.v227-refresh.is-refreshing span{
+  display:inline-block;
+  animation:v227-spin .75s linear infinite;
+}
+@keyframes v227-spin{to{transform:rotate(360deg)}}
+
+.v227-pulse-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+}
+.v227-pulse-item{
+  min-width:0;
+  padding:13px 14px 14px 16px;
+  border-right:1px solid rgba(11,46,72,.07);
+}
+.v227-pulse-item:last-child{
+  border-right:0;
+}
+.v227-item-top{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:5px;
+  min-height:18px;
+}
+.v227-item-type,
+.v227-item-status{
+  display:inline-flex;
+  align-items:center;
+  min-height:18px;
+  padding:0 6px;
+  border-radius:999px;
+  font:900 5.9px/1 system-ui;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.v227-item-type{
+  background:#edf4f7;
+  color:#174f74;
+}
+.v227-item-status{
+  background:#f7f3e8;
+  color:#806b3e;
+}
+.v227-item-status[data-tone="confirmed"]{
+  background:#edf7f4;
+  color:#2b6e63;
+}
+.v227-item-status[data-tone="followup"]{
+  background:#f7f0ed;
+  color:#805e50;
+}
+.v227-item-status[data-tone="development"]{
+  background:#f1f0f6;
+  color:#66587b;
+}
+.v227-item-time{
+  margin-left:auto;
+  color:#8a9da6;
+  font:750 6.5px/1 system-ui;
+  white-space:nowrap;
+}
+.v227-pulse-item h3{
+  margin:9px 0 0;
+  color:#123f59;
+  font:850 10.5px/1.3 system-ui;
+}
+.v227-pulse-item p{
+  margin:5px 0 0;
+  color:#6b828d;
+  font:650 8px/1.48 system-ui;
+}
+.v227-progress-note{
+  display:flex;
+  align-items:flex-start;
+  gap:6px;
+  margin-top:7px;
+  padding:7px 8px;
+  border-left:2px solid #a78f5e;
+  border-radius:0 8px 8px 0;
+  background:#faf7ef;
+  color:#6e765f;
+  font:700 7.5px/1.4 system-ui;
+}
+.v227-progress-note strong{
+  color:#806b3e;
+  font-size:7.5px;
+}
+.v227-item-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.v227-item-actions a,
+.v227-item-actions button{
+  min-height:30px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  padding:0 8px;
+  border:1px solid rgba(11,46,72,.09);
+  border-radius:9px;
+  background:#f7fafb;
+  color:#174f74;
+  text-decoration:none;
+  cursor:pointer;
+  font:850 6.8px/1 system-ui;
+}
+.v227-item-actions a:hover,
+.v227-item-actions a:focus-visible,
+.v227-item-actions button:hover,
+.v227-item-actions button:focus-visible{
+  border-color:rgba(167,143,94,.34);
+  background:#faf7ef;
+  color:#0b3553;
+  outline:none;
+}
+.v227-pulse-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:38px;
+  padding:7px 14px 7px 16px;
+  border-top:1px solid rgba(11,46,72,.07);
+  background:rgba(247,250,251,.68);
+}
+.v227-pulse-foot span{
+  color:#7d919a;
+  font:700 7px/1.35 system-ui;
+}
+.v227-pulse-foot a{
+  color:#174f74;
+  text-decoration:none;
+  font:850 7.2px/1 system-ui;
+}
+.v227-pulse-foot a:hover,
+.v227-pulse-foot a:focus-visible{
+  color:#8b7448;
+  text-decoration:underline;
+  outline:none;
+}
+
+.v227-pulse.is-empty,
+.v227-pulse.is-error{
+  display:none;
+}
+
+/* Dark mode */
+body.v112-dark .v227-pulse{
+  border-color:rgba(255,255,255,.09);
+  background:
+    radial-gradient(circle at 96% 3%,rgba(216,199,160,.055),transparent 12rem),
+    radial-gradient(circle at 1% 100%,rgba(23,79,116,.08),transparent 14rem),
+    linear-gradient(155deg,#0a2638,#102f42);
+  box-shadow:0 14px 34px rgba(0,0,0,.20);
+}
+body.v112-dark .v227-pulse-head,
+body.v112-dark .v227-pulse-foot{
+  border-color:rgba(255,255,255,.07);
+}
+body.v112-dark .v227-pulse-copy small{color:#dfc98f}
+body.v112-dark .v227-pulse-copy strong,
+body.v112-dark .v227-pulse-item h3{color:#fff}
+body.v112-dark .v227-pulse-copy span,
+body.v112-dark .v227-pulse-item p{color:#adc2cc}
+body.v112-dark .v227-freshness{
+  border-color:rgba(83,162,143,.18);
+  background:#163b35;
+  color:#a8d4c8;
+}
+body.v112-dark .v227-refresh{
+  border-color:rgba(255,255,255,.08);
+  background:#123247;
+  color:#b8cad2;
+}
+body.v112-dark .v227-pulse-item{
+  border-color:rgba(255,255,255,.065);
+}
+body.v112-dark .v227-item-type{
+  background:#173a4e;
+  color:#c6d9e2;
+}
+body.v112-dark .v227-item-status{
+  background:#3a372c;
+  color:#dfce9f;
+}
+body.v112-dark .v227-item-status[data-tone="confirmed"]{
+  background:#173b35;
+  color:#a9d8ca;
+}
+body.v112-dark .v227-item-status[data-tone="followup"]{
+  background:#3b302d;
+  color:#d8b8aa;
+}
+body.v112-dark .v227-item-status[data-tone="development"]{
+  background:#302f40;
+  color:#c6bfda;
+}
+body.v112-dark .v227-item-time{color:#93aab5}
+body.v112-dark .v227-progress-note{
+  border-left-color:#d8c7a0;
+  background:#2a332f;
+  color:#c3cdb9;
+}
+body.v112-dark .v227-progress-note strong{color:#e0cf9f}
+body.v112-dark .v227-item-actions a,
+body.v112-dark .v227-item-actions button{
+  border-color:rgba(255,255,255,.08);
+  background:#123247;
+  color:#d7e4e9;
+}
+body.v112-dark .v227-item-actions a:hover,
+body.v112-dark .v227-item-actions button:hover{
+  border-color:rgba(216,199,160,.22);
+  background:#173a4e;
+  color:#fff;
+}
+body.v112-dark .v227-pulse-foot{
+  background:rgba(5,28,43,.38);
+}
+body.v112-dark .v227-pulse-foot span{color:#9fb5bf}
+body.v112-dark .v227-pulse-foot a{color:#d8c7a0}
+
+/* Tablets */
+@media(max-width:1050px){
+  .v227-pulse-list{
+    grid-template-columns:1fr 1fr;
+  }
+  .v227-pulse-item:nth-child(2){
+    border-right:0;
+  }
+  .v227-pulse-item:nth-child(3){
+    grid-column:1/-1;
+    border-top:1px solid rgba(11,46,72,.07);
+  }
+  body.v112-dark .v227-pulse-item:nth-child(3){
+    border-top-color:rgba(255,255,255,.065);
+  }
+}
+
+/* Phones: use a deliberate swipe rail rather than stacking a long block. */
+@media(max-width:700px){
+  .v227-pulse{
+    border-radius:18px;
+  }
+  .v227-pulse-head{
+    padding:13px 12px 10px 15px;
+  }
+  .v227-pulse-copy strong{
+    font-size:17px;
+  }
+  .v227-pulse-copy span{
+    font-size:8px;
+  }
+  .v227-freshness{
+    display:none;
+  }
+  .v227-pulse-list{
+    display:flex;
+    grid-template-columns:none;
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:12px;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    padding:0 0 3px;
+  }
+  .v227-pulse-list::-webkit-scrollbar{display:none}
+  .v227-pulse-item,
+  .v227-pulse-item:nth-child(3){
+    flex:0 0 min(84vw,320px);
+    grid-column:auto;
+    border-top:0;
+    border-right:1px solid rgba(11,46,72,.07);
+    scroll-snap-align:start;
+  }
+  body.v112-dark .v227-pulse-item,
+  body.v112-dark .v227-pulse-item:nth-child(3){
+    border-top:0;
+    border-right-color:rgba(255,255,255,.065);
+  }
+  .v227-pulse-item:last-child{
+    border-right:0;
+  }
+  .v227-pulse-foot{
+    padding-inline:12px;
+  }
+}
+
+@media(max-width:430px){
+  .v227-pulse-head{
+    align-items:flex-start;
+  }
+  .v227-pulse-head-actions{
+    margin-top:1px;
+  }
+  .v227-pulse-copy span{
+    display:none;
+  }
+}
+
+@media print{
+  .v227-pulse{
+    border:1px solid #aaa!important;
+    box-shadow:none!important;
+    background:#fff!important;
+    break-inside:avoid-page;
+  }
+  .v227-refresh,
+  .v227-item-actions button{
+    display:none!important;
+  }
+  .v227-pulse-list{
+    display:block!important;
+    overflow:visible!important;
+  }
+  .v227-pulse-item,
+  .v227-pulse-item:nth-child(3){
+    border:0!important;
+    border-bottom:1px solid #ccc!important;
+    background:#fff!important;
+  }
+  .v227-pulse-item *{
+    color:#111!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v227-live-dot.is-refreshing,
+  .v227-refresh.is-refreshing span{
+    animation:none!important;
+  }
+}
