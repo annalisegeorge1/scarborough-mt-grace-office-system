@@ -100,7 +100,9 @@ async function sendPublicIndex(req,res,next){
       const hierarchyJsFile=path.join(config.staticRoot,'assets','district-content-hierarchy-v208.js');
       const lightHierarchyCssFile=path.join(config.staticRoot,'assets','district-light-hierarchy-v209.css');
       const lightHierarchyJsFile=path.join(config.staticRoot,'assets','district-light-hierarchy-v209.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer]=await Promise.all([
+      const aestheticCssFile=path.join(config.staticRoot,'assets','district-aesthetic-restoration-v210.css');
+      const aestheticJsFile=path.join(config.staticRoot,'assets','district-aesthetic-restoration-v210.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -116,7 +118,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(hierarchyCssFile),
         fs.readFile(hierarchyJsFile),
         fs.readFile(lightHierarchyCssFile),
-        fs.readFile(lightHierarchyJsFile)
+        fs.readFile(lightHierarchyJsFile),
+        fs.readFile(aestheticCssFile),
+        fs.readFile(aestheticJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -135,6 +139,8 @@ async function sendPublicIndex(req,res,next){
       const hierarchyJs=`<script src="/assets/district-content-hierarchy-v208.js?v=${versionFor(hierarchyJsBuffer)}" defer></script>`;
       const lightHierarchyCss=`<link rel="stylesheet" href="/assets/district-light-hierarchy-v209.css?v=${versionFor(lightHierarchyCssBuffer)}">`;
       const lightHierarchyJs=`<script src="/assets/district-light-hierarchy-v209.js?v=${versionFor(lightHierarchyJsBuffer)}" defer></script>`;
+      const aestheticCss=`<link rel="stylesheet" href="/assets/district-aesthetic-restoration-v210.css?v=${versionFor(aestheticCssBuffer)}">`;
+      const aestheticJs=`<script src="/assets/district-aesthetic-restoration-v210.js?v=${versionFor(aestheticJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -159,6 +165,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-light-hierarchy-v209.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,lightHierarchyCss+'</head>'):lightHierarchyCss+html;
       }
+      if(!html.includes('/assets/district-aesthetic-restoration-v210.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,aestheticCss+'</head>'):aestheticCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -182,6 +191,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-light-hierarchy-v209.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,lightHierarchyJs+'</body>'):html+lightHierarchyJs;
+      }
+      if(!html.includes('/assets/district-aesthetic-restoration-v210.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,aestheticJs+'</body>'):html+aestheticJs;
       }
       cachedPublicIndex=html;
     }

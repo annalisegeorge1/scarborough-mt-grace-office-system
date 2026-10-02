@@ -1,0 +1,46 @@
+Scarborough / Mt. Grace District Office — V210
+
+AESTHETIC RESTORATION
+
+V210 restores more of the visual language that made the earlier public site feel distinctive, while preserving the clearer V202–V209 information architecture.
+
+Restored visual ideas:
+- Deep navy editorial panels and layered civic gradients.
+- Georgia/serif emphasis for important headings and action titles.
+- Concentric civic rings and seal-like medallions.
+- Fine constellation/orbit linework.
+- Restrained metallic/brass details instead of bright yellow accents.
+- Layered radial backgrounds and subtle paper-like surfaces.
+- Stronger image/showcase framing.
+- More deliberate visual rhythm between large content blocks.
+- A stronger connection between the focused pages and the original public homepage aesthetic.
+
+Focused-page changes:
+- All focused-page heroes return to a unified navy/blue District Office foundation.
+- Route identities remain visible through accent details rather than replacing the core brand with unrelated full-page colours.
+- Route identity initials are restyled as circular civic medallions.
+- Quick-action cards gain layered materials, serif labels and fine metallic rules.
+- Content cards gain atmospheric radial layers and decorative constellation ornaments.
+- Original v181 constellation signatures are restored to a more visible level after being heavily muted in V204.
+- Sticky page navigation gains deeper navy framing and subtle civic-ring detailing.
+- V208/V209 expandable information panels are visually integrated into the same editorial language.
+- Gallery/showcase areas regain a darker, more dramatic framed presentation.
+- Small editorial dividers, folio numbers and an SMG summary seal improve visual continuity without changing content.
+
+Design restraint:
+- Metallic details use muted brass/champagne tones rather than strong yellow.
+- Decorative ornaments disappear or simplify on small screens.
+- Existing page structure, hierarchy, deep links, enquiry logic, staff authentication and public content remain unchanged.
+
+QA:
+- V210 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V210 CSS/JS injection: pass.
+- V210 loads after V209 so hierarchy changes are complete before aesthetic ornaments are added.
+
+Files added:
+- assets/district-aesthetic-restoration-v210.css
+- assets/district-aesthetic-restoration-v210.js
+
+Files updated:
+- server/src/app.js

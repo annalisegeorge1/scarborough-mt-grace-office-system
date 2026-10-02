@@ -1,0 +1,456 @@
+/* Scarborough / Mt. Grace District Office — V210 aesthetic restoration
+   Restores the site's earlier civic/editorial language: navy depth, serif hierarchy,
+   restrained metallic detail, constellation linework, concentric seals and layered atmospheres. */
+
+body.v203-focused-view{
+  --v210-navy:#0a2b44;
+  --v210-navy-2:#0f3c5a;
+  --v210-blue:#174f74;
+  --v210-paper:#fbfcfc;
+  --v210-paper-2:#f3f7f8;
+  --v210-brass:#a78f5e;
+  --v210-brass-soft:#d8c7a0;
+  --v210-line:rgba(11,46,72,.12);
+  --v210-shadow:0 18px 46px rgba(7,35,55,.085);
+  background:
+    radial-gradient(circle at 12% 4%,rgba(23,79,116,.035),transparent 18rem),
+    linear-gradient(180deg,#f7fafb 0%,#fff 34%,#f8fbfc 100%);
+}
+
+/* Bring all focused headers back to the core civic palette.
+   Route identity stays in the accent details rather than replacing the brand. */
+body.v203-focused-view .v203-page-header{
+  background:
+    radial-gradient(circle at 82% 18%,rgba(var(--v207-accent-rgb),.16),transparent 17rem),
+    radial-gradient(circle at 12% 84%,rgba(216,199,160,.08),transparent 15rem),
+    linear-gradient(118deg,#071f33 0%,#0b3553 48%,#174f74 100%)!important;
+  border-bottom:1px solid rgba(216,199,160,.18);
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.04);
+}
+body.v203-focused-view .v203-page-header:before{
+  width:470px;height:470px;
+  border-color:rgba(216,199,160,.12);
+  box-shadow:
+    0 0 0 42px rgba(255,255,255,.025),
+    0 0 0 84px rgba(216,199,160,.018),
+    0 0 0 126px rgba(255,255,255,.012);
+}
+body.v203-focused-view .v203-page-header:after{
+  content:"";
+  position:absolute;
+  left:-70px;bottom:-120px;
+  width:250px;height:250px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.09);
+  box-shadow:0 0 0 28px rgba(255,255,255,.018),0 0 0 58px rgba(216,199,160,.012);
+  pointer-events:none;
+  z-index:-1;
+}
+body.v203-focused-view .v203-page-header h1{
+  text-shadow:0 8px 28px rgba(0,0,0,.13);
+}
+body.v203-focused-view .v203-eyebrow{
+  color:#d8c99f;
+}
+body.v203-focused-view .v207-header-badge{
+  border-color:rgba(216,199,160,.24);
+  background:rgba(7,31,51,.18);
+  color:#f5f0e3;
+}
+body.v203-focused-view .v207-header-dot{
+  background:#d8c7a0;
+  box-shadow:0 0 0 4px rgba(216,199,160,.10);
+}
+body.v203-focused-view .v203-page-tab{
+  border-color:rgba(216,199,160,.20);
+  background:rgba(255,255,255,.065);
+}
+body.v203-focused-view .v203-page-tab:hover,
+body.v203-focused-view .v203-page-tab:focus-visible{
+  background:#f8f5ed;
+  color:#0b3553;
+}
+
+/* Restore the civic-seal feeling to the route identity band. */
+body.v203-focused-view .v207-identity-strip{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border:1px solid rgba(11,46,72,.11);
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 92% 18%,rgba(167,143,94,.09),transparent 12rem),
+    radial-gradient(circle at 14% 92%,rgba(var(--v207-accent-rgb),.055),transparent 14rem),
+    linear-gradient(145deg,rgba(255,255,255,.98),rgba(244,248,249,.94));
+  box-shadow:0 14px 36px rgba(7,35,55,.07),inset 0 0 0 1px rgba(255,255,255,.78);
+  padding:20px 22px;
+}
+body.v203-focused-view .v207-identity-strip:before{
+  width:3px;
+  background:linear-gradient(180deg,var(--v210-brass),var(--v207-accent),transparent 88%);
+}
+body.v203-focused-view .v207-identity-strip:after{
+  content:"";
+  position:absolute;
+  right:-72px;top:-88px;
+  width:210px;height:210px;border-radius:50%;
+  border:1px solid rgba(11,46,72,.055);
+  box-shadow:0 0 0 26px rgba(167,143,94,.018),0 0 0 53px rgba(23,79,116,.012);
+  z-index:-1;
+}
+body.v203-focused-view .v207-identity-mark{
+  position:relative;
+  width:52px;height:52px;flex:0 0 52px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#23658c 0%,#0b3553 68%);
+  color:#f8f4e8;
+  border:1px solid rgba(167,143,94,.7);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.94),
+    0 0 0 5px rgba(167,143,94,.34),
+    0 10px 24px rgba(7,35,55,.14);
+}
+body.v203-focused-view .v207-identity-mark:before{
+  content:"";
+  position:absolute;inset:5px;border-radius:50%;
+  border:1px dashed rgba(216,199,160,.56);
+}
+body.v203-focused-view .v207-identity-copy small{
+  color:#8c7448;
+}
+body.v203-focused-view .v207-identity-copy strong{
+  color:#0b3553;
+  font-size:18px;
+}
+body.v203-focused-view .v207-principle{
+  border-color:rgba(167,143,94,.23);
+  background:rgba(255,255,255,.76);
+  color:#5f6f75;
+}
+
+/* The main page frame feels like an editorial civic publication, not a dashboard shell. */
+body.v203-focused-view .v204-focus-shell{
+  position:relative;
+}
+body.v203-focused-view .v204-main-column{
+  position:relative;
+  gap:26px;
+}
+body.v203-focused-view .v204-main-column:before{
+  content:"";
+  position:absolute;
+  left:-14px;top:72px;bottom:34px;
+  width:1px;
+  background:linear-gradient(180deg,transparent,rgba(167,143,94,.24) 8%,rgba(23,79,116,.14) 52%,transparent 96%);
+  pointer-events:none;
+}
+body.v203-focused-view .v204-main-column:after{
+  content:"";
+  position:absolute;
+  left:-18px;top:144px;
+  width:9px;height:9px;border-radius:50%;
+  background:#fff;
+  border:2px solid rgba(167,143,94,.58);
+  box-shadow:0 0 0 4px rgba(167,143,94,.08);
+  pointer-events:none;
+}
+
+/* Quick actions: retain utility but recover material depth and typographic elegance. */
+body.v203-focused-view .v204-action-card{
+  min-height:124px;
+  border:1px solid rgba(11,46,72,.10);
+  border-top:1px solid rgba(167,143,94,.30);
+  border-radius:19px;
+  background:
+    radial-gradient(circle at 92% 14%,rgba(167,143,94,.07),transparent 6rem),
+    linear-gradient(150deg,#fff,#f4f8f9);
+  box-shadow:0 11px 27px rgba(7,35,55,.06);
+}
+body.v203-focused-view .v204-action-card:before{
+  content:"";
+  position:absolute;
+  left:16px;right:16px;top:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--v207-accent),rgba(167,143,94,.55),transparent);
+  opacity:.68;
+}
+body.v203-focused-view .v204-action-icon{
+  width:38px;height:38px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#fff,var(--v207-accent-soft));
+  border:1px solid rgba(167,143,94,.24);
+  color:var(--v207-accent);
+  box-shadow:0 6px 14px rgba(7,35,55,.05);
+}
+body.v203-focused-view .v204-action-card strong{
+  font:600 13px/1.2 Georgia,"Times New Roman",serif;
+  color:#0f3d59;
+}
+body.v203-focused-view .v204-action-card span:not(.v204-action-icon){
+  color:#6e838d;
+}
+
+/* Content panels receive layered paper, rings and a lighter card treatment. */
+body.v203-focused-view .v204-content-card{
+  position:relative!important;
+  isolation:isolate;
+  border:1px solid rgba(11,46,72,.10)!important;
+  border-radius:27px!important;
+  background-color:#fff;
+  box-shadow:var(--v210-shadow);
+}
+body.v203-focused-view .v204-content-card:nth-of-type(even){
+  background-image:
+    radial-gradient(circle at 94% 9%,rgba(167,143,94,.055),transparent 11rem),
+    linear-gradient(155deg,rgba(255,255,255,.98),rgba(246,249,250,.95));
+}
+body.v203-focused-view .v204-content-card:nth-of-type(odd){
+  background-image:
+    radial-gradient(circle at 7% 95%,rgba(23,79,116,.035),transparent 12rem),
+    linear-gradient(155deg,rgba(255,255,255,.99),rgba(249,250,250,.96));
+}
+body.v203-focused-view .v204-content-card:after{
+  width:2px;
+  background:linear-gradient(180deg,var(--v210-brass),rgba(var(--v207-accent-rgb),.48),transparent 56%);
+  opacity:.72;
+}
+body.v203-focused-view .v204-section-chip{
+  top:17px;right:17px;
+  border:1px solid rgba(167,143,94,.18);
+  background:rgba(251,249,243,.9);
+  color:#76623f;
+  letter-spacing:.10em;
+  box-shadow:0 5px 15px rgba(7,35,55,.035);
+}
+body.v203-focused-view .v204-content-card h2,
+body.v203-focused-view .v204-content-card h3{
+  text-wrap:balance;
+}
+
+/* Decorative constellation ornament injected by V210. */
+.v210-card-ornament{
+  position:absolute;
+  right:13px;bottom:11px;
+  width:126px;height:126px;
+  z-index:0;
+  pointer-events:none;
+  opacity:.34;
+  transform:rotate(-7deg);
+}
+.v210-card-ornament .v210-orbit,
+.v210-card-ornament .v210-orbit2,
+.v210-card-ornament .v210-thread{
+  position:absolute;border-radius:50%;
+}
+.v210-card-ornament .v210-orbit{
+  inset:10px;
+  border:1px dashed rgba(167,143,94,.52);
+}
+.v210-card-ornament .v210-orbit2{
+  inset:29px;
+  border:1px solid rgba(23,79,116,.16);
+}
+.v210-card-ornament .v210-thread{
+  left:30px;top:61px;width:70px;height:1px;border-radius:0;
+  background:linear-gradient(90deg,rgba(23,79,116,.14),rgba(167,143,94,.52),rgba(23,79,116,.12));
+  transform:rotate(-29deg);
+}
+.v210-card-ornament .v210-node{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:#a78f5e;
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 0 0 3px rgba(167,143,94,.08);
+}
+.v210-card-ornament .v210-node:nth-child(4){left:27px;top:74px}
+.v210-card-ornament .v210-node:nth-child(5){left:61px;top:53px;width:5px;height:5px}
+.v210-card-ornament .v210-node:nth-child(6){right:24px;top:35px;width:4px;height:4px}
+.v210-card-ornament .v210-node:nth-child(7){right:34px;bottom:29px;width:5px;height:5px}
+body.v203-focused-view .v204-content-card>*:not(.v210-card-ornament){
+  position:relative;
+  z-index:1;
+}
+
+/* Re-amplify the original constellation signatures that V204 deliberately muted. */
+body.v203-focused-view .v204-main-column .v181-constellation-signature{
+  opacity:.48!important;
+  transform:scale(.90) rotate(-4deg)!important;
+  filter:drop-shadow(0 8px 18px rgba(11,53,83,.025));
+}
+body.v203-focused-view .v204-main-column .v181-orbit{
+  stroke:rgba(167,143,94,.30)!important;
+}
+body.v203-focused-view .v204-main-column .v181-line{
+  stroke:rgba(167,143,94,.46)!important;
+}
+body.v203-focused-view .v204-main-column .v181-node{
+  fill:#a78f5e!important;
+}
+
+/* Restore an executive, framed treatment to the sticky navigation. */
+body.v203-focused-view .v204-side-panel{
+  border:1px solid rgba(11,46,72,.11);
+  border-radius:25px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(167,143,94,.055),transparent 9rem),
+    linear-gradient(180deg,#fff,#f5f8f9);
+  box-shadow:0 17px 40px rgba(7,35,55,.085),inset 0 0 0 1px rgba(255,255,255,.75);
+}
+body.v203-focused-view .v204-side-head{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 94% 12%,rgba(216,199,160,.16),transparent 8rem),
+    linear-gradient(145deg,#082941,#0f4263)!important;
+}
+body.v203-focused-view .v204-side-head:after{
+  content:"";
+  position:absolute;
+  right:-45px;bottom:-58px;
+  width:120px;height:120px;border-radius:50%;
+  border:1px solid rgba(216,199,160,.13);
+  box-shadow:0 0 0 18px rgba(255,255,255,.018);
+}
+body.v203-focused-view .v204-side-head small{color:#d8c99f}
+body.v203-focused-view .v204-side-head strong{
+  font-size:23px;
+}
+body.v203-focused-view .v204-side-nav a{
+  border-bottom:1px solid rgba(11,46,72,.045);
+}
+body.v203-focused-view .v204-side-nav a.is-active{
+  background:linear-gradient(90deg,var(--v207-accent-soft),rgba(255,255,255,.85));
+  box-shadow:inset 2px 0 0 var(--v210-brass);
+}
+
+/* V208/V209 support hubs should feel integrated, not like generic accordions. */
+body.v203-focused-view .v208-support-hub,
+body.v203-focused-view .v209-more-hub{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 95% 8%,rgba(167,143,94,.06),transparent 10rem),
+    linear-gradient(150deg,#fff,#f5f8f9);
+  box-shadow:0 14px 34px rgba(7,35,55,.06);
+}
+body.v203-focused-view .v208-support-hub:after,
+body.v203-focused-view .v209-more-hub:after{
+  content:"";
+  position:absolute;
+  right:-65px;top:-76px;
+  width:170px;height:170px;border-radius:50%;
+  border:1px solid rgba(167,143,94,.085);
+  box-shadow:0 0 0 24px rgba(23,79,116,.012);
+  pointer-events:none;
+}
+body.v203-focused-view .v208-support-head strong,
+body.v203-focused-view .v209-more-head strong{
+  color:#0f3d59;
+  font-size:19px;
+}
+body.v203-focused-view .v208-support-toggle,
+body.v203-focused-view .v209-more-btn{
+  background:rgba(255,255,255,.91);
+  border-color:rgba(11,46,72,.09);
+}
+body.v203-focused-view .v208-support-toggle:hover,
+body.v203-focused-view .v209-more-btn:hover{
+  border-color:rgba(167,143,94,.30);
+}
+body.v203-focused-view .v208-toggle-index,
+body.v203-focused-view .v209-more-count{
+  box-shadow:inset 0 0 0 1px rgba(167,143,94,.14);
+}
+
+/* Give gallery/showcase content its original dramatic framing. */
+body.v203-focused-view #gallery.v204-content-card{
+  background:#071f33;
+  border-color:rgba(216,199,160,.16)!important;
+  box-shadow:0 23px 55px rgba(4,28,45,.16);
+}
+body.v203-focused-view #gallery.v204-content-card .v204-section-chip{
+  background:rgba(7,31,51,.70);
+  color:#e8dfc6;
+  border-color:rgba(216,199,160,.20);
+  backdrop-filter:blur(6px);
+}
+
+/* Small editorial divider to break the rhythm of repeated cards. */
+.v210-editorial-break{
+  position:relative;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.v210-editorial-break:before,
+.v210-editorial-break:after{
+  content:"";
+  height:1px;flex:1;
+  background:linear-gradient(90deg,transparent,rgba(11,46,72,.10));
+}
+.v210-editorial-break:after{
+  background:linear-gradient(90deg,rgba(11,46,72,.10),transparent);
+}
+.v210-editorial-break span{
+  width:8px;height:8px;margin:0 12px;border-radius:50%;
+  border:1px solid rgba(167,143,94,.55);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(167,143,94,.06);
+}
+
+/* Mobile retains the atmosphere but removes excess ornament. */
+@media(max-width:900px){
+  body.v203-focused-view .v204-main-column:before,
+  body.v203-focused-view .v204-main-column:after{display:none}
+  .v210-card-ornament{width:104px;height:104px;opacity:.24}
+  body.v203-focused-view .v204-main-column .v181-constellation-signature{opacity:.34!important}
+  body.v203-focused-view .v207-identity-strip{border-radius:21px}
+}
+@media(max-width:650px){
+  body.v203-focused-view .v203-page-header:after{display:none}
+  body.v203-focused-view .v207-identity-strip{
+    padding:15px 16px;
+    background:linear-gradient(145deg,#fff,#f5f8f9);
+  }
+  body.v203-focused-view .v207-identity-mark{
+    width:42px;height:42px;flex-basis:42px;
+  }
+  .v210-card-ornament{display:none}
+  body.v203-focused-view .v204-content-card{border-radius:20px!important}
+  body.v203-focused-view .v204-action-card{min-height:108px}
+  body.v203-focused-view .v204-side-panel{border-radius:18px}
+  .v210-editorial-break{height:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.v203-focused-view .v204-action-card{transition:none!important}
+}
+
+
+/* Small ceremonial details that echo the original civic-seal language. */
+.v210-summary-seal{
+  float:right;
+  width:46px;height:46px;margin:0 0 8px 14px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 34% 28%,#1b5b82,#0a2b44 70%);
+  border:1px solid rgba(216,199,160,.62);
+  box-shadow:0 0 0 4px rgba(255,255,255,.08),inset 0 0 0 5px rgba(255,255,255,.025);
+}
+.v210-summary-seal span{
+  color:#eee6d2;
+  font:900 8px/1 system-ui;
+  letter-spacing:.12em;
+}
+.v210-folio-no{
+  position:absolute;
+  left:17px;bottom:13px;
+  z-index:2;
+  color:rgba(11,46,72,.28);
+  font:850 8px/1 system-ui;
+  letter-spacing:.14em;
+  pointer-events:none;
+}
+body.v203-focused-view #gallery .v210-folio-no{color:rgba(255,255,255,.28)}
+@media(max-width:650px){
+  .v210-summary-seal{display:none}
+  .v210-folio-no{display:none}
+}
