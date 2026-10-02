@@ -1,0 +1,70 @@
+Scarborough / Mt. Grace District Office — V214
+
+FEED PUBLISHING, PINNING & RETURN-VISIT AWARENESS
+
+V214 deepens the District Digital Feed into a real public-information publishing system without removing or replacing the full source sections introduced before V213.
+
+Public feed enhancements:
+- Staff-managed public content can now be matched back to its real public-content record.
+- Featured Activity Hub items appear as PINNED in the District Digital Feed.
+- Pinned items stay at the top of the feed.
+- Published/updated dates from verified public-content records are added where the feed did not already have a date.
+- No date is invented for static content that does not have one.
+- Feed items with managed public-content IDs receive stable permalink URLs using:
+  /updates/?post=<public-content-id>
+  or the equivalent Community route.
+- Opening a permalink highlights and scrolls to the exact feed item.
+- Copy Link and Share use the exact managed-item permalink when one exists.
+- Static items continue using their full section URL.
+
+New-since-last-visit:
+- The browser records the visitor’s most recent District Digital Feed visit locally.
+- On a later visit, managed items published or updated after that timestamp receive a NEW badge.
+- A compact banner reports how many new public items are present.
+- First-time visitors are not told that the entire archive is “new”.
+- This uses browser local storage only; no resident account or personal profile is created.
+
+Staff CMS:
+- Activity Hub editor now includes:
+  “Pin in District Digital Feed — Yes / No”
+- The control maps to the existing public_content.is_featured field.
+- Existing verification and workflow rules still apply.
+- An item must still be Published + Verified before it is public.
+- Managed Activity Hub register now shows whether each record is Pinned or Standard.
+- Editing an existing item restores its current pin state.
+- Clearing the editor resets pin state to No.
+- Built-in Activity Hub overrides can also be featured through the same controlled workflow.
+
+RSS:
+- Adds /api/public/feed.xml.
+- RSS contains only database-managed content that is already Published + Verified and within its publication window.
+- Hidden Activity Hub overrides are excluded.
+- Feed items link to stable public update permalinks.
+- The public HTML advertises the RSS endpoint through a rel="alternate" discovery link.
+- RSS does not expose private cases, resident records, internal notes or unverified drafts.
+
+Information integrity:
+- Full original source sections remain unchanged and available.
+- Pinning changes prominence only; it does not alter wording or status.
+- NEW is based on the record’s real publish/update timestamp.
+- Static legacy content without a managed timestamp is never falsely marked New.
+- Existing status language remains authoritative.
+
+QA:
+- V214 public JavaScript syntax: pass.
+- Server app JavaScript syntax: pass.
+- Public RSS route JavaScript syntax: pass.
+- Staff CMS inline JavaScript syntax: pass.
+- CMS pin control/save wiring: pass.
+- V214 CSS/JS injection: pass.
+- RSS route + HTML discovery injection: pass.
+
+Files added:
+- assets/district-feed-publishing-v214.css
+- assets/district-feed-publishing-v214.js
+- V214_NOTES.txt
+
+Files updated:
+- staff/cms.html
+- server/src/routes/public.js
+- server/src/app.js
