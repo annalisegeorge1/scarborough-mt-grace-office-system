@@ -1,0 +1,226 @@
+/* Scarborough / Mt. Grace District Office — V223
+   Public discovery + print/PDF presentation.
+   Screen behaviour is unchanged; print rules remove interface chrome and preserve content. */
+
+@media print{
+  @page{
+    size:auto;
+    margin:14mm;
+  }
+
+  html,body{
+    background:#fff!important;
+    color:#111!important;
+    max-width:none!important;
+    overflow:visible!important;
+  }
+
+  body{
+    font-family:Georgia,"Times New Roman",serif!important;
+    font-size:10.5pt!important;
+    line-height:1.45!important;
+  }
+
+  /* Remove controls and navigation that have no value on paper/PDF. */
+  nav[aria-label="Site navigation"],
+  .v125-mobile-nav-shell,
+  .v202-sidebar-root,
+  .v202-menu-fab,
+  .v7-mobile-dock,
+  .v8-accessibility,
+  .v219-access-trigger,
+  .v203-page-tabs,
+  .v204-side-panel,
+  .v204-action-deck,
+  .v208-support-head .v208-collapse-all,
+  .v203-page-end,
+  .v213-feed-tools,
+  .v213-feed-foot,
+  .v213-item-actions,
+  .v214-feed-banner,
+  .v215-thread-toggle,
+  .v212-skip-link{
+    display:none!important;
+  }
+
+  /* Keep the institutional identity, but remove decorative backgrounds. */
+  .topbar,
+  .identity-banner,
+  .v203-page-header,
+  footer{
+    background:#fff!important;
+    color:#111!important;
+    box-shadow:none!important;
+    border-color:#999!important;
+  }
+
+  .topbar *,
+  .identity-banner *,
+  .v203-page-header *,
+  footer *{
+    color:#111!important;
+    text-shadow:none!important;
+  }
+
+  .identity-banner{
+    min-height:0!important;
+    border-bottom:1px solid #777!important;
+  }
+
+  .identity-inner{
+    min-height:0!important;
+    padding:8mm 0 5mm!important;
+  }
+
+  .identity-banner .brand img{
+    width:54px!important;
+  }
+
+  .v203-page-header{
+    padding:7mm 0 5mm!important;
+  }
+
+  .v203-page-header:before,
+  .v203-page-header:after,
+  .v207-identity-strip:before,
+  .v207-identity-strip:after,
+  footer:before{
+    display:none!important;
+  }
+
+  /* Print the actual page content at full width. */
+  body.v203-focused-view .v204-focus-shell{
+    display:block!important;
+    max-width:none!important;
+    padding:0!important;
+    margin:0!important;
+  }
+
+  body.v203-focused-view .v204-main-column{
+    display:block!important;
+  }
+
+  body.v203-focused-view .v204-content-card,
+  body.v203-focused-view .v207-identity-strip,
+  body.v203-focused-view .v208-support-hub,
+  body.v203-focused-view .v209-more-hub,
+  body.v203-focused-view .v213-feed-shell,
+  .v215-thread{
+    break-inside:avoid-page;
+    border:1px solid #bbb!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    color:#111!important;
+    margin:0 0 7mm!important;
+  }
+
+  body.v203-focused-view .v204-content-card *,
+  body.v203-focused-view .v207-identity-strip *,
+  body.v203-focused-view .v208-support-hub *,
+  body.v203-focused-view .v209-more-hub *,
+  body.v203-focused-view .v213-feed-shell *,
+  .v215-thread *{
+    color:#111!important;
+    text-shadow:none!important;
+  }
+
+  /* Print all supporting information, even if it is collapsed on screen. */
+  body.v203-focused-view .v208-secondary.v208-collapsed,
+  body.v203-focused-view .v209-secondary.v209-collapsed,
+  body.v203-focused-view .v208-secondary,
+  body.v203-focused-view .v209-secondary{
+    display:block!important;
+    max-height:none!important;
+    height:auto!important;
+    opacity:1!important;
+    visibility:visible!important;
+    overflow:visible!important;
+  }
+
+  body.v203-focused-view .v208-support-list,
+  body.v203-focused-view .v209-more-list{
+    display:none!important;
+  }
+
+  /* Feed and progress history become simple readable records. */
+  .v213-feed-item,
+  .v215-thread-entry{
+    break-inside:avoid!important;
+    border-color:#ccc!important;
+  }
+
+  .v213-item-avatar{
+    box-shadow:none!important;
+    border:1px solid #777!important;
+    background:#fff!important;
+    color:#111!important;
+  }
+
+  .v213-feed-list:before,
+  .v215-thread-list:before{
+    background:#999!important;
+  }
+
+  /* Avoid wasting paper on large decorative photography while keeping useful images. */
+  img{
+    max-width:100%!important;
+    height:auto!important;
+    break-inside:avoid!important;
+  }
+
+  #gallery img{
+    max-height:90mm!important;
+    object-fit:contain!important;
+  }
+
+  /* Links remain recognizable without dumping long URLs onto the page. */
+  a{
+    color:#111!important;
+    text-decoration:underline!important;
+  }
+
+  /* Form fields print as blank/value-bearing lines rather than interactive controls. */
+  #district-enquiry-form :is(input,select,textarea){
+    border:1px solid #999!important;
+    background:#fff!important;
+    color:#111!important;
+    box-shadow:none!important;
+  }
+
+  #district-enquiry-form .btn-send,
+  .v220-message-counter{
+    display:none!important;
+  }
+
+  /* Footer becomes a concise office reference block. */
+  footer{
+    page-break-before:auto;
+    padding:6mm 0 0!important;
+  }
+
+  footer .v20-footer-signature,
+  footer .v14-access-note,
+  footer .v10-staff-entry,
+  footer .v88-footer-links,
+  footer .v170-footer-watermark{
+    display:none!important;
+  }
+
+  footer .footer-inner,
+  footer .v6-footer-links{
+    max-width:none!important;
+    margin:0!important;
+    padding:4mm 0!important;
+    border-color:#bbb!important;
+  }
+
+  /* Prevent decorative/interactive animations from influencing print layout. */
+  *,
+  *::before,
+  *::after{
+    animation:none!important;
+    transition:none!important;
+    filter:none!important;
+  }
+}
