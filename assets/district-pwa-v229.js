@@ -124,7 +124,12 @@
     }
 
     if(isIOS&&isSafari){
-      showStatus("On iPhone/iPad: tap Share, then choose “Add to Home Screen”.",{kind:"update",persist:true});
+      showStatus("On iPhone/iPad: tap Share, then choose “Add to Home Screen”.",{
+        kind:"update",
+        persist:true,
+        actionLabel:"Got it",
+        onAction:()=>status.classList.remove("is-visible")
+      });
     }
   }
 
