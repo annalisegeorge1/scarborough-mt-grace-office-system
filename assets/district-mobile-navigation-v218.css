@@ -1,0 +1,175 @@
+/* Scarborough / Mt. Grace District Office — V218 intelligent mobile navigation
+   Improves current-route visibility, section tabs, Explore accordion behaviour and
+   focused-page masthead efficiency without removing any destination or content. */
+
+/* Current route in the horizontal mobile navigation. */
+.v125-mobile-nav-rail button[data-v51-go].v205-route-active,
+.v125-mobile-nav-rail button[data-v51-go][aria-current="page"]{
+  position:relative;
+  background:linear-gradient(180deg,rgba(216,199,160,.16),rgba(255,255,255,.08))!important;
+  border-color:rgba(216,199,160,.72)!important;
+  color:#fff!important;
+  box-shadow:inset 0 0 0 1px rgba(216,199,160,.08),0 5px 14px rgba(0,0,0,.10)!important;
+}
+.v125-mobile-nav-rail button[data-v51-go].v205-route-active::after,
+.v125-mobile-nav-rail button[data-v51-go][aria-current="page"]::after{
+  content:"";
+  position:absolute;
+  left:50%;bottom:3px;
+  width:5px;height:5px;
+  margin-left:-2.5px;
+  border-radius:50%;
+  background:#d8c7a0;
+  box-shadow:0 0 0 3px rgba(216,199,160,.08);
+}
+
+/* Focused-page section tabs become a true horizontal navigation rail. */
+body.v203-focused-view .v203-page-tabs{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-snap-type:x proximity!important;
+  scroll-padding-inline:14px!important;
+  overscroll-behavior-x:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  scrollbar-width:none!important;
+  padding:7px 2px 9px!important;
+}
+body.v203-focused-view .v203-page-tabs::-webkit-scrollbar{display:none!important}
+body.v203-focused-view .v203-page-tab{
+  flex:0 0 auto!important;
+  scroll-snap-align:center!important;
+  min-width:max-content!important;
+  position:relative;
+}
+body.v203-focused-view .v203-page-tab.is-active,
+body.v203-focused-view .v203-page-tab[aria-current="true"]{
+  background:#f7f4ed!important;
+  color:#0b3553!important;
+  border-color:rgba(216,199,160,.52)!important;
+  box-shadow:0 6px 15px rgba(3,22,36,.08)!important;
+}
+body.v203-focused-view .v203-page-tab.is-active::after,
+body.v203-focused-view .v203-page-tab[aria-current="true"]::after{
+  content:"";
+  position:absolute;
+  left:16px;right:16px;bottom:4px;
+  height:1px;
+  background:#a78f5e;
+}
+
+/* Explore drawer: current public area gets a subtle identity cue. */
+.v202-group.v218-current-group>.v202-group-toggle{
+  border-color:rgba(167,143,94,.28)!important;
+}
+.v202-group.v218-current-group>.v202-group-toggle .v202-group-icon{
+  box-shadow:0 0 0 3px rgba(167,143,94,.07)!important;
+}
+.v202-group.v218-current-group>.v202-group-toggle .v202-group-copy strong::after{
+  content:"Current";
+  display:inline-flex;
+  margin-left:7px;
+  padding:3px 5px;
+  border-radius:999px;
+  background:#edf4f7;
+  color:#174f74;
+  font:850 6px/1 system-ui;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  vertical-align:middle;
+}
+
+/* Focused subpages carry the full identity, but mobile does not need such a tall masthead. */
+@media(max-width:900px){
+  body.v203-focused-view .topbar{
+    padding:5px 0!important;
+    font-size:10px!important;
+  }
+  body.v203-focused-view .topbar .wrap{
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:10px!important;
+    padding-inline:14px!important;
+  }
+  body.v203-focused-view .topbar .wrap>span:last-child{
+    font-size:8px!important;
+    letter-spacing:.04em!important;
+    white-space:nowrap;
+  }
+
+  body.v203-focused-view .identity-banner{
+    min-height:102px!important;
+    background-position:62% center!important;
+  }
+  body.v203-focused-view .identity-inner{
+    min-height:102px!important;
+    padding:10px 14px!important;
+  }
+  body.v203-focused-view .identity-banner .brand{
+    gap:10px!important;
+    max-width:none!important;
+  }
+  body.v203-focused-view .identity-banner .brand img{
+    width:56px!important;
+  }
+  body.v203-focused-view .identity-banner .brand-text strong{
+    font-size:.98rem!important;
+    line-height:1.15!important;
+    letter-spacing:.035em!important;
+  }
+  body.v203-focused-view .identity-banner .brand-text span{
+    margin-top:3px!important;
+    font-size:8px!important;
+    line-height:1.2!important;
+    letter-spacing:.16em!important;
+  }
+
+  /* The current area should arrive centered rather than half clipped at the rail edge. */
+  .v125-mobile-nav-rail{
+    scroll-snap-type:x mandatory!important;
+  }
+
+  body.v203-focused-view .v203-page-tabs{
+    margin-top:3px!important;
+    padding-inline:4px!important;
+  }
+}
+
+/* Phones: preserve both topbar messages but allow them to wrap cleanly if necessary. */
+@media(max-width:520px){
+  body.v203-focused-view .topbar .wrap{
+    flex-wrap:wrap!important;
+    row-gap:3px!important;
+  }
+  body.v203-focused-view .topbar .wrap>span:last-child{
+    white-space:normal!important;
+  }
+  body.v203-focused-view .identity-banner{
+    min-height:92px!important;
+  }
+  body.v203-focused-view .identity-inner{
+    min-height:92px!important;
+  }
+  body.v203-focused-view .identity-banner .brand img{
+    width:50px!important;
+  }
+  body.v203-focused-view .identity-banner .brand-text strong{
+    font-size:.88rem!important;
+  }
+  body.v203-focused-view .identity-banner .brand-text span{
+    font-size:7px!important;
+  }
+}
+
+/* Avoid motion for users who request it. */
+@media(prefers-reduced-motion:reduce){
+  .v125-mobile-nav-rail,
+  body.v203-focused-view .v203-page-tabs{
+    scroll-behavior:auto!important;
+  }
+}
