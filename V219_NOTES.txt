@@ -1,0 +1,71 @@
+Scarborough / Mt. Grace District Office — V219
+
+LIVE CONTRAST + ACCESSIBILITY TRAY CORRECTIONS
+
+V219 responds directly to the latest live mobile/tablet screenshots.
+
+1. District Office Today
+- Restores white heading text on the dark card.
+- Makes the “Next regular opening…” line clearly readable.
+- Keeps open/closed status wording unchanged.
+
+2. Activity Hub intro
+- Restores the District Activity Hub title to white.
+- Restores supporting copy to pale blue-white.
+- Restores the eyebrow/status-key contrast.
+- Keeps the existing dark navy civic background and constellation styling.
+
+3. Activity Hub tab cards
+Observed:
+- Latest Notices was readable, but Town Hall / Projects & Follow-up could become white-on-white.
+Correction:
+- All Activity Hub tabs now use their own light card surface with dark navy text.
+- Active tab receives a restrained brass emphasis.
+- On mobile/tablet the tabs become a swipeable horizontal rail instead of compressed columns.
+- No tab or destination is removed.
+
+4. Activity summary/status cards
+- Reinforces readable dark text on the existing light cards.
+- Prevents later global theme rules from causing another contrast regression.
+
+5. Focused-page quick-action icon labels
+- Strengthens icon-chip contrast so TEAM / INFO / CALL / HELP remain readable.
+
+6. Mobile accessibility controls
+Observed:
+- A+ and dark-mode buttons remained permanently visible above the mobile dock and covered content.
+Correction:
+- Existing text-size and dark-mode features are preserved.
+- On <=900px they are now collapsed behind one compact “Aa” control.
+- Tapping Aa reveals the original A+ and dark-mode buttons.
+- The text-size menu still opens with all five existing size choices.
+- Dark mode behaviour is unchanged.
+- Escape closes the tray.
+- Clicking outside closes it when the text-size menu is not open.
+- Desktop controls remain unchanged.
+- Text-size menu is right-aligned on mobile so it stays on-screen.
+
+Preservation:
+- No information removed.
+- No service, form, enquiry, tracker or navigation destination removed.
+- No staff CMS changes.
+- No V215 progress-thread changes.
+- No authentication, database or publishing changes.
+
+QA:
+- V219 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V219 CSS/JS injection: pass.
+- V219 loads after V218: pass.
+- District Office Today selector: present.
+- Activity Hub heading/tab selectors: present.
+- Accessibility tray selector/controller: present.
+
+Files added:
+- assets/district-contrast-accessibility-v219.css
+- assets/district-contrast-accessibility-v219.js
+- V219_NOTES.txt
+
+Files updated:
+- server/src/app.js
