@@ -272,7 +272,9 @@ async function sendPublicIndex(req,res,next){
       const commandCenterJsFile=path.join(config.staticRoot,'assets','district-command-center-v224.js');
       const residentJourneyCssFile=path.join(config.staticRoot,'assets','district-resident-journey-v225.css');
       const residentJourneyJsFile=path.join(config.staticRoot,'assets','district-resident-journey-v225.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer]=await Promise.all([
+      const smartNextStepCssFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.css');
+      const smartNextStepJsFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -317,7 +319,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(commandCenterCssFile),
         fs.readFile(commandCenterJsFile),
         fs.readFile(residentJourneyCssFile),
-        fs.readFile(residentJourneyJsFile)
+        fs.readFile(residentJourneyJsFile),
+        fs.readFile(smartNextStepCssFile),
+        fs.readFile(smartNextStepJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -365,6 +369,8 @@ async function sendPublicIndex(req,res,next){
       const commandCenterJs=`<script src="/assets/district-command-center-v224.js?v=${versionFor(commandCenterJsBuffer)}" defer></script>`;
       const residentJourneyCss=`<link rel="stylesheet" href="/assets/district-resident-journey-v225.css?v=${versionFor(residentJourneyCssBuffer)}">`;
       const residentJourneyJs=`<script src="/assets/district-resident-journey-v225.js?v=${versionFor(residentJourneyJsBuffer)}" defer></script>`;
+      const smartNextStepCss=`<link rel="stylesheet" href="/assets/district-smart-next-step-v226.css?v=${versionFor(smartNextStepCssBuffer)}">`;
+      const smartNextStepJs=`<script src="/assets/district-smart-next-step-v226.js?v=${versionFor(smartNextStepJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -438,6 +444,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-resident-journey-v225.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentJourneyCss+'</head>'):residentJourneyCss+html;
       }
+      if(!html.includes('/assets/district-smart-next-step-v226.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,smartNextStepCss+'</head>'):smartNextStepCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -503,6 +512,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-resident-journey-v225.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,residentJourneyJs+'</body>'):html+residentJourneyJs;
+      }
+      if(!html.includes('/assets/district-smart-next-step-v226.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,smartNextStepJs+'</body>'):html+smartNextStepJs;
       }
       cachedPublicIndex=html;
     }
