@@ -1,0 +1,72 @@
+Scarborough / Mt. Grace District Office — V218
+
+INTELLIGENT MOBILE NAVIGATION
+
+V218 builds on the screenshot-driven V216/V217 fixes by making the mobile navigation system behave more intelligently rather than only looking better.
+
+1. Mobile primary navigation now centers the current area
+- The active Home / Office / Services / Community / Forms / Updates / Contact item is automatically scrolled into the centre of the horizontal navigation rail on load.
+- The rail recentres after viewport changes.
+- The current item receives a clearer muted-brass active marker.
+- Existing previous/next arrow controls and swipe behaviour remain intact.
+
+2. Focused-page tabs now track the section being read
+- The horizontal focused-page tab row now behaves as a proper section navigator.
+- IntersectionObserver watches the visible page sections.
+- As residents scroll, the relevant tab receives an active state.
+- The active tab automatically scrolls toward the centre of the horizontal tab rail.
+- Hash links and direct tab clicks update the active state immediately.
+- Existing section content and deep-link behaviour remain intact.
+
+3. Explore drawer becomes a cleaner mobile accordion
+- At <=900px, only one Explore group remains open at a time when the search box is empty.
+- The group matching the current route opens automatically:
+  /office -> Your District Office
+  /services -> Resident Services
+  /community -> Community
+  /forms -> Forms & Portals
+  /updates -> Updates & Information
+  /contact -> Contact & Enquiries
+- The current group receives a subtle “Current” marker.
+- Searching the drawer can still open multiple matching groups so search is not restricted.
+- All existing child links remain available.
+
+4. Focused-page masthead is more efficient on mobile/tablet
+- The Tobago House of Assembly topbar retains both messages but uses tighter spacing.
+- The District Office identity banner is reduced in height on focused subpages.
+- Logo, office name and People • Community • Opportunity remain present.
+- The homepage keeps its fuller identity treatment.
+- On narrow phones the topbar can wrap cleanly instead of clipping.
+
+5. Focused-page tabs
+- Horizontal overflow is now intentionally swipeable.
+- Scroll snapping is centred rather than leaving the active item clipped at an edge.
+- Scrollbars remain hidden visually while keyboard/touch navigation stays available.
+
+Preservation:
+- No information removed.
+- No public destination removed.
+- No staff CMS changes.
+- No staff workflow changes.
+- No V215 progress thread changes.
+- No forms, enquiries, tracking, authentication, database or publishing changes.
+
+QA:
+- V218 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V218 CSS/JS injection: pass.
+- V218 CSS loads after V217: pass.
+- Current-route centring logic: present.
+- Focused section tracking: present.
+- Explore one-group mobile accordion: present.
+- Current route group indicator: present.
+- Focused mobile masthead compaction: present.
+
+Files added:
+- assets/district-mobile-navigation-v218.css
+- assets/district-mobile-navigation-v218.js
+- V218_NOTES.txt
+
+Files updated:
+- server/src/app.js
