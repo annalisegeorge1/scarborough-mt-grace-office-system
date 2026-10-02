@@ -110,7 +110,9 @@ async function sendPublicIndex(req,res,next){
       const digitalFeedJsFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.js');
       const feedPublishingCssFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.css');
       const feedPublishingJsFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer]=await Promise.all([
+      const progressThreadsCssFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.css');
+      const progressThreadsJsFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -136,7 +138,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(digitalFeedCssFile),
         fs.readFile(digitalFeedJsFile),
         fs.readFile(feedPublishingCssFile),
-        fs.readFile(feedPublishingJsFile)
+        fs.readFile(feedPublishingJsFile),
+        fs.readFile(progressThreadsCssFile),
+        fs.readFile(progressThreadsJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -165,6 +169,8 @@ async function sendPublicIndex(req,res,next){
       const digitalFeedJs=`<script src="/assets/district-digital-feed-v213.js?v=${versionFor(digitalFeedJsBuffer)}" defer></script>`;
       const feedPublishingCss=`<link rel="stylesheet" href="/assets/district-feed-publishing-v214.css?v=${versionFor(feedPublishingCssBuffer)}">`;
       const feedPublishingJs=`<script src="/assets/district-feed-publishing-v214.js?v=${versionFor(feedPublishingJsBuffer)}" defer></script>`;
+      const progressThreadsCss=`<link rel="stylesheet" href="/assets/district-progress-threads-v215.css?v=${versionFor(progressThreadsCssBuffer)}">`;
+      const progressThreadsJs=`<script src="/assets/district-progress-threads-v215.js?v=${versionFor(progressThreadsJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -204,6 +210,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-feed-publishing-v214.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,feedPublishingCss+'</head>'):feedPublishingCss+html;
+      }
+      if(!html.includes('/assets/district-progress-threads-v215.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,progressThreadsCss+'</head>'):progressThreadsCss+html;
       }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
@@ -246,6 +255,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-feed-publishing-v214.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,feedPublishingJs+'</body>'):html+feedPublishingJs;
+      }
+      if(!html.includes('/assets/district-progress-threads-v215.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,progressThreadsJs+'</body>'):html+progressThreadsJs;
       }
       cachedPublicIndex=html;
     }
