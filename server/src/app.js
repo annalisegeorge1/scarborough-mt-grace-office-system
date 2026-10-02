@@ -114,7 +114,9 @@ async function sendPublicIndex(req,res,next){
       const progressThreadsJsFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.js');
       const mobileCorrectionsCssFile=path.join(config.staticRoot,'assets','district-mobile-corrections-v216.css');
       const mobilePolishCssFile=path.join(config.staticRoot,'assets','district-mobile-polish-v217.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer]=await Promise.all([
+      const mobileNavigationCssFile=path.join(config.staticRoot,'assets','district-mobile-navigation-v218.css');
+      const mobileNavigationJsFile=path.join(config.staticRoot,'assets','district-mobile-navigation-v218.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -144,7 +146,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(progressThreadsCssFile),
         fs.readFile(progressThreadsJsFile),
         fs.readFile(mobileCorrectionsCssFile),
-        fs.readFile(mobilePolishCssFile)
+        fs.readFile(mobilePolishCssFile),
+        fs.readFile(mobileNavigationCssFile),
+        fs.readFile(mobileNavigationJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -177,6 +181,8 @@ async function sendPublicIndex(req,res,next){
       const progressThreadsJs=`<script src="/assets/district-progress-threads-v215.js?v=${versionFor(progressThreadsJsBuffer)}" defer></script>`;
       const mobileCorrectionsCss=`<link rel="stylesheet" href="/assets/district-mobile-corrections-v216.css?v=${versionFor(mobileCorrectionsCssBuffer)}">`;
       const mobilePolishCss=`<link rel="stylesheet" href="/assets/district-mobile-polish-v217.css?v=${versionFor(mobilePolishCssBuffer)}">`;
+      const mobileNavigationCss=`<link rel="stylesheet" href="/assets/district-mobile-navigation-v218.css?v=${versionFor(mobileNavigationCssBuffer)}">`;
+      const mobileNavigationJs=`<script src="/assets/district-mobile-navigation-v218.js?v=${versionFor(mobileNavigationJsBuffer)}" defer></script>`;
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
@@ -226,6 +232,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-mobile-polish-v217.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobilePolishCss+'</head>'):mobilePolishCss+html;
       }
+      if(!html.includes('/assets/district-mobile-navigation-v218.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobileNavigationCss+'</head>'):mobileNavigationCss+html;
+      }
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
@@ -270,6 +279,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-progress-threads-v215.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,progressThreadsJs+'</body>'):html+progressThreadsJs;
+      }
+      if(!html.includes('/assets/district-mobile-navigation-v218.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,mobileNavigationJs+'</body>'):html+mobileNavigationJs;
       }
       cachedPublicIndex=html;
     }
