@@ -165,6 +165,7 @@
       </select>
     </div>
     <div class="f4"><label>Progress date</label><input id="progress-date" type="datetime-local"></div>
+    <div class="f4"><label>Use as current public status</label><select id="progress-set-current"><option value="true">Yes</option><option value="false">No — history only</option></select></div>
     <div class="f12"><label>Public progress update</label><textarea id="progress-summary" placeholder="State what happened or what changed. Keep this factual and public-safe."></textarea></div>
     <div class="f12"><label>Optional public context</label><textarea id="progress-note" placeholder="Optional clarification, next step or agency context."></textarea></div>
   </div>
@@ -345,6 +346,7 @@ function clearProgressForm(){
   SMG.set('progress-summary','');SMG.set('progress-note','');
   const x=data.find(r=>r.id===selectedProgressId);
   SMG.set('progress-status',x?.public_status||'Follow-Up Required');
+  SMG.set('progress-set-current','true');
   SMG.set('progress-date',localDateTimeNow());
 }
 function renderProgressEntries(x){
@@ -438,7 +440,7 @@ $('progress-add').onclick=async()=>{
   const id=selectedProgressId,x=data.find(r=>r.id===id);
   if(!x)return SMG.msg('Choose a managed Activity Hub item first.','danger');
   const localDate=SMG.val('progress-date');
-  const body={status:SMG.val('progress-status'),date:localDate?new Date(localDate).toISOString():'',summary:SMG.val('progress-summary'),note:SMG.val('progress-note')};
+  const body={status:SMG.val('progress-status'),date:localDate?new Date(localDate).toISOString():'',summary:SMG.val('progress-summary'),note:SMG.val('progress-note'),setCurrentStatus:SMG.val('progress-set-current')==='true'};
   if(!localDate||!body.summary)return SMG.msg('Progress date and public update are required.','danger');
   try{
     await SMG.api('/api/content/'+id+'/progress',{method:'POST',body});
