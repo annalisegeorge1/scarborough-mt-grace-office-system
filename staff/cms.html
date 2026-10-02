@@ -396,7 +396,8 @@ function editActivity(id){const x=data.find(r=>r.id===id);if(x){fillActivity(x);
 function editStaticActivity(enc){
   const key=decodeURIComponent(enc),s=(snapshot.activity||[]).find(x=>x.key===key);if(!s)return;
   const o=latestOverride('activity_override',key);
-  if(o)fillActivity(o,key);else fillActivity({...s,workflow:'Published',verified:true,metadata:{staticKey:key,subtype:s.subtype,code:s.code,role:s.role}},key);
+  if(o){fillActivity(o,key);selectProgressRecord(o.id,false)}
+  else{selectedProgressId='';refreshProgressEditor();fillActivity({...s,workflow:'Published',verified:true,metadata:{staticKey:key,subtype:s.subtype,code:s.code,role:s.role}},key)}
   document.querySelector('[data-tab="activity"]').click();window.scrollTo({top:0,behavior:'smooth'});
 }
 $('activity-save').onclick=async()=>{
@@ -436,8 +437,9 @@ $('progress-clear').onclick=clearProgressForm;
 $('progress-add').onclick=async()=>{
   const id=selectedProgressId,x=data.find(r=>r.id===id);
   if(!x)return SMG.msg('Choose a managed Activity Hub item first.','danger');
-  const body={status:SMG.val('progress-status'),date:SMG.val('progress-date'),summary:SMG.val('progress-summary'),note:SMG.val('progress-note')};
-  if(!body.date||!body.summary)return SMG.msg('Progress date and public update are required.','danger');
+  const localDate=SMG.val('progress-date');
+  const body={status:SMG.val('progress-status'),date:localDate?new Date(localDate).toISOString():'',summary:SMG.val('progress-summary'),note:SMG.val('progress-note')};
+  if(!localDate||!body.summary)return SMG.msg('Progress date and public update are required.','danger');
   try{
     await SMG.api('/api/content/'+id+'/progress',{method:'POST',body});
     SMG.msg('Progress entry added. It will be public only while the parent item is Published + Verified.','ok');
