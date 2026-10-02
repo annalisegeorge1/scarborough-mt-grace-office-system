@@ -94,7 +94,9 @@ async function sendPublicIndex(req,res,next){
       const routeCssFile=path.join(config.staticRoot,'assets','public-route-integration-v205.css');
       const routeJsFile=path.join(config.staticRoot,'assets','public-route-integration-v205.js');
       const visualQaCssFile=path.join(config.staticRoot,'assets','district-visual-qa-v206.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer]=await Promise.all([
+      const pageIdentityCssFile=path.join(config.staticRoot,'assets','district-page-identity-v207.css');
+      const pageIdentityJsFile=path.join(config.staticRoot,'assets','district-page-identity-v207.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -104,7 +106,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(focusedLayoutJsFile),
         fs.readFile(routeCssFile),
         fs.readFile(routeJsFile),
-        fs.readFile(visualQaCssFile)
+        fs.readFile(visualQaCssFile),
+        fs.readFile(pageIdentityCssFile),
+        fs.readFile(pageIdentityJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -117,6 +121,8 @@ async function sendPublicIndex(req,res,next){
       const routeCss=`<link rel="stylesheet" href="/assets/public-route-integration-v205.css?v=${versionFor(routeCssBuffer)}">`;
       const routeJs=`<script src="/assets/public-route-integration-v205.js?v=${versionFor(routeJsBuffer)}" defer></script>`;
       const visualQaCss=`<link rel="stylesheet" href="/assets/district-visual-qa-v206.css?v=${versionFor(visualQaCssBuffer)}">`;
+      const pageIdentityCss=`<link rel="stylesheet" href="/assets/district-page-identity-v207.css?v=${versionFor(pageIdentityCssBuffer)}">`;
+      const pageIdentityJs=`<script src="/assets/district-page-identity-v207.js?v=${versionFor(pageIdentityJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -132,6 +138,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-visual-qa-v206.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,visualQaCss+'</head>'):visualQaCss+html;
       }
+      if(!html.includes('/assets/district-page-identity-v207.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pageIdentityCss+'</head>'):pageIdentityCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -146,6 +155,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/public-route-integration-v205.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,routeJs+'</body>'):html+routeJs;
+      }
+      if(!html.includes('/assets/district-page-identity-v207.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pageIdentityJs+'</body>'):html+pageIdentityJs;
       }
       cachedPublicIndex=html;
     }

@@ -1,0 +1,43 @@
+Scarborough / Mt. Grace District Office — V207
+
+DISTINCT PUBLIC PAGE IDENTITIES
+
+V207 gives each focused public page a clearer visual and functional identity while preserving the same District Office brand.
+
+Page identities:
+- /office/ — Office Directory
+  Focus: people, leadership and district information.
+- /services/ — Service Dashboard
+  Focus: finding help, understanding requirements and taking the next step.
+- /community/ — Community Hub
+  Focus: projects, participation and district activity.
+- /forms/ — Task Workspace
+  Focus: apply, enquire and track.
+- /updates/ — Public Information Desk
+  Focus: current activity, published information and progress.
+- /contact/ — Help Centre
+  Focus: call, WhatsApp, visit and enquiry follow-up.
+
+Visual changes:
+- Route-specific civic accent palettes while retaining the navy/blue District Office identity.
+- Route-specific header gradients.
+- New identity strip at the top of each focused content column.
+- Three concise page-focus chips on every route.
+- Route accent applied to quick-action cards, section chips, sticky page navigation and content cards.
+- Small route badge added to each focused-page hero.
+- Subtle route-specific refinements for service cards, forms, community content, updates, office directory content and contact actions.
+
+Responsive behaviour:
+- Identity strip collapses cleanly on tablet.
+- Explanatory copy is shortened automatically on phones.
+- Page-focus chips remain visible on mobile without creating excessive height.
+
+Architecture:
+V207 is presentation-only. It does not duplicate content, change enquiry logic, modify staff authentication, or alter the public data source.
+
+Files added:
+- assets/district-page-identity-v207.css
+- assets/district-page-identity-v207.js
+
+Files updated:
+- server/src/app.js
