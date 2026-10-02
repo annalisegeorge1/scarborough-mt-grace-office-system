@@ -1,0 +1,198 @@
+Scarborough / Mt. Grace District Office — V229
+
+PUBLIC PWA + RESILIENCE LAYER
+
+V229 adds an installable, offline-aware public application layer while deliberately excluding staff systems and sensitive/live API traffic from caching.
+
+1. Progressive Web App manifest
+Adds:
+- /manifest.webmanifest
+- App name: Scarborough / Mt. Grace District Office
+- Short name: SMG Office
+- start_url: /
+- scope: /
+- display: standalone
+- en-TT language metadata
+- civic/productivity/utilities categories
+- Resident Services, Forms, Track and Contact shortcuts
+
+2. App identity
+Adds:
+- /assets/district-app-icon-v229.svg
+
+The icon uses the existing navy/brass visual language and a neutral SMG District Office monogram.
+It does not reproduce or invent an official government seal.
+
+3. Public service worker
+Adds:
+- /sw.js
+
+The service worker supports the public shell only.
+
+Cached/fallback public shell routes:
+- /
+- /index.html
+- /index-self-contained.html
+- /office/
+- /services/
+- /community/
+- /forms/
+- /updates/
+- /contact/
+
+Because the focused routes use the same public shell plus pathname-based focused-page logic, V229 stores a single shell response instead of duplicating the large self-contained HTML under every focused-route URL.
+
+4. Sensitive/live routes explicitly bypass caching
+The service worker does NOT cache:
+- /staff/*
+- /api/*
+- /server/*
+- non-GET requests
+
+This means staff authentication, CMS activity, enquiries, public-content API responses and other server-side application data remain network-authoritative.
+
+5. Resident tracker remains live-only
+/track/ is deliberately not part of the cached focused-page shell.
+
+If a resident attempts to use the tracker while offline, V229 uses the offline fallback rather than presenting a stale tracker state as current.
+
+6. Public assets
+Same-origin /assets/* resources use stale-while-revalidate caching.
+- Current cached asset can load quickly/offline.
+- Network refresh updates the cached copy.
+- Cache is trimmed to a maximum of 90 asset entries.
+- Versioned asset query strings keep releases separated.
+
+7. Offline fallback
+Adds:
+- /offline.html
+
+The page clearly explains that:
+- live updates are unavailable
+- the tracker requires internet
+- enquiry submission requires internet
+- current programme requirements/opening notices/deadlines/statuses should be rechecked after reconnecting
+
+The offline page is noindex/nofollow/noarchive.
+
+8. Connection-state UI
+V229 adds a compact public network-status control.
+
+Offline:
+- persistent “Offline mode” message
+- warns that live updates, enquiries and tracking are unavailable
+
+Back online:
+- short “Back online” confirmation
+
+The status uses aria-live/role=status.
+
+9. Current-information labels
+When offline, V227 freshness indicators are relabelled:
+“Offline · reconnect for current information”
+
+This prevents a cached visual timestamp from looking like a live verification signal.
+
+10. Install experience
+Where supported, V229 handles the browser beforeinstallprompt event.
+
+Install controls can appear inside:
+- Explore drawer
+- Resident Command Center
+
+On Chromium-style install flows:
+- resident chooses whether to install through the browser prompt
+
+On iPhone/iPad Safari:
+- V229 provides the manual Share → Add to Home Screen instruction
+
+The install control is hidden when the site is already running in standalone mode.
+
+11. Update awareness
+If a newer service worker/site version is installed while an older public page remains open:
+- V229 shows a non-forced “newer version ready” / “site update activated” notice
+- resident can choose Refresh
+
+The page is not automatically reloaded in the middle of an enquiry or interaction.
+
+12. Installed-mode safe area
+Standalone mode gets additional safe-area handling for mobile gesture/navigation regions.
+
+13. Browser metadata
+Public pages now receive:
+- manifest link
+- SVG favicon
+- mobile-web-app-capable
+- apple-mobile-web-app-capable
+- Apple status-bar preference
+- app title
+
+Existing V223 route metadata and V221 theme-color synchronization remain intact.
+
+14. Privacy
+V229:
+- uses no localStorage
+- uses no sessionStorage
+- stores no resident profile
+- caches no API responses
+- caches no staff pages
+- caches no authentication responses
+- does not cache form submissions
+- does not cache tracker data
+
+15. Preservation
+No changes to:
+- staff CMS
+- authentication
+- staff publishing
+- V215 progress threads
+- enquiry API
+- resident tracker behavior
+- database schema
+- public verification controls
+- V224 Command Center logic
+- V225 Resident Journey logic
+- V228 Readiness logic
+
+16. QA
+Passed:
+- V229 client JavaScript syntax
+- Service worker JavaScript syntax
+- Server JavaScript syntax
+- Manifest JSON parse
+- CSS brace balance
+- CSS/JS injection
+- PWA head metadata injection
+- manifest/service-worker/offline server routes
+- V229 loads after V228
+- /staff bypass
+- /api bypass
+- /server bypass
+- GET-only caching
+- tracker excluded from cached shell
+- no localStorage/sessionStorage
+- no public-content API caching
+- offline noindex
+- app icon present
+- 4 manifest shortcuts present
+- root service-worker scope header present
+- install prompt handling present
+- iOS install guidance present
+- online/offline listeners present
+- update prompt present
+- canonical index routes covered by offline shell
+
+Files added:
+- manifest.webmanifest
+- sw.js
+- offline.html
+- assets/district-app-icon-v229.svg
+- assets/district-pwa-v229.css
+- assets/district-pwa-v229.js
+- V229_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Important limitation:
+V229 was validated through code/syntax/injection/safety checks. It has not been claimed as a live-device PWA install test; actual browser install availability still depends on the deployed HTTPS environment and browser installability rules.
