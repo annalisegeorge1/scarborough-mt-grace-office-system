@@ -108,7 +108,9 @@ async function sendPublicIndex(req,res,next){
       const globalPolishJsFile=path.join(config.staticRoot,'assets','district-global-polish-v212.js');
       const digitalFeedCssFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.css');
       const digitalFeedJsFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer]=await Promise.all([
+      const feedPublishingCssFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.css');
+      const feedPublishingJsFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -132,7 +134,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(globalPolishCssFile),
         fs.readFile(globalPolishJsFile),
         fs.readFile(digitalFeedCssFile),
-        fs.readFile(digitalFeedJsFile)
+        fs.readFile(digitalFeedJsFile),
+        fs.readFile(feedPublishingCssFile),
+        fs.readFile(feedPublishingJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -159,6 +163,9 @@ async function sendPublicIndex(req,res,next){
       const globalPolishJs=`<script src="/assets/district-global-polish-v212.js?v=${versionFor(globalPolishJsBuffer)}" defer></script>`;
       const digitalFeedCss=`<link rel="stylesheet" href="/assets/district-digital-feed-v213.css?v=${versionFor(digitalFeedCssBuffer)}">`;
       const digitalFeedJs=`<script src="/assets/district-digital-feed-v213.js?v=${versionFor(digitalFeedJsBuffer)}" defer></script>`;
+      const feedPublishingCss=`<link rel="stylesheet" href="/assets/district-feed-publishing-v214.css?v=${versionFor(feedPublishingCssBuffer)}">`;
+      const feedPublishingJs=`<script src="/assets/district-feed-publishing-v214.js?v=${versionFor(feedPublishingJsBuffer)}" defer></script>`;
+      const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -195,6 +202,12 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-digital-feed-v213.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,digitalFeedCss+'</head>'):digitalFeedCss+html;
       }
+      if(!html.includes('/assets/district-feed-publishing-v214.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,feedPublishingCss+'</head>'):feedPublishingCss+html;
+      }
+      if(!html.includes('/api/public/feed.xml')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -230,6 +243,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-digital-feed-v213.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,digitalFeedJs+'</body>'):html+digitalFeedJs;
+      }
+      if(!html.includes('/assets/district-feed-publishing-v214.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,feedPublishingJs+'</body>'):html+feedPublishingJs;
       }
       cachedPublicIndex=html;
     }

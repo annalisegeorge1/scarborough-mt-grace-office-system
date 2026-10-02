@@ -25,6 +25,7 @@ function uploadType(file){const b=file.buffer,m=file.mimetype;
 router.get('/upload-status',(req,res)=>res.json({enabled:uploadsReady(),maxFiles:3,maxFileMb:config.maxUploadMb,types:['PDF','JPG','PNG']}));
 
 const digits=s=>String(s||'').replace(/\D/g,'');
+const xml=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
 async function matchedCase(reference,contact){
   const ref=String(reference||'').trim().toUpperCase(),c=String(contact||'').trim();
   if(!ref||!c)return null;
@@ -59,6 +60,58 @@ router.get('/content',async(req,res,next)=>{
       eventDate:x.event_date,sortOrder:x.sort_order,isFeatured:x.is_featured,metadata:x.metadata||{},
       publishOn:x.publish_on,expireOn:x.expire_on,updatedAt:x.updated_at,originalFilename:x.original_filename||null
     }))});
+  }catch(e){next(e)}
+});
+
+/* Public RSS feed for verified, published office updates. Static website
+   information remains available on the full public pages; this endpoint exposes
+   database-managed public notices/activity only. */
+router.get('/feed.xml',async(req,res,next)=>{
+  try{
+    const q=await db.query(`
+      SELECT id,type,section,category,title,summary,body,public_status,status_note,
+             publish_on,updated_at,is_featured,metadata
+      FROM public_content
+      WHERE workflow='Published'
+        AND verified=true
+        AND (publish_on IS NULL OR publish_on<=now())
+        AND (expire_on IS NULL OR expire_on>now())
+        AND (
+          section='activity'
+          OR type IN ('notice','important','newsletter')
+        )
+        AND COALESCE(metadata->>'action','show') <> 'hide'
+      ORDER BY is_featured DESC, COALESCE(publish_on,updated_at) DESC, updated_at DESC
+      LIMIT 50
+    `);
+    const origin=String(config.publicOrigin||'').replace(/\/$/,'');
+    const items=q.rows.map(row=>{
+      const link=`${origin}/updates/?post=${encodeURIComponent(row.id)}`;
+      const description=row.summary||row.body||row.status_note||row.public_status||'';
+      const published=row.publish_on||row.updated_at;
+      return `<item>
+<title>${xml(row.title)}</title>
+<link>${xml(link)}</link>
+<guid isPermaLink="true">${xml(link)}</guid>
+<description>${xml(description)}</description>
+<category>${xml(row.category||row.type||'Update')}</category>
+<pubDate>${new Date(published).toUTCString()}</pubDate>
+</item>`;
+    }).join('\n');
+    const feed=`<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Scarborough / Mt. Grace District Office Updates</title>
+<link>${xml(origin+'/updates/')}</link>
+<description>Verified public updates published by the Scarborough / Mt. Grace District Office.</description>
+<language>en-TT</language>
+<lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+${items}
+</channel>
+</rss>`;
+    res.setHeader('Content-Type','application/rss+xml; charset=utf-8');
+    res.setHeader('Cache-Control','public, max-age=300');
+    res.send(feed);
   }catch(e){next(e)}
 });
 
