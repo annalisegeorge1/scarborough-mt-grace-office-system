@@ -1,0 +1,79 @@
+Scarborough / Mt. Grace District Office — V221
+
+DARK-MODE CONSISTENCY + DESKTOP/TABLET REFINEMENT
+
+V221 extends the public design system into dark mode and improves wider-screen spacing without removing information or changing staff functionality.
+
+1. Focused-page dark mode
+- Dark-mode focused pages now use a consistent deep navy canvas instead of mixing bright modern components with the older dark theme.
+- Route identity strips become dark civic panels with white copy and muted brass accents.
+- Quick-action cards use dark layered surfaces with readable white/slate copy.
+- The desktop side navigator receives a full dark treatment, including active states, side actions and WhatsApp styling.
+- Existing large legacy source sections remain readable and authoritative.
+
+2. Progressive-disclosure dark mode
+- V208 “More guidance & service information” and V209 “Explore more” hubs now have proper dark surfaces.
+- Buttons, expanded states, counters and descriptive copy retain accessible contrast.
+
+3. District Digital Feed / Community Stream
+- Feed shell, filters, search, feed actions, metadata, “new” banner and footer are now visually consistent in dark mode.
+- Pinned/new/thread functionality remains unchanged.
+- Feed items retain full source links and statuses.
+
+4. Progress threads
+- V215 public progress histories now have dedicated dark-mode surfaces.
+- Dates, statuses, summaries and notes remain readable while keeping the existing history structure.
+
+5. Homepage digital additions
+- V211 District Office / Community gateway cards and V213 District Pulse now follow the selected dark theme.
+- The homepage keeps its existing content and routes.
+
+6. Explore drawer
+- Search, groups, active items and current-route treatment now have a consistent dark-mode palette.
+- V218 one-group mobile accordion behaviour remains unchanged.
+
+7. Enquiry form
+- Inputs, select fields, textareas, placeholders, labels and message counter now have explicit dark-mode styling.
+- V220 submission and keyboard behaviour is unchanged.
+- No form data is stored by V221.
+
+8. Desktop/tablet refinement
+- Focused pages receive slightly more deliberate desktop vertical spacing.
+- Hover-capable desktops get restrained lift/transition polish.
+- 901–1160px layouts use a narrower side navigator and tighter gap so the main content is not squeezed.
+- Route identity principles stack more naturally on medium laptop/tablet widths.
+- Large desktops (1360px+) receive a slightly wider 1500px page frame, 318px side navigator and more breathing room without stretching content excessively.
+
+9. Browser chrome theme
+- V221 observes the existing v112-dark class.
+- Browser theme-color is synchronized to the selected light/dark appearance.
+- color-scheme metadata is provided for compatible native controls.
+- Existing theme preference/toggle logic remains authoritative; V221 does not introduce a second theme preference.
+
+Preservation
+- No public information removed.
+- No navigation destinations removed.
+- No staff CMS changes.
+- No staff workflow changes.
+- No V215 progress-thread changes.
+- No enquiry endpoint, tracker, authentication, database or publishing changes.
+
+QA
+- V221 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V221 CSS/JS injection: pass.
+- V221 loads after V220: pass.
+- Focused-page dark-mode selectors: present.
+- Feed / Explore / enquiry dark-mode selectors: present.
+- 901–1160px tablet/laptop rules: present.
+- 1360px+ desktop rules: present.
+- Browser theme-color synchronization: present.
+
+Files added:
+- assets/district-dark-desktop-v221.css
+- assets/district-dark-desktop-v221.js
+- V221_NOTES.txt
+
+Files updated:
+- server/src/app.js
