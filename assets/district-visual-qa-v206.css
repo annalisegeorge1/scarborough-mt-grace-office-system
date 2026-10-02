@@ -1,0 +1,134 @@
+/* Scarborough / Mt. Grace District Office — V206 visual QA refinements */
+
+/* Align focused-page headers and end caps with the wider V204 content shell. */
+body.v203-focused-view .v203-page-header .v203-wrap,
+body.v203-focused-view .v203-page-end .v203-wrap{
+  max-width:1460px;
+}
+
+/* Long focused-page menus must remain usable on common laptop-height screens. */
+body.v203-focused-view .v204-side-panel{
+  max-height:calc(100vh - 94px);
+  display:flex;
+  flex-direction:column;
+}
+body.v203-focused-view .v204-side-head,
+body.v203-focused-view .v204-side-actions,
+body.v203-focused-view .v204-side-note{
+  flex:0 0 auto;
+}
+body.v203-focused-view .v204-side-nav{
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#b9ccd7 transparent;
+}
+body.v203-focused-view .v204-side-nav::-webkit-scrollbar{width:7px}
+body.v203-focused-view .v204-side-nav::-webkit-scrollbar-thumb{
+  background:#b9ccd7;
+  border-radius:99px;
+}
+
+/* Keep content-card clipping from creating visible horizontal spill. */
+body.v203-focused-view .v204-main-column,
+body.v203-focused-view .v204-content-card,
+body.v203-focused-view .v204-content-card>.wrap,
+body.v203-focused-view .v204-content-card>.v121-wrap{
+  min-width:0;
+  max-width:100%;
+}
+
+/* Tablet and phone: turn the long right-side section menu into a compact horizontal rail. */
+@media(max-width:900px){
+  body.v203-focused-view .v204-side-panel{
+    position:relative;
+    top:auto;
+    order:-1;
+    max-height:none;
+    overflow:visible;
+  }
+  body.v203-focused-view .v204-side-head{
+    padding:14px 15px 12px;
+  }
+  body.v203-focused-view .v204-side-head strong{
+    font-size:18px;
+  }
+  body.v203-focused-view .v204-side-head p{
+    display:none;
+  }
+  body.v203-focused-view .v204-side-nav{
+    display:flex!important;
+    grid-template-columns:none!important;
+    gap:6px;
+    padding:9px 10px 10px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x proximity;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+  }
+  body.v203-focused-view .v204-side-nav::-webkit-scrollbar{
+    display:none;
+  }
+  body.v203-focused-view .v204-side-nav a{
+    flex:0 0 auto;
+    grid-template-columns:20px auto!important;
+    min-height:36px;
+    padding:6px 10px;
+    border:1px solid var(--v204-line);
+    background:#fff;
+    white-space:nowrap;
+    scroll-snap-align:start;
+  }
+  body.v203-focused-view .v204-side-num{
+    width:20px;
+    height:20px;
+    border-radius:7px;
+  }
+  body.v203-focused-view .v204-side-arrow{
+    display:none;
+  }
+  body.v203-focused-view .v204-side-note{
+    display:none;
+  }
+  body.v203-focused-view .v204-side-actions{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    padding-top:9px;
+  }
+}
+
+/* Phone: reduce the tall explanatory header and preserve two useful quick-action columns. */
+@media(max-width:650px){
+  body.v203-focused-view .v203-summary-card{
+    display:none;
+  }
+  body.v203-focused-view .v203-page-header{
+    padding:30px 0 18px;
+  }
+  body.v203-focused-view .v203-page-tabs{
+    margin-top:18px;
+  }
+  body.v203-focused-view .v204-focus-shell{
+    padding-top:14px;
+  }
+  body.v203-focused-view .v204-action-deck{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body.v203-focused-view .v204-side-nav{
+    display:flex!important;
+    grid-template-columns:none!important;
+  }
+  body.v203-focused-view .v204-side-actions{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body.v203-focused-view .v203-page-end{
+    padding-bottom:74px;
+  }
+}
+
+@media(max-width:340px){
+  body.v203-focused-view .v204-action-deck{
+    grid-template-columns:1fr!important;
+  }
+}

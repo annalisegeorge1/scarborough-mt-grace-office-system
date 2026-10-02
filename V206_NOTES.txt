@@ -1,0 +1,34 @@
+Scarborough / Mt. Grace District Office — V206
+
+VISUAL / RESPONSIVE QA REFINEMENTS
+
+This QA pass focuses on the V203–V205 public subpage system.
+
+Fixes:
+- Aligns the focused-page header and footer cap with the wider V204 content shell on large displays.
+- Prevents long side navigation (especially Resident Services) from extending below common laptop-height viewports.
+- Makes the desktop section navigator internally scrollable while preserving its sticky position.
+- Converts the tablet/mobile "On this page" section list into a compact horizontal swipe rail instead of a tall stacked menu.
+- Hides redundant explanatory summary cards on small phones to reduce the distance to useful content.
+- Keeps two quick-action cards per row on normal phone widths; only very narrow screens drop to one column.
+- Preserves compact New Enquiry / Track / Call / WhatsApp controls on mobile.
+- Adds bottom breathing room on focused mobile pages so the floating Explore control does not cover footer actions.
+- Adds min-width/max-width containment guards to reduce horizontal overflow risk in nested legacy sections.
+
+QA checks completed:
+- Server JavaScript syntax: pass.
+- V206 asset injection: pass.
+- All six focused routes remain registered.
+- Current public DOM checked against V203/V204 selectors:
+  * Office: 8/8 targeted sections resolve.
+  * Services: 14/14 targeted sections resolve.
+  * Community: 9/9 targeted sections resolve.
+  * Forms: 6/6 targeted sections resolve.
+  * Updates: 7/7 targeted sections resolve.
+  * Contact: 4/4 targeted sections resolve.
+
+Files added:
+- assets/district-visual-qa-v206.css
+
+Files updated:
+- server/src/app.js
