@@ -1,0 +1,146 @@
+/* Scarborough / Mt. Grace District Office — V215 threaded public progress */
+
+.v215-thread-toggle{
+  border-color:rgba(167,143,94,.24)!important;
+  background:#faf7ef!important;
+  color:#765f38!important;
+}
+.v215-thread-toggle .v215-thread-count{
+  min-width:18px;height:18px;border-radius:999px;
+  display:inline-grid;place-items:center;
+  background:#0b3553;color:#fff;
+  font:900 7px/1 system-ui;
+}
+.v215-thread{
+  margin-top:12px;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 96% 6%,rgba(167,143,94,.05),transparent 8rem),
+    linear-gradient(180deg,#fbfcfc,#f5f8f9);
+  overflow:hidden;
+}
+.v215-thread[hidden]{display:none!important}
+.v215-thread-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:12px 13px;
+  border-bottom:1px solid rgba(11,46,72,.08);
+}
+.v215-thread-head small{
+  display:block;margin-bottom:4px;
+  color:#8b7448;
+  font:850 7px/1 system-ui;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.v215-thread-head strong{
+  color:#0f3d59;
+  font:600 14px/1.2 Georgia,"Times New Roman",serif;
+}
+.v215-thread-head span{
+  color:#718792;
+  font:700 8px/1.35 system-ui;
+}
+.v215-thread-list{
+  position:relative;
+  padding:6px 13px 10px 39px;
+}
+.v215-thread-list:before{
+  content:"";
+  position:absolute;left:22px;top:12px;bottom:22px;
+  width:1px;
+  background:linear-gradient(180deg,#a78f5e,rgba(23,79,116,.18));
+}
+.v215-thread-entry{
+  position:relative;
+  padding:11px 0 12px;
+  border-bottom:1px solid rgba(11,46,72,.065);
+}
+.v215-thread-entry:last-child{border-bottom:0}
+.v215-thread-entry:before{
+  content:"";
+  position:absolute;
+  left:-21px;top:15px;
+  width:7px;height:7px;border-radius:50%;
+  background:#174f74;
+  border:2px solid #fff;
+  box-shadow:0 0 0 1px #a78f5e;
+}
+.v215-thread-entry.is-latest:before{
+  background:#a78f5e;
+  box-shadow:0 0 0 1px #a78f5e,0 0 0 4px rgba(167,143,94,.08);
+}
+.v215-thread-meta{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+.v215-thread-date{
+  color:#7d9099;
+  font:750 8px/1.2 system-ui;
+}
+.v215-thread-status{
+  padding:4px 6px;border-radius:999px;
+  background:#edf4f6;color:#54707f;
+  font:850 7px/1 system-ui;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.v215-thread-status[data-tone="confirmed"]{background:#edf7f4;color:#2b6e63}
+.v215-thread-status[data-tone="development"]{background:#f1f0f6;color:#66587b}
+.v215-thread-status[data-tone="followup"]{background:#f7f0ed;color:#805e50}
+.v215-thread-status[data-tone="planned"]{background:#f7f3e8;color:#806b3e}
+.v215-thread-entry p{
+  margin:6px 0 0!important;
+  color:#56717f!important;
+  font:600 10px/1.5 system-ui!important;
+}
+.v215-thread-entry em{
+  display:block;margin-top:5px;
+  color:#718892;
+  font:600 9px/1.45 system-ui;
+}
+.v215-thread-note{
+  padding:10px 13px;
+  border-top:1px solid rgba(11,46,72,.07);
+  background:rgba(255,255,255,.7);
+  color:#788d97;
+  font:650 8px/1.45 system-ui;
+}
+
+/* Activity Hub source cards retain the complete thread in a collapsed disclosure. */
+.v215-source-thread{
+  margin-top:12px;
+  border-top:1px solid rgba(11,46,72,.08);
+  padding-top:10px;
+}
+.v215-source-thread summary{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  cursor:pointer;
+  list-style:none;
+  color:#174f74;
+  font:850 9px/1.3 system-ui;
+}
+.v215-source-thread summary::-webkit-details-marker{display:none}
+.v215-source-thread summary:after{
+  content:"+";
+  width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid rgba(167,143,94,.22);
+  color:#8b7448;
+  background:#fff;
+}
+.v215-source-thread[open] summary:after{content:"–"}
+.v215-source-thread .v215-thread{
+  margin-top:10px;
+}
+
+/* Staff thread count is also visually echoed publicly. */
+.v215-thread-flag{
+  border-color:rgba(23,79,116,.13)!important;
+  background:#edf5f8!important;
+  color:#174f74!important;
+}
+
+@media(max-width:620px){
+  .v215-thread-head{flex-direction:column}
+  .v215-thread-list{padding-left:34px}
+  .v215-thread-list:before{left:19px}
+  .v215-thread-entry:before{left:-19px}
+}
