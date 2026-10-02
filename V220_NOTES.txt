@@ -1,0 +1,72 @@
+Scarborough / Mt. Grace District Office — V220
+
+PERFORMANCE + INTERACTION QUALITY PASS
+
+V220 improves how the public site feels in everyday use without removing information or changing staff functionality.
+
+1. Long-page rendering
+- Sections that begin well below the viewport can use content-visibility:auto during initial rendering.
+- Deferred sections are restored before they enter the viewport.
+- A direct hash target is never deferred.
+- This is intended to reduce initial rendering work on very long homepage/focused-page documents without changing DOM content.
+- No performance benchmark is claimed; this is a standards-based rendering optimization.
+
+2. Image loading/decode hints
+- Non-critical images below the initial viewport receive browser-native loading="lazy", decoding="async" and low fetch-priority hints where supported.
+- Critical identity/hero imagery is not marked low priority.
+- Image sources, alt text and public content are not changed.
+
+3. Enquiry form message counter
+- The public enquiry message field now shows a live “X / 2000 characters” counter.
+- Near-limit and at-limit states receive clearer visual feedback.
+- The counter is added to aria-describedby and uses polite accessibility announcements.
+
+4. Enquiry submission feedback
+- After form submission begins, the submit control shows a SUBMITTING ENQUIRY… state with aria-busy.
+- The busy state clears when the existing public result area reports success/error.
+- A safety timeout prevents the button from becoming permanently unavailable if an unexpected client error occurs.
+- Successful results are focused and scrolled into view for clearer confirmation.
+- Existing submission, validation, reference-number and tracking logic remains authoritative.
+
+5. Mobile keyboard awareness
+- Uses visualViewport when supported to detect when an on-screen keyboard substantially reduces the available viewport while a form field is active.
+- While the keyboard is open, the fixed Call / WhatsApp / Enquiry / Track dock, Explore FAB and accessibility tray move out of the way.
+- They return automatically when the keyboard closes.
+- This reduces obstruction while typing without removing any action.
+
+6. Form focus clarity
+- Active enquiry fields receive a slightly stronger focused treatment.
+- Touch interaction uses touch-action:manipulation for responsive taps.
+
+Privacy
+- V220 deliberately does NOT save enquiry names, phone numbers, addresses, DOB, messages or other form data to localStorage or sessionStorage.
+- No resident information is persisted by this enhancement.
+
+Preservation
+- No public information removed.
+- No staff CMS changes.
+- No V215 progress-thread changes.
+- No forms or enquiry endpoint changes.
+- No tracker, authentication, database or publishing changes.
+- Existing accessibility and mobile navigation controls remain available.
+
+QA
+- V220 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- CSS brace balance: pass.
+- V220 CSS/JS injection: pass.
+- V220 loads after V219: pass.
+- Deferred-rendering controller: present.
+- Image loading/decode hints: present.
+- VisualViewport keyboard handling: present.
+- Message counter: present.
+- Submit busy/result feedback: present.
+- No localStorage/sessionStorage PII draft implementation: verified.
+
+Files added:
+- assets/district-performance-interaction-v220.css
+- assets/district-performance-interaction-v220.js
+- V220_NOTES.txt
+
+Files updated:
+- server/src/app.js

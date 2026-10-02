@@ -1,0 +1,96 @@
+/* Scarborough / Mt. Grace District Office — V220
+   Performance + interaction quality pass. */
+
+/* Initial-render optimization for long offscreen sections.
+   JS removes this class before a deferred section enters view. */
+.v220-render-deferred{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 820px;
+}
+
+/* Form interaction polish */
+#district-enquiry-form .form-group{
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+#district-enquiry-form .form-group:focus-within{
+  position:relative;
+}
+#district-enquiry-form .form-group:focus-within>label{
+  color:#0b3553!important;
+}
+#district-enquiry-form .form-group:focus-within input,
+#district-enquiry-form .form-group:focus-within select,
+#district-enquiry-form .form-group:focus-within textarea{
+  border-color:rgba(23,79,116,.56)!important;
+  box-shadow:0 0 0 3px rgba(23,79,116,.085)!important;
+}
+.v220-message-counter{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:5px;
+  color:#718892;
+  font:750 8px/1.2 system-ui;
+  letter-spacing:.03em;
+}
+.v220-message-counter.is-near-limit{
+  color:#8b6a2e;
+}
+.v220-message-counter.is-at-limit{
+  color:#8a4550;
+  font-weight:900;
+}
+#district-enquiry-form .btn-send.v220-submitting{
+  position:relative;
+  cursor:wait!important;
+  opacity:.86;
+  pointer-events:none;
+}
+#district-enquiry-form .btn-send.v220-submitting::before{
+  content:"";
+  width:13px;height:13px;
+  border:2px solid rgba(255,255,255,.34);
+  border-top-color:#fff;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:8px;
+  vertical-align:-2px;
+  animation:v220-spin .75s linear infinite;
+}
+@keyframes v220-spin{to{transform:rotate(360deg)}}
+
+/* Better tap response without altering visual hierarchy. */
+:where(a,button,[role="button"]){
+  touch-action:manipulation;
+}
+
+/* Mobile form entry: fixed controls should not cover the active field/keyboard. */
+@media(max-width:900px){
+  html{
+    scroll-padding-bottom:82px;
+  }
+  .v7-mobile-dock,
+  .v202-menu-fab,
+  .v8-accessibility{
+    transition:opacity .16s ease,transform .18s ease!important;
+  }
+  body.v220-keyboard-open .v7-mobile-dock,
+  body.v220-keyboard-open .v202-menu-fab,
+  body.v220-keyboard-open .v8-accessibility{
+    opacity:0!important;
+    transform:translateY(115%)!important;
+    pointer-events:none!important;
+  }
+
+  #district-enquiry-form .form-group:focus-within{
+    background:rgba(239,246,249,.48);
+    border-radius:12px;
+  }
+}
+
+/* Avoid animation work when reduced motion is requested. */
+@media(prefers-reduced-motion:reduce){
+  #district-enquiry-form .btn-send.v220-submitting::before{animation:none}
+  .v7-mobile-dock,
+  .v202-menu-fab,
+  .v8-accessibility{transition:none!important}
+}
