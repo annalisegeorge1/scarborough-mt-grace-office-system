@@ -1,0 +1,126 @@
+Scarborough / Mt. Grace District Office — V223
+
+PUBLIC DISCOVERY + PRINT/PDF PRESENTATION
+
+V223 improves how the public website presents itself in browser tabs, shared links, search indexing and printed/PDF output.
+
+1. Route-specific metadata
+The main public routes now receive server-rendered metadata before the HTML is sent:
+- /
+- /office/
+- /services/
+- /community/
+- /forms/
+- /updates/
+- /contact/
+
+Each route receives:
+- A focused page title
+- A focused meta description
+- Canonical URL
+- en-TT alternate URL
+- robots index/follow directive
+- Open Graph site/title/description/url metadata
+- Twitter summary-card title/description metadata
+
+This is server-side rather than JavaScript-only so link preview/search crawlers can read it immediately.
+
+2. Structured data
+The public pages now receive JSON-LD for:
+- WebSite
+- GovernmentOffice
+- WebPage
+
+The GovernmentOffice entry uses the public office details already presented by the website:
+- Scarborough / Mt. Grace District Office
+- Harmony Hall, Mt. Grace Plaza
+- Scarborough, Tobago
+- Office telephone
+- Public office email
+
+No political-person metadata is added by V223.
+
+3. Canonical handling
+- /index.html and /index-self-contained.html canonicalize to the public homepage.
+- Focused routes canonicalize to their clean trailing-slash URL.
+- Metadata is applied per request after the shared public HTML is cached, so one route cannot leak another route’s title/canonical tags.
+
+4. Sitemap
+Adds:
+- /sitemap.xml
+
+The sitemap currently contains:
+- /
+- /office/
+- /services/
+- /community/
+- /forms/
+- /updates/
+- /contact/
+- /track/
+- /resident-guide/
+
+The endpoint is publicly cacheable for one hour.
+
+5. robots.txt
+robots.txt now:
+- Disallows /staff/
+- Disallows /api/
+- Disallows /server/
+- Advertises /sitemap.xml
+
+6. 404 indexing protection
+Public 404 responses now send:
+X-Robots-Tag: noindex, nofollow, noarchive
+
+The existing 404 presentation is unchanged.
+
+7. Print/PDF stylesheet
+Adds a dedicated @media print treatment:
+- Hides desktop/mobile navigation, Explore drawer/FAB, fixed action dock, accessibility controls and feed action controls.
+- Keeps District Office identity and page content.
+- Removes decorative gradients/shadows for clean paper/PDF output.
+- Expands V208/V209 supporting-information sections so collapsed on-screen information is not silently omitted from print.
+- Prints focused pages at full width.
+- Keeps feed items and progress histories readable.
+- Keeps useful photographs while constraining gallery images.
+- Hides interactive submit controls and character counter.
+- Converts the footer into a concise office reference block.
+
+8. Preservation
+- No public information removed.
+- No public route removed.
+- No enquiry or tracking logic changed.
+- No staff CMS changes.
+- No staff workflow changes.
+- No V215 progress-thread behavior changes.
+- No authentication, database or publishing changes.
+- No resident information is stored by V223.
+
+Deployment note
+- Canonical/sitemap origin follows PUBLIC_ORIGIN when configured.
+- If PUBLIC_ORIGIN is not configured in production, the existing Render external hostname fallback remains in use.
+- This means the custom scarboroughmtgrace.page domain should eventually be set as PUBLIC_ORIGIN when the domain is fully connected.
+
+QA
+- Server JavaScript syntax: pass.
+- V223 CSS brace balance: pass.
+- V223 stylesheet injection: pass.
+- Route metadata map: pass.
+- Canonical metadata: pass.
+- Open Graph metadata: pass.
+- Twitter metadata: pass.
+- JSON-LD structured data: pass.
+- Sitemap endpoint: pass.
+- robots.txt sitemap advertisement: pass.
+- Route-specific metadata applied after cached HTML: pass.
+- 404 noindex header: pass.
+- Print expansion of V208/V209 collapsed content: pass.
+- Duplicate robots/sitemap routes: none.
+
+Files added:
+- assets/district-public-discovery-v223.css
+- V223_NOTES.txt
+
+Files updated:
+- server/src/app.js
