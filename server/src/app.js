@@ -296,7 +296,9 @@ async function sendPublicIndex(req,res,next){
       const pwaCssFile=path.join(config.staticRoot,'assets','district-pwa-v229.css');
       const pwaJsFile=path.join(config.staticRoot,'assets','district-pwa-v229.js');
       const landscapeCorrectionsCssFile=path.join(config.staticRoot,'assets','district-landscape-corrections-v230.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer]=await Promise.all([
+      const serviceIntelligenceCssFile=path.join(config.staticRoot,'assets','district-service-intelligence-v231.css');
+      const serviceIntelligenceJsFile=path.join(config.staticRoot,'assets','district-service-intelligence-v231.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -350,7 +352,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(residentReadinessJsFile),
         fs.readFile(pwaCssFile),
         fs.readFile(pwaJsFile),
-        fs.readFile(landscapeCorrectionsCssFile)
+        fs.readFile(landscapeCorrectionsCssFile),
+        fs.readFile(serviceIntelligenceCssFile),
+        fs.readFile(serviceIntelligenceJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -407,6 +411,8 @@ async function sendPublicIndex(req,res,next){
       const pwaCss=`<link rel="stylesheet" href="/assets/district-pwa-v229.css?v=${versionFor(pwaCssBuffer)}">`;
       const pwaJs=`<script src="/assets/district-pwa-v229.js?v=${versionFor(pwaJsBuffer)}" defer></script>`;
       const landscapeCorrectionsCss=`<link rel="stylesheet" href="/assets/district-landscape-corrections-v230.css?v=${versionFor(landscapeCorrectionsCssBuffer)}">`;
+      const serviceIntelligenceCss=`<link rel="stylesheet" href="/assets/district-service-intelligence-v231.css?v=${versionFor(serviceIntelligenceCssBuffer)}">`;
+      const serviceIntelligenceJs=`<script src="/assets/district-service-intelligence-v231.js?v=${versionFor(serviceIntelligenceJsBuffer)}" defer></script>`;
       const pwaHead='<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="/assets/district-app-icon-v229.svg"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SMG Office">';
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
@@ -496,6 +502,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-landscape-corrections-v230.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,landscapeCorrectionsCss+'</head>'):landscapeCorrectionsCss+html;
       }
+      if(!html.includes('/assets/district-service-intelligence-v231.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,serviceIntelligenceCss+'</head>'):serviceIntelligenceCss+html;
+      }
       if(!html.includes('/manifest.webmanifest')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaHead+'</head>'):pwaHead+html;
       }
@@ -576,6 +585,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-pwa-v229.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pwaJs+'</body>'):html+pwaJs;
+      }
+      if(!html.includes('/assets/district-service-intelligence-v231.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,serviceIntelligenceJs+'</body>'):html+serviceIntelligenceJs;
       }
       cachedPublicIndex=html;
     }
