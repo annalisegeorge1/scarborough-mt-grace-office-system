@@ -1,0 +1,18 @@
+Scarborough / Mt. Grace District Office — V202
+
+PUBLIC SITE NAVIGATION UPGRADE
+
+- Adds a slim desktop side rail for fast access to Home, Resident Services, Community, Forms/Portals and Contact.
+- Adds an expandable "Explore the District Office" side drawer with grouped sub-sections.
+- Adds mobile slide-out navigation with a compact Explore button.
+- Adds sidebar search for public sections.
+- Adds active-section highlighting while residents move through the page.
+- Preserves the existing top navigation and all existing public content.
+- Uses the existing section IDs rather than duplicating services or forms.
+- Keeps Staff sign-in available as a secondary utility link.
+- Public sidebar assets are injected by the Node server and cache-busted by content hash.
+
+Files:
+- assets/district-sidebar-v202.css
+- assets/district-sidebar-v202.js
+- server/src/app.js

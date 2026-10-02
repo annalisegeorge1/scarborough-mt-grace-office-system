@@ -85,10 +85,25 @@ async function sendPublicIndex(req,res,next){
       const file=path.join(config.staticRoot,'index-self-contained.html');
       let html=currentCalderHallNames(await fs.readFile(file,'utf8'));
       const runtimeFile=path.join(config.staticRoot,'assets','public-content-runtime.js');
-      const runtimeVersion=crypto.createHash('sha256').update(await fs.readFile(runtimeFile)).digest('hex').slice(0,12);
-      const runtime=`<script src="/assets/public-content-runtime.js?v=${runtimeVersion}" defer></script>`;
+      const sidebarCssFile=path.join(config.staticRoot,'assets','district-sidebar-v202.css');
+      const sidebarJsFile=path.join(config.staticRoot,'assets','district-sidebar-v202.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer]=await Promise.all([
+        fs.readFile(runtimeFile),
+        fs.readFile(sidebarCssFile),
+        fs.readFile(sidebarJsFile)
+      ]);
+      const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
+      const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
+      const sidebarCss=`<link rel="stylesheet" href="/assets/district-sidebar-v202.css?v=${versionFor(sidebarCssBuffer)}">`;
+      const sidebarJs=`<script src="/assets/district-sidebar-v202.js?v=${versionFor(sidebarJsBuffer)}" defer></script>`;
+      if(!html.includes('/assets/district-sidebar-v202.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
+      }
+      if(!html.includes('/assets/district-sidebar-v202.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,sidebarJs+'</body>'):html+sidebarJs;
       }
       cachedPublicIndex=html;
     }
