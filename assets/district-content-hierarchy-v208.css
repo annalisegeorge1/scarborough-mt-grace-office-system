@@ -1,0 +1,221 @@
+/* Scarborough / Mt. Grace District Office — V208 content hierarchy */
+
+body.v203-focused-view{
+  --v208-border:rgba(11,46,72,.12);
+  --v208-soft:#f6fafc;
+  --v208-text:#17384b;
+  --v208-muted:#6a818e;
+}
+
+/* Priority label used on primary content blocks */
+.v208-priority-ribbon{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:0 0 10px;
+  padding:7px 10px;
+  border:1px solid rgba(var(--v207-accent-rgb),.16);
+  border-radius:999px;
+  background:var(--v207-accent-soft);
+  color:var(--v207-accent-ink);
+  font:850 8.5px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.v208-priority-ribbon:before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:var(--v207-accent);
+  box-shadow:0 0 0 4px rgba(var(--v207-accent-rgb),.08);
+}
+
+/* Supporting information controller */
+.v208-support-hub{
+  border:1px solid rgba(var(--v207-accent-rgb),.15);
+  border-radius:22px;
+  background:linear-gradient(155deg,#fff 0%,var(--v207-accent-soft) 145%);
+  box-shadow:0 12px 30px rgba(8,42,63,.06);
+  overflow:hidden;
+}
+.v208-support-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:16px;
+  align-items:center;
+  padding:18px 18px 15px;
+  border-bottom:1px solid var(--v208-border);
+}
+.v208-support-head small{
+  display:block;
+  margin-bottom:5px;
+  color:var(--v207-accent);
+  font:850 8.5px/1 system-ui;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.v208-support-head strong{
+  display:block;
+  color:var(--v208-text);
+  font:650 18px/1.15 Georgia,"Times New Roman",serif;
+}
+.v208-support-head p{
+  margin:6px 0 0;
+  max-width:680px;
+  color:var(--v208-muted);
+  font:600 10.5px/1.48 system-ui;
+}
+.v208-collapse-all{
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid var(--v208-border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--v207-accent-ink);
+  cursor:pointer;
+  font:800 9.5px/1 system-ui;
+}
+.v208-collapse-all:hover,
+.v208-collapse-all:focus-visible{
+  background:var(--v207-accent);
+  color:#fff;
+  border-color:var(--v207-accent);
+  outline:none;
+}
+.v208-support-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  padding:12px;
+}
+.v208-support-toggle{
+  width:100%;
+  min-height:66px;
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr) 20px;
+  gap:10px;
+  align-items:center;
+  padding:10px 11px;
+  border:1px solid var(--v208-border);
+  border-radius:14px;
+  background:#fff;
+  color:var(--v208-text);
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.v208-support-toggle:hover,
+.v208-support-toggle:focus-visible{
+  border-color:rgba(var(--v207-accent-rgb),.3);
+  box-shadow:0 8px 18px rgba(8,42,63,.06);
+  transform:translateY(-1px);
+  outline:none;
+}
+.v208-support-toggle[aria-expanded="true"]{
+  background:var(--v207-accent-soft);
+  border-color:rgba(var(--v207-accent-rgb),.28);
+}
+.v208-toggle-index{
+  width:34px;height:34px;border-radius:10px;
+  display:grid;place-items:center;
+  background:var(--v207-accent-soft);
+  color:var(--v207-accent);
+  font:900 9px/1 system-ui;
+}
+.v208-support-toggle[aria-expanded="true"] .v208-toggle-index{
+  background:var(--v207-accent);
+  color:#fff;
+}
+.v208-toggle-copy strong{
+  display:block;
+  color:inherit;
+  font:800 10.5px/1.2 system-ui;
+}
+.v208-toggle-copy span{
+  display:block;
+  margin-top:4px;
+  color:#708792;
+  font:600 9px/1.35 system-ui;
+}
+.v208-toggle-arrow{
+  color:#93a6b0;
+  font-size:18px;
+  transition:transform .18s ease;
+}
+.v208-support-toggle[aria-expanded="true"] .v208-toggle-arrow{
+  transform:rotate(90deg);
+  color:var(--v207-accent);
+}
+
+/* Secondary blocks remain in normal document flow but collapse cleanly. */
+.v208-secondary{
+  transition:max-height .28s ease,opacity .22s ease,margin .22s ease,transform .22s ease;
+  transform-origin:top;
+}
+.v208-secondary.v208-collapsed{
+  max-height:0!important;
+  min-height:0!important;
+  height:0!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border-width:0!important;
+  opacity:0;
+  visibility:hidden;
+  overflow:hidden!important;
+  transform:translateY(-4px);
+  pointer-events:none;
+}
+.v208-secondary:not(.v208-collapsed){
+  max-height:none;
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+.v208-secondary.v208-revealed{
+  animation:v208Reveal .28s ease both;
+}
+@keyframes v208Reveal{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:none}
+}
+
+/* Hierarchy spacing: keep primary content feeling intentional. */
+body[data-district-view="services"] .v204-main-column>.v204-content-card:not(.v208-secondary),
+body[data-district-view="forms"] .v204-main-column>.v204-content-card:not(.v208-secondary){
+  box-shadow:0 16px 38px rgba(var(--v207-accent-rgb),.075);
+}
+body[data-district-view="services"] .v208-support-hub,
+body[data-district-view="forms"] .v208-support-hub{
+  order:0;
+}
+
+/* Mobile */
+@media(max-width:760px){
+  .v208-support-head{
+    grid-template-columns:1fr;
+    padding:15px;
+  }
+  .v208-collapse-all{
+    justify-self:start;
+  }
+  .v208-support-list{
+    grid-template-columns:1fr;
+    padding:10px;
+  }
+  .v208-support-toggle{
+    min-height:60px;
+  }
+}
+@media(max-width:520px){
+  .v208-support-head p{font-size:9.8px}
+  .v208-toggle-copy span{display:none}
+  .v208-support-toggle{
+    grid-template-columns:31px minmax(0,1fr) 18px;
+    min-height:54px;
+  }
+  .v208-toggle-index{width:31px;height:31px}
+}
+@media(prefers-reduced-motion:reduce){
+  .v208-secondary,.v208-support-toggle,.v208-toggle-arrow{transition:none!important;animation:none!important}
+}

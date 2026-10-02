@@ -96,7 +96,9 @@ async function sendPublicIndex(req,res,next){
       const visualQaCssFile=path.join(config.staticRoot,'assets','district-visual-qa-v206.css');
       const pageIdentityCssFile=path.join(config.staticRoot,'assets','district-page-identity-v207.css');
       const pageIdentityJsFile=path.join(config.staticRoot,'assets','district-page-identity-v207.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer]=await Promise.all([
+      const hierarchyCssFile=path.join(config.staticRoot,'assets','district-content-hierarchy-v208.css');
+      const hierarchyJsFile=path.join(config.staticRoot,'assets','district-content-hierarchy-v208.js');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -108,7 +110,9 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(routeJsFile),
         fs.readFile(visualQaCssFile),
         fs.readFile(pageIdentityCssFile),
-        fs.readFile(pageIdentityJsFile)
+        fs.readFile(pageIdentityJsFile),
+        fs.readFile(hierarchyCssFile),
+        fs.readFile(hierarchyJsFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -123,6 +127,8 @@ async function sendPublicIndex(req,res,next){
       const visualQaCss=`<link rel="stylesheet" href="/assets/district-visual-qa-v206.css?v=${versionFor(visualQaCssBuffer)}">`;
       const pageIdentityCss=`<link rel="stylesheet" href="/assets/district-page-identity-v207.css?v=${versionFor(pageIdentityCssBuffer)}">`;
       const pageIdentityJs=`<script src="/assets/district-page-identity-v207.js?v=${versionFor(pageIdentityJsBuffer)}" defer></script>`;
+      const hierarchyCss=`<link rel="stylesheet" href="/assets/district-content-hierarchy-v208.css?v=${versionFor(hierarchyCssBuffer)}">`;
+      const hierarchyJs=`<script src="/assets/district-content-hierarchy-v208.js?v=${versionFor(hierarchyJsBuffer)}" defer></script>`;
       if(!html.includes('/assets/district-sidebar-v202.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
       }
@@ -141,6 +147,9 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/assets/district-page-identity-v207.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pageIdentityCss+'</head>'):pageIdentityCss+html;
       }
+      if(!html.includes('/assets/district-content-hierarchy-v208.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,hierarchyCss+'</head>'):hierarchyCss+html;
+      }
       if(!html.includes('/assets/public-content-runtime.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
       }
@@ -158,6 +167,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-page-identity-v207.js')){
         html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pageIdentityJs+'</body>'):html+pageIdentityJs;
+      }
+      if(!html.includes('/assets/district-content-hierarchy-v208.js')){
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,hierarchyJs+'</body>'):html+hierarchyJs;
       }
       cachedPublicIndex=html;
     }
