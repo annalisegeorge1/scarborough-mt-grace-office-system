@@ -1,0 +1,77 @@
+Scarborough / Mt. Grace District Office — V209
+
+LIGHT CONTENT HIERARCHY FOR OFFICE, COMMUNITY, UPDATES & CONTACT
+
+V209 extends the V208 cleanup approach to the remaining focused pages without over-collapsing them.
+
+Office:
+Always visible:
+- About the Office
+- Meet Our Team
+- Leadership
+
+Expandable supporting information:
+- Office Promise
+- District Profile
+- Office Scope
+- Office Vision
+- Contact & Hours
+
+Community:
+Always visible:
+- Activity Hub
+- Community Action Centre
+- Projects & Progress
+- Gallery
+
+Expandable supporting information:
+- Public Matters
+- Public Plans
+- Community Engagement
+- What We Heard
+- Community Compass
+
+Updates:
+Always visible:
+- Live Updates
+- Activity Hub
+- Projects & Progress
+
+Expandable supporting information:
+- Public Matters
+- Public Plans
+- What We Heard
+- Gallery
+
+Contact:
+Always visible:
+- Office Details
+- Send an Enquiry
+
+Expandable supporting information:
+- Resident Feedback
+- Resident Voice
+
+Behaviour:
+- Only one supporting section is expanded at a time on these lighter-information pages.
+- Deep links automatically reveal the requested supporting section.
+- V202/V203/V204 navigation controls reveal collapsed sections before scrolling.
+- Secondary items are removed from the permanent right-side page index.
+- Primary information is moved directly beneath the page quick actions.
+- Mobile uses a simple single-column Explore More panel.
+
+QA:
+- Office selectors: 8/8 resolve.
+- Community selectors: 9/9 resolve.
+- Updates selectors: 7/7 resolve.
+- Contact selectors: 4/4 resolve.
+- V209 JavaScript syntax: pass.
+- Server JavaScript syntax: pass.
+- V209 asset injection: pass.
+
+Files added:
+- assets/district-light-hierarchy-v209.css
+- assets/district-light-hierarchy-v209.js
+
+Files updated:
+- server/src/app.js
