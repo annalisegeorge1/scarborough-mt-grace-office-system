@@ -146,7 +146,7 @@
   }
   function summaryFor(record){
     const p=latestProgress(record);
-    return p?.summary||record.summary||record.statusNote||record.body||"Open the full public information for details.";
+    return record.summary||record.statusNote||record.body||p?.summary||"Open the full public information for details.";
   }
 
   function relevance(record){
