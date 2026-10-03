@@ -28,6 +28,8 @@ await check('Liveness','/api/health/live');
 await check('Health','/api/health',[200,503]);
 await check('Readiness','/api/health/readiness',[200,503]);
 await check('Public homepage','/');
+await check('Public Civic Flow script','/assets/district-civic-flow-v237.js');
+await check('Public Civic Flow styles','/assets/district-civic-flow-v237.css');
 await check('Public content API','/api/public/content');
 await check('Resident tracker','/track/');
 await check('Resident portal hub','/portals/');
