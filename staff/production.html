@@ -1,10 +1,134 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Production Control — Scarborough / Mt. Grace District Office</title><style>
-:root{--navy:#08263d;--navy2:#0d3554;--gold:#c9a34a;--paper:#f2f6f8;--line:#d9e4e9;--text:#17394e;--muted:#647d8b;--green:#2f7558;--amber:#8b6a1f;--red:#9d4943}*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--paper);color:var(--text)}a{color:inherit}.v159-global-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:rgba(255,255,255,.98);border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(6,31,51,.07)}.v159-global-nav>a{text-decoration:none;color:#0b3553;background:#f3f7f9;border:1px solid #dbe5e9;border-radius:7px;padding:6px 8px;font-size:10px;font-weight:800;white-space:nowrap}.v159-global-nav>a:hover,.v159-global-nav>a[aria-current=page]{background:#08263d;color:#fff}.v159-brand{margin-right:auto!important;color:#87691f!important;background:transparent!important;border-color:transparent!important;letter-spacing:.08em}.top{background:linear-gradient(90deg,#061f33,#0d3554);color:#fff;padding:22px 26px}.top small{color:#d5bd7b;font-weight:900;letter-spacing:.14em}.top h1{font:600 clamp(28px,4vw,44px) Georgia,serif;margin:6px 0}.top p{max-width:850px;color:#bed0da;line-height:1.6}.wrap{max-width:1220px;margin:auto;padding:22px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 8px 24px rgba(8,38,61,.05)}.card h2,.card h3{font-family:Georgia,serif;color:var(--navy);margin:3px 0 8px}.metric strong{display:block;font:600 27px Georgia,serif;color:var(--navy)}.metric small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#87691f}.wide{grid-column:span 2}.full{grid-column:1/-1}.status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:900;background:#eef3f6}.dot{width:8px;height:8px;border-radius:50%;background:#8799a3}.ok .dot{background:var(--green)}.bad .dot{background:var(--red)}.warn .dot{background:var(--amber)}.areas{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.area{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fbfdfe}.area strong{display:block;color:var(--navy);font-family:Georgia,serif;margin-bottom:6px}.area a{display:block;text-decoration:none;font-size:10px;color:#456575;padding:4px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{border:1px solid var(--line);background:white;color:#20475d;text-decoration:none;border-radius:8px;padding:9px 11px;font-size:10px;font-weight:800;cursor:pointer}.primary{background:var(--navy);color:white;border-color:var(--navy)}pre{white-space:pre-wrap;background:#f6f9fa;border:1px solid var(--line);border-radius:9px;padding:11px;font-size:10px;min-height:54px}.check{padding:8px 0;border-bottom:1px solid #edf2f4;font-size:11px}.check:last-child{border-bottom:0}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.areas{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}}@media(max-width:600px){.grid,.areas{grid-template-columns:1fr}.wide{grid-column:auto}.v159-global-nav{flex-wrap:nowrap;overflow-x:auto}.v159-brand{display:none}}
-</style></head><body><nav class="v159-global-nav" aria-label="Staff system navigation"><a class="v159-brand" href="sections.html">SMG STAFF SYSTEM</a><a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a href="workflow.html">Daily Work</a><a href="search.html">Search</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="events.html">Events</a><a href="records.html">Records</a><a href="reports.html">Reports</a><a href="roster.html">Roster</a><a href="production.html" aria-current="page">Production</a></nav><header class="top"><small>V162 • PRODUCTION QA & DEPLOYMENT</small><h1>Production Control Centre</h1><p>One place to verify the application server, PostgreSQL database, authentication and infrastructure readiness before real resident information is used.</p></header><main class="wrap"><section class="grid"><article class="card metric"><small>APPLICATION API</small><strong id="apiState">Checking…</strong><span class="status" id="apiBadge"><i class="dot"></i><span>Health</span></span></article><article class="card metric"><small>DATABASE</small><strong id="dbState">Checking…</strong><span class="status" id="dbBadge"><i class="dot"></i><span>PostgreSQL</span></span></article><article class="card metric"><small>PRIVATE STORAGE</small><strong id="storageState">Checking…</strong><span class="status" id="storageBadge"><i class="dot"></i><span>Documents</span></span></article><article class="card metric"><small>READINESS</small><strong id="readyState">Checking…</strong><span class="status" id="readyBadge"><i class="dot"></i><span>Launch</span></span></article>
-<article class="card full"><h2>Clean Staff Architecture</h2><div class="areas"><div class="area"><strong>Daily Operations</strong><a href="index.html">Cases</a><a href="workflow.html">Daily Workboard</a><a href="applications.html">Applications</a><a href="correspondence.html">Correspondence</a><a href="field.html">Field Visits</a><a href="automation.html">Attention & Reminders</a></div><div class="area"><strong>Community Operations</strong><a href="community.html">Community Matters</a><a href="events.html">Events & Town Halls</a><a href="meetings.html">Meetings</a><a href="field.html">Outreach</a></div><div class="area"><strong>Records & Intelligence</strong><a href="records.html">Records</a><a href="search.html">Global Search</a><a href="reports.html">Reports</a><a href="performance.html">Performance</a><a href="quality.html">Quality</a><a href="feedback.html">Resident Feedback</a></div><div class="area"><strong>Website & Communications</strong><a href="cms.html">Website CMS</a><a href="correspondence.html">Correspondence</a><a href="feedback.html">Resident Experience</a></div><div class="area"><strong>Administration</strong><a href="roster.html">Roster & Coverage</a><a href="access.html">Access</a><a href="audit.html">Audit</a><a href="system.html">System</a><a href="readiness.html">Readiness</a><a href="go-live.html">Go-Live</a></div></div></article>
-<article class="card wide"><h2>Live infrastructure check</h2><p>The readiness endpoint must be green before confidential resident records are migrated.</p><div class="actions"><button class="btn primary" id="runCheck">RUN CHECK</button><a class="btn" href="readiness.html">READINESS GATES</a><a class="btn" href="go-live.html">GO-LIVE CENTRE</a></div><pre id="checkOutput">Waiting for health check…</pre></article><article class="card wide"><h2>Production gates</h2><div class="check">☐ Managed PostgreSQL provisioned and migrated</div><div class="check">☐ Named Manager account created; shared login prohibited</div><div class="check">☐ Managed private object storage configured</div><div class="check">☐ HTTPS and secure proxy configured</div><div class="check">☐ Backup and restore test completed</div><div class="check">☐ UAT and pilot sign-off completed</div></article>
-<article class="card full"><h2>Production verification in V162</h2><p>V161 unified the main operational modules on PostgreSQL-backed APIs. V162 adds release gates: environment preflight, live smoke tests, backup-restore verification, request tracing, staging/production separation and package-level QA. A production launch should proceed only when readiness, UAT, backup restoration and post-deployment smoke testing all pass.</p></article></section></main><script>
-function paint(id,text,state){document.getElementById(id+'State').textContent=text;const b=document.getElementById(id+'Badge');b.className='status '+state}
-async function check(){const out=document.getElementById('checkOutput');out.textContent='Checking…';try{const live=await fetch('/api/health/live',{credentials:'same-origin'}),ld=await live.json();const h=await fetch('/api/health',{credentials:'same-origin'}),hd=await h.json();paint('api',h.ok?'Online':'Degraded',h.ok?'ok':'bad');paint('db',hd.database==='ok'?'Connected':'Unavailable',hd.database==='ok'?'ok':'bad');paint('storage',hd.storage==='local'?'Local / configure':'Configured',hd.storage==='local'?'warn':'ok');const r=await fetch('/api/health/readiness',{credentials:'same-origin'}),rd=await r.json();paint('ready',rd.ready?'Ready':'Not Ready',rd.ready?'ok':'warn');out.textContent=JSON.stringify({liveness:ld,health:hd,readiness:rd},null,2)}catch(e){paint('api','Offline','bad');paint('db','Unknown','bad');paint('storage','Unknown','warn');paint('ready','Not Ready','bad');out.textContent='Backend unavailable: '+e.message}}
-document.getElementById('runCheck').onclick=check;check();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>Production Control | Scarborough / Mt. Grace District Office</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--pc-navy:#08263d;--pc-blue:#174f74;--pc-gold:#c9a34a;--pc-line:#d9e4e9;--pc-paper:#eef4f6;--pc-green:#317052;--pc-red:#984b46;--pc-amber:#84671f}
+body{background:var(--pc-paper);color:#17394e}
+.hero{padding:22px 24px 20px;background:linear-gradient(115deg,#061f33,#0b3553 66%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}
+.hero h1{margin:5px 0;font:500 32px Georgia,serif}.hero p{max-width:920px;margin:6px 0 0;color:#b8ccd6;font-size:12px;line-height:1.55}.hero .eyebrow{font-size:8px;font-weight:900;letter-spacing:.14em;color:#d7c27c}
+.hero-nav{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.hero-nav a{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.11);color:#d8e4e9;text-decoration:none;font-size:10px;font-weight:800}.hero-nav a.active{background:#fff;color:#0b3553}
+.shell{width:min(1400px,calc(100% - 28px));margin:18px auto 70px}.noticebar{padding:11px 13px;border:1px solid #e4d49d;border-left:4px solid var(--pc-gold);border-radius:10px;background:#fff9e9;color:#675725;font-size:11px;line-height:1.5;margin-bottom:12px}.noticebar.ok{border-color:#bdd8c9;background:#eef8f2;color:#2f6649}.noticebar.danger{border-color:#deb8b6;background:#fff1f0;color:#87433f}
+.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.metric-card,.panel{background:#fff;border:1px solid var(--pc-line);border-radius:14px;box-shadow:0 9px 24px rgba(7,35,55,.045)}.metric-card{padding:15px}.metric-card small{font-size:8px;font-weight:900;letter-spacing:.08em;color:#718690;text-transform:uppercase}.metric-card strong{display:block;margin-top:4px;color:#0b3553;font:600 24px Georgia,serif}.metric-card span{display:block;margin-top:4px;color:#7a8c96;font-size:8px;line-height:1.4}
+.two-col{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:12px;align-items:start}.panel{overflow:hidden}.panel-head{padding:15px 16px 12px;border-bottom:1px solid #e9eff2}.panel-head small{font-size:8px;font-weight:900;letter-spacing:.1em;color:#87691f}.panel-head h2{margin:4px 0 3px;color:#0b3553;font:500 22px Georgia,serif}.panel-head p{margin:0;color:#70848f;font-size:10px;line-height:1.45}
+.checks{padding:7px 15px 14px}.check{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:9px;padding:10px 0;border-bottom:1px solid #edf2f4;align-items:start}.check:last-child{border-bottom:0}.mark{width:23px;height:23px;display:grid;place-items:center;border-radius:8px;background:#e6f2eb;color:var(--pc-green);font-weight:900}.check.bad .mark{background:#fae9e7;color:var(--pc-red)}.check.warn .mark{background:#fbf2df;color:var(--pc-amber)}.check strong{display:block;font-size:10px;color:#31596f}.check p{margin:3px 0 0;color:#768a94;font-size:8.5px;line-height:1.45}.pill{padding:4px 6px;border-radius:999px;background:#edf3f6;color:#526d7b;font-size:7px;font-weight:900;text-transform:uppercase}.check.bad .pill{background:#f6e7e5;color:#8d4742}
+.toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #e9eff2;background:#f9fbfc}.pc-btn{border:1px solid #d2dfe5;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.pc-btn.primary{background:#0b3553;color:#fff;border-color:#0b3553}.pc-btn.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}
+.route-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:14px 15px}.route{border:1px solid #dce6ea;border-radius:11px;background:#f9fbfc;padding:12px}.route small{display:block;font-size:7px;font-weight:900;letter-spacing:.08em;color:#87691f}.route strong{display:block;margin:4px 0 7px;color:#0b3553;font:500 16px Georgia,serif}.route a{display:block;padding:4px 0;color:#456a7f;text-decoration:none;font-size:9px;font-weight:800}.route a:hover{text-decoration:underline}
+.release-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;padding:14px 15px}.stage{position:relative;border:1px solid #dce6ea;border-radius:11px;background:#fff;padding:12px}.stage::after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:#a9b8bf;font-weight:900}.stage:last-child::after{display:none}.stage b{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:#edf3f6;color:#31596f;font-size:9px}.stage strong{display:block;margin-top:7px;color:#244d65;font-size:10px}.stage span{display:block;margin-top:3px;color:#778b95;font-size:8px;line-height:1.4}
+.boundary{margin-top:12px;padding:13px 14px;border-left:4px solid var(--pc-gold);background:#fffdf5;border-radius:10px;color:#61747d;font-size:10px;line-height:1.55}.boundary strong{color:#0b3553}
+@media(max-width:1050px){.metrics{grid-template-columns:repeat(3,1fr)}.two-col{grid-template-columns:1fr}.route-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.shell{width:calc(100% - 18px)}.hero{padding:18px 14px}.metrics{grid-template-columns:1fr 1fr}.route-grid,.release-path{grid-template-columns:1fr}.stage::after{display:none}.check{grid-template-columns:26px minmax(0,1fr)}.pill{grid-column:2;justify-self:start}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="authline" data-auth>Checking session…</span>
+  <span class="eyebrow">V247 • OPERATIONS + RELEASE CONTROL</span>
+  <h1>Production Control Centre</h1>
+  <p>A live operational overview of the application, database, storage, security readiness and publishing bridge—plus direct routes to the staff systems used to prepare a controlled launch.</p>
+  <nav class="hero-nav" aria-label="Production control navigation">
+    <a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a href="cms.html">Website CMS</a><a href="publishing.html">Publishing Desk</a><a href="publishing-qa.html">Publishing QA</a><a href="readiness.html">Release Control</a><a href="go-live.html">Go-Live</a><a class="active" aria-current="page" href="production.html">Production</a>
+  </nav>
+</header>
+<main class="shell">
+  <div id="msg" class="noticebar">Running live infrastructure checks…</div>
+  <section class="metrics">
+    <article class="metric-card"><small>Application</small><strong id="apiState">Checking</strong><span id="apiDetail">Liveness and API health.</span></article>
+    <article class="metric-card"><small>Database</small><strong id="dbState">Checking</strong><span id="dbDetail">PostgreSQL connectivity.</span></article>
+    <article class="metric-card"><small>Private storage</small><strong id="storageState">Checking</strong><span id="storageDetail">Production document storage posture.</span></article>
+    <article class="metric-card"><small>Server readiness</small><strong id="readyState">Checking</strong><span id="readyDetail">Security and environment policy.</span></article>
+    <article class="metric-card"><small>Publishing integrity</small><strong id="publishState">Checking</strong><span id="publishDetail">Publishing bridge and public exposure.</span></article>
+  </section>
+
+  <div class="two-col">
+    <section class="panel">
+      <header class="panel-head"><small>LIVE ENVIRONMENT</small><h2>Technical readiness</h2><p>These values come from the deployed API. They are evidence of system state, not production authorization.</p></header>
+      <div id="checks" class="checks"><div class="empty">Loading live checks…</div></div>
+      <div class="toolbar"><button class="pc-btn primary" id="runCheck" type="button">Refresh live checks</button><a class="pc-btn gold" href="readiness.html">Open Release Control</a><a class="pc-btn" href="publishing-qa.html">Open Publishing QA</a></div>
+    </section>
+
+    <section class="panel">
+      <header class="panel-head"><small>CONTROLLED RELEASE PATH</small><h2>From staging to authorized launch</h2><p>Keep each decision boundary visible instead of treating a green server as permission to go live.</p></header>
+      <div class="release-path">
+        <div class="stage"><b>1</b><strong>Technical QA</strong><span>Health, readiness, migrations, smoke tests and publishing integrity.</span></div>
+        <div class="stage"><b>2</b><strong>Data + UAT</strong><span>Synthetic staging, role testing, resident-flow testing and migration review.</span></div>
+        <div class="stage"><b>3</b><strong>Evidence review</strong><span>Backups, restore test, DNS/TLS, storage, support and administrative gates.</span></div>
+        <div class="stage"><b>4</b><strong>Authorization</strong><span>THA IT/management decision, controlled cutover and post-launch verification.</span></div>
+      </div>
+      <div class="toolbar"><a class="pc-btn" href="uat.html">UAT</a><a class="pc-btn" href="pilot.html">Pilot</a><a class="pc-btn" href="go-live.html">Go-Live Centre</a></div>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:12px">
+    <header class="panel-head"><small>STAFF ARCHITECTURE</small><h2>Operational routes</h2><p>The production hub now reflects the current system rather than the older V162 module map.</p></header>
+    <div class="route-grid">
+      <article class="route"><small>DAILY OPERATIONS</small><strong>Resident work</strong><a href="index.html">Case Management</a><a href="workflow.html">Daily Workboard</a><a href="applications.html">Applications & Referrals</a><a href="correspondence.html">Correspondence</a><a href="field.html">Field Operations</a></article>
+      <article class="route"><small>COMMUNITY</small><strong>Engagement</strong><a href="community.html">Community Matters</a><a href="events.html">Events & Town Halls</a><a href="meetings.html">Meetings</a><a href="feedback.html">Resident Feedback</a></article>
+      <article class="route"><small>RECORDS + INTELLIGENCE</small><strong>Evidence</strong><a href="records.html">Records Centre</a><a href="search.html">Global Search</a><a href="reports.html">Reports</a><a href="performance.html">Performance</a><a href="quality.html">Quality</a></article>
+      <article class="route"><small>PUBLIC CONTENT</small><strong>Website publishing</strong><a href="cms.html">Website CMS</a><a href="publishing.html">Publishing Desk</a><a href="publishing-qa.html">Publishing QA</a></article>
+      <article class="route"><small>ADMINISTRATION</small><strong>People + controls</strong><a href="roster.html">Roster & Coverage</a><a href="access.html">Access Control</a><a href="audit.html">Audit</a><a href="system.html">System</a></article>
+      <article class="route"><small>RELEASE</small><strong>Launch controls</strong><a href="readiness.html">Release Control</a><a href="go-live.html">Go-Live & Migration</a><a href="training.html">Training</a><a href="uat.html">UAT</a><a href="pilot.html">Pilot</a></article>
+    </div>
+  </section>
+
+  <div class="boundary"><strong>Production boundary:</strong> this page intentionally does not contain a “go live” switch. Passing technical checks means the deployed software is reporting healthy state. It does not replace formal hosting, privacy, security, backup, support, DNS/TLS, UAT and management/THA IT approval.</div>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');
+let live=null,health=null,ready=null,publishing=null;
+function setMsg(text,kind=''){const e=$('msg');e.textContent=text;e.className='noticebar '+kind}
+function metric(id,state,detail){$(id+'State').textContent=state;$(id+'Detail').textContent=detail}
+function checkRow(label,ok,detail,severity='blocker'){return '<article class="check '+(ok?'':'bad')+'"><span class="mark">'+(ok?'✓':'!')+'</span><span><strong>'+esc(label)+'</strong><p>'+esc(detail)+'</p></span><span class="pill">'+(ok?'pass':esc(severity))+'</span></article>'}
+async function jsonFetch(path){const r=await fetch(path,{credentials:'same-origin'});let d={};try{d=await r.json()}catch{}return {ok:r.ok,status:r.status,data:d}}
+async function run(){
+  setMsg('Running live infrastructure checks…');$('checks').innerHTML='<div class="empty">Loading live checks…</div>';
+  live=health=ready=publishing=null;
+  const results=await Promise.allSettled([jsonFetch('/api/health/live'),jsonFetch('/api/health'),jsonFetch('/api/health/readiness'),SMG.api('/api/content/publishing-readiness')]);
+  if(results[0].status==='fulfilled')live=results[0].value;
+  if(results[1].status==='fulfilled')health=results[1].value;
+  if(results[2].status==='fulfilled')ready=results[2].value;
+  if(results[3].status==='fulfilled')publishing=results[3].value;
+
+  const apiOk=!!live?.ok && (health?.status===200||health?.status===503);
+  metric('api',apiOk?'Online':'Unavailable',apiOk?('API '+(live.data.version||'')+' responding normally.').trim():'Liveness or health endpoint could not be reached.');
+  const dbOk=health?.data?.database==='ok';
+  metric('db',dbOk?'Connected':'Unavailable',dbOk?'PostgreSQL connection is responding.':'Database check is not passing.');
+  const storage=health?.data?.storage||ready?.data?.environment?.storageDriver||'unknown';
+  const uploads=!!(health?.data?.uploadsEnabled??ready?.data?.uploadsEnabled);
+  const storageOk=!!ready?.data?.checks?.privateStorage;
+  metric('storage',storageOk?(uploads?'Ready':'Uploads off'):'Attention',storageOk?(uploads?('Private storage: '+storage):'Uploads are disabled; private-storage gate is satisfied.'):'Private storage readiness is not passing.');
+  const readyOk=!!ready?.data?.ready;
+  metric('ready',readyOk?'Pass':'Attention',readyOk?'Expanded production security readiness checks pass.':'One or more live security/environment checks require attention.');
+  const publishOk=!!publishing?.ready;
+  const publishBlockers=(publishing?.checks||[]).filter(x=>!x.ok).length;
+  metric('publish',publishOk?'Pass':'Attention',publishOk?'Publishing migration, revisions, snapshots and document exposure pass.':(publishBlockers?publishBlockers+' publishing blocker(s) remain.':'Publishing evidence is unavailable.'));
+
+  const rc=ready?.data?.checks||{};
+  const rows=[
+    ['API liveness',!!live?.ok,'Application process responds to the liveness probe.'],
+    ['Database',!!rc.database,'PostgreSQL connectivity is available.'],
+    ['Production mode',!!rc.productionMode,'NODE_ENV is production.'],
+    ['HTTPS origin',!!rc.productionOrigin,'Configured public origin uses HTTPS.'],
+    ['Trusted proxy',!!rc.trustProxy,'Reverse-proxy trust is configured for hosted deployment.'],
+    ['Idle session policy',!!rc.sessionIdlePolicy,'Idle session timeout is inside the approved production range.'],
+    ['Absolute session policy',!!rc.sessionAbsolutePolicy,'Absolute session lifetime is inside the approved production range.'],
+    ['Private storage',!!rc.privateStorage,'Document storage policy is acceptable for the current upload setting.'],
+    ['Malware scanner',!!rc.malwareScanner,'Malware scanning policy is satisfied for the current upload setting.'],
+    ['Publishing bridge',publishOk,publishOk?'Publishing integrity checks pass.':(publishBlockers?publishBlockers+' blocker(s) reported by Publishing QA.':'Publishing QA could not be loaded.')]
+  ];
+  $('checks').innerHTML=rows.map(x=>checkRow(...x)).join('');
+  const all=rows.every(x=>x[1]);
+  setMsg(all?'All currently automated technical checks pass. Production authorization still requires the separate human/IT release process.':'Production remains pre-launch. One or more automated technical checks need attention before authorization is considered.',all?'ok':'');
+}
+$('runCheck').onclick=run;
+run();
+})();
+</script>
+</body>
+</html>
