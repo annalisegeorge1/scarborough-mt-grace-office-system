@@ -1,0 +1,36 @@
+Scarborough / Mt. Grace District Office — V249
+
+STAFF WORKSPACE MODERNIZATION
+
+1. Staff System Directory
+- Removes the V159-era duplicate global-navigation shell.
+- Reorganizes modules into current operational categories.
+- Adds current publishing, release and go-live surfaces.
+- Uses authenticated production-client session handling.
+
+2. Daily Workboard
+- Replaces the static redirect page with a live read-only workload view.
+- Reads /api/reports/summary.
+- Shows open cases, overdue case follow-ups, open applications, open field work and records awaiting review.
+- Routes staff into authoritative modules for editing.
+
+3. System Administration
+- Replaces the older static production-services page.
+- Reads liveness, health, readiness and publishing-readiness endpoints.
+- Shows application, database, security/environment and publishing status.
+- Keeps detailed authorization decisions in dedicated release controls.
+
+4. Verification coverage
+Preflight now verifies:
+- Staff Directory
+- Daily Workboard
+- System Administration
+- existing Production/Publishing/Release/Go-Live controls
+
+Smoke tests now verify those protected pages both unauthenticated and authenticated, and test the management summary API.
+
+5. Release identity
+server/package.json now reports 249.0.0 so health/liveness no longer identify the current build as V163.
+
+6. Preservation
+V249 does not change database schema, case records, application records, resident tracking, public-content rules, publishing transitions or authentication credentials.
