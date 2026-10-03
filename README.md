@@ -1,162 +1,127 @@
-# Scarborough / Mt. Grace District Office Service System — V255
+# Scarborough / Mt. Grace District Office Service System — V256
 
 **Current status: controlled pre-launch / staging candidate**
 
-V255 adds a first-class Resident Profile layer on top of the V250–V254 staff architecture.
+V256 adds a controlled **New Case** workflow and a permission-aware **Quick Create** menu across the protected staff system.
 
-The system can now treat a resident as a person with a continuing office history rather than treating every case as an isolated identity.
-
-## Resident data model
-
-New migration:
-
-- `007_resident_profiles.sql`
-
-It adds:
-- `residents`
-- resident references such as `SMG-RES-2026-000001`
-- `cases.resident_id`
-- indexes for resident name, phone, email and case linkage
-
-### Safe migration rule
-
-Existing records are **not automatically merged** based on similar names, phone numbers, addresses or email addresses.
-
-During migration, every existing case without a resident link receives its own resident profile.
-
-This deliberately avoids incorrectly combining two different people.
-
-Staff can then explicitly reassign/link cases to the correct resident profile when they have verified that the records belong to the same person.
-
-## Resident Directory
+## New Case workflow
 
 New staff page:
 
-- `/staff/residents.html`
+- `/staff/new-case.html`
 
-Staff can search profiles by:
-- resident profile reference
-- name
-- phone
-- email
-- address
+A case can begin in either of two ways:
 
-The directory shows case totals, open-case totals and recent case activity.
+1. **Existing Resident Profile**
+   - search the authorized resident directory
+   - select the verified resident
+   - create the case under that resident identity
 
-Field Officers only receive resident profiles associated with cases they are permitted to access.
+2. **New resident for this case**
+   - enter the resident's basic identity/contact information
+   - create the resident and case together in one database transaction
 
-## Resident Profile
+The second path does not create an orphan Resident Profile if case creation fails.
 
-New staff page:
+## Case intake
 
-- `/staff/resident.html?id=<resident-id>`
+The controlled intake captures:
+- case / enquiry type
+- priority
+- enquiry / request
+- next action
+- next follow-up
+- target / due date
+- escalation state
+- assigned officer
+- case owner
 
-A Resident Profile combines the resident's authorized office history into tabs for:
+After a successful save, staff are sent directly into the new Case Management workspace.
 
-- Overview
-- Cases
-- Applications
-- Correspondence
-- Field Visits
-- Documents
-- Feedback
-- Activity
+## Assignment rules
 
-Permission-restricted sections remain unavailable when the signed-in role does not have access to the underlying module.
+New endpoint:
 
-## Resident Profile API
+- `GET /api/cases/options`
 
-New endpoints include:
+It returns active case-working staff permitted for assignment.
 
-- `GET /api/residents`
-- `GET /api/residents/:id`
-- `POST /api/residents`
-- `PATCH /api/residents/:id`
-- `POST /api/residents/:id/link-case`
+Field Officers creating a case are automatically set as:
+- assigned officer
+- case owner
 
-The API reuses existing RBAC permissions.
+For broader case-writing roles:
+- assignment can be selected
+- the signed-in creator remains the default case owner unless changed
 
-For Field Officers, profile access is limited to residents attached to cases assigned to or owned by that officer.
+The server validates that selected owner/assignee accounts are active case-working staff.
 
-## Case integration
+## Resident Profile integration
 
-Cases now carry `residentId` through the shared case shape.
+Resident Profile now includes:
 
-When a new case is created without an existing resident profile, the server creates the resident and case in the same database transaction.
+- **New case**
+- **Open latest case**
 
-When a verified existing resident profile is supplied, the new case can link to that resident instead.
+The New Case action passes the current resident identity directly into the controlled intake workflow.
 
-Existing Case Workspace drawers now include:
+## Quick Create
 
-**Open Resident Profile →**
+The shared staff header now includes a permission-aware:
 
-## Linking existing cases
+**+ New**
 
-Resident Profile allows staff with case-write authority to enter a case reference and explicitly link it to the current resident.
+menu.
 
-If the case already belongs to another resident profile, the API returns a conflict and requires explicit reassignment confirmation.
+Depending on the signed-in role, it can expose:
+- New case
+- New resident
+- New application
+- New correspondence
+- New field visit
+- New community matter
+- New event
+- New record
 
-No silent resident merges occur.
+Items are filtered using the same RBAC permission names used by the server.
 
-## Global Search
+Senior Staff or other roles with no relevant write permission do not receive meaningless creation actions.
 
-Global Search now includes authorized Resident Profile results.
+## Existing-module creation
 
-Resident search is migration-safe: if the resident table is not present yet, the rest of Global Search continues functioning.
+For staff modules that already had a safe native **New** action, Quick Create opens that existing creation flow using a small query-state handoff rather than duplicating another form.
 
-## Navigation
+Standalone New Resident is intentionally not shown to Field Officers; Field Officers can still create a new resident safely as part of the transactional New Case workflow.
 
-Within the **Residents** area, the shared shell now presents:
+## Navigation context
 
-- Resident Profiles
-- Case Management
-- Applications & Referrals
-- Correspondence
-- Field Visits
-- Resident Feedback
-
-The individual `resident.html` page remains inside the Resident Profiles navigation context.
-
-## Live readiness
-
-`/api/health/readiness` now includes:
-
-- `residentProfiles`
-
-This check passes only when both:
-- the `residents` table exists
-- `cases.resident_id` exists
-
-A deployment therefore cannot report fully ready while the V255 schema migration is missing.
+`new-case.html` is treated as part of the **Residents** area, so the user retains the Residents navigation context while creating a case.
 
 ## Backend release identity
 
-The server package version is now `255.0.0`.
-
-## Required deployment step
-
-Before exercising Resident Profiles on a deployed environment, run:
-
-`npm run migrate`
-
-This applies migration 007 after the previously recorded migrations.
+The server package version is now `256.0.0`.
 
 ## Verification
 
-Preflight now checks:
-- Resident Directory
-- Resident Profile workspace
-- Resident Profile API route
-- migration 007
+Preflight checks that the New Case workflow exists.
 
-Authenticated smoke testing checks:
-- Resident Directory page
-- Resident Profile shell
-- Resident Profile list API
-- first accessible Resident Profile detail when one exists
+Authenticated smoke testing verifies:
+- the New Case page is protected
+- the New Case page can be served after authentication
+- the case-creation options API responds when the smoke role has case-write permission
+
+Smoke testing does **not** create a real case.
+
+## Database requirement
+
+V256 depends on the V255 resident-profile schema.
+
+Before using New Case on a deployed environment:
+
+`npm run migrate`
+
+must have applied migration 007.
 
 ## Production boundary
 
-V255 creates a structured resident identity layer but does not authorize production use or change the office's privacy obligations.
-
-Resident data remains subject to approved hosting, access, retention, backup, audit and THA IT / management controls.
+V256 improves controlled staff intake and navigation. It does not authorize production use, weaken RBAC, or bypass resident-data privacy and records requirements.
