@@ -1,0 +1,118 @@
+Scarborough / Mt. Grace District Office — V241
+
+EXPLORE DRAWER STABILIZATION
+
+V241 is a screenshot-driven correction for the Explore drawer overlap visible on tablet/mobile.
+
+GOAL
+Keep Explore usable as the public navigation layer even after later resident tools add footer utilities.
+
+1. Drawer becomes a stable four-row shell
+- header
+- search
+- flexible scrollable navigation
+- fixed utility footer
+
+2. Navigation owns the remaining vertical space
+.v202-nav-scroll now uses:
+- min-height:0
+- overflow-y:auto
+- overscroll containment
+- touch momentum scrolling
+
+This prevents open groups from pushing the footer into the navigation.
+
+3. Footer is structurally separate
+The existing footer remains authoritative.
+
+It now:
+- never floats over navigation
+- does not use auto margin to compete for layout space
+- has its own visual separation and shadow
+
+4. Guided Resident Path
+V225 dynamically adds a third footer action.
+
+V241 intentionally makes the third quick action span both footer columns so:
+- Send enquiry / Track enquiry stay side by side
+- Guided resident path receives its own full-width row
+- Staff sign-in remains below the action grid
+
+5. Staff sign-in
+The existing Staff sign-in link remains unchanged in destination and behavior.
+
+Its layout is normalized so it cannot overlap dynamically inserted utility actions.
+
+6. Active Explore layer
+On tablet/mobile while Explore is open:
+- resident dock is visually hidden
+- accessibility floating control is visually hidden
+- Explore FAB is hidden
+
+They return immediately when the drawer closes.
+
+This prevents multiple fixed interaction layers from competing with the drawer.
+
+7. Dark-mode close control
+The supplied screenshot showed the close button losing contrast.
+
+V241 gives it:
+- explicit light surface
+- navy X
+- brass hover/focus state
+
+8. Dynamic viewport / safe areas
+The drawer respects:
+- safe-area top
+- safe-area bottom
+- 100dvh viewport height
+
+9. Short landscape screens
+For viewports <=620px tall:
+- drawer intro is hidden
+- header/search/footer chrome is compacted
+- scrollable navigation receives priority
+
+10. Preservation
+V241 is CSS-only.
+
+No changes to:
+- drawer navigation destinations
+- Explore JS
+- Guided Resident Journey behavior
+- staff login destination
+- resident dock actions
+- accessibility controls
+- public content
+- enquiries
+- tracking
+- authentication
+- staff CMS
+- database
+
+11. QA
+Passed:
+- server JavaScript syntax
+- CSS brace balance
+- stylesheet injection
+- V241 loads after V240
+- four-row drawer shell present
+- scrollable middle navigation present
+- separated footer present
+- third utility full-width rule present
+- Staff sign-in separation present
+- fixed dock hidden while drawer open
+- accessibility control hidden while drawer open
+- dark close-button contrast present
+- 100dvh handling present
+- short-viewport treatment present
+
+Files added:
+- assets/district-explore-drawer-v241.css
+- V241_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V241 is based directly on the supplied deployed tablet screenshot. A fresh deployed screenshot remains the final visual confirmation.
