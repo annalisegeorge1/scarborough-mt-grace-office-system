@@ -1,80 +1,72 @@
-# Scarborough / Mt. Grace District Office Service System — V249
+# Scarborough / Mt. Grace District Office Service System — V250
 
 **Current status: controlled pre-launch / staging candidate**
 
-V249 extends the V242–V248 release-control modernization into the everyday staff workspace. The Staff System Directory, Daily Workboard and System Administration now use the current authenticated production shell and live server-backed information instead of the older V159-era navigation pattern.
+V250 reorganizes the protected Staff System around a shared information architecture instead of exposing every page at the same navigation level.
 
-## Current staff entry points
+## V250 navigation model
 
-- Staff sign-in: `/staff/login.html`
-- Staff home / case management: `/staff/index.html`
-- Staff System Directory: `/staff/sections.html`
-- Daily Workboard: `/staff/workflow.html`
-- Applications & Referrals: `/staff/applications.html`
-- Records Centre: `/staff/records.html`
-- Reports: `/staff/reports.html`
-- Access Control: `/staff/access.html`
-- System Administration: `/staff/system.html`
-- Website CMS: `/staff/cms.html`
-- Publishing Desk: `/staff/publishing.html`
-- Publishing QA: `/staff/publishing-qa.html`
-- Production Control: `/staff/production.html`
-- Release Control: `/staff/readiness.html`
-- Go-Live & Migration: `/staff/go-live.html`
+The staff workspace now has six primary areas:
 
-Public/resident entry points:
-- Public website: `/`
-- Resident tracker: `/track/`
-- Resident portal hub: `/portals/`
+1. **Home** — Today, Operations Centre, Management Briefing, Handover, Attention & Reminders
+2. **Residents** — Case Management, Applications & Referrals, Correspondence, Field Visits, Resident Feedback
+3. **Community** — Community Matters, Events & Volunteers, Meetings
+4. **Records & Knowledge** — Records Centre, Global Search, Reports, Performance, Service Quality, Procedures
+5. **Communications** — Website CMS, Publishing Desk, Publishing QA
+6. **Administration** — Roster, Access, Audit, System, Production, Release Control, Training, UAT, Pilot, Go-Live, IT Review
 
-Health endpoints:
-- Liveness: `/api/health/live`
-- Health: `/api/health`
-- Readiness: `/api/health/readiness`
+## Shared staff navigation shell
 
-## V249 staff-workspace improvements
+All protected staff HTML pages except the sign-in page now load:
 
-### Staff System Directory
-The old V160/V159 directory shell is replaced with a current system map organized around:
-- resident operations
-- community operations
-- records and management intelligence
-- public website/publishing
-- administration and release controls
+- `/staff/staff-shell.css`
+- `/staff/staff-shell.js`
 
-### Daily Workboard
-`/staff/workflow.html` now reads the live management summary API and displays:
-- open cases
-- overdue case follow-ups
-- open applications
-- open field activity
-- records awaiting review
+The shell provides:
+- a persistent left sidebar for the six primary work areas
+- collapsible area submenus
+- contextual horizontal subpage tabs
+- current-area/current-page highlighting
+- desktop collapse/expand side tab
+- mobile slide-out drawer and overlay
+- remembered collapsed state
+- authenticated staff name/role display
+- shortcuts to Search and the System Directory
+- a single Sign Out control
+- automatic suppression of older duplicated navigation rows
 
-It remains a read-only routing surface. Staff edit authoritative records inside the relevant case/application/field/records modules instead of creating duplicate workboard state.
+The sign-in page intentionally remains outside the shell.
 
-### System Administration
-`/staff/system.html` now reads:
-- liveness
-- database health
-- expanded server readiness
-- publishing integrity
+## Interaction hierarchy
 
-Detailed release decisions remain in Production Control and Release Control.
+The intended staff hierarchy is now:
 
-### Backend release identity
-The server package version is now `249.0.0`, so `/api/health/live` reports the current build family rather than the obsolete V163 package identity.
+**Primary area → subpage tab → record/workspace**
 
-## Controlled publishing and release
+Examples:
+- Residents → Applications & Referrals → individual application
+- Records & Knowledge → Records Centre → individual document
+- Communications → Publishing Desk → content item/revision
+- Administration → Release Control → technical/admin evidence
 
-The V242–V248 controls remain in place:
-- governed Draft → In Review → Approved → Published workflow
-- verification before publishing
-- stable public snapshots during controlled revisions
-- Publishing QA and integrity diagnostics
-- expanded server/environment readiness
-- separate administrative evidence gates
-- local-only migration CSV staging
-- explicit production authorization boundary
+This reduces top-level navigation without removing existing capabilities or backend workflows.
+
+## Existing operational improvements retained
+
+V249 and earlier work remain in place:
+- live Daily Workboard management summary
+- modern Staff System Directory
+- live System Administration diagnostics
+- controlled public publishing
+- Publishing QA
+- Production Control
+- Release Control
+- Go-Live migration staging
+- expanded readiness/preflight/smoke checks
+
+## Backend release identity
+
+The server package version is now `250.0.0`.
 
 ## Technical release verification
 
@@ -87,19 +79,10 @@ Run from `server/`:
 - `npm run smoke`
 - `npm run migrate`
 
-Package-level static QA:
-- `python tools/release_qa.py`
-
-Smoke coverage now includes the Staff Directory, Daily Workboard, System Administration, Production Control, Publishing Desk, Publishing QA, Release Control and Go-Live surfaces.
+Preflight now checks that the shared navigation shell assets exist. Authenticated smoke testing also verifies that both shell assets can be served.
 
 ## Production boundary
 
-Green technical checks and completed browser evidence do **not** authorize production.
+V250 changes staff information architecture and navigation. It does not change production authorization requirements, database schema, resident records, authentication credentials, publishing transitions, or public-content exposure rules.
 
-Before confidential resident data or public production launch, the office still requires documented review/approval of hosting, DNS/TLS, secrets, staff access, privacy/retention, private storage, backup/restore, incident/rollback procedures, migration reconciliation, UAT/pilot, monitoring and THA IT / management authorization.
-
-See `PRODUCTION_LAUNCH_CHECKLIST.md` for the detailed evidence checklist.
-
-## Data rule until authorization
-
-Use synthetic/test data in staging until the required production review is complete. A healthy server, completed checklist, clean migration CSV or successful deployment must not be interpreted as permission to migrate confidential resident records.
+Use synthetic/test data in staging until the required production review and THA IT / management authorization are complete.
