@@ -117,6 +117,7 @@ async function run(){
     ['Private storage',!!rc.privateStorage,'Document storage policy is acceptable for the current upload setting.'],
     ['Malware scanner',!!rc.malwareScanner,'Malware scanning policy is satisfied for the current upload setting.'],
     ['Resident profile schema',!!rc.residentProfiles,'Resident Profiles and case linkage are available in the database.'],
+    ['Central Meetings schema',!!rc.meetingOperations,'Meetings, attendance, actions and timeline tables are available.'],
     ['Direct API isolation',!!rc.directApiIsolation,'Sensitive resident/revision tables are isolated from direct Supabase anon/authenticated access.'],
     ['Publishing bridge',publishOk,publishOk?'Publishing integrity checks pass.':(publishBlockers?publishBlockers+' blocker(s) reported by Publishing QA.':'Publishing QA could not be loaded.')]
   ];
