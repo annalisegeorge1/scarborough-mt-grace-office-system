@@ -29,6 +29,8 @@ if(email&&password){
   let d={};try{d=await r.json()}catch{}
   const ok=r.status===200&&d.csrf;console.log(`${ok?'PASS':'FAIL'} — Staff authentication: ${r.status}`);if(!ok)failures++;else{
     csrf=d.csrf;
+    await check('Authenticated staff shell styles','/staff/staff-shell.css');
+    await check('Authenticated staff shell script','/staff/staff-shell.js');
     await check('Authenticated staff home','/staff/index.html');
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
