@@ -35,6 +35,8 @@ if(email&&password){
     await check('Authenticated case workspace script','/staff/case-workspace-v251.js');
     await check('Authenticated case-context styles','/staff/case-context-v251.css');
     await check('Authenticated case-context helper','/staff/case-context-v251.js');
+    await check('Authenticated focused case styles','/staff/case-focus-v252.css');
+    await check('Authenticated focused case script','/staff/case-focus-v252.js');
     await check('Authenticated staff home','/staff/index.html');
     await check('Authenticated Applications','/staff/applications.html');
     await check('Authenticated Correspondence','/staff/correspondence.html');
