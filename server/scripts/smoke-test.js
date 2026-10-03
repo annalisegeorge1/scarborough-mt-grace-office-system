@@ -28,7 +28,7 @@ await check('Protected Go-Live Control redirects','/staff/go-live.html',[302]);
 if(email&&password){
   const r=await req('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
   let d={};try{d=await r.json()}catch{}
-  const ok=r.status===200&&d.csrf;console.log(`${ok?'PASS':'FAIL'} — Staff authentication: ${r.status}`);if(!ok)failures++;else{
+  const ok=r.status===200&&d.csrf&&Array.isArray(d.permissions);console.log(`${ok?'PASS':'FAIL'} — Staff authentication + permission payload: ${r.status}`);if(!ok)failures++;else{
     csrf=d.csrf;
     await check('Authenticated staff shell styles','/staff/staff-shell.css');
     await check('Authenticated staff shell script','/staff/staff-shell.js');
@@ -66,7 +66,7 @@ if(email&&password){
       else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
     }catch(e){console.log('FAIL — Integrated case workspace API discovery: '+e.message);failures++;}
 
-    const me=await req('/api/auth/me');console.log(`${me.ok?'PASS':'FAIL'} — Authenticated /me: ${me.status}`);if(!me.ok)failures++;
+    const me=await req('/api/auth/me');let med={};try{med=await me.json()}catch{}const meOk=me.ok&&Array.isArray(med.permissions);console.log(`${meOk?'PASS':'FAIL'} — Authenticated /me + permissions: ${me.status}`);if(!meOk)failures++;
   }
 }else console.log('SKIP — Authenticated staff smoke test (set SMOKE_EMAIL and SMOKE_PASSWORD).');
 console.log(`\nSmoke test complete: ${failures} failure(s).`);process.exitCode=failures?1:0;
