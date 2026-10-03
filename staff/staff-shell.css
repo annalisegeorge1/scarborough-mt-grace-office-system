@@ -93,3 +93,25 @@ body.smg-shell-collapsed .smg-shell-footer{padding:9px}
 @media print{
   body.smg-shell-active{padding:0!important}.smg-shell,.smg-shell-context,.smg-shell-edge,.smg-shell-overlay{display:none!important}
 }
+
+/* V252 touch-context contrast */
+@media(max-width:900px){
+  .smg-shell-context{height:52px}
+  .smg-context-tabs{gap:5px}
+  .smg-context-tabs a{
+    background:#f4f8fa;
+    border:1px solid #dfe8ec;
+    color:#31596f;
+    padding:8px 10px;
+    font-size:9px;
+    font-weight:850;
+  }
+  .smg-context-tabs a:hover{background:#eaf1f4;color:#173f58}
+  .smg-context-tabs a.active{
+    background:#0b3553;
+    border-color:#0b3553;
+    color:#fff;
+    box-shadow:0 3px 8px rgba(11,53,83,.14);
+  }
+  body.smg-shell-active,body.smg-shell-active.smg-shell-collapsed{padding-top:52px!important}
+}
