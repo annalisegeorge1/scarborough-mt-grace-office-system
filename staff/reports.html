@@ -1,1 +1,140 @@
-<!doctype html><html lang="en"><head><base href="/staff/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reports & Management Position | Scarborough / Mt. Grace</title><link rel="stylesheet" href="production-ui.css"><script src="production-client.js"></script><link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head><body><header class="top"><span class="authline" data-auth>Checking session…</span><h1>Reports & Management Position</h1><div class="sub">Live operational summary from PostgreSQL.</div><div class="nav"><a href="index.html">Home</a><a href="workflow.html">Daily Work</a><a href="applications.html">Applications</a><a href="correspondence.html">Correspondence</a><a href="field.html">Field</a><a href="community.html">Community</a><a href="events.html">Events</a><a href="records.html">Records</a><a href="search.html">Search</a><a href="reports.html" class="active">Reports</a><a href="cms.html">Website</a><a href="sections.html">All Sections</a></div></header><main class="wrap"><div id="msg" class="notice">These figures are calculated directly from the production database. They are operational counts, not political or electoral measures.</div><div class="grid" id="metrics"></div><section class="card"><h2>Management use</h2><p>Use these totals alongside the detailed Cases, Applications, Records, Field, Quality and Community sections. A number here reflects the current database state at the moment the report is refreshed.</p><div class="toolbar"><button class="btn gold" id="refresh">Refresh live figures</button><button class="btn light" onclick="window.print()">Print / Save PDF</button></div></section></main><script>const labels={cases_total:'Cases received',cases_open:'Open cases',cases_overdue:'Overdue case follow-ups',applications_open:'Open applications',applications_overdue:'Overdue application follow-ups',community_open:'Open community matters',field_open:'Open field activities',recovery_open:'Open service-recovery actions',records_review:'Records awaiting review',upcoming_events:'Upcoming events'};async function load(){try{const d=await SMG.api('/api/reports/summary'),s=d.summary||{};document.getElementById('metrics').innerHTML=Object.entries(labels).map(([k,l])=>`<section class="card third"><div class="metric">${SMG.esc(s[k]??0)}</div><strong>${SMG.esc(l)}</strong></section>`).join('');SMG.msg('Live management figures refreshed at '+new Date().toLocaleString('en-TT'),'ok')}catch(e){SMG.msg(e.message,'danger')}}document.getElementById('refresh').onclick=load;load();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>Management Reports | Scarborough / Mt. Grace</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--n:#08263d;--b:#174f74;--g:#c9a34a;--paper:#eef4f6;--line:#d9e4e9;--muted:#71858f;--red:#984b46;--green:#317052}
+body{background:var(--paper);color:#17394e}.wrap2{width:min(1420px,calc(100% - 28px));margin:16px auto 70px}
+.hero2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;padding:17px 19px;border-radius:14px;background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}.hero2 small{display:block;color:#d7c27c;font-size:8px;font-weight:900;letter-spacing:.12em}.hero2 h1{margin:4px 0 3px;font:500 27px Georgia,serif}.hero2 p{margin:0;color:#b8ccd6;font-size:9px;line-height:1.45;max-width:900px}.hero-actions{display:flex;gap:6px;flex-wrap:wrap}.btn2{border:1px solid #d4e0e5;border-radius:8px;background:#fff;color:#31596f;padding:8px 10px;font-size:8px;font-weight:900;cursor:pointer;text-decoration:none}.btn2.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn2.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}
+.notice2{margin:10px 0;padding:9px 11px;border-left:3px solid var(--g);border-radius:8px;background:#fff9e9;color:#675a30;font-size:8px;line-height:1.45}
+.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:10px 0}.metric{padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff}.metric small{display:block;color:#748893;font-size:7px;font-weight:900}.metric strong{display:block;margin-top:3px;color:#0b3553;font:600 21px Georgia,serif}.metric span{display:block;margin-top:2px;color:#81919a;font-size:7.5px;line-height:1.35}.metric.alert{border-left:4px solid #b85d54}.metric.good{border-left:4px solid #5a8d72}
+.panel{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 7px 18px rgba(6,31,51,.035)}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px 14px 10px;border-bottom:1px solid #e9eff2}.head small{display:block;color:#87691f;font-size:7px;font-weight:900;letter-spacing:.09em}.head h2{margin:3px 0 0;color:#0b3553;font:500 19px Georgia,serif}.head p{margin:3px 0 0;color:#748892;font-size:8px;line-height:1.4}.tabs{display:flex;gap:5px;flex-wrap:wrap}.tabs button{border:1px solid #d9e4e9;border-radius:8px;background:#f5f9fa;color:#426479;padding:7px 9px;font-size:8px;font-weight:900;cursor:pointer}.tabs button.active{background:#0b3553;border-color:#0b3553;color:#fff}.body{padding:12px 14px}.pane{display:none}.pane.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.subpanel{border:1px solid #e0e8ec;border-radius:10px;background:#fbfdfe;overflow:hidden}.subhead{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px solid #e8eef1}.subhead strong{color:#234f66;font-size:9px}.subhead span{font-size:7px;color:#80919a}.rows{display:grid}.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-bottom:1px solid #edf2f4}.row:last-child{border-bottom:0}.row strong{font-size:8.5px;color:#31596f}.row small{display:block;margin-top:2px;font-size:7.5px;color:#82939c}.count{font:600 16px Georgia,serif;color:#0b3553}.barrow{display:grid;grid-template-columns:minmax(150px,1fr) minmax(120px,2fr) 56px;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #edf2f4}.barrow:last-child{border-bottom:0}.barrow strong{font-size:8px;color:#31596f}.bar{height:8px;border-radius:999px;background:#e8eff2;overflow:hidden}.bar i{display:block;height:100%;background:#6d91a5;border-radius:999px}.barrow span{text-align:right;font-size:8px;color:#6d808a}
+.trend{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;padding:10px}.month{min-width:0;padding:9px;border:1px solid #e0e8ec;border-radius:9px;background:#fff}.month strong{display:block;color:#31596f;font-size:8px}.month .pair{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px}.month .pair div{padding:7px;border-radius:7px;background:#f2f6f8}.month small{display:block;font-size:6.5px;color:#7d8f98}.month b{display:block;margin-top:2px;font:600 15px Georgia,serif;color:#0b3553}
+.tablewrap{overflow:auto;border:1px solid #e0e8ec;border-radius:9px}.tablewrap table{width:100%;min-width:620px;border-collapse:collapse}.tablewrap th,.tablewrap td{padding:8px 9px;border-bottom:1px solid #e8eef1;text-align:left;font-size:8px}.tablewrap th{background:#0b3553;color:#fff;font-size:7px}.empty{padding:14px;text-align:center;color:#83949d;font-size:8px}
+@media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.trend{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){.hero2{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.trend{grid-template-columns:repeat(2,1fr)}.tabs{width:100%;overflow-x:auto;flex-wrap:nowrap}.tabs button{flex:0 0 auto}}
+@media(max-width:560px){.wrap2{width:calc(100% - 18px);margin-top:10px}.metrics{grid-template-columns:repeat(2,1fr)}.trend{grid-template-columns:1fr}.barrow{grid-template-columns:1fr}.barrow span{text-align:left}}
+@media print{.smg-staff-shell,.smg-shell-context,.smg-shell-edge,.smg-shell-overlay,.smg-quick-menu,.hero-actions,.tabs{display:none!important}.wrap2{width:100%;margin:0}.hero2{background:#fff!important;color:#111!important;border:0!important;padding:0 0 10px}.hero2 h1,.hero2 small,.hero2 p{color:#111!important}.pane{display:block!important}.panel{box-shadow:none;break-inside:avoid}.body{padding:8px 0}.metrics{grid-template-columns:repeat(3,1fr)}}
+</style>
+<link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script>
+</head>
+<body>
+<main class="wrap2">
+  <section class="hero2">
+    <div><small>RECORDS & KNOWLEDGE · MANAGEMENT REPORTING</small><h1>Management Reports</h1><p>Live descriptive reporting from central office records: workload, formal closure, case mix, throughput and current operational pressure.</p></div>
+    <div class="hero-actions"><button class="btn2 gold" id="refresh" type="button">Refresh</button><button class="btn2" id="print" type="button">Print / Save PDF</button></div>
+  </section>
+  <div id="msg" class="notice2">Figures are operational counts calculated from the central database. They are not staff performance ratings, electoral measures or political indicators.</div>
+
+  <section class="metrics">
+    <article class="metric"><small>TOTAL CASES</small><strong id="mTotal">—</strong><span>Cases recorded centrally</span></article>
+    <article class="metric"><small>OPEN CASES</small><strong id="mOpen">—</strong><span>Not Completed or Closed</span></article>
+    <article class="metric alert"><small>OVERDUE CASES</small><strong id="mOverdue">—</strong><span>Past follow-up date</span></article>
+    <article class="metric good"><small>FORMALLY CLOSED</small><strong id="mClosed">—</strong><span>Closed case files</span></article>
+    <article class="metric"><small>CLOSED THIS MONTH</small><strong id="mClosedMonth">—</strong><span>Formal closure timestamp this month</span></article>
+    <article class="metric"><small>AVG DAYS TO CLOSE</small><strong id="mDays">—</strong><span>Closed cases with valid timestamps</span></article>
+  </section>
+
+  <section class="panel">
+    <header class="head">
+      <div><small>LIVE REPORT</small><h2>Office operating position</h2><p id="generated">Loading central reporting data…</p></div>
+      <nav class="tabs" id="tabs">
+        <button class="active" data-tab="overview" type="button">Overview</button>
+        <button data-tab="closures" type="button">Formal closures</button>
+        <button data-tab="mix" type="button">Case mix</button>
+        <button data-tab="trend" type="button">Six-month flow</button>
+        <button data-tab="workload" type="button">Workload distribution</button>
+      </nav>
+    </header>
+    <div class="body">
+      <section class="pane active" data-pane="overview">
+        <div class="grid2">
+          <section class="subpanel"><header class="subhead"><strong>Current operational pressure</strong><span>central records</span></header><div id="pressure" class="rows"></div></section>
+          <section class="subpanel"><header class="subhead"><strong>Case status position</strong><span>all cases</span></header><div id="statuses" class="rows"></div></section>
+        </div>
+      </section>
+
+      <section class="pane" data-pane="closures">
+        <div class="grid2">
+          <section class="subpanel"><header class="subhead"><strong>Closure reasons</strong><span>formally Closed cases</span></header><div id="closures" class="rows"></div></section>
+          <section class="subpanel"><header class="subhead"><strong>Current month throughput</strong><span>descriptive</span></header><div id="throughput" class="rows"></div></section>
+        </div>
+      </section>
+
+      <section class="pane" data-pane="mix">
+        <section class="subpanel"><header class="subhead"><strong>Case categories</strong><span>total / open / closed</span></header><div id="categories"></div></section>
+      </section>
+
+      <section class="pane" data-pane="trend">
+        <section class="subpanel"><header class="subhead"><strong>Cases opened and formally closed</strong><span>last six calendar months</span></header><div id="trend" class="trend"></div></section>
+      </section>
+
+      <section class="pane" data-pane="workload">
+        <section class="subpanel"><header class="subhead"><strong>Current case-owner workload distribution</strong><span>descriptive counts, not rankings</span></header>
+          <div class="tablewrap"><table><thead><tr><th>Case owner</th><th>Open cases</th><th>Overdue cases</th></tr></thead><tbody id="owners"></tbody></table></div>
+        </section>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');let report=null;
+function show(tab){document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===tab))}
+function n(v){const x=Number(v);return Number.isFinite(x)?x:0}
+function row(label,value,detail=''){return '<article class="row"><div><strong>'+esc(label)+'</strong>'+(detail?'<small>'+esc(detail)+'</small>':'')+'</div><span class="count">'+esc(value)+'</span></article>'}
+function render(){
+  if(!report)return;const h=report.headline||{};
+  $('mTotal').textContent=n(h.cases_total);$('mOpen').textContent=n(h.cases_open);$('mOverdue').textContent=n(h.cases_overdue);$('mClosed').textContent=n(h.cases_closed);$('mClosedMonth').textContent=n(h.cases_closed_month);$('mDays').textContent=h.avg_days_to_close==null?'—':h.avg_days_to_close;
+  $('generated').textContent='Generated '+new Date(report.generatedAt||Date.now()).toLocaleString('en-TT')+' from central records.';
+
+  $('pressure').innerHTML=[
+    ['Open applications',h.applications_open,'Applications/referrals not Closed'],
+    ['Overdue application follow-ups',h.applications_overdue,'Past next-follow-up date'],
+    ['Open field work',h.field_open,'Field visits not Completed'],
+    ['Open community matters',h.community_open,'Community matters not Resolved'],
+    ['Open resident feedback',h.feedback_open,'Feedback not Closed'],
+    ['Open service recovery',h.recovery_open,'Outstanding recovery actions'],
+    ['Records needing review',h.records_review,'Document review status = Needs Review'],
+    ['Open meeting actions',h.meeting_actions_open,'Meeting actions not Completed/Cancelled'],
+    ['Overdue meeting actions',h.meeting_actions_overdue,'Open actions past due'],
+    ['Open event actions',h.event_actions_open,'Event actions not Completed/Cancelled'],
+    ['Upcoming appointments',h.upcoming_appointments,'Scheduled from today forward']
+  ].map(x=>row(x[0],n(x[1]),x[2])).join('');
+
+  $('statuses').innerHTML=(report.caseStatuses||[]).length?(report.caseStatuses||[]).map(x=>row(x.status,n(x.n))).join(''):'<div class="empty">No case status data.</div>';
+
+  $('closures').innerHTML=(report.closureReasons||[]).length?(report.closureReasons||[]).map(x=>row(x.reason,n(x.n))).join(''):'<div class="empty">No formally closed cases yet.</div>';
+
+  $('throughput').innerHTML=[
+    ['Cases created this month',n(h.cases_created_month)],
+    ['Cases operationally Completed',n(h.cases_completed),'Current total in Completed status'],
+    ['Cases formally Closed this month',n(h.cases_closed_month)],
+    ['Field visits completed this month',n(h.field_completed_month)]
+  ].map(x=>row(x[0],x[1],x[2]||'')).join('');
+
+  const cats=report.categories||[],max=Math.max(1,...cats.map(x=>n(x.total)));
+  $('categories').innerHTML=cats.length?cats.map(x=>'<article class="barrow"><strong>'+esc(x.category)+'</strong><div class="bar"><i style="width:'+Math.max(2,Math.round(n(x.total)/max*100))+'%"></i></div><span>'+n(x.total)+' total · '+n(x.open)+' open · '+n(x.closed)+' closed</span></article>').join(''):'<div class="empty">No category data.</div>';
+
+  $('trend').innerHTML=(report.sixMonthTrend||[]).length?(report.sixMonthTrend||[]).map(x=>'<article class="month"><strong>'+esc(x.month)+'</strong><div class="pair"><div><small>OPENED</small><b>'+n(x.opened)+'</b></div><div><small>CLOSED</small><b>'+n(x.closed)+'</b></div></div></article>').join(''):'<div class="empty">No trend data.</div>';
+
+  $('owners').innerHTML=(report.ownerWorkload||[]).length?(report.ownerWorkload||[]).map(x=>'<tr><td>'+esc(x.staff)+'</td><td>'+n(x.open_cases)+'</td><td>'+n(x.overdue_cases)+'</td></tr>').join(''):'<tr><td colspan="3" class="empty">No owner workload data.</td></tr>';
+}
+async function load(){
+  $('msg').textContent='Refreshing central management report…';
+  try{report=await SMG.api('/api/reports/management');render();$('msg').textContent='Central management report refreshed successfully. Figures describe current workload and outcomes; they are not staff ratings.'}
+  catch(e){$('msg').textContent=e.message}
+}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));$('refresh').onclick=load;$('print').onclick=()=>window.print();load();
+})();
+</script>
+</body>
+</html>
