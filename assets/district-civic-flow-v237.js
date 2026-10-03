@@ -156,6 +156,7 @@
 
   function moveActiveCardIntoView(index){
     if(!track)return;
+    if(window.matchMedia("(max-width: 900px)").matches)return;
     const step=steps[index];
     if(!step)return;
 
