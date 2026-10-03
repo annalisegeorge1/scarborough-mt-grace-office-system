@@ -1,127 +1,112 @@
-# Scarborough / Mt. Grace District Office Service System — V256
+# Scarborough / Mt. Grace District Office Service System — V257
 
 **Current status: controlled pre-launch / staging candidate**
 
-V256 adds a controlled **New Case** workflow and a permission-aware **Quick Create** menu across the protected staff system.
+V257 hardens the database path used by V253–V256 and makes resident-data isolation visible in release readiness.
 
-## New Case workflow
+## Database hardening
 
-New staff page:
+New migration:
 
-- `/staff/new-case.html`
+- `008_operational_indexes_and_function_hardening.sql`
 
-A case can begin in either of two ways:
+It has been applied to the connected Supabase project and recorded in both:
+- Supabase migration history
+- the application's `public.schema_migrations` ledger
 
-1. **Existing Resident Profile**
-   - search the authorized resident directory
-   - select the verified resident
-   - create the case under that resident identity
+This prevents Render's startup migration runner from reapplying it.
 
-2. **New resident for this case**
-   - enter the resident's basic identity/contact information
-   - create the resident and case together in one database transaction
+## Resident-reference function
 
-The second path does not create an orphan Resident Profile if case creation fails.
+`public.next_resident_reference()` now has an explicit PostgreSQL search path:
 
-## Case intake
+- `public`
+- `pg_temp`
 
-The controlled intake captures:
-- case / enquiry type
-- priority
-- enquiry / request
-- next action
-- next follow-up
-- target / due date
-- escalation state
-- assigned officer
-- case owner
+This clears Supabase's mutable-function-search-path security warning.
 
-After a successful save, staff are sent directly into the new Case Management workspace.
+## Operational indexes
 
-## Assignment rules
+V257 adds targeted indexes for the workflows introduced in recent releases:
 
-New endpoint:
+- resident creator linkage
+- case ownership/status
+- case activity timeline
+- permanent case notes
+- applications by case
+- applications by assigned officer/stage/follow-up
+- appointments by case
+- appointments by assigned officer/start time
+- correspondence by linked case/reference
+- field visits by linked case/reference
+- field visits by lead officer/status/schedule
+- resident feedback by case reference
 
-- `GET /api/cases/options`
+Supabase's unindexed-foreign-key advisory count dropped from 51 to 42 after this hardening pass.
 
-It returns active case-working staff permitted for assignment.
+## Direct Supabase API isolation
 
-Field Officers creating a case are automatically set as:
-- assigned officer
-- case owner
+The application remains server-mediated: resident/case data is accessed through the Node server's PostgreSQL connection, not through browser-side Supabase clients.
 
-For broader case-writing roles:
-- assignment can be selected
-- the signed-in creator remains the default case owner unless changed
+Supabase currently reports RLS disabled on:
+- `public.residents`
+- `public.public_content_revisions`
 
-The server validates that selected owner/assignee accounts are active case-working staff.
+However, direct role checks confirm that `anon` and `authenticated` do not currently have direct SELECT/INSERT/UPDATE privileges on those sensitive tables.
 
-## Resident Profile integration
+V257 adds a live readiness check:
 
-Resident Profile now includes:
+- `directApiIsolation`
 
-- **New case**
-- **Open latest case**
+It fails when `anon` or `authenticated` receive direct DML privileges on either sensitive table.
 
-The New Case action passes the current resident identity directly into the controlled intake workflow.
+## Resident schema readiness
 
-## Quick Create
+The existing `residentProfiles` readiness gate remains and verifies:
+- `public.residents` exists
+- `public.cases.resident_id` exists
 
-The shared staff header now includes a permission-aware:
+## Staff diagnostics
 
-**+ New**
+System Administration, Production Control and Release Control now show both checks explicitly:
 
-menu.
+- Resident profile schema
+- Direct API isolation
 
-Depending on the signed-in role, it can expose:
-- New case
-- New resident
-- New application
-- New correspondence
-- New field visit
-- New community matter
-- New event
-- New record
-
-Items are filtered using the same RBAC permission names used by the server.
-
-Senior Staff or other roles with no relevant write permission do not receive meaningless creation actions.
-
-## Existing-module creation
-
-For staff modules that already had a safe native **New** action, Quick Create opens that existing creation flow using a small query-state handoff rather than duplicating another form.
-
-Standalone New Resident is intentionally not shown to Field Officers; Field Officers can still create a new resident safely as part of the transactional New Case workflow.
-
-## Navigation context
-
-`new-case.html` is treated as part of the **Residents** area, so the user retains the Residents navigation context while creating a case.
+This makes resident-data protection visible rather than hidden behind a generic readiness result.
 
 ## Backend release identity
 
-The server package version is now `256.0.0`.
+The server package version is now `257.0.0`.
 
-## Verification
+## Deployment
 
-Preflight checks that the New Case workflow exists.
+Render is configured to run:
 
-Authenticated smoke testing verifies:
-- the New Case page is protected
-- the New Case page can be served after authentication
-- the case-creation options API responds when the smoke role has case-write permission
+`cd server && npm run migrate && npm start`
 
-Smoke testing does **not** create a real case.
+on service startup.
 
-## Database requirement
+Because migration 008 has already been recorded in the app migration ledger, the next Render restart/deploy should skip it cleanly.
 
-V256 depends on the V255 resident-profile schema.
+## Verification completed
 
-Before using New Case on a deployed environment:
+The connected Supabase project is ACTIVE_HEALTHY.
 
-`npm run migrate`
+Confirmed:
+- migration 007 is applied
+- migration 008 is applied
+- one existing case is linked to one Resident Profile
+- all V257 indexes exist
+- the mutable-function-search-path warning is resolved
+- direct anon/authenticated resident/revision access is not granted
 
-must have applied migration 007.
+## Remaining RLS decision
+
+Supabase still advises enabling Row Level Security on `residents` and `public_content_revisions`.
+
+That remediation is intentionally not auto-applied because RLS policy design is an access-policy decision. The current server-only architecture is protected by revoked direct client privileges, which V257 now checks continuously.
 
 ## Production boundary
 
-V256 improves controlled staff intake and navigation. It does not authorize production use, weaken RBAC, or bypass resident-data privacy and records requirements.
+Technical hardening and readiness evidence do not constitute final production authorization. Confidential resident data still requires approved hosting, backups, retention, operational procedures, and THA IT / management authorization.
