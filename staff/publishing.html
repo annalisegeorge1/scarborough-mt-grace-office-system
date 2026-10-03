@@ -168,7 +168,7 @@ function renderPreview(){
     '<section class="preview-shell"><div class="preview-label"><span>RESIDENT PREVIEW · PUBLIC-SAFE FIELDS ONLY</span><span class="preview-route">'+esc(routeLabel(route))+'</span></div>'+
     '<article class="preview-card"><small>'+esc((p.category||p.type||'District Office').toUpperCase())+'</small><h3>'+esc(p.title||'Untitled content')+'</h3>'+
     (p.summary?'<p>'+esc(p.summary)+'</p>':'')+(p.body?'<p>'+esc(p.body)+'</p>':'')+
-    '<div class="preview-status">'+status+(preview.workflow?.verified?pill('Verified','verified'):pill('Not verified','unverified'))+'</div>'+
+    '<div class="preview-status">'+status+(preview.workflow?.verified?pill('Verified','verified'):pill('Not verified','unverified'))+(preview.workflow?.liveSnapshotActive&&x.workflow!=='Published'?pill('Previous public version remains live','verified'):'')+'</div>'+
     previewAction(p)+'</article></section>'+
     '<section class="readiness"><h3>Publication readiness</h3>'+checks+
       (!ready.checks?.length?'<div class="check"><span class="check-mark">✓</span><span><strong>No additional checks</strong><span>This record has no special publishing checks.</span></span></div>':'')+
@@ -198,8 +198,10 @@ function workflowButtons(x,ready,route){
     b.push('<button class="'+(x.verified?'':'gold')+'" type="button" data-action="'+(x.verified?'unverify':'verify')+'">'+(x.verified?'Remove verification':'Verify source')+'</button>');
     b.push('<button class="primary" type="button" data-action="publish" '+(!x.verified||!ready.ready?'disabled':'')+'>Publish</button>');
   }
-  if(x.workflow==='Published')b.push('<button class="danger" type="button" data-action="archive">Archive</button>');
-  else if(x.workflow!=='Archived')b.push('<button class="danger" type="button" data-action="archive">Archive</button>');
+  if(x.workflow==='Published'){
+    b.push('<button class="gold" type="button" data-action="revise">Start a revision</button>');
+    b.push('<button class="danger" type="button" data-action="archive">Archive</button>');
+  }else if(x.workflow!=='Archived')b.push('<button class="danger" type="button" data-action="archive">Archive</button>');
   if(x.workflow==='Archived')b.push('<button class="gold" type="button" data-action="restore">Restore to draft</button>');
   return b.join('');
 }
