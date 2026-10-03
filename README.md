@@ -1,148 +1,124 @@
-# Scarborough / Mt. Grace District Office Service System — V267
+# Scarborough / Mt. Grace District Office Service System — V268
 
 **Current status: consolidation / staging candidate**
 
-V267 strengthens the **closure** step of the office workflow.
+V268 strengthens the **report** step of the office workflow.
 
 The consolidation path remains:
 
 **Today → record/workspace → action → follow-up → evidence → close/report**
 
-V267 focuses on **formal case closure**.
+V268 focuses on reporting directly from the central work records rather than reconstructing activity manually or relying on browser-local data.
 
-## Completed vs Closed
+## Central management reporting API
 
-The system now treats these statuses deliberately:
+New endpoint:
 
-- **Completed** — operational work may be complete.
-- **Closed** — the case file has been formally closed.
+- `GET /api/reports/management`
 
-This preserves the existing workflow distinction instead of treating both labels as interchangeable.
+It derives descriptive operational reporting from PostgreSQL.
 
-## Formal closure authority
+### Headline measures
 
-Formal transition to **Closed** is server-enforced for:
-
-- Manager
-- Administrative
-
-A case cannot be created directly in the Closed state.
-
-A formally closed case cannot be edited/reopened through the normal case update path by a role without formal closure authority.
-
-This aligns the backend with the long-standing Case Management closure control.
-
-## Formal closure requirements
-
-Before entering Closed, the server requires:
-
-- a closure reason
-- for resident-visible cases, public status must be **Completed** or **Closed**
-- for resident-visible cases, a resident-facing completion/closure update must be recorded
-
-These are true server-side controls, not only browser checks.
-
-## Closure timestamp
-
-The existing `cases.closed_at` field is now maintained correctly:
-
-- entering Closed sets the timestamp
-- reopening clears it
-- existing timestamp is preserved while a case remains Closed
-
-The client case shape now exposes:
-
-- `closedAt`
-
-## Closure readiness
-
-The Case Workspace API now returns:
-
-- `closureReadiness`
-
-It contains:
-- whether the current role can formally close
-- whether the case is already formally closed
-- closure timestamp
-- required blockers
-- unresolved linked-work warnings
-- calculated readiness
-
-### Required blockers
-
-The checklist can require:
-- closure reason
-- resident-facing Completed/Closed status
-- resident-facing completion/closure update
-
-### Review warnings
-
-The workspace also surfaces unresolved work such as:
-- open applications
-- incomplete field visits
-- correspondence not yet issued/archived
+The response includes:
+- total cases
+- open cases
+- operationally Completed cases
+- formally Closed cases
+- cases created this month
+- cases formally closed this month
+- overdue case follow-ups
+- open/overdue applications
+- open field work
+- field visits completed this month
+- open community matters
 - open resident feedback
 - open service-recovery actions
-- future appointments
+- records needing review
+- open/overdue meeting actions
 - open event actions
+- upcoming appointments
+- average days from case creation to formal closure where valid closure timestamps exist
+
+These are descriptive office counts, not staff ratings or performance scores.
+
+## Formal closure reporting
+
+The management response includes:
+
+- case status distribution
+- formal closure-reason distribution
+- case category totals/open/closed
+- six-month cases-opened vs formally-closed trend
+- case-owner workload distribution
+
+Closure reason reporting uses the formal `closure_reason` field introduced earlier in the case workflow.
+
+Cases without a recorded formal reason are explicitly shown as **Not recorded** rather than silently discarded.
+
+## Management Reports
+
+`/staff/reports.html` has been rebuilt as a responsive central reporting workspace.
+
+Tabs:
+
+- Overview
+- Formal closures
+- Case mix
+- Six-month flow
+- Workload distribution
+
+The page clearly labels workload distribution as descriptive counts rather than staff ranking.
+
+It includes:
+- live central refresh
+- print / save PDF support
+- tablet/mobile layouts
+- no duplicate legacy navigation
+- no browser-local report fallback
+
+## Management Briefing
+
+`/staff/briefing.html` has been replaced with a central-only briefing.
+
+It combines:
+- `/api/reports/management`
+- `/api/today`
+
+to show:
+- open and overdue cases
+- cross-module due-today work
+- formal closure totals
+- closures this month
 - open meeting actions
-- evidence still needing records review
-- referral follow-up still open
+- priority attention items
+- current operational pressure
+- closure reasons
+- current-month throughput
 
-Warnings are intentionally advisory rather than universal hard blockers because legitimate transfer/referral closure scenarios may leave external work continuing elsewhere.
+The previous localStorage/browser-test fallback has been removed.
 
-## Case Workspace
-
-A new tab has been added:
-
-**Closure**
-
-It displays:
-- formal closure authority
-- required prerequisites
-- unresolved linked-work warnings
-- formal closure timestamp when closed
-- a route back to Case Management to resolve required fields
-
-This gives staff a clear final review before closing the case file.
-
-## Activity and audit
-
-Formal closure now records:
-- a **Case closed** activity event with the closure reason
-- audit metadata indicating formal closure
-
-Reopening records:
-- a **Case reopened** activity event
-- audit metadata indicating reopening
-
-## Policy wording cleanup
-
-The older Case Management operating note previously bundled assignment and closure into one statement.
-
-It now states:
-- formal closure requires Manager/Administrative authority
-- assignment controls remain role-based
-
-No assignment permission was changed in V267.
+If central reporting is unavailable, the briefing shows that it is unavailable instead of substituting potentially stale browser data.
 
 ## Verification
 
-Source validation confirms:
-- Cases API parses
-- case-shape helper parses
-- Case Workspace helper parses
+Preflight checks:
+- Management Reports
+- Management Briefing
 
-Authenticated smoke testing now requires `closureReadiness` to contain:
-- `blockers` array
-- `warnings` array
-- boolean `ready`
-- boolean `canFormalClose`
+Authenticated smoke testing verifies:
+- both pages
+- `/api/reports/management`
+- management response includes headline data plus status, closure, category, six-month trend and workload arrays
 
 ## Backend release identity
 
-The server package version is now `267.0.0`.
+The server package version is now `268.0.0`.
+
+## Consolidation direction
+
+With Today, Case Workspace, evidence, closure and central reporting now connected, the next phase should be a **feature freeze and structured UAT pass** rather than another major feature expansion.
 
 ## Production boundary
 
-V267 adds closure integrity and visibility. It does not automatically decide that unresolved linked work is acceptable, change assignment policy, or constitute final production authorization.
+V268 improves operational reporting. It does not create staff rankings, political/electoral measures, production authorization, or replace management review of consequential figures.
