@@ -45,6 +45,12 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
        count(*) FILTER (WHERE c.priority IN ('Urgent','High') AND c.status NOT IN ('Closed','Completed'))::int high_priority
        FROM cases c WHERE ${caseWhere}`,caseParams);
 
+  const applicationCount=permissions.applications
+    ? await db.query(isField
+      ? "SELECT count(*)::int n FROM applications WHERE assigned_user_id=$1 AND stage<>$2"
+      : "SELECT count(*)::int n FROM applications WHERE stage<>$1",isField?[uid,openApplicationStage]:[openApplicationStage])
+    : {rows:[{n:0}]};
+
   const applications=permissions.applications
     ? await db.query(
       isField
@@ -56,6 +62,12 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
              ORDER BY CASE WHEN next_follow_up<CURRENT_DATE THEN 0 WHEN next_follow_up=CURRENT_DATE THEN 1 ELSE 2 END,next_follow_up NULLS LAST,updated_at DESC LIMIT 8`,
       isField?[uid,openApplicationStage]:[openApplicationStage])
     : {rows:[]};
+
+  const fieldCount=permissions.field
+    ? await db.query(isField
+      ? "SELECT count(*)::int n FROM field_visits WHERE lead_user_id=$1 AND status<>'Completed'"
+      : "SELECT count(*)::int n FROM field_visits WHERE status<>'Completed'",isField?[uid]:[])
+    : {rows:[{n:0}]};
 
   const field=permissions.field
     ? await db.query(
@@ -69,6 +81,12 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
       isField?[uid]:[])
     : {rows:[]};
 
+  const appointmentCount=permissions.appointments
+    ? await db.query(isField
+      ? "SELECT count(*)::int n FROM appointments WHERE assigned_user_id=$1 AND starts_at>=CURRENT_DATE AND status<>'Cancelled'"
+      : "SELECT count(*)::int n FROM appointments WHERE starts_at>=CURRENT_DATE AND status<>'Cancelled'",isField?[uid]:[])
+    : {rows:[{n:0}]};
+
   const appointments=permissions.appointments
     ? await db.query(
       isField
@@ -80,6 +98,10 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
              ORDER BY starts_at ASC LIMIT 8`,
       isField?[uid]:[])
     : {rows:[]};
+
+  const feedbackCount=permissions.feedback
+    ? await db.query("SELECT count(*)::int n FROM resident_feedback WHERE status<>'Closed'")
+    : {rows:[{n:0}]};
 
   const feedback=permissions.feedback
     ? await db.query(`SELECT id,case_reference,feedback_type,theme,status,follow_up_requested,updated_at
@@ -113,10 +135,10 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
       casesOverdue:summary.overdue||0,
       casesDueToday:summary.due_today||0,
       highPriority:summary.high_priority||0,
-      applicationsOpen:applications.rows.length,
-      fieldOpen:field.rows.length,
-      upcomingAppointments:appointments.rows.length,
-      feedbackOpen:feedback.rows.length
+      applicationsOpen:applicationCount.rows[0]?.n||0,
+      fieldOpen:fieldCount.rows[0]?.n||0,
+      upcomingAppointments:appointmentCount.rows[0]?.n||0,
+      feedbackOpen:feedbackCount.rows[0]?.n||0
     },
     cases:cases.rows,
     applications:applications.rows,
