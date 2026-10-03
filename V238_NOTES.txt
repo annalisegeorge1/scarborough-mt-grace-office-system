@@ -1,0 +1,144 @@
+Scarborough / Mt. Grace District Office — V238
+
+DARK-MODE + FORM-CONTROL STABILIZATION
+
+V238 is a screenshot-driven correction release based on the 20:36–20:39 tablet captures.
+
+The latest screenshots confirmed three remaining defects:
+- Resident Update Preferences labels were overlapping
+- V208/V209 support guidance and focused page-end links were too low-contrast in dark mode
+- Explore drawer footer actions were nearly white-on-white in dark mode
+
+1. Resident Update Preferences normalization
+V238 adds a small DOM normalizer for:
+- #v138-status-consent
+- #v138-reminder-consent
+
+The existing checkbox elements are NOT cloned or replaced.
+
+They are moved into stable semantic rows with their existing labels so:
+- IDs remain unchanged
+- label associations remain intact
+- checked state remains intact
+- form submission logic continues to read the same checkbox IDs
+- notificationConsent/reminderConsent behavior is preserved
+
+2. Preference layout
+Each consent becomes:
+- one compact checkbox column
+- one flexible text column
+- normal document flow
+- no absolute positioning
+- no inherited full-width checkbox behavior
+- safe text wrapping
+
+The explanatory notification-service note remains below the two choices.
+
+3. Late-render protection
+Because the preference controls may be inserted or enhanced by earlier runtime code, V238:
+- runs after DOMContentLoaded when needed
+- retries briefly if the target block is not yet available
+- stops once normalization succeeds
+- marks the block to prevent duplicate normalization
+
+4. Dark V208/V209 guidance
+V238 reinforces dark-mode contrast for:
+- support-hub headings
+- support-hub descriptions
+- accordion row titles
+- accordion row descriptions
+- number/index badges
+- Collapse all control
+
+This addresses the low-contrast “Additional tools & process guidance” screenshot.
+
+5. Dark focused page-end links
+The compact V236 cross-site links now receive explicit:
+- dark navy card surfaces
+- light text
+- hover/focus brass state
+- -webkit-text-fill-color protection
+
+This prevents later dark-runtime rules from producing nearly invisible labels.
+
+6. Explore drawer footer
+The V202 drawer footer now has a full dark treatment:
+- dark footer background
+- visible borders
+- readable utility action text
+- readable staff sign-in text
+- clear hover/focus state
+
+The rule also covers newer resident-tool footer buttons if they are inserted later.
+
+7. Portrait end-of-page spacing
+Focused page-end bottom spacing is reduced from the larger V236 clearance to a tighter dock-safe value on portrait screens.
+
+The fixed resident dock remains protected.
+
+8. Preservation
+V238 does not change:
+- staff CMS
+- authentication
+- public publishing / verification
+- enquiry API
+- form field names
+- consent field IDs
+- notification consent logic
+- reminder consent logic
+- document upload logic
+- tracker
+- database
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness
+- V229 PWA
+- V231 Service Intelligence
+- V235 Resident Service Workspace
+- V236 focused-route coherence
+- V237 Civic Flow
+
+9. Privacy/data
+V238 JavaScript:
+- performs no fetch/API request
+- uses no localStorage
+- uses no sessionStorage
+- sends no resident data
+- performs no POST/PATCH/DELETE
+- does not clone or replace consent inputs
+
+10. QA
+Passed:
+- V238 JavaScript syntax
+- server JavaScript syntax
+- CSS brace balance
+- V238 CSS/JS injection
+- V238 CSS loads after V237
+- V238 JS loads after V237
+- preference-row normalizer present
+- original input elements reused
+- label association logic present
+- delayed-runtime retry present
+- dark V208/V209 title/description rules present
+- dark focused page-end rules present
+- dark Explore drawer footer rules present
+- mobile preference sizing present
+- portrait gap reduction present
+- no fetch
+- no browser storage
+- no write request
+- existing consent IDs retained
+- no cloneNode use
+
+Files added:
+- assets/district-dark-form-stabilization-v238.css
+- assets/district-dark-form-stabilization-v238.js
+- V238_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V238 is based directly on the supplied deployed tablet screenshots plus source-level inspection of the current hierarchy/sidebar/form layers. A new deployed screenshot remains the final visual confirmation.
