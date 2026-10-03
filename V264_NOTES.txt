@@ -1,0 +1,41 @@
+Scarborough / Mt. Grace District Office — V264
+
+CONSOLIDATION PHASE: UNIFIED TODAY
+
+1. /api/today now normalizes attention across:
+- Cases
+- Applications
+- Field work
+- Community matters
+- Meeting actions
+- Resident feedback
+
+2. Attention ordering:
+- overdue
+- due today
+- explicit attention
+- upcoming
+
+3. Staff Home
+- cross-module Overdue and Due Today metrics
+- Community follow-ups metric
+- Meeting actions metric
+- main queue renamed to What needs action now
+- source module shown on each attention item
+
+4. Daily Workboard
+- aligned to the same Today summary
+- six cross-module metrics
+- Meetings added as a work queue
+- duplicate legacy auth/navigation removed
+
+5. Meetings
+- supports direct ?meeting=<id>&tab=manage|timeline|editor links
+
+6. Smoke
+- validates unified attention array and attention summary counters
+
+7. Release identity
+- backend version 264.0.0
+
+This release intentionally adds no new major module.
