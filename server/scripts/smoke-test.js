@@ -42,6 +42,7 @@ await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
 await check('Protected Community Operations redirects','/staff/community.html',[302]);
 await check('Protected Events and Volunteers redirects','/staff/events.html',[302]);
+await check('Protected Meetings redirects','/staff/meetings.html',[302]);
 await check('Protected Website CMS redirects','/staff/cms.html',[302]);
 await check('Protected Roster and Coverage redirects','/staff/roster.html',[302]);
 await check('Protected Access Control redirects','/staff/access.html',[302]);
@@ -82,7 +83,7 @@ if(email&&password){
     await check('Authenticated Resident Feedback','/staff/feedback.html');
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
-    if(d.permissions.includes('*')||d.permissions.includes('community.write')){await check('Authenticated Community Operations','/staff/community.html');await check('Authenticated Events and Volunteers','/staff/events.html');}
+    if(d.permissions.includes('*')||d.permissions.includes('community.write')){await check('Authenticated Community Operations','/staff/community.html');await check('Authenticated Events and Volunteers','/staff/events.html');await check('Authenticated Meetings','/staff/meetings.html');await check('Authenticated Meetings API','/api/ops/meetings');}
     if(d.permissions.includes('*')||d.permissions.includes('content.write')){await check('Authenticated Website CMS','/staff/cms.html');await check('Authenticated content cohesion styles','/staff/content-cohesion-v262.css');}
     if(d.permissions.includes('*')||d.permissions.includes('reports.read'))await check('Authenticated Roster and Coverage','/staff/roster.html');
     if(d.permissions.includes('*')||d.permissions.includes('accessAdmin'))await check('Authenticated Access Control','/staff/access.html');
