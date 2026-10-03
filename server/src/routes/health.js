@@ -1,6 +1,39 @@
 'use strict';
 const express=require('express');const db=require('../db');const config=require('../config');const storage=require('../storage');const virusScan=require('../virus-scan');const pkg=require('../../package.json');const router=express.Router();
+
 router.get('/live',(req,res)=>res.json({status:'ok',service:'Scarborough / Mt. Grace Office API',version:pkg.version,time:new Date().toISOString()}));
-router.get('/',async(req,res)=>{const out={status:'ok',service:'Scarborough / Mt. Grace Office API',version:pkg.version,time:new Date().toISOString(),database:'unknown',storage:config.storageDriver,uploadsEnabled:config.uploadsEnabled};try{await db.query('SELECT 1');out.database='ok';}catch(e){out.status='degraded';out.database='unavailable';}res.status(out.status==='ok'?200:503).json(out)});
-router.get('/readiness',async(req,res)=>{const checks={database:false,productionOrigin:/^https:\/\//.test(config.publicOrigin),privateStorage:!config.uploadsEnabled||storage.readiness(),malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured()};try{await db.query('SELECT 1');checks.database=true;}catch{}const ready=Object.values(checks).every(Boolean);res.status(ready?200:503).json({ready,checks,uploadsEnabled:config.uploadsEnabled});});
+
+router.get('/',async(req,res)=>{
+  const out={status:'ok',service:'Scarborough / Mt. Grace Office API',version:pkg.version,time:new Date().toISOString(),database:'unknown',storage:config.storageDriver,uploadsEnabled:config.uploadsEnabled};
+  try{await db.query('SELECT 1');out.database='ok';}catch(e){out.status='degraded';out.database='unavailable';}
+  res.status(out.status==='ok'?200:503).json(out);
+});
+
+router.get('/readiness',async(req,res)=>{
+  const checks={
+    database:false,
+    productionMode:config.production,
+    productionOrigin:/^https:\/\//i.test(config.publicOrigin),
+    trustProxy:Number(config.trustProxy)>=1,
+    sessionIdlePolicy:config.sessionIdleMinutes>=5&&config.sessionIdleMinutes<=120,
+    sessionAbsolutePolicy:config.sessionAbsoluteHours>=1&&config.sessionAbsoluteHours<=24,
+    privateStorage:!config.uploadsEnabled||storage.readiness(),
+    malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured()
+  };
+  try{await db.query('SELECT 1');checks.database=true;}catch{}
+  const ready=Object.values(checks).every(Boolean);
+  res.status(ready?200:503).json({
+    ready,
+    checks,
+    uploadsEnabled:config.uploadsEnabled,
+    environment:{
+      production:config.production,
+      trustProxy:Number(config.trustProxy)||0,
+      sessionIdleMinutes:config.sessionIdleMinutes,
+      sessionAbsoluteHours:config.sessionAbsoluteHours,
+      storageDriver:config.storageDriver
+    }
+  });
+});
+
 module.exports=router;
