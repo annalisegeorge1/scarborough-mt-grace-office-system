@@ -1,0 +1,27 @@
+Scarborough / Mt. Grace District Office — V271
+
+CONTROLLED CLEANUP RELEASE
+
+Purpose
+- Reduce accumulated implementation debt without redesigning the public site.
+- Keep current routes, content, visual direction, accessibility behavior and staff workflows intact.
+
+Completed cleanup
+1. Civic Flow is now a native tablet/mobile swipe rail.
+2. Removed obsolete Previous/Next button markup and event handlers.
+3. Removed abandoned scripted auto-scroll/card-positioning logic.
+4. Removed snap-era timing state and unused navigation CSS.
+5. Simplified swipe-state detection to track the leading visible card.
+6. Preserved focused-page vertical stage synchronization and deep-link behavior.
+7. Removed the unused service-worker runtime cache.
+8. Documented that routine asset edits do not require manual service-worker version bumps because public asset URLs are content-hashed.
+9. Added smoke-test contracts that fail if obsolete Civic Flow carousel controls return.
+10. Release identity advanced to 271.0.0.
+
+Cleanup rule
+- Do not add another corrective layer when an existing component can be simplified.
+- Prefer deleting proven-dead code over hiding it with CSS.
+- Keep one owner for each interaction: native horizontal swipe owns the Civic Flow rail; page scroll owns focused-page section synchronization.
+- Further consolidation must preserve load order and pass preflight/smoke checks before additional dead assets are removed.
+
+No major feature was added.
