@@ -1,0 +1,129 @@
+Scarborough / Mt. Grace District Office — V234
+
+DARK FORM + PROGRAMME ACTION + GALLERY CLEANUP
+
+V234 is a screenshot-driven correction pass following V232/V233.
+
+Primary issues visible in the latest tablet screenshots:
+- Resident Update Preferences checkboxes stretched across the form
+- Supporting Documents card became unreadable in dark mode
+- Resident Programme help chips remained too dark
+- service-card action buttons could look blank on dark programme cards
+- Gallery top decorations still collided with the focused-page header system
+
+1. Checkbox/radio width rescue
+V232 correctly made standard form controls fluid, but the selector also gave checkbox/radio inputs width:100%.
+
+V234 explicitly restores checkbox/radio controls to compact native dimensions:
+- 22px standard
+- 20px on smaller screens
+- fixed min/max width
+- fixed min/max height
+- native accessibility semantics preserved
+- brass accent-color retained
+
+2. Resident Update Preferences layout
+#v138-notification-preferences is normalized into compact choice rows.
+
+Supports both:
+- separate input + label markup
+- labels containing inputs
+
+Long horizontal stretched-checkbox artifacts are removed.
+
+3. Supporting Documents dark mode
+The disabled upload state is intentionally converted by public-content-runtime into an information card.
+
+V234 gives that card a real dark-mode treatment:
+- dark navy/slate surface
+- brass left border
+- readable heading
+- readable status
+- readable help copy
+
+This prevents the white-card / white-text failure shown in the screenshot.
+
+4. Programme help-chip contrast
+The dark runtime stylesheet applies navy text to .v17-start-items span.
+
+V234 uses a deliberately more specific selector so dark-mode programme chips remain:
+- light text
+- slate-blue pill surface
+- subtle brass border
+
+No programme content changes.
+
+5. Programme-card resident actions
+V228 Review readiness:
+- readable light text
+- slate action surface
+- visible border
+
+V231 Service briefing:
+- brass action surface
+- navy text
+
+This visually separates the two resident tools and prevents blank-looking buttons.
+
+6. Gallery header cleanup
+The legacy gallery section still carried decorative layers from the original one-page design.
+
+In focused views V234:
+- removes the old flower-pill pseudo decoration
+- hides the redundant vertical section marker
+- keeps the V204 focused section chip
+- restores normal flow/spacing for that chip
+- keeps the main 05 COMMUNITY GALLERY label
+- reduces the flower emoji prominence
+
+Gallery photos, slideshow controls, thumbnails, captions and supplied-photo note remain unchanged.
+
+7. Preservation
+V234 is CSS-only.
+
+No changes to:
+- staff CMS
+- authentication
+- publishing/verification
+- enquiry submission
+- notification consent behavior
+- supporting-document upload behavior
+- tracker
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness logic
+- V229 PWA/service worker
+- V231 Service Intelligence logic
+- V232 form-width architecture
+- V233 mobile-dock behavior
+
+8. QA
+Passed:
+- server JavaScript syntax
+- CSS brace balance
+- V234 stylesheet injection
+- V234 loads after V233
+- checkbox-width rescue present
+- Resident Update Preferences grid normalization present
+- dark Supporting Documents treatment present
+- dark programme-chip override present
+- V228 action-button contrast present
+- V231 action-button contrast present
+- gallery old ornament removal present
+- gallery old marker suppression present
+- focused gallery-chip spacing present
+- mobile checkbox sizing present
+
+Files added:
+- assets/district-dark-form-gallery-v234.css
+- V234_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V234 is based directly on the latest supplied screenshots plus source-level inspection of the relevant form/runtime/gallery styles. A fresh post-deploy tablet screenshot remains the final visual confirmation.
