@@ -15,6 +15,7 @@ await check('Resident tracker','/track/');
 await check('Resident portal hub','/portals/');
 await check('Resident guide','/resident-guide/');
 await check('Staff login','/staff/login.html');
+await check('Protected Staff Home redirects','/staff/home.html',[302]);
 await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
@@ -37,7 +38,9 @@ if(email&&password){
     await check('Authenticated case-context helper','/staff/case-context-v251.js');
     await check('Authenticated focused case styles','/staff/case-focus-v252.css');
     await check('Authenticated focused case script','/staff/case-focus-v252.js');
-    await check('Authenticated staff home','/staff/index.html');
+    await check('Authenticated Staff Home','/staff/home.html');
+    await check('Authenticated role-aware Today API','/api/today');
+    await check('Authenticated Case Management','/staff/index.html');
     await check('Authenticated Applications','/staff/applications.html');
     await check('Authenticated Correspondence','/staff/correspondence.html');
     await check('Authenticated Field Operations','/staff/field.html');
