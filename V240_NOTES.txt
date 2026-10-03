@@ -1,0 +1,210 @@
+Scarborough / Mt. Grace District Office — V240
+
+PRODUCTION RESPONSIVE HARDENING
+
+V240 is a system-level reliability pass. It adds no new public dashboard or staff feature.
+
+GOAL
+Make the current site behave consistently across desktop, tablet, phone, orientation changes, keyboard navigation, deep links and devices with safe-area insets.
+
+1. Sticky-header measurement
+V240 measures the currently visible sticky public navigation instead of relying on a hard-coded offset.
+
+It observes:
+- main public navigation
+- V125 mobile navigation
+
+The measured height is stored in:
+--v240-sticky-offset
+
+2. Deep-link clearance
+Public anchors now use the measured sticky-header clearance.
+
+This prevents:
+- hash links
+- focused-route tabs
+- accordion deep links
+- V222 destination highlights
+
+from landing underneath the sticky civic shell.
+
+3. Hash-change correction
+V240 listens for hash changes and corrects the scroll position only when a target would otherwise be hidden beneath the sticky header.
+
+It does not replace existing route navigation.
+
+4. Keyboard focus clearance
+When keyboard focus moves to an interactive element that would sit behind the sticky header, V240 adjusts the viewport enough to keep that control visible.
+
+Excluded:
+- navigation itself
+- Explore drawer
+- resident modal/sheet roots
+
+5. Orientation and resize handling
+Sticky clearance is recalculated on:
+- resize
+- orientation change
+- ResizeObserver changes to sticky navigation
+- visualViewport resize where supported
+
+6. Horizontal overflow protection
+V240 adds system-level min-width/max-width guards for:
+- focused shells
+- main content cards
+- Civic Flow
+- Resident Service Workspace
+- footer deck
+- public media
+
+Intentional horizontal swipe rails retain their own overflow behavior.
+
+7. Dynamic viewport drawer
+Explore now uses:
+- safe-area top/bottom/left offsets
+- 100dvh-based maximum height
+- safe width calculation
+
+This improves behavior on:
+- browser UI expansion/collapse
+- notched devices
+- installed PWA mode
+- small screens
+
+8. Resident dock safe areas
+On <=900px:
+- resident dock respects left/right/bottom safe-area insets
+- Explore respects safe-area left inset
+- accessibility control respects safe-area right inset
+- footer receives fixed-dock clearance
+- document scroll-padding-bottom accounts for the dock
+
+Landscape uses a smaller dock-clearance value.
+
+9. Touch-target hardening
+On coarse-pointer devices:
+- focused page tabs
+- “On this page” items
+- focused page-end links
+- Explore sub-links
+- utility links
+- Civic Flow footer actions
+
+receive a 42px minimum interaction height where appropriate.
+
+Explore close and accessibility controls receive a 40px minimum hit area.
+
+10. Keyboard focus fallback
+The Civic Shell receives a consistent route-aware focus ring for:
+- links
+- buttons
+- role=button controls
+- keyboard-focusable custom controls
+
+Inputs/selects/textareas receive a smaller route-aware field outline.
+
+Component-specific focus styling remains authoritative where present.
+
+11. Long-copy resilience
+Public headings, paragraphs, labels and footer/drawer copy can wrap safely without forcing viewport-wide overflow.
+
+Form controls retain min-width:0 / max-width:100% safeguards.
+
+12. Reduced motion
+When reduced motion is preferred:
+- smooth document scrolling is disabled
+- nested scroll behavior is switched to auto
+
+13. Increased contrast
+When prefers-contrast: more is available:
+- key route/navigation controls receive stronger borders
+- resident dock border strength increases
+
+14. Forced colors
+In forced-colors mode:
+- decorative reading progress is hidden
+- keyboard focus uses the system Highlight color
+
+15. Small-phone safeguards
+At <=380px:
+- Explore drawer uses a tighter safe width
+- dock actions can shrink without overflowing
+- Explore FAB padding is reduced
+
+16. Privacy / data
+V240 JavaScript:
+- performs no fetch/API request
+- uses no localStorage
+- uses no sessionStorage
+- reads no resident form values
+- writes no resident information
+- performs no POST/PATCH/DELETE
+- references no staff route
+- references no API route
+- moves no DOM content
+
+17. Preservation
+No changes to:
+- staff CMS
+- staff authentication
+- publishing / verification
+- enquiry API
+- resident tracker
+- consent handling
+- uploads
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness
+- V229 PWA/service worker
+- V231 Service Intelligence
+- V235 Resident Service Workspace
+- V236 focused-route coherence
+- V237 Civic Flow
+- V238 stabilization
+- V239 Civic Shell behavior
+
+18. QA
+Passed:
+- V240 JavaScript syntax
+- server JavaScript syntax
+- CSS brace balance
+- V240 CSS/JS injection
+- V240 CSS loads after V239
+- V240 JS loads after V239
+- dynamic sticky offset present
+- hash-clearance behavior present
+- focus-clearance behavior present
+- orientation handling present
+- ResizeObserver handling present
+- visualViewport handling present
+- safe-area rules present
+- dynamic viewport drawer present
+- horizontal overflow guard present
+- coarse-pointer touch targets present
+- focus-visible fallback present
+- reduced-motion support present
+- increased-contrast support present
+- forced-colors support present
+- tiny-phone safeguard present
+- no fetch
+- no browser storage
+- no write request
+- no form-value access
+- no staff route reference
+- no API reference
+- no DOM reparenting
+
+Files added:
+- assets/district-responsive-hardening-v240.css
+- assets/district-responsive-hardening-v240.js
+- V240_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V240 is a source-level responsive and accessibility hardening pass. A deployed multi-device screenshot/browser pass remains the final visual confirmation.
