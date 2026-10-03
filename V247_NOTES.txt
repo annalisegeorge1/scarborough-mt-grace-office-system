@@ -1,0 +1,37 @@
+Scarborough / Mt. Grace District Office — V247
+
+PRODUCTION CONTROL + RELEASE DOCUMENTATION ALIGNMENT
+
+1. Production Control modernization
+- Replaces the stale V162-labelled production hub.
+- Uses the current staff production client/session handling.
+- Adds live application, database, private-storage, security-readiness and publishing-integrity status.
+- Links directly to current operational, publishing, UAT, pilot, Release Control and Go-Live surfaces.
+
+2. Release path clarity
+Production Control now shows four distinct stages:
+- Technical QA
+- Data + UAT
+- Evidence review
+- Authorization
+
+A healthy server is explicitly not treated as launch permission.
+
+3. Repository documentation
+README now reflects the current V242–V247 architecture instead of presenting V163 as the latest release state.
+
+4. Launch checklist
+PRODUCTION_LAUNCH_CHECKLIST.md is expanded to cover:
+- hosting/DNS/TLS
+- identity and sessions
+- publishing/public exposure
+- migration
+- automated QA and UAT
+- backup/restore and incident controls
+- formal authorization and cutover
+
+5. Preservation
+V247 does not change resident workflows, case data, publishing transitions, authentication credentials, database schema or public-content rules.
+
+6. Release boundary
+The system remains pre-launch until the required live verification and THA IT / management authorization are complete.
