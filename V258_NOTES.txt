@@ -1,0 +1,30 @@
+Scarborough / Mt. Grace District Office — V258
+
+AUTOMATED DEPLOYMENT VERIFICATION
+
+1. Added GitHub Actions workflow
+.github/workflows/verify-and-smoke.yml
+
+2. Source QA on every main push
+- Node 20
+- dependency install
+- npm run check
+- npm test
+- production-structured npm run preflight
+
+3. Render deployment verification
+- waits for staging /api/health/live
+- requires the live Render application version to equal server/package.json
+- then runs the repository smoke suite against staging
+
+4. Optional authenticated smoke
+If SMOKE_EMAIL and SMOKE_PASSWORD GitHub repository secrets are configured, authenticated staff checks also run.
+
+5. Render connection
+A direct Render connection can additionally be connected to ChatGPT for deploy/log/metric/environment inspection.
+
+6. Release identity
+Backend advanced to 258.0.0.
+
+7. Purpose
+Future commits now receive persistent GitHub verification instead of relying only on manual or chat-environment HTTP checks.
