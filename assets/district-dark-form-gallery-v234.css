@@ -1,0 +1,283 @@
+/* Scarborough / Mt. Grace District Office — V234
+   Dark-form controls, programme action clarity and gallery header cleanup.
+   Screenshot-driven CSS correction only. */
+
+/* ==========================================================================
+   1. CHECKBOX / RADIO RESCUE
+   V232 correctly made ordinary form inputs fluid, but checkboxes/radios must
+   never inherit width:100%. The stretched lines in Resident Update Preferences
+   came from the native checkbox control being expanded across the field width.
+   ========================================================================== */
+#enquiry #district-enquiry-form input[type="checkbox"],
+#enquiry #district-enquiry-form input[type="radio"]{
+  box-sizing:border-box!important;
+  width:22px!important;
+  min-width:22px!important;
+  max-width:22px!important;
+  height:22px!important;
+  min-height:22px!important;
+  max-height:22px!important;
+  margin:1px 0 0!important;
+  padding:0!important;
+  flex:0 0 22px!important;
+  justify-self:start!important;
+  align-self:start!important;
+  accent-color:#c9a34a!important;
+}
+
+/* Give each notification choice a clean compact row. This accommodates both
+   label-for-input markup and labels that contain the checkbox. */
+#enquiry #v138-notification-preferences{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #v138-notification-preferences > div{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  column-gap:12px!important;
+  row-gap:4px!important;
+  align-items:start!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:12px 0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+#enquiry #v138-notification-preferences > div + div{
+  border-top:1px solid rgba(255,255,255,.12)!important;
+}
+
+#enquiry #v138-notification-preferences > div > input[type="checkbox"],
+#enquiry #v138-notification-preferences > div > input[type="radio"]{
+  grid-column:1!important;
+  grid-row:1!important;
+}
+
+#enquiry #v138-notification-preferences > div > label{
+  grid-column:2!important;
+  grid-row:1!important;
+  display:block!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  line-height:1.45!important;
+}
+
+#enquiry #v138-notification-preferences > div > :is(small,p){
+  grid-column:2!important;
+  margin:0!important;
+  min-width:0!important;
+  line-height:1.45!important;
+}
+
+#enquiry #v138-notification-preferences label:has(input[type="checkbox"]),
+#enquiry #v138-notification-preferences label:has(input[type="radio"]){
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #v138-notification-preferences label:has(input[type="checkbox"]) input,
+#enquiry #v138-notification-preferences label:has(input[type="radio"]) input{
+  grid-column:1!important;
+}
+
+body.v112-dark #main-content #enquiry #v138-notification-preferences{
+  border-color:rgba(255,255,255,.09)!important;
+  background:#102f42!important;
+}
+
+body.v112-dark #main-content #enquiry #v138-notification-preferences :is(label,span,small,p,strong){
+  color:#e1ebef!important;
+  -webkit-text-fill-color:#e1ebef!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+/* ==========================================================================
+   2. SUPPORTING DOCUMENTS — dark mode must not become white-on-white.
+   public-content-runtime intentionally turns the disabled file input into an
+   information card. In dark mode, keep that card dark and readable.
+   ========================================================================== */
+body.v112-dark #main-content #enquiry .form-group.v203-document-note,
+body.v112-dark #main-content #enquiry .v203-document-note{
+  border:1px solid rgba(216,199,160,.22)!important;
+  border-left:5px solid #c9a34a!important;
+  background:
+    radial-gradient(circle at 96% 8%,rgba(216,199,160,.055),transparent 8rem),
+    #102f42!important;
+  box-shadow:none!important;
+}
+
+body.v112-dark #main-content #enquiry .v203-document-note > label{
+  color:#f3f7f9!important;
+  -webkit-text-fill-color:#f3f7f9!important;
+  opacity:1!important;
+}
+
+body.v112-dark #main-content #enquiry .v203-document-note .v203-document-status{
+  color:#e1c879!important;
+  -webkit-text-fill-color:#e1c879!important;
+  opacity:1!important;
+}
+
+body.v112-dark #main-content #enquiry .v203-document-note .v48-form-help,
+body.v112-dark #main-content #enquiry .v203-document-note :is(p,span,small){
+  color:#c3d3db!important;
+  -webkit-text-fill-color:#c3d3db!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+/* ==========================================================================
+   3. PROGRAMME HELP CHIPS — beat the later runtime dark-mode rule.
+   public-content-runtime currently assigns navy text to these spans in dark
+   mode. This selector is deliberately more specific.
+   ========================================================================== */
+body.v112-dark #main-content #resident-programmes .v17-start .v17-start-items span{
+  color:#edf5f8!important;
+  -webkit-text-fill-color:#edf5f8!important;
+  -webkit-text-stroke-width:0!important;
+  background:#21485f!important;
+  border:1px solid rgba(216,199,160,.16)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+body.v112-dark #main-content #resident-programmes .v17-start > strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
+}
+
+/* ==========================================================================
+   4. PROGRAMME CARD ACTIONS — distinguish Readiness from Service Intelligence
+   and prevent blank-looking dark buttons.
+   ========================================================================== */
+body.v112-dark #main-content #resident-programmes .v17-card .v228-card-button{
+  border:1px solid rgba(216,199,160,.25)!important;
+  background:#173a4e!important;
+  color:#f2f7f9!important;
+  -webkit-text-fill-color:#f2f7f9!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+
+body.v112-dark #main-content #resident-programmes .v17-card .v231-service-button{
+  border:1px solid #d8c7a0!important;
+  background:#d8c7a0!important;
+  color:#0b3553!important;
+  -webkit-text-fill-color:#0b3553!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+
+body.v112-dark #main-content #resident-programmes .v17-card .v228-card-button:hover,
+body.v112-dark #main-content #resident-programmes .v17-card .v228-card-button:focus-visible{
+  border-color:rgba(216,199,160,.48)!important;
+  background:#204b63!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+body.v112-dark #main-content #resident-programmes .v17-card .v231-service-button:hover,
+body.v112-dark #main-content #resident-programmes .v17-card .v231-service-button:focus-visible{
+  border-color:#eadcb8!important;
+  background:#eadcb8!important;
+  color:#08263d!important;
+  -webkit-text-fill-color:#08263d!important;
+}
+
+/* ==========================================================================
+   5. GALLERY HEADER — remove redundant old decorative layers that collide with
+   the newer focused-page chips and section identity.
+   ========================================================================== */
+#gallery.gallery-section::before{
+  display:none!important;
+  content:none!important;
+}
+
+body.v203-focused-view #gallery > .v20-section-marker{
+  display:none!important;
+}
+
+body.v203-focused-view #gallery > .v204-section-chip{
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  z-index:5!important;
+  width:max-content!important;
+  max-width:calc(100% - 36px)!important;
+  margin:14px 18px 8px!important;
+  transform:none!important;
+}
+
+body.v203-focused-view #gallery > .wrap{
+  position:relative!important;
+  z-index:2!important;
+  padding-top:8px!important;
+}
+
+body.v203-focused-view #gallery .v51-primary-label{
+  position:relative!important;
+  z-index:4!important;
+  margin-top:0!important;
+}
+
+/* The flower emoji already supplies a small decorative cue. Keep it subtle. */
+body.v203-focused-view #gallery > span[aria-hidden="true"][style*="font-size:30px"]{
+  opacity:.20!important;
+  top:16px!important;
+  right:16px!important;
+}
+
+/* ==========================================================================
+   6. MOBILE / PORTRAIT POLISH
+   ========================================================================== */
+@media(max-width:760px){
+  #enquiry #v138-notification-preferences > div{
+    grid-template-columns:24px minmax(0,1fr)!important;
+    column-gap:10px!important;
+    padding:10px 0!important;
+  }
+
+  #enquiry #district-enquiry-form input[type="checkbox"],
+  #enquiry #district-enquiry-form input[type="radio"]{
+    width:20px!important;
+    min-width:20px!important;
+    max-width:20px!important;
+    height:20px!important;
+    min-height:20px!important;
+    max-height:20px!important;
+    flex-basis:20px!important;
+  }
+
+  body.v203-focused-view #gallery > .v204-section-chip{
+    margin:10px 12px 6px!important;
+    max-width:calc(100% - 24px)!important;
+  }
+}
+
+@media print{
+  #enquiry #district-enquiry-form input[type="checkbox"],
+  #enquiry #district-enquiry-form input[type="radio"]{
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+  }
+}
