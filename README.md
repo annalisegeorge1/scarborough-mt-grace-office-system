@@ -1,90 +1,106 @@
-# Scarborough / Mt. Grace District Office Service System — V261
+# Scarborough / Mt. Grace District Office Service System — V262
 
 **Current status: controlled pre-launch / staging candidate**
 
-V261 completes the first Administration-area visual cohesion pass by bringing **System Administration** and **Production Control** into the same compact visual language introduced for Roster & Coverage, Access Control and Audit Review.
+V262 applies the same tablet-first cleanup used in Administration to the **Community** and **Website / Communications** areas.
 
-## Shared Administration cohesion asset
+## Community Operations
 
-New shared stylesheet:
+`/staff/community.html` has been rebuilt around a compact workflow:
 
-- `/staff/admin-cohesion-v261.css`
+**Summary → one active editor → central register**
 
-It centralizes the presentation used by System Administration and Production Control so future spacing, typography and tablet refinements do not need to be maintained separately.
+Instead of showing three long forms at once, staff switch between:
+- Community matter
+- Initiative / project
+- Partner
 
-## System Administration
+The page now includes:
+- compact community metrics
+- one form at a time
+- stronger required-field checks
+- a card-based central register on tablet/mobile
+- reduced vertical spacing
+- no duplicate legacy header or in-page navigation
 
-`/staff/system.html` keeps its existing live logic and endpoints.
+Quick Create now safely opens the Community Matter editor rather than triggering the old Save button.
 
-V261 changes presentation only:
-- removes the redundant in-page auth line
-- removes the redundant internal Administration navigation
-- relies on the shared staff shell for navigation
-- converts the oversized full-width hero into a compact Administration header
-- reduces metric-card height
-- reduces panel-heading size
-- tightens live-check rows
-- reduces route-card and toolbar spacing
-- improves tablet/mobile proportions
+## Events & Volunteers
 
-The live system-health, readiness, resident-schema, direct-API-isolation and publishing checks are unchanged.
+`/staff/events.html` now separates:
+- Events register
+- Event editor
+- Attendance & actions
 
-## Production Control
+The default view is the event register rather than a full-page form.
 
-`/staff/production.html` keeps its release-control logic and production boundary unchanged.
+Opening an event can take staff directly to:
+- editing
+- attendance
+- actions arising
 
-V261:
-- removes the redundant in-page auth line
-- removes the redundant hero navigation
-- keeps the shared staff shell as the single navigation layer
-- compacts the Production Control header
-- reduces oversized metrics and panels
-- tightens technical-readiness rows
-- makes the controlled release path more compact
-- reduces operational-route card height
+The page now includes:
+- event totals
+- planned/confirmed count
+- completed count
+- recorded attendance total
+- responsive event cards
+- compact form controls
+- tablet-friendly attendance/action panels
+
+The existing event APIs and database records remain authoritative.
+
+## Website CMS
+
+The CMS publishing/editor logic is intentionally preserved.
+
+New shared presentation asset:
+
+- `/staff/content-cohesion-v262.css`
+
+The CMS now:
+- removes its duplicate in-page auth line/navigation
+- uses the shared staff shell as the navigation layer
+- has a compact header
+- uses smaller editor controls
+- keeps the three content tabs
+- reduces card and textarea height
+- constrains long content tables inside scrollable register panels
+- uses sticky table headers
 - improves tablet/mobile density
 
-The page still contains no go-live switch.
-
-## Administration area after V261
-
-The principal Administration pages now follow the same overall pattern:
-
-- Roster & Coverage — compact tabbed continuity workspace
-- Access Control — responsive account-management workspace
-- Audit Review — live server audit workspace
-- System Administration — compact live-health workspace
-- Production Control — compact release-control workspace
+Publishing, upload, hide/restore, activity-thread and workflow logic are unchanged.
 
 ## Verification
 
 Source validation confirms:
-- System Administration inline JavaScript parses
-- Production Control inline JavaScript parses
-- neither page contains its old duplicate internal navigation
-- neither page contains the duplicate in-page auth line
+- Community inline JavaScript parses
+- Events inline JavaScript parses
+- Website CMS inline JavaScript parses
+- staff-shell JavaScript parses
+- none of the three screenshot-target pages retain the legacy duplicated page header/navigation
 
-Preflight now checks the shared Administration cohesion stylesheet.
+Preflight now checks:
+- Community Operations
+- Events & Volunteers
+- Website CMS
+- content-cohesion-v262.css
 
-Authenticated smoke testing checks the stylesheet when staff smoke credentials are configured.
+Authenticated smoke testing covers the same pages when the smoke role has the required permissions.
 
 ## Backend release identity
 
-The server package version is now `261.0.0`.
+The server package version is now `262.0.0`.
 
-## Automated deployment verification
+## Automated staging verification
 
-The GitHub verification workflow remains active.
-
-For V261 it will:
-- run source checks
-- run unit tests
+The GitHub deployment workflow will:
+- run source QA
+- run tests
 - run production preflight
-- wait for Render staging to report version `261.0.0`
+- wait for Render staging to report version `262.0.0`
 - run the staging smoke suite
-
-Transient 429/502/503/504 responses are retried before being treated as persistent failures.
 
 ## Production boundary
 
-V261 is a user-interface cohesion release. It does not alter RBAC, resident data, production authorization, privacy requirements or release-governance boundaries.
+V262 is a workflow/presentation release. It does not broaden public visibility, bypass publishing controls, weaken RBAC, or authorize production use.
