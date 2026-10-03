@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publishing QA | Scarborough / Mt. Grace District Office</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--qa-navy:#08263d;--qa-blue:#174f74;--qa-gold:#c9a34a;--qa-line:#d9e4e9;--qa-paper:#eef4f6;--qa-green:#317052;--qa-red:#984b46;--qa-amber:#84671f}
+*{box-sizing:border-box}body{margin:0;background:var(--qa-paper);color:#17394e;font-family:Segoe UI,Arial,sans-serif}button,select,input{font:inherit}
+.top{padding:22px 24px 18px;background:linear-gradient(115deg,#061f33,#0b3553 66%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}
+.top h1{margin:5px 0;font:500 31px Georgia,serif}.top .sub{max-width:900px;color:#b8ccd6;font-size:12px;line-height:1.5}.authline{display:block;color:#d7c27c;font-size:10px;font-weight:800}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.nav a{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.11);color:#d8e4e9;text-decoration:none;font-size:10px;font-weight:800}.nav a.active{background:#fff;color:#0b3553}
+.wrap{width:min(1380px,calc(100% - 28px));margin:18px auto 70px}.notice{padding:11px 13px;border:1px solid #e4d49d;border-left:4px solid var(--qa-gold);border-radius:10px;background:#fff9e9;color:#675725;font-size:11px;line-height:1.5;margin-bottom:12px}.notice.ok{border-color:#bdd8c9;background:#eef8f2;color:#2f6649}.notice.danger{border-color:#deb8b6;background:#fff1f0;color:#87433f}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric,.card{background:#fff;border:1px solid var(--qa-line);border-radius:14px;box-shadow:0 9px 24px rgba(7,35,55,.045)}.metric{padding:15px}.metric small{font-size:8px;font-weight:900;letter-spacing:.08em;color:#718690;text-transform:uppercase}.metric strong{display:block;margin-top:4px;color:#0b3553;font:600 25px Georgia,serif}.metric span{display:block;margin-top:4px;color:#7a8c96;font-size:8px}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr);gap:12px;align-items:start}.card{overflow:hidden}.card-head{padding:15px 16px 12px;border-bottom:1px solid #e9eff2}.card-head small{font-size:8px;font-weight:900;letter-spacing:.1em;color:#87691f}.card-head h2{margin:4px 0 3px;color:#0b3553;font:500 22px Georgia,serif}.card-head p{margin:0;color:#70848f;font-size:10px;line-height:1.45}
+.checklist{padding:7px 15px 14px}.check{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:9px;padding:10px 0;border-bottom:1px solid #edf2f4;align-items:start}.check:last-child{border-bottom:0}.mark{width:23px;height:23px;display:grid;place-items:center;border-radius:8px;background:#e6f2eb;color:var(--qa-green);font-weight:900}.check.bad .mark{background:#fae9e7;color:var(--qa-red)}.check strong{display:block;font-size:10px;color:#31596f}.check p{margin:3px 0 0;color:#768a94;font-size:8.5px;line-height:1.45}.severity{padding:4px 6px;border-radius:999px;background:#edf3f6;color:#526d7b;font-size:7px;font-weight:900;text-transform:uppercase}.check.bad .severity{background:#f6e7e5;color:#8d4742}
+.env{padding:12px 15px;border-top:1px solid #e9eff2;background:#f9fbfc}.env-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.env-item{padding:9px;border:1px solid #dce6ea;border-radius:9px;background:#fff}.env-item small{display:block;color:#758994;font-size:7px;font-weight:900;text-transform:uppercase}.env-item strong{display:block;margin-top:4px;color:#31596f;font-size:10px}
+.trace-tools{padding:12px 15px;border-bottom:1px solid #e9eff2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.trace-tools select{width:100%;padding:10px;border:1px solid #d7e2e7;border-radius:8px;background:#fff;color:#17394e;font-size:10px}.btn{border:1px solid #d2dfe5;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}
+.trace{padding:14px 15px}.trace-empty{padding:28px 10px;text-align:center;color:#788c96;font-size:10px}.trace-head{padding:12px;border:1px solid #e1eaee;border-radius:11px;background:#f9fbfc;margin-bottom:10px}.trace-head strong{display:block;color:#0b3553;font-size:12px}.trace-head span{display:block;margin-top:4px;color:#748994;font-size:8px}
+.milestones{display:grid;gap:7px}.milestone{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px;border:1px solid #e2eaee;border-radius:9px;background:#fff}.milestone .dot{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:#edf3f6;color:#6c808c;font-size:9px;font-weight:900}.milestone.done .dot{background:#e4f1e9;color:#317052}.milestone strong{font-size:9px;color:#31596f}.milestone small{display:block;margin-top:2px;color:#7a8c95;font-size:7.5px}.milestone em{font-style:normal;color:#748894;font-size:7px;font-weight:900;text-transform:uppercase}
+.trace-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.revision-log{margin-top:13px;padding-top:11px;border-top:1px solid #e7edef}.revision-log h3{margin:0 0 7px;color:#174f74;font-size:12px}.revision{padding:7px 8px;border-left:3px solid #bfd0d8;background:#f8fbfc;margin-bottom:6px;border-radius:6px}.revision strong{font-size:8.5px;color:#31596f}.revision span{display:block;margin-top:2px;color:#7b8d96;font-size:7px}
+.footer-note{margin-top:12px;padding:11px 13px;border-left:4px solid #c9a34a;background:#fffdf5;border-radius:9px;color:#697b84;font-size:9px;line-height:1.5}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.wrap{width:calc(100% - 18px)}.top{padding:18px 14px}.metrics{grid-template-columns:1fr 1fr}.trace-tools{grid-template-columns:1fr}.env-grid{grid-template-columns:1fr}.check{grid-template-columns:26px minmax(0,1fr)}.severity{grid-column:2;justify-self:start}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="authline" data-auth>Checking session…</span>
+  <h1>Publishing QA</h1>
+  <div class="sub">Server-backed checks for the publishing migration, revision history, stable public snapshots, document exposure and end-to-end editorial workflow.</div>
+  <nav class="nav" aria-label="Staff sections">
+    <a href="index.html">Home</a><a href="cms.html">Website CMS</a><a href="publishing.html">Publishing Desk</a>
+    <a class="active" aria-current="page" href="publishing-qa.html">Publishing QA</a>
+    <a href="readiness.html">Readiness</a><a href="go-live.html">Go-Live</a>
+  </nav>
+</header>
+<main class="wrap">
+  <div id="msg" class="notice">Running publishing checks…</div>
+  <section class="metrics">
+    <article class="metric"><small>Publishing system</small><strong id="qa-state">Checking</strong><span id="qa-time">—</span></article>
+    <article class="metric"><small>Server readiness</small><strong id="server-state">Checking</strong><span id="server-detail">—</span></article>
+    <article class="metric"><small>Public content</small><strong id="content-total">0</strong><span id="content-detail">—</span></article>
+    <article class="metric"><small>Integrity issues</small><strong id="issue-total">0</strong><span>Must be zero before certification.</span></article>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <header class="card-head"><small>AUTOMATED SERVER CHECKS</small><h2>Publishing infrastructure</h2><p>These results come from the deployed database and API, not from a local browser checklist.</p></header>
+      <div id="checks" class="checklist"><div class="trace-empty">Loading server checks…</div></div>
+      <div class="env"><div id="env-grid" class="env-grid"></div></div>
+    </section>
+
+    <section class="card">
+      <header class="card-head"><small>REAL RECORD TRACE</small><h2>Workflow evidence</h2><p>Select a content record to inspect its actual revision history and workflow milestones.</p></header>
+      <div class="trace-tools">
+        <select id="record-select" aria-label="Choose content record"><option value="">Choose a content record…</option></select>
+        <button class="btn" id="refresh" type="button">Refresh checks</button>
+      </div>
+      <div id="trace" class="trace"><div class="trace-empty">Choose a record to inspect its publishing history.</div></div>
+    </section>
+  </div>
+
+  <div class="footer-note"><strong>Certification boundary:</strong> this screen can verify application/database state. It cannot prove DNS, Cloudflare, Render billing/account ownership, backup restoration, or human approval decisions by itself. Those remain part of the Production Readiness and Go-Live process.</div>
+</main>
+<script>
+(()=>{'use strict';
+let records=[],system=null,health=null;
+const $=id=>document.getElementById(id);
+const esc=v=>SMG.esc(v??'');
+const fmt=v=>v?SMG.fmt(v):'—';
+
+function setMsg(text,kind=''){const e=$('msg');e.textContent=text;e.className='notice '+kind}
+function issueCount(obj){return Object.values(obj||{}).reduce((n,v)=>n+(typeof v==='number'?v:0),0)}
+function renderSystem(){
+  if(!system)return;
+  $('qa-state').textContent=system.ready?'Ready':'Needs attention';
+  $('qa-time').textContent='Checked '+fmt(system.checkedAt);
+  const content=system.content||{},integrity=system.integrity||{};
+  $('content-total').textContent=String(content.total||0);
+  $('content-detail').textContent=(content.published||0)+' published · '+(content.inReview||0)+' in review · '+(content.revisionSnapshotsLive||0)+' prior versions held live';
+  $('issue-total').textContent=String(issueCount(integrity));
+  $('checks').innerHTML=(system.checks||[]).map(ch=>
+    '<article class="check '+(ch.ok?'':'bad')+'"><span class="mark">'+(ch.ok?'✓':'!')+'</span><span><strong>'+esc(ch.label)+'</strong><p>'+esc(ch.detail||'')+'</p></span><span class="severity">'+esc(ch.severity||'check')+'</span></article>'
+  ).join('')||'<div class="trace-empty">No server checks returned.</div>';
+  const s=system.schema||{};
+  $('env-grid').innerHTML=[
+    ['Migration 006',s.migrationApplied?'Applied':'Missing'],
+    ['Publishing columns',(s.presentColumns||0)+' / '+(s.requiredColumns||0)],
+    ['Revision table',s.revisionsTable?'Present':'Missing'],
+    ['Revision parity',(integrity.revisionVersionMismatches||0)===0?'Matched':(integrity.revisionVersionMismatches+' mismatch(es)')],
+    ['Stable public snapshots',(integrity.publishedMissingSnapshot||0)===0?'Healthy':(integrity.publishedMissingSnapshot+' missing')],
+    ['Public documents',(integrity.invalidPublicDocuments||0)===0?'Controlled':(integrity.invalidPublicDocuments+' issue(s)')]
+  ].map(([a,b])=>'<div class="env-item"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
+}
+function renderHealth(){
+  if(!health){$('server-state').textContent='Unknown';return}
+  $('server-state').textContent=health.ready?'Ready':'Not ready';
+  const c=health.checks||{};
+  const failed=Object.entries(c).filter(([,v])=>!v).map(([k])=>k);
+  $('server-detail').textContent=failed.length?'Failed: '+failed.join(', '):'Database, origin and configured security dependencies pass readiness.';
+}
+function fillRecords(){
+  const sel=$('record-select'),current=sel.value;
+  sel.innerHTML='<option value="">Choose a content record…</option>'+records.map(x=>
+    '<option value="'+esc(x.id)+'">'+esc(x.title)+' · '+esc(x.workflow)+(x.verified?' · verified':'')+'</option>'
+  ).join('');
+  if(current&&records.some(x=>x.id===current))sel.value=current;
+}
+function milestone(label,done,detail,when=''){
+  return '<article class="milestone '+(done?'done':'')+'"><span class="dot">'+(done?'✓':'·')+'</span><span><strong>'+esc(label)+'</strong><small>'+esc(detail)+'</small></span><em>'+esc(when|| (done?'recorded':'not yet'))+'</em></article>';
+}
+async function trace(id){
+  if(!id){$('trace').innerHTML='<div class="trace-empty">Choose a record to inspect its publishing history.</div>';return}
+  $('trace').innerHTML='<div class="trace-empty">Loading revision evidence…</div>';
+  try{
+    const [previewRes,historyRes]=await Promise.all([
+      SMG.api('/api/content/'+encodeURIComponent(id)+'/preview'),
+      SMG.api('/api/content/'+encodeURIComponent(id)+'/revisions')
+    ]);
+    const x=records.find(r=>r.id===id)||{},rev=(historyRes.revisions||[]).slice().reverse();
+    const first=a=>rev.find(r=>r.action===a);
+    const publishEvents=rev.filter(r=>r.action==='publish'||(r.action==='create'&&r.workflow==='Published'));
+    const anyWorkflow=w=>rev.find(r=>r.workflow===w);
+    const draft=anyWorkflow('Draft'),review=first('submit-review')||first('revise')||anyWorkflow('In Review');
+    const verify=first('verify')||rev.find(r=>r.verified),approve=first('approve')||anyWorkflow('Approved');
+    const publish=first('publish')||anyWorkflow('Published'),revise=first('revise');
+    const archive=first('archive')||anyWorkflow('Archived'),restore=first('restore');
+    const republish=publishEvents.length>1?publishEvents[1]:null;
+    const flow=[
+      milestone('Draft created / captured',!!draft||rev.length>0,'A version exists before public release.',draft?.created_at||rev[0]?.created_at),
+      milestone('Review stage entered',!!review,'Content reached In Review through submission or revision.',review?.created_at),
+      milestone('Source verified',!!verify,'A verified revision is recorded.',verify?.created_at),
+      milestone('Approved',!!approve,'Editorial approval reached Approved.',approve?.created_at),
+      milestone('Published',!!publish,'A public release is recorded.',publish?.created_at),
+      milestone('Revision started',!!revise,'Published content moved back into controlled review.',revise?.created_at),
+      milestone('Replacement republished',!!republish,'A later verified release replaced the previous public snapshot.',republish?.created_at),
+      milestone('Archived',!!archive,'Public exposure was deliberately removed.',archive?.created_at),
+      milestone('Restored to Draft',!!restore,'Archived content returned to Draft for new review.',restore?.created_at)
+    ].join('');
+    const live=previewRes.workflow?.liveSnapshotActive;
+    $('trace').innerHTML=
+      '<div class="trace-head"><strong>'+esc(x.title||previewRes.content?.title||'Content record')+'</strong><span>Current state: '+esc(x.workflow||previewRes.workflow?.state)+' · version '+esc(previewRes.workflow?.version||x.version||'—')+' · '+(previewRes.workflow?.verified?'verified':'not verified')+' · public snapshot '+(live?'active':'inactive')+'</span></div>'+
+      '<div class="milestones">'+flow+'</div>'+
+      '<div class="trace-actions"><a class="btn primary" href="publishing.html?id='+encodeURIComponent(id)+'">Open in Publishing Desk</a><a class="btn" href="'+esc(previewRes.residentRoute||'/')+'" target="_blank" rel="noopener">Open resident route ↗</a></div>'+
+      '<div class="revision-log"><h3>Revision log</h3>'+rev.slice().reverse().map(r=>'<div class="revision"><strong>v'+esc(r.version)+' · '+esc(r.action)+' · '+esc(r.workflow)+(r.verified?' · Verified':'')+'</strong><span>'+esc(fmt(r.created_at))+' · '+esc(r.actor_name||r.actor_email||'System')+'</span></div>').join('')+'</div>';
+  }catch(e){$('trace').innerHTML='<div class="trace-empty">'+esc(e.message)+'</div>'}
+}
+async function load(){
+  setMsg('Running server-backed publishing checks…');
+  try{
+    const [sys,contentRes,healthRes]=await Promise.all([
+      SMG.api('/api/content/publishing-readiness'),
+      SMG.api('/api/content'),
+      fetch('/api/health/readiness',{credentials:'same-origin'}).then(async r=>{const d=await r.json().catch(()=>({ready:false,checks:{}}));d.httpStatus=r.status;return d})
+    ]);
+    system=sys;records=contentRes.content||[];health=healthRes;
+    renderSystem();renderHealth();fillRecords();
+    setMsg(system.ready&&health.ready?'Publishing infrastructure checks pass. Complete a real record trace before operational sign-off.':'Publishing QA found items that need attention. Review the failed checks below.',system.ready&&health.ready?'ok':'danger');
+    if($('record-select').value)await trace($('record-select').value);
+  }catch(e){setMsg(e.message,'danger')}
+}
+$('record-select').addEventListener('change',e=>trace(e.target.value));
+$('refresh').addEventListener('click',load);
+load();
+})();
+</script>
+</body>
+</html>

@@ -420,6 +420,202 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
   }
 });
 
+router.get('/publishing-readiness',requirePermission('content.write'),async(req,res,next)=>{
+  try{
+    const requiredColumns=[
+      'internal_notes','source_reference','verification_note','reviewed_by','reviewed_at',
+      'verified_by','verified_at','published_by','published_at','archived_by','archived_at',
+      'version','published_snapshot','published_snapshot_at','published_snapshot_active'
+    ];
+    const [migration,columns,revisions]=await Promise.all([
+      db.query("SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",['006_content_publishing_workflow.sql']),
+      db.query(`
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_schema='public'
+          AND table_name='public_content'
+          AND column_name=ANY($1::text[])
+      `,[requiredColumns]),
+      db.query("SELECT to_regclass('public.public_content_revisions') AS table_name")
+    ]);
+    const migrationApplied=!!migration.rows[0]?.applied;
+    const present=new Set(columns.rows.map(x=>x.column_name));
+    const missingColumns=requiredColumns.filter(x=>!present.has(x));
+    const revisionsTable=!!revisions.rows[0]?.table_name;
+    const schemaReady=migrationApplied&&missingColumns.length===0&&revisionsTable;
+    let stats={
+      total:0,draft:0,in_review:0,approved:0,published:0,archived:0,
+      published_unverified:0,archived_active_snapshot:0,active_snapshot_missing_payload:0,
+      published_missing_snapshot:0,revision_snapshots_live:0
+    };
+    let integrity={
+      publishedUnverified:0,
+      archivedActiveSnapshot:0,
+      activeSnapshotMissingPayload:0,
+      publishedMissingSnapshot:0,
+      revisionVersionMismatches:0,
+      invalidPublicDocuments:0
+    };
+    if(schemaReady){
+      const [counts,mismatch,documents]=await Promise.all([
+        db.query(`
+          SELECT
+            count(*)::int AS total,
+            count(*) FILTER (WHERE workflow='Draft')::int AS draft,
+            count(*) FILTER (WHERE workflow='In Review')::int AS in_review,
+            count(*) FILTER (WHERE workflow='Approved')::int AS approved,
+            count(*) FILTER (WHERE workflow='Published')::int AS published,
+            count(*) FILTER (WHERE workflow='Archived')::int AS archived,
+            count(*) FILTER (WHERE workflow='Published' AND verified=false)::int AS published_unverified,
+            count(*) FILTER (WHERE workflow='Archived' AND published_snapshot_active=true)::int AS archived_active_snapshot,
+            count(*) FILTER (WHERE published_snapshot_active=true AND published_snapshot IS NULL)::int AS active_snapshot_missing_payload,
+            count(*) FILTER (
+              WHERE workflow='Published' AND verified=true
+                AND COALESCE(published_snapshot_active,false)=false
+            )::int AS published_missing_snapshot,
+            count(*) FILTER (
+              WHERE workflow<>'Published' AND published_snapshot_active=true
+            )::int AS revision_snapshots_live
+          FROM public_content
+        `),
+        db.query(`
+          SELECT count(*)::int AS mismatches
+          FROM public_content pc
+          LEFT JOIN LATERAL (
+            SELECT max(version) AS max_version
+            FROM public_content_revisions r
+            WHERE r.content_id=pc.id
+          ) rv ON true
+          WHERE COALESCE(rv.max_version,0)<>pc.version
+        `),
+        db.query(`
+          SELECT count(*)::int AS invalid_public_documents
+          FROM public_content pc
+          JOIN documents d ON d.id=CASE
+            WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
+            ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+          END
+          WHERE (
+            (pc.workflow='Published' AND pc.verified=true)
+            OR pc.published_snapshot_active=true
+          )
+            AND (d.sensitivity<>'Public' OR d.review_status<>'Approved')
+        `)
+      ]);
+      stats={...stats,...(counts.rows[0]||{})};
+      integrity={
+        publishedUnverified:Number(stats.published_unverified)||0,
+        archivedActiveSnapshot:Number(stats.archived_active_snapshot)||0,
+        activeSnapshotMissingPayload:Number(stats.active_snapshot_missing_payload)||0,
+        publishedMissingSnapshot:Number(stats.published_missing_snapshot)||0,
+        revisionVersionMismatches:Number(mismatch.rows[0]?.mismatches)||0,
+        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0
+      };
+    }
+    const checks=[
+      {
+        key:'migration',
+        label:'V242 publishing migration applied',
+        ok:migrationApplied,
+        severity:'blocker',
+        detail:migrationApplied?'Migration 006 is recorded.':'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
+      },
+      {
+        key:'columns',
+        label:'Publishing workflow columns present',
+        ok:missingColumns.length===0,
+        severity:'blocker',
+        detail:missingColumns.length?`Missing: ${missingColumns.join(', ')}`:'All required publishing columns are present.'
+      },
+      {
+        key:'revisions-table',
+        label:'Revision history table present',
+        ok:revisionsTable,
+        severity:'blocker',
+        detail:revisionsTable?'public_content_revisions is available.':'public_content_revisions is not available.'
+      }
+    ];
+    if(schemaReady){
+      checks.push(
+        {
+          key:'published-verification',
+          label:'No Published records bypass verification',
+          ok:integrity.publishedUnverified===0,
+          severity:'blocker',
+          detail:integrity.publishedUnverified?`${integrity.publishedUnverified} Published record(s) are not verified.`:'Published content is respecting the verification gate.'
+        },
+        {
+          key:'archive-snapshot',
+          label:'Archived content is not still live',
+          ok:integrity.archivedActiveSnapshot===0,
+          severity:'blocker',
+          detail:integrity.archivedActiveSnapshot?`${integrity.archivedActiveSnapshot} archived record(s) still have an active public snapshot.`:'Archived records have no active public snapshot.'
+        },
+        {
+          key:'snapshot-payload',
+          label:'Active public snapshots have payloads',
+          ok:integrity.activeSnapshotMissingPayload===0,
+          severity:'blocker',
+          detail:integrity.activeSnapshotMissingPayload?`${integrity.activeSnapshotMissingPayload} active snapshot(s) are missing their public payload.`:'Every active snapshot has a resident-facing payload.'
+        },
+        {
+          key:'published-snapshot',
+          label:'Published + Verified records have a stable snapshot',
+          ok:integrity.publishedMissingSnapshot===0,
+          severity:'blocker',
+          detail:integrity.publishedMissingSnapshot?`${integrity.publishedMissingSnapshot} current published record(s) are missing a stable snapshot.`:'Published records have a stable snapshot for revision continuity.'
+        },
+        {
+          key:'revision-parity',
+          label:'Content versions match revision history',
+          ok:integrity.revisionVersionMismatches===0,
+          severity:'blocker',
+          detail:integrity.revisionVersionMismatches?`${integrity.revisionVersionMismatches} record(s) have a version/revision mismatch.`:'Every current content version has a matching revision entry.'
+        },
+        {
+          key:'public-documents',
+          label:'Exposed documents are Public + Approved',
+          ok:integrity.invalidPublicDocuments===0,
+          severity:'blocker',
+          detail:integrity.invalidPublicDocuments?`${integrity.invalidPublicDocuments} exposed document link(s) fail Records Centre approval/sensitivity rules.`:'Public document exposure respects Records Centre controls.'
+        }
+      );
+    }else{
+      checks.push({
+        key:'integrity-pending',
+        label:'Publishing integrity checks can run',
+        ok:false,
+        severity:'blocker',
+        detail:'Apply/repair migration 006 first; content, snapshot, revision and public-document integrity checks are intentionally skipped until the publishing schema is complete.'
+      });
+    }
+    const ready=checks.every(x=>x.severity!=='blocker'||x.ok);
+    res.json({
+      ready,
+      checkedAt:new Date().toISOString(),
+      schema:{
+        migrationApplied,
+        requiredColumns:requiredColumns.length,
+        presentColumns:present.size,
+        missingColumns,
+        revisionsTable,
+        schemaReady
+      },
+      content:{
+        total:Number(stats.total)||0,
+        draft:Number(stats.draft)||0,
+        inReview:Number(stats.in_review)||0,
+        approved:Number(stats.approved)||0,
+        published:Number(stats.published)||0,
+        archived:Number(stats.archived)||0,
+        revisionSnapshotsLive:Number(stats.revision_snapshots_live)||0
+      },
+      integrity,
+      checks
+    });
+  }catch(e){next(e)}
+});
+
 router.get('/:id/preview',requirePermission('content.write'),async(req,res,next)=>{
   try{
     const row=await contentWithDocument(db,req.params.id);
@@ -546,31 +742,72 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
 
 router.post('/:id/progress',requirePermission('content.write'),async(req,res,next)=>{
   try{
-    const cur=(await db.query('SELECT * FROM public_content WHERE id=$1',[req.params.id])).rows[0];
-    if(!cur)return res.status(404).json({detail:'Content record not found.'});
-    if(!['activity','activity_override'].includes(cur.type))return res.status(400).json({detail:'Progress threads are available only for Activity Hub items.'});
     const parsed=cleanProgressInput(req.body||{});
     if(parsed.error)return res.status(400).json({detail:parsed.error});
     const setCurrentStatus=req.body?.setCurrentStatus!==false;
-    const metadata={...safeMeta(cur.metadata),progressHistory:[...progressHistory(cur.metadata).slice(-99),parsed.entry]};
-    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, public_status=CASE WHEN $3 THEN $4 ELSE public_status END, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata),setCurrentStatus,parsed.entry.status]);
-    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_add',objectType:'public_content',objectId:req.params.id,metadata:{progressId:parsed.entry.id,status:parsed.entry.status,date:parsed.entry.date,setCurrentStatus}});
-    res.status(201).json({content:q.rows[0],progress:parsed.entry});
-  }catch(e){next(e)}
+    const row=await db.tx(async client=>{
+      const cur=await contentWithDocument(client,req.params.id);
+      if(!cur){const err=new Error('Content record not found.');err.statusCode=404;throw err}
+      if(!['activity','activity_override'].includes(cur.type)){const err=new Error('Progress threads are available only for Activity Hub items.');err.statusCode=400;throw err}
+      const metadata={...safeMeta(cur.metadata),progressHistory:[...progressHistory(cur.metadata).slice(-99),parsed.entry]};
+      let updated=(await client.query(`
+        UPDATE public_content SET
+          metadata=$2::jsonb,
+          public_status=CASE WHEN $3 THEN $4 ELSE public_status END,
+          version=version+1,
+          updated_at=now()
+        WHERE id=$1
+        RETURNING *
+      `,[req.params.id,JSON.stringify(metadata),setCurrentStatus,parsed.entry.status])).rows[0];
+      if(updated.workflow==='Published'&&updated.verified){
+        const snap={...publicPayload(updated),publishOn:updated.publish_on||new Date().toISOString(),updatedAt:new Date().toISOString()};
+        updated=(await client.query(
+          'UPDATE public_content SET published_snapshot=$2::jsonb,published_snapshot_at=now(),published_snapshot_active=true WHERE id=$1 RETURNING *',
+          [updated.id,JSON.stringify(snap)]
+        )).rows[0];
+      }
+      await writeRevision(client,updated,'progress-add',req.user.id);
+      return updated;
+    });
+    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_add',objectType:'public_content',objectId:req.params.id,metadata:{progressId:parsed.entry.id,status:parsed.entry.status,date:parsed.entry.date,setCurrentStatus,version:row.version}});
+    res.status(201).json({content:row,progress:parsed.entry});
+  }catch(e){
+    if(e.statusCode)return res.status(e.statusCode).json({detail:e.message});
+    next(e);
+  }
 });
 
 router.delete('/:id/progress/:progressId',requirePermission('content.write'),async(req,res,next)=>{
   try{
-    const cur=(await db.query('SELECT * FROM public_content WHERE id=$1',[req.params.id])).rows[0];
-    if(!cur)return res.status(404).json({detail:'Content record not found.'});
-    if(!['activity','activity_override'].includes(cur.type))return res.status(400).json({detail:'Progress threads are available only for Activity Hub items.'});
-    const list=progressHistory(cur.metadata),entry=list.find(x=>String(x.id)===String(req.params.progressId));
-    if(!entry)return res.status(404).json({detail:'Progress entry not found.'});
-    const metadata={...safeMeta(cur.metadata),progressHistory:list.filter(x=>String(x.id)!==String(req.params.progressId))};
-    const q=await db.query('UPDATE public_content SET metadata=$2::jsonb, updated_at=now() WHERE id=$1 RETURNING *',[req.params.id,JSON.stringify(metadata)]);
-    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_remove',objectType:'public_content',objectId:req.params.id,metadata:{progressId:entry.id,status:entry.status,date:entry.date}});
-    res.json({content:q.rows[0],removed:true});
-  }catch(e){next(e)}
+    let removed=null;
+    const row=await db.tx(async client=>{
+      const cur=await contentWithDocument(client,req.params.id);
+      if(!cur){const err=new Error('Content record not found.');err.statusCode=404;throw err}
+      if(!['activity','activity_override'].includes(cur.type)){const err=new Error('Progress threads are available only for Activity Hub items.');err.statusCode=400;throw err}
+      const list=progressHistory(cur.metadata),entry=list.find(x=>String(x.id)===String(req.params.progressId));
+      if(!entry){const err=new Error('Progress entry not found.');err.statusCode=404;throw err}
+      removed=entry;
+      const metadata={...safeMeta(cur.metadata),progressHistory:list.filter(x=>String(x.id)!==String(req.params.progressId))};
+      let updated=(await client.query(`
+        UPDATE public_content SET metadata=$2::jsonb,version=version+1,updated_at=now()
+        WHERE id=$1 RETURNING *
+      `,[req.params.id,JSON.stringify(metadata)])).rows[0];
+      if(updated.workflow==='Published'&&updated.verified){
+        const snap={...publicPayload(updated),publishOn:updated.publish_on||new Date().toISOString(),updatedAt:new Date().toISOString()};
+        updated=(await client.query(
+          'UPDATE public_content SET published_snapshot=$2::jsonb,published_snapshot_at=now(),published_snapshot_active=true WHERE id=$1 RETURNING *',
+          [updated.id,JSON.stringify(snap)]
+        )).rows[0];
+      }
+      await writeRevision(client,updated,'progress-remove',req.user.id);
+      return updated;
+    });
+    await audit(db,{actorUserId:req.user.id,eventType:'content.progress_remove',objectType:'public_content',objectId:req.params.id,metadata:{progressId:removed.id,status:removed.status,date:removed.date,version:row.version}});
+    res.json({content:row,removed:true});
+  }catch(e){
+    if(e.statusCode)return res.status(e.statusCode).json({detail:e.message});
+    next(e);
+  }
 });
 
 module.exports=router;
