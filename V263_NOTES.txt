@@ -1,0 +1,24 @@
+Scarborough / Mt. Grace District Office — V263
+
+CENTRAL MEETINGS WORKSPACE
+
+1. Replaced browser-only Meetings training page.
+2. Fixed portrait/tablet width bug and removed legacy navigation.
+3. Added migration 009 with:
+   - meetings
+   - meeting_attendance
+   - meeting_actions
+   - meeting_timeline
+4. Migration 009 applied to Supabase and recorded in app migration ledger.
+5. Added audited Meetings API under /api/ops/meetings.
+6. New page structure:
+   - Meeting register
+   - Meeting editor
+   - Attendance & actions
+   - Timeline
+7. Preserved private/public split for minutes vs resident-safe summary.
+8. Added New Meeting to Quick Create.
+9. Added meetingOperations live readiness gate.
+10. System / Production / Release Control display Central Meetings schema.
+11. Preflight and smoke coverage added.
+12. Backend version: 263.0.0.
