@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>Resident Profiles | Scarborough / Mt. Grace District Office</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--r-navy:#08263d;--r-blue:#174f74;--r-gold:#c9a34a;--r-paper:#eef4f6;--r-line:#d9e4e9}
+body{background:var(--r-paper);color:#17394e}.shell2{width:min(1400px,calc(100% - 28px));margin:18px auto 70px}
+.hero2{padding:18px 20px;border-radius:15px;background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}.hero2 small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#d7c27c}.hero2 h1{margin:5px 0 4px;font:500 29px Georgia,serif}.hero2 p{margin:0;color:#b8ccd6;font-size:10px;line-height:1.5}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;margin:12px 0;padding:10px;background:#fff;border:1px solid var(--r-line);border-radius:12px}.bar input,.form input,.form select{width:100%;border:1px solid #d7e2e7;border-radius:8px;padding:9px;background:#f9fbfc;color:#17394e;font-size:9px}.btn2{border:1px solid #d5e1e6;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:8px;font-weight:900;cursor:pointer}.btn2.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn2.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}
+.card{background:#fff;border:1px solid var(--r-line);border-radius:13px;overflow:hidden}.status{padding:10px 12px;border-bottom:1px solid #edf2f4;color:#71858f;font-size:8px}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:10px 11px;border-top:1px solid #edf2f4;text-align:left;font-size:9px}th{background:#edf4f7;color:#536f7e;font-size:7px;letter-spacing:.06em}.ref{font-weight:900;color:#0b3553}.name strong{display:block;color:#17394e;font-size:10px}.name small{display:block;color:#7d8f98;font-size:8px;margin-top:2px}tr[data-id]{cursor:pointer}tr[data-id]:hover{background:#f8fbfc}.pill{display:inline-flex;border-radius:999px;padding:4px 7px;background:#edf3f6;color:#526d7b;font-size:7px;font-weight:900}
+.cards{display:none}.resident-card{padding:12px;border-top:1px solid #edf2f4;text-decoration:none;display:block}.resident-card:first-child{border-top:0}.resident-card strong{display:block;color:#0b3553;font-size:11px}.resident-card small{display:block;margin-top:3px;color:#71858f;font-size:8px;line-height:1.45}.resident-card .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.dialog{display:none;margin:12px 0;background:#fff;border:1px solid var(--r-line);border-radius:13px;padding:14px}.dialog.open{display:block}.dialog h2{margin:0 0 3px;color:#0b3553;font:500 19px Georgia,serif}.dialog p{margin:0 0 10px;color:#71858f;font-size:9px}.form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.form label{font-size:7px;font-weight:900;color:#667d89}.wide{grid-column:span 2}.form-actions{grid-column:1/-1;display:flex;gap:7px;margin-top:2px}
+@media(max-width:760px){.shell2{width:calc(100% - 18px)}.bar{grid-template-columns:1fr auto}.bar .new{grid-column:1/-1}.tablewrap{display:none}.cards{display:block}.form{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}}@media(max-width:480px){.bar,.form{grid-template-columns:1fr}.bar .new,.form-actions,.wide{grid-column:auto}}
+</style>
+<link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script>
+</head>
+<body>
+<main class="shell2">
+  <section class="hero2"><small>RESIDENTS · PROFILES</small><h1>Resident Profiles</h1><p>One resident identity can connect multiple cases and related office activity without merging people automatically.</p></section>
+  <div class="bar"><input id="q" placeholder="Search resident name, profile reference, phone, email or address"><button class="btn2 primary" id="search" type="button">Search</button><button class="btn2 gold new" id="newResident" type="button">New resident</button></div>
+  <section class="dialog" id="createPanel"><h2>Create resident profile</h2><p>Create the person record first. Cases can then be explicitly linked to this profile.</p><div class="form">
+    <label>FULL NAME<input id="fullName"></label><label>PHONE<input id="phone"></label><label>EMAIL<input id="email" type="email"></label>
+    <label>DATE OF BIRTH<input id="dob" type="date"></label><label class="wide">ADDRESS<input id="address"></label>
+    <label>PREFERRED CONTACT<select id="preferred"><option value="">Not set</option><option>Phone</option><option>WhatsApp</option><option>Email</option></select></label>
+    <label class="wide">HOUSEHOLD / FAMILY LABEL<input id="household" placeholder="Optional"></label>
+    <div class="form-actions"><button class="btn2 primary" id="create" type="button">Create profile</button><button class="btn2" id="cancel" type="button">Cancel</button></div>
+  </div></section>
+  <section class="card"><div id="status" class="status">Loading resident profiles…</div><div class="tablewrap"><table><thead><tr><th>PROFILE</th><th>RESIDENT</th><th>CONTACT</th><th>ADDRESS</th><th>CASES</th><th>OPEN</th><th>LAST CASE ACTIVITY</th></tr></thead><tbody id="rows"></tbody></table></div><div id="cards" class="cards"></div></section>
+</main>
+<script>
+(()=>{'use strict';const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');let session=null;
+function fmt(v){if(!v)return '—';try{return new Date(v).toLocaleDateString('en-TT',{year:'numeric',month:'short',day:'numeric'})}catch{return String(v)}}
+function canWrite(){const p=session?.permissions||[];return p.includes('*')||p.includes('cases.write')||p.includes('cases.write.assigned')}
+async function load(){const q=$('q').value.trim();$('status').textContent='Loading resident profiles…';try{const d=await SMG.api('/api/residents'+(q?'?q='+encodeURIComponent(q):'')),rows=d.residents||[];$('status').textContent=rows.length+' resident profile'+(rows.length===1?'':'s')+(q?' matched your search.':'.');$('rows').innerHTML=rows.map(r=>'<tr data-id="'+r.id+'"><td><span class="ref">'+esc(r.reference)+'</span></td><td class="name"><strong>'+esc(r.full_name)+'</strong><small>'+esc(r.household_name||'')+'</small></td><td>'+esc(r.phone||'—')+'<br><small>'+esc(r.email||'')+'</small></td><td>'+esc(r.address||'—')+'</td><td>'+esc(r.cases_total||0)+'</td><td><span class="pill">'+esc(r.open_cases||0)+'</span></td><td>'+esc(fmt(r.last_case_update))+'</td></tr>').join('')||'<tr><td colspan="7">No resident profiles found.</td></tr>';$('cards').innerHTML=rows.map(r=>'<a class="resident-card" href="resident.html?id='+encodeURIComponent(r.id)+'"><strong>'+esc(r.full_name)+'</strong><small>'+esc(r.reference)+' · '+esc(r.phone||r.email||'No contact recorded')+'</small><small>'+esc(r.address||'No address recorded')+'</small><div class="meta"><span class="pill">'+esc(r.cases_total||0)+' case(s)</span><span class="pill">'+esc(r.open_cases||0)+' open</span></div></a>').join('')||'<div class="resident-card">No resident profiles found.</div>';document.querySelectorAll('tr[data-id]').forEach(tr=>tr.onclick=()=>location.href='resident.html?id='+encodeURIComponent(tr.dataset.id))}catch(e){$('status').textContent=e.message}}
+async function create(){try{const d=await SMG.api('/api/residents',{method:'POST',body:{fullName:$('fullName').value.trim(),phone:$('phone').value.trim(),email:$('email').value.trim(),dateOfBirth:$('dob').value,address:$('address').value.trim(),preferredContact:$('preferred').value,householdName:$('household').value.trim()}});location.href='resident.html?id='+encodeURIComponent(d.resident.id)}catch(e){$('status').textContent=e.message}}
+(async()=>{session=await SMG.session();if(!canWrite()||session.user.role==='Field Officer')$('newResident').style.display='none';$('search').onclick=load;$('q').addEventListener('keydown',e=>{if(e.key==='Enter')load()});$('newResident').onclick=()=>$('createPanel').classList.add('open');$('cancel').onclick=()=>$('createPanel').classList.remove('open');$('create').onclick=create;load()})().catch(()=>{});
+})();
+</script>
+</body>
+</html>
