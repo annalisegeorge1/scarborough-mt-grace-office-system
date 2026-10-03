@@ -1,119 +1,93 @@
-# Scarborough / Mt. Grace District Office Service System — V264
+# Scarborough / Mt. Grace District Office Service System — V265
 
 **Current status: consolidation / staging candidate**
 
-V264 begins the deliberate consolidation phase: fewer disconnected dashboards, stronger workflow integration, and a clearer daily operating path.
+V265 continues the consolidation phase by strengthening the **Case Workspace as the office file** rather than creating another standalone module.
 
-## Consolidation direction
+## Related Work in the Case Workspace
 
-The intended staff flow is now:
+The central case workspace already brings together:
+- applications
+- correspondence
+- field visits
+- records/documents
+- resident feedback and recovery
+- appointments
+- permanent case notes
+- central case activity
 
-**Today → record/workspace → action → follow-up → evidence → close/report**
+V265 adds:
 
-V264 focuses specifically on the first step: **Today**.
+- **linked Events**
+- **linked Meetings**
 
-## Unified office attention
+under a new Case Workspace tab:
 
-`GET /api/today` now builds one normalized attention queue across the modules the signed-in role is allowed to use.
+**Related Work**
 
-The queue can include:
-- resident case follow-ups
-- applications/referrals due for follow-up
-- field visits/activity due or already scheduled
-- community matter follow-ups
-- central Meeting action items
-- resident feedback where follow-up has been requested
+## Relationship rule
 
-The underlying modules remain authoritative. Today does not duplicate editing logic.
+V265 does not guess relationships.
 
-## Attention priority
+Events and Meetings appear in a case only when they are explicitly linked using the existing fields:
 
-The queue is ordered:
+- `linked_type = Case`
+- `linked_reference = <case UUID or case reference>`
 
-1. overdue
-2. due today
-3. undated items explicitly requiring attention
-4. future/upcoming items where applicable
+This preserves the authoritative source record and avoids duplicating community/event/meeting data inside Cases.
 
-Role restrictions still apply. Field Officers remain limited to the operational records already scoped to them by existing RBAC/query rules.
+## Direct navigation
 
-## Staff Home
+Related Work cards open the exact source record.
 
-`/staff/home.html` now shows:
-- **Overdue work** across accessible modules
-- **Due today** across accessible modules
-- Open cases
-- Upcoming appointments
-- Open applications
-- Open field work
-- Community follow-ups
-- Open meeting actions
-- Open feedback
-- Urgent/high-priority cases
+Examples:
 
-The main Home panel is now:
+- `events.html?event=<event-id>&tab=manage`
+- `meetings.html?meeting=<meeting-id>&tab=manage`
 
-**What needs action now**
+The Events workspace now accepts direct event IDs just as Meetings already accepts direct meeting IDs.
 
-rather than a Case-only attention list.
+Staff no longer need to:
+1. open the module,
+2. search for the linked record,
+3. reopen it manually.
 
-Each attention item identifies its source module and routes staff into the authoritative workspace.
+## Permissions
 
-## Meeting-action deep links
+The Related Work tab respects the existing `community.write` permission.
 
-Today can link directly to:
-
-`meetings.html?meeting=<id>&tab=manage`
-
-The Meetings workspace now accepts those query parameters and opens the selected meeting directly in the requested operational tab.
-
-This removes the previous extra step of opening Meetings and searching again.
-
-## Daily Workboard
-
-The Daily Workboard now uses the same cross-module Today summary.
-
-Its top metrics are:
-- overdue attention
-- due today
-- open cases
-- open applications
-- open field activity
-- open meeting actions
-
-The duplicate legacy auth/header navigation has been removed from the page.
-
-The Workboard remains a routing/overview surface rather than a second editing system.
-
-## Legacy/consolidation audit
-
-At the start of this phase, repository-wide searches no longer found the broad legacy patterns targeted earlier:
-- old V159 global navigation
-- old duplicate auth-line markup
-- old hero-nav/nav2 patterns in the audited search pass
-- browser-local meeting storage has already been replaced by V263 central Meetings
-
-The focus can therefore move from wholesale legacy removal toward integration, consistency and operational reliability.
+If a role does not have Community Operations access, the case workspace shows the restricted state rather than exposing Event/Meeting data.
 
 ## Verification
 
 Source validation confirms:
-- Today API JavaScript parses
-- Staff Home inline JavaScript parses
-- Daily Workboard inline JavaScript parses
-- Meetings deep-link JavaScript parses
+- Cases route parses
+- Case Workspace helper parses
+- Events deep-link logic parses
+- Meetings deep-link logic parses
 
-Authenticated smoke testing now validates the Today response structure itself and requires:
-- an `attention` array
-- `summary.attentionOverdue`
-- `summary.attentionDueToday`
+Authenticated smoke testing now inspects the integrated Case Workspace response and requires:
+- `applications` array
+- `documents` array
+- `events` array
+- `meetings` array
 
-rather than checking HTTP status alone.
+when an accessible case exists.
 
 ## Backend release identity
 
-The server package version is now `264.0.0`.
+The server package version is now `265.0.0`.
+
+## Consolidation direction
+
+The office flow remains:
+
+**Today → record/workspace → action → follow-up → evidence → close/report**
+
+V265 improves the **record/workspace** step.
+
+The next consolidation focus should be the **evidence layer**: making documents, correspondence, field evidence and related records consistently attach to and prove the work they support.
 
 ## Production boundary
 
-V264 consolidates operational attention. It does not broaden role access, move authority away from the underlying modules, publish confidential records, or constitute final production authorization.
+V265 links already-authorized records. It does not broaden access, create inferred relationships, publish private data, or constitute final production authorization.
