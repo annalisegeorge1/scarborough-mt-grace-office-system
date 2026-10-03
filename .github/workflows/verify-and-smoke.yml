@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      SMOKE_BASE_URL: https://scarborough-mt-grace-staging.onrender.com
+      SMOKE_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://scarborough-mt-grace-staging-v52j.onrender.com' }}
       SMOKE_EMAIL: ${{ secrets.SMOKE_EMAIL }}
       SMOKE_PASSWORD: ${{ secrets.SMOKE_PASSWORD }}
     steps:
@@ -82,14 +82,14 @@ jobs:
           set -euo pipefail
           EXPECTED_VERSION="$(node -p "require('./server/package.json').version")"
           echo "Waiting for staging to report version $EXPECTED_VERSION"
-          for attempt in $(seq 1 40); do
+          for attempt in $(seq 1 28); do
             BODY="$(curl --silent --show-error --max-time 20 "$SMOKE_BASE_URL/api/health/live" || true)"
             LIVE_VERSION="$(printf '%s' "$BODY" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).version||'')}catch{console.log('')}})")"
             if [ "$LIVE_VERSION" = "$EXPECTED_VERSION" ]; then
               echo "Render staging is on version $LIVE_VERSION"
               exit 0
             fi
-            echo "Attempt $attempt/40: staging version is '${LIVE_VERSION:-unavailable}', expected '$EXPECTED_VERSION'"
+            echo "Attempt $attempt/28: staging version is '${LIVE_VERSION:-unavailable}', expected '$EXPECTED_VERSION'"
             sleep 15
           done
           echo "Render staging did not reach application version $EXPECTED_VERSION in time."
