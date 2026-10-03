@@ -79,7 +79,9 @@ router.get('/content',async(req,res,next)=>{
       FROM public_content pc
       LEFT JOIN documents d ON d.id=CASE
         WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
-        ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+        WHEN COALESCE(pc.published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          THEN (pc.published_snapshot->>'documentId')::uuid
+        ELSE NULL
       END
       WHERE (pc.workflow='Published' AND pc.verified=true)
          OR pc.published_snapshot_active=true
@@ -167,7 +169,11 @@ router.get('/documents/:id',async(req,res,next)=>{
              publish_on,expire_on,updated_at,workflow,verified,published_snapshot,published_snapshot_active
       FROM public_content
       WHERE document_id=$1
-         OR NULLIF(published_snapshot->>'documentId','')::uuid=$1
+         OR CASE
+              WHEN COALESCE(published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+                THEN (published_snapshot->>'documentId')::uuid=$1
+              ELSE false
+            END
     `,[req.params.id]);
     const now=Date.now();
     const exposed=cq.rows.some(row=>{
