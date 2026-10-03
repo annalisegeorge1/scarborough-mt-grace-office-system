@@ -87,12 +87,14 @@ function renderSystem(){
   ).join('')||'<div class="trace-empty">No server checks returned.</div>';
   const s=system.schema||{};
   $('env-grid').innerHTML=[
+    ['Migration registry',s.migrationTablePresent?'Present':'Missing'],
     ['Migration 006',s.migrationApplied?'Applied':'Missing'],
     ['Publishing columns',(s.presentColumns||0)+' / '+(s.requiredColumns||0)],
     ['Revision table',s.revisionsTable?'Present':'Missing'],
     ['Revision parity',(integrity.revisionVersionMismatches||0)===0?'Matched':(integrity.revisionVersionMismatches+' mismatch(es)')],
     ['Stable public snapshots',(integrity.publishedMissingSnapshot||0)===0?'Healthy':(integrity.publishedMissingSnapshot+' missing')],
-    ['Public documents',(integrity.invalidPublicDocuments||0)===0?'Controlled':(integrity.invalidPublicDocuments+' issue(s)')]
+    ['Public documents',(integrity.invalidPublicDocuments||0)===0?'Controlled':(integrity.invalidPublicDocuments+' issue(s)')],
+    ['Snapshot document IDs',(integrity.malformedSnapshotDocumentIds||0)===0?'Valid':(integrity.malformedSnapshotDocumentIds+' malformed')]
   ].map(([a,b])=>'<div class="env-item"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
 }
 function renderHealth(){
