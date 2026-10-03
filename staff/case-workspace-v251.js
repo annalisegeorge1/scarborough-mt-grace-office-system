@@ -2,7 +2,7 @@
 const state={caseId:null,workspace:null,csrf:'',loading:false,activeTab:'overview'};
 const tabs=[
   ['overview','Overview'],['activity','Activity'],['applications','Applications'],['correspondence','Correspondence'],
-  ['field','Field Visits'],['related','Related Work'],['documents','Documents'],['feedback','Feedback'],['timeline','Timeline']
+  ['field','Field Visits'],['related','Related Work'],['documents','Documents'],['feedback','Feedback'],['closure','Closure'],['timeline','Timeline']
 ];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=v=>{if(!v)return '—';try{return new Date(v).toLocaleString('en-TT',{dateStyle:'medium',timeStyle:String(v).includes('T')?'short':undefined})}catch{return String(v)}};
@@ -58,6 +58,7 @@ function ensureLayout(){
   const relatedEvents=panel('Linked events','Events explicitly linked to this case.','events.html','Open Events');relatedEvents.id='v265-events';pane('related').append(relatedEvents);
   const relatedMeetings=panel('Linked meetings','Meetings, decisions and follow-up explicitly linked to this case.','meetings.html','Open Meetings');relatedMeetings.id='v265-meetings';pane('related').append(relatedMeetings);
   const fb=panel('Resident feedback & recovery','Feedback and service-recovery actions linked to this case.','feedback.html','Open Feedback');fb.id='v251-feedback';pane('feedback').append(fb);
+  const closure=panel('Closure readiness','Formal closure requirements and unresolved linked work.');closure.id='v267-closure';pane('closure').append(closure);
   const timeline=panel('Central case timeline','Server-backed activity recorded against this case.');timeline.id='v251-timeline';pane('timeline').prepend(timeline);
 
   const noteSec=closestSection('new-note');
@@ -108,7 +109,7 @@ function renderWorkspace(w){
   if(!residentLink&&strip){residentLink=document.createElement('div');residentLink.id='v255-resident-profile-link';residentLink.className='v255-resident-profile-link';strip.after(residentLink)}
   if(residentLink)residentLink.innerHTML=c.residentId?'<a href="resident.html?id='+encodeURIComponent(c.residentId)+'">Open Resident Profile →</a>':'';
 
-  setCount('applications',w.applications?.length);setCount('correspondence',w.correspondence?.length);setCount('field',w.fieldVisits?.length);setCount('related',(w.events?.length||0)+(w.meetings?.length||0));setCount('documents',w.documents?.length);setCount('feedback',w.feedback?.length);setCount('timeline',w.activity?.length);setCount('activity',(w.notes?.length||0)+(w.appointments?.length||0));
+  setCount('applications',w.applications?.length);setCount('correspondence',w.correspondence?.length);setCount('field',w.fieldVisits?.length);setCount('related',(w.events?.length||0)+(w.meetings?.length||0));setCount('documents',w.documents?.length);setCount('feedback',w.feedback?.length);setCount('closure',(w.closureReadiness?.blockers?.length||0)+(w.closureReadiness?.warnings?.length||0));setCount('timeline',w.activity?.length);setCount('activity',(w.notes?.length||0)+(w.appointments?.length||0));
 
   const appHost=document.getElementById('v251-applications');
   if(!p.applications)restricted(appHost.querySelector('.v251-list'),'Your role does not have Applications access.');
@@ -135,6 +136,18 @@ function renderWorkspace(w){
   const fbHost=document.getElementById('v251-feedback');
   if(!p.feedback)restricted(fbHost.querySelector('.v251-list'),'Your role does not have Resident Feedback access.');
   else renderItems(fbHost,w.feedback,a=>'<article class="v251-item"><div><strong>'+esc(a.feedback_type||'Feedback')+(a.theme?' · '+esc(a.theme):'')+'</strong><small>'+esc(fmt(a.updated_at||a.created_at))+(a.rating?' · Rating '+esc(a.rating)+'/5':'')+'</small><p>'+esc(a.details||'')+'</p></div><span class="v251-badge">'+esc(a.status||'Open')+'</span></article>','No resident feedback is linked to this case.');
+
+  const closureHost=document.getElementById('v267-closure')?.querySelector('.v251-list');
+  if(closureHost){
+    const cr=w.closureReadiness||{},blockers=cr.blockers||[],warnings=cr.warnings||[];
+    const status=cr.closed
+      ? '<article class="v251-item"><div><strong>Formally closed</strong><small>'+esc(fmt(cr.closedAt))+'</small><p>This case has a formal closure timestamp.</p></div><span class="v251-badge">CLOSED</span></article>'
+      : '<article class="v251-item"><div><strong>'+esc(cr.ready?'Formal closure prerequisites pass':'Formal closure needs attention')+'</strong><small>Authority: '+esc(cr.canFormalClose?'Manager / Administrative authority available':'Current role cannot perform formal closure')+'</small><p>Completion may be recorded operationally before formal closure. Review unresolved linked work before closing the file.</p></div><span class="v251-badge">'+esc(cr.ready?'READY':'REVIEW')+'</span></article>';
+    const blockerHtml=blockers.map(x=>'<article class="v251-item"><div><strong>'+esc(x.label)+'</strong><small>Required before formal closure</small><p>'+esc(x.detail||'')+'</p></div><span class="v251-badge">REQUIRED</span></article>').join('');
+    const warningHtml=warnings.map(x=>'<article class="v251-item"><div><strong>'+esc(x.label)+'</strong><small>'+esc(x.count||0)+' unresolved item(s)</small><p>'+esc(x.detail||'')+'</p></div><span class="v251-badge">REVIEW</span></article>').join('');
+    closureHost.innerHTML=status+blockerHtml+warningHtml+(!blockers.length&&!warnings.length&&!cr.closed?'<div class="v251-empty">No unresolved linked-work warnings were found. Review the Case Management fields, then formally close when appropriate.</div>':'')+'<div class="v251-panel-actions"><button class="v251-link" type="button" data-v267-overview>Review Case Management</button></div>';
+    closureHost.querySelector('[data-v267-overview]')?.addEventListener('click',()=>setTab('overview'));
+  }
 
   const noteList=document.getElementById('notes-list');
   if(noteList){
