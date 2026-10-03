@@ -103,13 +103,39 @@ router.post('/:id/notes',requirePermission('cases.write'),async(req,res,next)=>{
 }catch(e){next(e)}});
 
 router.post('/',requirePermission('cases.write'),async(req,res,next)=>{try{
-  const x=fromClient(req.body?.case||req.body||{});
-  const q=await db.query(`INSERT INTO cases(status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,next_follow_up,due_date,escalation,next_action,public_status,public_update,public_next_step,resident_visible,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING id,reference`,[x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.public_status,x.public_update,x.public_next_step,x.resident_visible,req.user.id]);
-  await db.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case created','Case record created.',false)`,[q.rows[0].id,req.user.id]);
-  await audit(db,{actorUserId:req.user.id,eventType:'case.create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference}});
-  const full=await db.query(CASE_SELECT+' WHERE c.id=$1',[q.rows[0].id]);
-  res.status(201).json({case:toClient(full.rows[0])});
-}catch(e){next(e)}});
+  const body=req.body?.case||req.body||{},x=fromClient(body);
+  const created=await db.tx(async client=>{
+    let residentId=x.resident_id||null,resident=null;
+    if(residentId){
+      if(req.user.role==='Field Officer'){
+        const rq=await client.query(`SELECT r.* FROM residents r WHERE r.id=$1 AND EXISTS(
+          SELECT 1 FROM cases c WHERE c.resident_id=r.id AND (c.assigned_user_id=$2 OR c.case_owner_user_id=$2)
+        )`,[residentId,req.user.id]);
+        resident=rq.rows[0]||null;
+      }else resident=(await client.query('SELECT * FROM residents WHERE id=$1',[residentId])).rows[0]||null;
+      if(!resident){const e=new Error('Resident profile not found or not available to your role.');e.statusCode=404;throw e;}
+      x.resident_name=x.resident_name||resident.full_name;
+      x.phone=x.phone||resident.phone;
+      x.email=x.email||resident.email;
+      x.date_of_birth=x.date_of_birth||resident.date_of_birth;
+      x.address=x.address||resident.address;
+      x.preferred_contact=x.preferred_contact||resident.preferred_contact;
+    }else{
+      const rq=await client.query(`INSERT INTO residents(full_name,phone,email,date_of_birth,address,preferred_contact,created_by)
+        VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+        [x.resident_name||'Unnamed resident',x.phone,x.email,x.date_of_birth,x.address,x.preferred_contact,req.user.id]);
+      resident=rq.rows[0];residentId=resident.id;
+    }
+    const q=await client.query(`INSERT INTO cases(resident_id,status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,next_follow_up,due_date,escalation,next_action,public_status,public_update,public_next_step,resident_visible,created_by)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING id,reference`,
+      [residentId,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.public_status,x.public_update,x.public_next_step,x.resident_visible,req.user.id]);
+    await client.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case created','Case record created.',false)`,[q.rows[0].id,req.user.id]);
+    await audit(client,{actorUserId:req.user.id,eventType:'case.create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference,residentId}});
+    const full=await client.query(CASE_SELECT+' WHERE c.id=$1',[q.rows[0].id]);
+    return full.rows[0];
+  });
+  res.status(201).json({case:toClient(created)});
+}catch(e){if(e.statusCode)return res.status(e.statusCode).json({detail:e.message});next(e)}});
 
 router.put('/:id',requirePermission('cases.write'),async(req,res,next)=>{try{
   const id=req.params.id,body=req.body?.case||{};
@@ -119,12 +145,12 @@ router.put('/:id',requirePermission('cases.write'),async(req,res,next)=>{try{
   let assignedId=body.assignedUserId||null,ownerId=body.caseOwnerUserId||null;
   if(!assignedId&&body.assigned&&body.assigned!=='Unassigned'){const u=await db.query('SELECT id FROM users WHERE display_name=$1 AND is_active=true',[body.assigned]);assignedId=u.rows[0]?.id||null;}
   if(!ownerId&&body.caseOwner&&body.caseOwner!=='Unassigned'){const u=await db.query('SELECT id FROM users WHERE display_name=$1 AND is_active=true',[body.caseOwner]);ownerId=u.rows[0]?.id||null;}
-  await db.query(`UPDATE cases SET status=$2,priority=$3,resident_name=$4,phone=$5,email=$6,date_of_birth=$7,address=$8,category=$9,preferred_contact=$10,enquiry_message=$11,assigned_user_id=COALESCE($12,assigned_user_id),case_owner_user_id=COALESCE($13,case_owner_user_id),next_follow_up=$14,due_date=$15,escalation=$16,next_action=$17,referral_agency=$18,referral_reference=$19,referral_date=$20,referral_purpose=$21,referral_contact=$22,referral_ack_date=$23,referral_response_status=$24,referral_follow_up_date=$25,referral_response_note=$26,closure_reason=$27,public_status=$28,public_update=$29,public_next_step=$30,public_updated_at=CASE WHEN public_update IS DISTINCT FROM $29 OR public_status IS DISTINCT FROM $28 THEN now() ELSE public_updated_at END,resident_visible=$31,updated_at=now() WHERE id=$1`,[id,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,assignedId,ownerId,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.referral_agency,x.referral_reference,x.referral_date,x.referral_purpose,x.referral_contact,x.referral_ack_date,x.referral_response_status,x.referral_follow_up_date,x.referral_response_note,x.closure_reason,x.public_status,x.public_update,x.public_next_step,x.resident_visible]);
+  await db.query(`UPDATE cases SET status=$2,priority=$3,resident_name=$4,phone=$5,email=$6,date_of_birth=$7,address=$8,category=$9,preferred_contact=$10,enquiry_message=$11,assigned_user_id=COALESCE($12,assigned_user_id),case_owner_user_id=COALESCE($13,case_owner_user_id),next_follow_up=$14,due_date=$15,escalation=$16,next_action=$17,referral_agency=$18,referral_reference=$19,referral_date=$20,referral_purpose=$21,referral_contact=$22,referral_ack_date=$23,referral_response_status=$24,referral_follow_up_date=$25,referral_response_note=$26,closure_reason=$27,public_status=$28,public_update=$29,public_next_step=$30,public_updated_at=CASE WHEN public_update IS DISTINCT FROM $29 OR public_status IS DISTINCT FROM $28 THEN now() ELSE public_updated_at END,resident_visible=$31,resident_id=COALESCE($32,resident_id),updated_at=now() WHERE id=$1`,[id,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,assignedId,ownerId,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.referral_agency,x.referral_reference,x.referral_date,x.referral_purpose,x.referral_contact,x.referral_ack_date,x.referral_response_status,x.referral_follow_up_date,x.referral_response_note,x.closure_reason,x.public_status,x.public_update,x.public_next_step,x.resident_visible,body.residentId||null]);
   const full=await db.query(CASE_SELECT+' WHERE c.id=$1',[id]);
   if(!full.rowCount)return res.status(404).json({detail:'Case not found.'});
   const after=full.rows[0],changes=[];
   const add=(label,a,b)=>{if(changed(a,b))changes.push(`${label} changed from ${a??'not set'} to ${b??'not set'}.`)};
-  add('Status',before.status,after.status);add('Priority',before.priority,after.priority);add('Assigned officer',before.assigned_name,after.assigned_name);add('Case owner',before.owner_name,after.owner_name);add('Follow-up date',before.next_follow_up,after.next_follow_up);add('Target date',before.due_date,after.due_date);add('Escalation',before.escalation,after.escalation);add('Next action',before.next_action,after.next_action);add('Referral agency',before.referral_agency,after.referral_agency);add('Public status',before.public_status,after.public_status);
+  add('Status',before.status,after.status);add('Priority',before.priority,after.priority);add('Assigned officer',before.assigned_name,after.assigned_name);add('Case owner',before.owner_name,after.owner_name);add('Follow-up date',before.next_follow_up,after.next_follow_up);add('Target date',before.due_date,after.due_date);add('Escalation',before.escalation,after.escalation);add('Next action',before.next_action,after.next_action);add('Referral agency',before.referral_agency,after.referral_agency);add('Public status',before.public_status,after.public_status);add('Resident profile',before.resident_id,after.resident_id);
   for(const description of changes)await db.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case update',$3,false)`,[id,req.user.id,description]);
   await audit(db,{actorUserId:req.user.id,eventType:'case.update',objectType:'case',objectId:id,metadata:{reference:body.reference,status:x.status,changeCount:changes.length}});
   res.json({case:toClient(after)});
