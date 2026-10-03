@@ -1,0 +1,425 @@
+/* Scarborough / Mt. Grace District Office — V239
+   Civic Shell
+   A calm, route-aware public frame around the existing site systems. */
+
+body.v239-civic-shell{
+  --v239-accent:#174f74;
+  --v239-accent-rgb:23,79,116;
+  --v239-accent-soft:rgba(23,79,116,.10);
+  --v239-shell:#071f33;
+  --v239-shell-2:#0b3553;
+  --v239-brass:#a78f5e;
+  --v239-brass-soft:#d8c7a0;
+}
+
+body[data-v239-route="office"]{
+  --v239-accent:#4b6d80;
+  --v239-accent-rgb:75,109,128;
+}
+body[data-v239-route="services"]{
+  --v239-accent:#17678f;
+  --v239-accent-rgb:23,103,143;
+}
+body[data-v239-route="community"]{
+  --v239-accent:#2b7569;
+  --v239-accent-rgb:43,117,105;
+}
+body[data-v239-route="forms"]{
+  --v239-accent:#4c5f8e;
+  --v239-accent-rgb:76,95,142;
+}
+body[data-v239-route="updates"]{
+  --v239-accent:#6c5d82;
+  --v239-accent-rgb:108,93,130;
+}
+body[data-v239-route="contact"]{
+  --v239-accent:#386f7c;
+  --v239-accent-rgb:56,111,124;
+}
+
+/* ==========================================================================
+   1. SCROLL PROGRESS
+   ========================================================================== */
+.v239-scroll-progress{
+  position:fixed;
+  inset:0 auto auto 0;
+  width:100%;
+  height:3px;
+  z-index:10050;
+  pointer-events:none;
+  background:transparent;
+}
+
+.v239-scroll-progress > span{
+  display:block;
+  width:var(--v239-progress,0%);
+  height:100%;
+  border-radius:0 999px 999px 0;
+  background:linear-gradient(90deg,var(--v239-accent),var(--v239-brass-soft));
+  box-shadow:0 0 12px rgba(var(--v239-accent-rgb),.28);
+  transform-origin:left center;
+}
+
+/* ==========================================================================
+   2. STICKY CIVIC NAVIGATION
+   The existing navigation remains authoritative. V239 only changes its shell.
+   ========================================================================== */
+body.v239-civic-shell nav[aria-label="Site navigation"]{
+  position:sticky!important;
+  top:0!important;
+  z-index:5100!important;
+  background:
+    radial-gradient(circle at 84% -40%,rgba(216,199,160,.10),transparent 18rem),
+    linear-gradient(90deg,rgba(6,28,46,.96),rgba(10,48,74,.96) 58%,rgba(8,40,63,.96))!important;
+  -webkit-backdrop-filter:blur(15px) saturate(130%);
+  backdrop-filter:blur(15px) saturate(130%);
+  box-shadow:0 8px 28px rgba(3,22,36,.12)!important;
+  transition:box-shadow .18s ease,background .18s ease;
+}
+
+body.v239-scrolled nav[aria-label="Site navigation"]{
+  box-shadow:0 12px 34px rgba(3,22,36,.20)!important;
+  background:
+    linear-gradient(90deg,rgba(5,25,41,.985),rgba(9,44,68,.985) 58%,rgba(7,35,55,.985))!important;
+}
+
+body.v239-civic-shell nav[aria-label="Site navigation"] .nav-inner{
+  transition:min-height .18s ease,padding .18s ease;
+}
+
+body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark,
+body.v239-civic-shell nav[aria-label="Site navigation"] .v7-seal,
+body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark-copy{
+  transition:transform .18s ease,width .18s ease,height .18s ease,opacity .18s ease;
+}
+
+.v239-route-indicator{
+  display:none;
+  flex:0 0 auto;
+  align-items:center;
+  min-height:27px;
+  margin-left:3px;
+  padding:0 9px;
+  border:1px solid rgba(var(--v239-accent-rgb),.44);
+  border-radius:999px;
+  background:rgba(var(--v239-accent-rgb),.14);
+  color:#f4f8fa;
+  font:850 7px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(3px);
+  transition:opacity .18s ease,transform .18s ease;
+}
+
+body.v239-scrolled .v239-route-indicator{
+  opacity:1;
+  transform:none;
+}
+
+body.v239-civic-shell nav[aria-label="Site navigation"] .links>.v51-nav-btn.v205-route-active,
+body.v239-civic-shell nav[aria-label="Site navigation"] .links>.v51-nav-btn[aria-current="page"]{
+  border-color:rgba(var(--v239-accent-rgb),.34)!important;
+  background:rgba(var(--v239-accent-rgb),.16)!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(216,199,160,.10),
+    0 0 0 1px rgba(var(--v239-accent-rgb),.04)!important;
+}
+
+body.v239-civic-shell nav[aria-label="Site navigation"] .links>.v51-nav-btn.v205-route-active:after{
+  background:linear-gradient(90deg,var(--v239-accent),#d8c7a0)!important;
+}
+
+/* Compact only on true desktop. */
+@media(min-width:1180px){
+  .v239-route-indicator{display:inline-flex}
+
+  body.v239-scrolled nav[aria-label="Site navigation"] .nav-inner{
+    min-height:56px!important;
+  }
+
+  body.v239-scrolled nav[aria-label="Site navigation"] .v7-seal{
+    width:38px!important;
+    height:38px!important;
+  }
+
+  body.v239-scrolled nav[aria-label="Site navigation"] .v7-brandmark-copy span{
+    opacity:0!important;
+    max-height:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+
+  body.v239-scrolled nav[aria-label="Site navigation"] .links>.v51-nav-btn{
+    min-height:34px!important;
+  }
+
+  body.v239-scrolled nav[aria-label="Site navigation"] #v27-site-search-input{
+    min-height:34px!important;
+  }
+}
+
+/* Mobile rail sticks once reached, but does not duplicate desktop navigation. */
+body.v239-civic-shell .v125-mobile-nav-shell{
+  position:sticky!important;
+  top:0!important;
+  z-index:5090!important;
+  -webkit-backdrop-filter:blur(14px) saturate(125%);
+  backdrop-filter:blur(14px) saturate(125%);
+}
+
+body.v239-civic-shell .v125-mobile-nav-rail button[data-v51-go].v205-route-active,
+body.v239-civic-shell .v125-mobile-nav-rail button[data-v51-go][aria-current="page"]{
+  border-color:rgba(var(--v239-accent-rgb),.70)!important;
+  background:rgba(var(--v239-accent-rgb),.20)!important;
+  box-shadow:inset 0 -2px 0 var(--v239-accent)!important;
+}
+
+/* ==========================================================================
+   3. AMBIENT PAGE MATERIAL
+   Existing section backgrounds remain; this only gives the gaps between them
+   one route-aware visual atmosphere.
+   ========================================================================== */
+body.v239-civic-shell main#main-content{
+  background:
+    radial-gradient(circle at 92% 9%,rgba(var(--v239-accent-rgb),.035),transparent 24rem),
+    radial-gradient(circle at 8% 54%,rgba(167,143,94,.025),transparent 28rem),
+    transparent;
+}
+
+body.v112-dark.v239-civic-shell main#main-content{
+  background:
+    radial-gradient(circle at 92% 9%,rgba(var(--v239-accent-rgb),.08),transparent 25rem),
+    radial-gradient(circle at 8% 54%,rgba(216,199,160,.025),transparent 28rem),
+    #061b2b;
+}
+
+/* ==========================================================================
+   4. EXPLORE AS PART OF THE SAME SHELL
+   ========================================================================== */
+body.v239-civic-shell .v202-menu-fab{
+  border-color:rgba(var(--v239-accent-rgb),.40)!important;
+  background:
+    linear-gradient(145deg,
+      color-mix(in srgb,var(--v239-accent) 48%,#08283f),
+      #08283f 72%)!important;
+  box-shadow:
+    0 13px 30px rgba(3,22,36,.24),
+    inset 0 1px 0 rgba(255,255,255,.05)!important;
+}
+
+body.v239-civic-shell .v202-group.v218-current-group>.v202-group-toggle{
+  box-shadow:inset 3px 0 0 var(--v239-accent)!important;
+}
+
+body.v239-civic-shell .v202-sub-link.is-active:before{
+  background:var(--v239-accent)!important;
+  box-shadow:0 0 0 3px rgba(var(--v239-accent-rgb),.12)!important;
+}
+
+/* ==========================================================================
+   5. RESIDENT DOCK
+   Keep its four actions unchanged. Make it read as a permanent civic control
+   surface rather than a separate mobile widget.
+   ========================================================================== */
+body.v239-civic-shell .v7-mobile-dock{
+  position:fixed;
+  overflow:hidden;
+  border:1px solid rgba(216,199,160,.13)!important;
+  border-top-color:rgba(var(--v239-accent-rgb),.42)!important;
+  border-radius:18px!important;
+  background:
+    linear-gradient(90deg,rgba(5,26,43,.985),rgba(8,40,63,.985))!important;
+  -webkit-backdrop-filter:blur(16px) saturate(125%);
+  backdrop-filter:blur(16px) saturate(125%);
+  box-shadow:0 -8px 30px rgba(3,22,36,.18)!important;
+}
+
+body.v239-civic-shell .v7-mobile-dock:before{
+  content:"";
+  position:absolute;
+  top:0;left:12%;right:12%;
+  height:2px;
+  border-radius:0 0 999px 999px;
+  background:linear-gradient(90deg,transparent,var(--v239-accent),#d8c7a0,var(--v239-accent),transparent);
+  opacity:.62;
+  pointer-events:none;
+}
+
+body.v239-civic-shell .v7-mobile-dock a,
+body.v239-civic-shell .v7-mobile-dock button{
+  position:relative;
+  z-index:1;
+}
+
+body.v239-civic-shell .v7-mobile-dock a:not([href*="wa.me"]):hover,
+body.v239-civic-shell .v7-mobile-dock a:not([href*="wa.me"]):focus-visible,
+body.v239-civic-shell .v7-mobile-dock button:hover,
+body.v239-civic-shell .v7-mobile-dock button:focus-visible{
+  background:rgba(var(--v239-accent-rgb),.16)!important;
+}
+
+/* ==========================================================================
+   6. FOOTER CIVIC DECK
+   V239 JS groups the existing signature, accessibility note and staff entry.
+   Their text and links are untouched.
+   ========================================================================== */
+footer .v239-footer-deck{
+  position:relative;
+  z-index:2;
+  width:min(1200px,calc(100% - 36px));
+  margin:26px auto 0;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+footer .v239-footer-deck > .v20-footer-signature{
+  grid-column:1/-1;
+  max-width:none!important;
+  width:100%!important;
+  margin:0!important;
+  padding:24px 24px 22px!important;
+  border:1px solid rgba(216,199,160,.13)!important;
+  border-radius:20px!important;
+  background:
+    radial-gradient(circle at 6% 40%,rgba(216,199,160,.12),transparent 11rem),
+    rgba(255,255,255,.035)!important;
+}
+
+footer .v239-footer-deck > .v14-access-note,
+footer .v239-footer-deck > .v10-staff-entry{
+  max-width:none!important;
+  width:100%!important;
+  min-height:126px;
+  margin:0!important;
+  padding:18px!important;
+  border:1px solid rgba(216,199,160,.10)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+
+footer .v239-footer-deck > .v14-access-note{
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:14px!important;
+}
+
+footer .v239-footer-deck > .v10-staff-entry{
+  display:grid!important;
+  align-content:start!important;
+}
+
+footer .v239-footer-deck + .footer-inner{
+  margin-top:16px!important;
+}
+
+footer .v239-footer-deck ~ .v6-footer-links{
+  margin-top:0!important;
+}
+
+footer .v239-footer-deck .v10-staff-entry a{
+  width:max-content;
+  max-width:100%;
+  min-height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:10px;
+  padding:0 14px!important;
+}
+
+/* Footer’s remaining link areas become quieter after the civic deck. */
+footer .footer-inner{
+  margin-top:16px!important;
+  border-top-color:rgba(216,199,160,.07)!important;
+}
+
+footer .v6-footer-links{
+  border-top-color:rgba(255,255,255,.04)!important;
+  border-bottom-color:rgba(255,255,255,.04)!important;
+}
+
+footer .v88-footer-links{
+  padding-top:13px!important;
+  opacity:.90;
+}
+
+/* ==========================================================================
+   7. ROUTE TRANSITION
+   One restrained entrance, no animated layout shifts.
+   ========================================================================== */
+body.v239-mounted main#main-content{
+  animation:v239PageIn .28s ease both;
+}
+
+@keyframes v239PageIn{
+  from{opacity:.72}
+  to{opacity:1}
+}
+
+/* ==========================================================================
+   8. TABLET / MOBILE
+   ========================================================================== */
+@media(max-width:900px){
+  .v239-scroll-progress{height:2px}
+
+  footer .v239-footer-deck{
+    width:calc(100% - 24px);
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:18px;
+  }
+
+  footer .v239-footer-deck > .v20-footer-signature{
+    grid-column:auto;
+    padding:20px 16px 18px!important;
+  }
+
+  footer .v239-footer-deck > .v14-access-note,
+  footer .v239-footer-deck > .v10-staff-entry{
+    min-height:0;
+    padding:15px!important;
+  }
+}
+
+@media(max-width:520px){
+  body.v239-civic-shell .v7-mobile-dock{
+    border-radius:15px!important;
+  }
+
+  footer .v239-footer-deck{
+    width:calc(100% - 20px);
+  }
+
+  footer .v239-footer-deck > .v20-footer-signature{
+    padding:18px 14px 16px!important;
+  }
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY / REDUCED MOTION / PRINT
+   ========================================================================== */
+@media(prefers-reduced-motion:reduce){
+  body.v239-mounted main#main-content{animation:none!important}
+  .v239-route-indicator,
+  body.v239-civic-shell nav[aria-label="Site navigation"] .nav-inner,
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark,
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-seal,
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark-copy{
+    transition:none!important;
+  }
+}
+
+@media print{
+  .v239-scroll-progress,
+  .v239-route-indicator{
+    display:none!important;
+  }
+
+  footer .v239-footer-deck{
+    display:block!important;
+    width:100%!important;
+  }
+}
