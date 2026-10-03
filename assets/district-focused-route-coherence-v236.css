@@ -1,0 +1,384 @@
+/* Scarborough / Mt. Grace District Office — V236
+   Focused Route Coherence
+   Reduces repeated mobile/tablet page chrome while preserving all navigation,
+   route identity and resident actions. CSS-only. */
+
+/* --------------------------------------------------------------------------
+   1. MOBILE/TABLET FOCUSED NAVIGATOR
+   Keep section navigation, remove the duplicate large “Focused Page” head and
+   duplicate Call/WhatsApp/Enquiry/Track actions already available in the fixed
+   resident dock and Explore system.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v204-side-panel{
+    order:-1!important;
+    position:relative!important;
+    top:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  body.v203-focused-view .v204-side-head,
+  body.v203-focused-view .v204-side-actions,
+  body.v203-focused-view .v204-side-note{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v204-side-nav{
+    display:flex!important;
+    grid-template-columns:none!important;
+    gap:7px!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:2px 0 7px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  body.v203-focused-view .v204-side-nav::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v204-side-nav:before{
+    content:"On this page";
+    flex:0 0 auto;
+    min-height:34px;
+    display:inline-flex;
+    align-items:center;
+    padding:0 10px;
+    border-radius:999px;
+    border:1px solid rgba(var(--v207-accent-rgb),.18);
+    background:var(--v207-accent-soft);
+    color:var(--v207-accent-ink);
+    font:900 6.5px/1 system-ui;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    scroll-snap-align:start;
+  }
+
+  body.v203-focused-view .v204-side-nav a{
+    flex:0 0 auto!important;
+    min-height:34px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:6px!important;
+    padding:0 10px!important;
+    border:1px solid rgba(11,46,72,.09)!important;
+    border-radius:999px!important;
+    background:#fff!important;
+    color:#4d6876!important;
+    white-space:nowrap!important;
+    scroll-snap-align:start;
+    box-shadow:0 4px 12px rgba(7,35,55,.025);
+  }
+
+  body.v203-focused-view .v204-side-nav a.is-active{
+    border-color:rgba(var(--v207-accent-rgb),.22)!important;
+    background:var(--v207-accent-soft)!important;
+    color:var(--v207-accent-ink)!important;
+  }
+
+  body.v203-focused-view .v204-side-num{
+    width:18px!important;
+    height:18px!important;
+    flex:0 0 18px!important;
+    border-radius:6px!important;
+    font-size:6px!important;
+  }
+
+  body.v203-focused-view .v204-side-arrow{
+    display:none!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. QUICK ACTION DECK
+   On smaller screens, preserve all four route shortcuts in one horizontal row
+   instead of spending two rows before residents reach actual page content.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v204-action-deck{
+    display:flex!important;
+    grid-template-columns:none!important;
+    gap:8px!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+    padding-bottom:2px!important;
+  }
+
+  body.v203-focused-view .v204-action-deck::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v204-action-card{
+    flex:0 0 min(238px,74vw)!important;
+    min-height:96px!important;
+    padding:12px 13px!important;
+    border-radius:15px!important;
+    scroll-snap-align:start;
+  }
+
+  body.v203-focused-view .v204-action-card strong{
+    font-size:11px!important;
+  }
+
+  body.v203-focused-view .v204-action-card p,
+  body.v203-focused-view .v204-action-card small{
+    font-size:7.4px!important;
+    line-height:1.35!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. ROUTE IDENTITY
+   Preserve the distinctive OFF/SRV/COM/FOR/UPD/CON visual language, but make
+   the strip act like a compact route title rather than another large panel.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v207-identity-strip{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:10px!important;
+    padding:11px 12px!important;
+    border-radius:16px!important;
+    box-shadow:0 6px 16px rgba(8,42,63,.035)!important;
+  }
+
+  body.v203-focused-view .v207-identity-main{
+    gap:10px!important;
+  }
+
+  body.v203-focused-view .v207-identity-mark{
+    width:35px!important;
+    height:35px!important;
+    flex-basis:35px!important;
+    border-radius:11px!important;
+    font-size:8px!important;
+  }
+
+  body.v203-focused-view .v207-identity-copy small{
+    margin-bottom:3px!important;
+    font-size:7px!important;
+  }
+
+  body.v203-focused-view .v207-identity-copy strong{
+    font-size:14px!important;
+    line-height:1.18!important;
+  }
+
+  body.v203-focused-view .v207-identity-copy p{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v207-principles{
+    max-width:260px!important;
+    gap:4px!important;
+  }
+
+  body.v203-focused-view .v207-principle{
+    padding:5px 7px!important;
+    font-size:6.4px!important;
+  }
+}
+
+@media(max-width:620px){
+  body.v203-focused-view .v207-identity-strip{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  body.v203-focused-view .v207-principles{
+    max-width:100%!important;
+    justify-content:flex-start!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scrollbar-width:none!important;
+  }
+  body.v203-focused-view .v207-principles::-webkit-scrollbar{
+    display:none!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. FOCUSED PAGE HERO DENSITY
+   Keep the route hero and section tabs, but reduce wasted vertical depth on
+   phones/tablets. The title remains the dominant page identity.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v203-page-header{
+    padding:28px 0 17px!important;
+  }
+
+  body.v203-focused-view .v203-page-header .v203-wrap{
+    padding-inline:16px!important;
+  }
+
+  body.v203-focused-view .v203-breadcrumb{
+    margin-bottom:10px!important;
+    font-size:8px!important;
+  }
+
+  body.v203-focused-view .v203-title-grid{
+    gap:10px!important;
+  }
+
+  body.v203-focused-view .v203-page-header h1{
+    font-size:clamp(2rem,7vw,3.4rem)!important;
+  }
+
+  body.v203-focused-view .v203-page-header p.v203-intro{
+    max-width:760px!important;
+    margin-top:11px!important;
+    font-size:12px!important;
+    line-height:1.55!important;
+  }
+
+  body.v203-focused-view .v203-summary-card{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v203-page-tabs{
+    margin-top:16px!important;
+    gap:6px!important;
+    padding-bottom:2px!important;
+    scrollbar-width:none!important;
+  }
+
+  body.v203-focused-view .v203-page-tabs::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v203-page-tab{
+    min-height:35px!important;
+    padding-inline:11px!important;
+    font-size:8px!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. FOCUSED SHELL SPACING
+   With the duplicate head/actions removed, bring the useful sections together.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v204-focus-shell{
+    padding-top:14px!important;
+    gap:12px!important;
+  }
+
+  body.v203-focused-view .v204-main-column{
+    gap:16px!important;
+  }
+}
+
+@media(max-width:650px){
+  body.v203-focused-view .v204-focus-shell{
+    padding-inline:12px!important;
+    padding-bottom:26px!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. END-OF-PAGE CROSS-SITE NAVIGATION
+   Preserve the links while removing the oversized “another part of the site”
+   block that duplicates Explore and the fixed resident dock.
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v203-focused-view .v203-page-end{
+    padding:10px 0 calc(104px + env(safe-area-inset-bottom))!important;
+    background:transparent!important;
+    border-top:1px solid rgba(11,46,72,.08)!important;
+    border-bottom:0!important;
+  }
+
+  body.v203-focused-view .v203-page-end .v203-wrap{
+    display:block!important;
+    padding-inline:14px!important;
+  }
+
+  body.v203-focused-view .v203-page-end p{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v203-page-end-actions{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    gap:7px!important;
+    width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  body.v203-focused-view .v203-page-end-actions::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  body.v203-focused-view .v203-page-end a{
+    flex:0 0 auto!important;
+    min-height:34px!important;
+    padding:0 11px!important;
+    border-radius:999px!important;
+    font-size:7.5px!important;
+    white-space:nowrap!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. DARK MODE
+   -------------------------------------------------------------------------- */
+@media(max-width:900px){
+  body.v112-dark.v203-focused-view .v204-side-nav a{
+    border-color:rgba(255,255,255,.08)!important;
+    background:#123247!important;
+    color:#c8d8df!important;
+    box-shadow:none!important;
+  }
+
+  body.v112-dark.v203-focused-view .v204-side-nav a.is-active{
+    border-color:rgba(var(--v207-accent-rgb),.34)!important;
+    background:#1b4055!important;
+    color:#fff!important;
+  }
+
+  body.v112-dark.v203-focused-view .v204-side-nav:before{
+    border-color:rgba(216,199,160,.16)!important;
+    background:#19394d!important;
+    color:#dfc98f!important;
+  }
+
+  body.v112-dark.v203-focused-view .v203-page-end{
+    border-color:rgba(255,255,255,.07)!important;
+  }
+
+  body.v112-dark.v203-focused-view .v203-page-end a{
+    border-color:rgba(255,255,255,.08)!important;
+    background:#123247!important;
+    color:#dce8ed!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. PRINT
+   -------------------------------------------------------------------------- */
+@media print{
+  body.v203-focused-view .v204-side-panel,
+  body.v203-focused-view .v204-action-deck,
+  body.v203-focused-view .v207-identity-strip,
+  body.v203-focused-view .v203-page-end{
+    display:none!important;
+  }
+}
