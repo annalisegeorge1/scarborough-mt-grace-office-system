@@ -1,0 +1,6 @@
+/* V251 case-context mode for resident-linked staff modules */
+.v251-context-bar{margin:0 0 12px;padding:11px 13px;border:1px solid #d8e4e9;border-left:4px solid #c9a34a;border-radius:10px;background:#fffdf5;color:#5c727e;font-size:9px;line-height:1.45}
+.v251-context-bar strong{color:#0b3553}.v251-context-bar span{color:#7b8d96}.v251-context-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.v251-context-actions a,.v251-context-actions button{border:1px solid #d7e2e7;border-radius:7px;background:#fff;color:#31596f;padding:7px 9px;text-decoration:none;font-size:8px;font-weight:900;cursor:pointer}
+.v251-context-actions a.primary{background:#0b3553;border-color:#0b3553;color:#fff}
+.v251-context-hidden{display:none!important}
