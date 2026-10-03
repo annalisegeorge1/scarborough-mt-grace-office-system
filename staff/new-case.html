@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>New Case | Scarborough / Mt. Grace District Office</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--n:#08263d;--b:#174f74;--g:#c9a34a;--paper:#eef4f6;--line:#d9e4e9;--muted:#71858f}
+body{background:var(--paper);color:#17394e}.wrap{width:min(1180px,calc(100% - 28px));margin:18px auto 70px}
+.hero{padding:18px 20px;border-radius:15px;background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}.hero small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#d7c27c}.hero h1{margin:5px 0 4px;font:500 29px Georgia,serif}.hero p{margin:0;color:#b8ccd6;font-size:10px;line-height:1.5}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.step{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.step small{font-size:7px;font-weight:900;color:#87691f}.step strong{display:block;margin-top:3px;color:#31596f;font-size:9px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-top:10px}.head{padding:14px 15px 11px;border-bottom:1px solid #e9eff2}.head small{font-size:7px;font-weight:900;letter-spacing:.1em;color:#87691f}.head h2{margin:4px 0 2px;color:#0b3553;font:500 20px Georgia,serif}.head p{margin:0;color:var(--muted);font-size:9px;line-height:1.45}.body{padding:14px 15px}
+.mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.mode button{border:1px solid #d5e1e6;border-radius:8px;background:#f8fbfc;color:#31596f;padding:8px 10px;font-size:8px;font-weight:900;cursor:pointer}.mode button.active{background:#0b3553;border-color:#0b3553;color:#fff}
+.searchrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.searchrow input,.form input,.form select,.form textarea{width:100%;border:1px solid #d7e2e7;border-radius:8px;padding:9px;background:#f9fbfc;color:#17394e;font-size:9px}.form textarea{min-height:92px;resize:vertical}.btn{border:1px solid #d5e1e6;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:8px;font-weight:900;cursor:pointer}.btn.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}.btn:disabled{opacity:.55;cursor:not-allowed}
+.results{display:grid;gap:6px;margin-top:9px}.result{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;border:1px solid #e1e9ed;border-radius:9px;background:#fbfdfe;cursor:pointer}.result:hover{border-color:#c9b66f;background:#fffdf7}.result strong{display:block;color:#31596f;font-size:9px}.result small{display:block;margin-top:3px;color:#7b8e97;font-size:7.5px;line-height:1.4}.result.selected{border-color:#0b3553;box-shadow:inset 3px 0 0 #0b3553}.pill{border-radius:999px;background:#edf3f6;color:#536d7b;padding:4px 6px;font-size:7px;font-weight:900}
+.selectedResident{display:none;margin:10px 0 0;padding:11px;border-left:4px solid #c9a34a;border-radius:9px;background:#fff9e9}.selectedResident.show{display:block}.selectedResident strong{display:block;color:#0b3553;font-size:10px}.selectedResident span{display:block;margin-top:3px;color:#70653c;font-size:8px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.form label{font-size:7px;font-weight:900;color:#657c88;letter-spacing:.03em}.form label span{display:block;margin-bottom:4px}.wide{grid-column:1/-1}.triple{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;grid-column:1/-1}.notice{padding:10px 11px;border-left:3px solid #c9a34a;border-radius:8px;background:#fff9e9;color:#6f5e2e;font-size:8px;line-height:1.45}.actions{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #e9eff2;background:#f9fbfc}.status{margin-right:auto;align-self:center;color:#6d818c;font-size:8px}
+.hidden{display:none!important}
+@media(max-width:760px){.wrap{width:calc(100% - 18px)}.steps,.form,.triple{grid-template-columns:1fr}.wide,.triple{grid-column:auto}.searchrow{grid-template-columns:1fr}.actions{justify-content:stretch}.actions .btn{flex:1}}
+</style>
+<link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero"><small>RESIDENTS · NEW CASE</small><h1>Create a resident case</h1><p>Start from a verified Resident Profile or create the resident and case together. The saved case opens immediately in Case Management.</p></section>
+  <section class="steps"><div class="step"><small>1 · RESIDENT</small><strong>Select an existing resident or enter a new resident.</strong></div><div class="step"><small>2 · CASE</small><strong>Record the issue, responsibility and next action.</strong></div></section>
+
+  <section class="panel">
+    <header class="head"><small>RESIDENT IDENTITY</small><h2>Who is this case for?</h2><p>Avoid duplicate profiles when the resident already exists.</p></header>
+    <div class="body">
+      <div class="mode"><button id="existingMode" class="active" type="button">Existing resident</button><button id="newMode" type="button">New resident for this case</button></div>
+      <div id="existingBlock">
+        <div class="searchrow"><input id="residentSearch" placeholder="Search name, resident reference, phone, email or address"><button class="btn primary" id="residentSearchBtn" type="button">Search</button></div>
+        <div id="residentResults" class="results"></div>
+        <div id="selectedResident" class="selectedResident"></div>
+      </div>
+      <div id="newResidentBlock" class="hidden">
+        <div class="form">
+          <label><span>FULL NAME *</span><input id="fullName"></label><label><span>PHONE</span><input id="phone"></label>
+          <label><span>EMAIL</span><input id="email" type="email"></label><label><span>DATE OF BIRTH</span><input id="dob" type="date"></label>
+          <label class="wide"><span>ADDRESS</span><input id="address"></label>
+          <label><span>PREFERRED CONTACT</span><select id="preferred"><option value="">Not set</option><option>Phone</option><option>WhatsApp</option><option>Email</option></select></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <header class="head"><small>CASE INTAKE</small><h2>What needs the office’s attention?</h2><p>Keep the intake concise; detailed notes and documents can be added inside the case workspace after creation.</p></header>
+    <div class="body">
+      <div class="form">
+        <label><span>CASE / ENQUIRY TYPE *</span><input id="type" list="caseTypes" placeholder="e.g. Housing / Home Repairs"><datalist id="caseTypes"><option>Housing / Home Repairs</option><option>Social Assistance</option><option>Agriculture</option><option>Infrastructure / Public Works</option><option>Street Lighting / Safety</option><option>Medical Assistance</option><option>Funeral Assistance</option><option>Education / School Support</option><option>Utilities</option><option>Employment / Livelihood</option><option>Community Concern</option><option>General Enquiry</option></datalist></label>
+        <label><span>PRIORITY</span><select id="priority"><option>Standard</option><option>High</option><option>Urgent</option><option>Low</option></select></label>
+        <label class="wide"><span>ENQUIRY / REQUEST *</span><textarea id="message" placeholder="Briefly describe what the resident is asking the office to assist with."></textarea></label>
+        <label class="wide"><span>NEXT ACTION</span><input id="nextAction" placeholder="What should happen next?"></label>
+        <div class="triple">
+          <label><span>NEXT FOLLOW-UP</span><input id="followUp" type="date"></label>
+          <label><span>TARGET / DUE DATE</span><input id="dueDate" type="date"></label>
+          <label><span>ESCALATION</span><select id="escalation"><option>Normal</option><option>Monitor</option><option>Escalated</option></select></label>
+        </div>
+        <label><span>ASSIGNED OFFICER</span><select id="assigned"><option value="">Unassigned</option></select></label>
+        <label><span>CASE OWNER</span><select id="owner"><option value="">Current staff member</option></select></label>
+        <div class="wide notice">Case ownership establishes accountability; assignment identifies who is actively handling the work. Field Officers creating a case are automatically set as both owner and assigned officer.</div>
+      </div>
+    </div>
+    <div class="actions"><span id="status" class="status"></span><a class="btn" id="cancel" href="home.html">Cancel</a><button class="btn gold" id="save" type="button">Create case</button></div>
+  </section>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');
+let selected=null,session=null,options=null,mode='existing';
+const residentParam=new URLSearchParams(location.search).get('resident');
+function setMode(next){mode=next;$('existingMode').classList.toggle('active',next==='existing');$('newMode').classList.toggle('active',next==='new');$('existingBlock').classList.toggle('hidden',next!=='existing');$('newResidentBlock').classList.toggle('hidden',next!=='new');}
+function showSelected(r){selected=r;const e=$('selectedResident');if(!r){e.classList.remove('show');e.innerHTML='';return}e.classList.add('show');e.innerHTML='<strong>'+esc(r.full_name)+'</strong><span>'+esc(r.reference)+' · '+esc(r.phone||r.email||'No contact recorded')+' · '+esc(r.address||'No address recorded')+'</span>';$('residentResults').innerHTML='';}
+async function searchResidents(){const q=$('residentSearch').value.trim();$('residentResults').innerHTML='<div class="notice">Searching…</div>';try{const d=await SMG.api('/api/residents'+(q?'?q='+encodeURIComponent(q):'')),rows=d.residents||[];$('residentResults').innerHTML=rows.slice(0,12).map(r=>'<article class="result" data-id="'+r.id+'"><div><strong>'+esc(r.full_name)+'</strong><small>'+esc(r.reference)+' · '+esc(r.phone||r.email||'No contact')+'<br>'+esc(r.address||'No address')+'</small></div><span class="pill">'+esc(r.open_cases||0)+' open</span></article>').join('')||'<div class="notice">No accessible resident profiles matched. Choose “New resident for this case” if this person is not already in the system.</div>';document.querySelectorAll('.result[data-id]').forEach(el=>el.onclick=()=>{const r=rows.find(x=>x.id===el.dataset.id);showSelected(r)})}catch(e){$('residentResults').innerHTML='<div class="notice">'+esc(e.message)+'</div>'}}
+function fillStaff(){const users=options?.users||[],defaults=options?.defaults||{};for(const id of ['assigned','owner']){const s=$(id),first=id==='assigned'?'<option value="">Unassigned</option>':'<option value="">Current staff member</option>';s.innerHTML=first+users.map(u=>'<option value="'+u.id+'">'+esc(u.display_name)+' · '+esc(u.role)+'</option>').join('')}if(defaults.assignedUserId)$('assigned').value=defaults.assignedUserId;if(defaults.caseOwnerUserId)$('owner').value=defaults.caseOwnerUserId;if(session?.user?.role==='Field Officer'){$('assigned').disabled=true;$('owner').disabled=true}}
+function valid(){if(mode==='existing'&&!selected){$('status').textContent='Select an existing resident first.';return false}if(mode==='new'&&!$('fullName').value.trim()){$('status').textContent='Resident name is required.';return false}if(!$('type').value.trim()){$('status').textContent='Case / enquiry type is required.';return false}if(!$('message').value.trim()){$('status').textContent='Enquiry / request is required.';return false}return true}
+async function save(){if(!valid())return;const b={residentId:mode==='existing'?selected.id:null,fullName:mode==='new'?$('fullName').value.trim():undefined,phone:mode==='new'?$('phone').value.trim():undefined,email:mode==='new'?$('email').value.trim():undefined,dob:mode==='new'?$('dob').value:undefined,address:mode==='new'?$('address').value.trim():undefined,preferred:mode==='new'?$('preferred').value:undefined,status:'New',priority:$('priority').value,type:$('type').value.trim(),message:$('message').value.trim(),nextAction:$('nextAction').value.trim(),followUpDate:$('followUp').value,dueDate:$('dueDate').value,escalation:$('escalation').value,assignedUserId:$('assigned').value||null,caseOwnerUserId:$('owner').value||null,publicStatus:'Received',residentVisible:true};$('save').disabled=true;$('status').textContent='Creating case…';try{const d=await SMG.api('/api/cases',{method:'POST',body:{case:b}});location.href='index.html?case='+encodeURIComponent(d.case.id)}catch(e){$('status').textContent=e.message;$('save').disabled=false}}
+(async()=>{session=await SMG.session();options=await SMG.api('/api/cases/options');fillStaff();$('existingMode').onclick=()=>setMode('existing');$('newMode').onclick=()=>setMode('new');$('residentSearchBtn').onclick=searchResidents;$('residentSearch').addEventListener('keydown',e=>{if(e.key==='Enter')searchResidents()});$('save').onclick=save;if(residentParam){try{const d=await SMG.api('/api/residents/'+encodeURIComponent(residentParam));showSelected(d.resident);setMode('existing');$('cancel').href='resident.html?id='+encodeURIComponent(residentParam)}catch(e){$('status').textContent=e.message}}else searchResidents()})().catch(e=>{$('status').textContent=e.message});
+})();
+</script>
+</body>
+</html>
