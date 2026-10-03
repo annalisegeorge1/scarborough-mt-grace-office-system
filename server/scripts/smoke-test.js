@@ -68,7 +68,12 @@ if(email&&password){
     await check('Authenticated focused case styles','/staff/case-focus-v252.css');
     await check('Authenticated focused case script','/staff/case-focus-v252.js');
     await check('Authenticated Staff Home','/staff/home.html');
-    await check('Authenticated role-aware Today API','/api/today');
+    try{
+      const todayR=await req('/api/today'),todayD=todayR.ok?await todayR.json():{};
+      const todayOk=todayR.ok&&Array.isArray(todayD.attention)&&todayD.summary&&Number.isInteger(todayD.summary.attentionOverdue)&&Number.isInteger(todayD.summary.attentionDueToday);
+      console.log(`${todayOk?'PASS':'FAIL'} — Unified Today attention API: ${todayR.status}`);
+      if(!todayOk)failures++;
+    }catch(e){console.log('FAIL — Unified Today attention API: '+e.message);failures++;}
     await check('Authenticated Resident Directory','/staff/residents.html');
     await check('Authenticated Resident Profile shell','/staff/resident.html');
     await check('Authenticated New Case workflow','/staff/new-case.html');
