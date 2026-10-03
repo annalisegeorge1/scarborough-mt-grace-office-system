@@ -19,6 +19,9 @@ add('Malware scanning configured for uploads',!cfg.uploadsEnabled||!!cfg.clamav.
 add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-self-contained.html')),'index-self-contained.html');
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
 add('Staff Home exists',fs.existsSync(path.join(cfg.staticRoot,'staff','home.html')),'staff/home.html');
+add('Resident directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','residents.html')),'staff/residents.html');
+add('Resident profile workspace exists',fs.existsSync(path.join(cfg.staticRoot,'staff','resident.html')),'staff/resident.html');
+add('Resident profile API route exists',fs.existsSync(path.join(__dirname,'..','src','routes','residents.js')),'src/routes/residents.js');
 add('Role-aware Today route exists',fs.existsSync(path.join(__dirname,'..','src','routes','today.js')),'src/routes/today.js');
 add('Shared staff shell styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.css')),'staff/staff-shell.css');
 add('Shared staff shell script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.js')),'staff/staff-shell.js');
@@ -37,6 +40,7 @@ add('Publishing QA exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publi
 add('Release Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','readiness.html')),'staff/readiness.html');
 add('Go-Live Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','go-live.html')),'staff/go-live.html');
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
+add('Resident profile migration exists',fs.existsSync(path.join(__dirname,'..','migrations','007_resident_profiles.sql')),'migrations/007_resident_profiles.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
 const failed=results.filter(r=>r.required&&!r.ok);
