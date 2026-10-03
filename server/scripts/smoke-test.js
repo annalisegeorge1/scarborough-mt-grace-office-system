@@ -16,6 +16,8 @@ await check('Resident portal hub','/portals/');
 await check('Resident guide','/resident-guide/');
 await check('Staff login','/staff/login.html');
 await check('Protected Staff Home redirects','/staff/home.html',[302]);
+await check('Protected Resident Directory redirects','/staff/residents.html',[302]);
+await check('Protected Resident Profile redirects','/staff/resident.html?id=test',[302]);
 await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
@@ -40,6 +42,8 @@ if(email&&password){
     await check('Authenticated focused case script','/staff/case-focus-v252.js');
     await check('Authenticated Staff Home','/staff/home.html');
     await check('Authenticated role-aware Today API','/api/today');
+    await check('Authenticated Resident Directory','/staff/residents.html');
+    await check('Authenticated Resident Profile shell','/staff/resident.html');
     await check('Authenticated Case Management','/staff/index.html');
     await check('Authenticated Applications','/staff/applications.html');
     await check('Authenticated Correspondence','/staff/correspondence.html');
@@ -56,6 +60,13 @@ if(email&&password){
     await check('Authenticated Go-Live Control','/staff/go-live.html');
     await check('Management summary API','/api/reports/summary');
     await check('Publishing readiness API','/api/content/publishing-readiness');
+    try{
+      const residentsR=await req('/api/residents'),residentsD=residentsR.ok?await residentsR.json():{};
+      console.log(`${residentsR.ok?'PASS':'FAIL'} — Resident Profile API list: ${residentsR.status}`);if(!residentsR.ok)failures++;
+      const resident=residentsD.residents?.[0];
+      if(resident?.id)await check('Resident Profile API detail','/api/residents/'+encodeURIComponent(resident.id));
+      else console.log('SKIP — Resident Profile API detail (no accessible resident profiles).');
+    }catch(e){console.log('FAIL — Resident Profile API discovery: '+e.message);failures++;}
 
     try{
       const casesR=await req('/api/cases'),casesD=casesR.ok?await casesR.json():{};
