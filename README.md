@@ -1,124 +1,128 @@
-# Scarborough / Mt. Grace District Office Service System — V268
+# Scarborough / Mt. Grace District Office Service System — V269
 
-**Current status: consolidation / staging candidate**
+**Current status: feature freeze / structured UAT staging baseline**
 
-V268 strengthens the **report** step of the office workflow.
+V269 deliberately pauses major feature expansion.
 
-The consolidation path remains:
+The system has reached the point where the priority is proving that the existing office workflow is integrated, usable, secure enough for approved staging use, recoverable, and understandable to staff.
+
+The operating path under test is:
 
 **Today → record/workspace → action → follow-up → evidence → close/report**
 
-V268 focuses on reporting directly from the central work records rather than reconstructing activity manually or relying on browser-local data.
+## Feature freeze
 
-## Central management reporting API
+Freeze rules are documented in:
 
-New endpoint:
+- `FEATURE_FREEZE_V269.md`
 
-- `GET /api/reports/management`
+During the freeze, changes should address:
+- failed/blocked UAT scenarios
+- data-integrity and relationship defects
+- authorization/privacy/security defects
+- deployment/migration/backup/recovery defects
+- accessibility/responsive defects that materially hinder work
+- misleading/inconsistent operational wording
+- broken links, calculations, navigation or reporting
+- removal of duplicate/legacy behavior
 
-It derives descriptive operational reporting from PostgreSQL.
+New major modules and speculative feature expansion are deferred.
 
-### Headline measures
+## Structured UAT plan
 
-The response includes:
-- total cases
-- open cases
-- operationally Completed cases
-- formally Closed cases
-- cases created this month
-- cases formally closed this month
-- overdue case follow-ups
-- open/overdue applications
-- open field work
-- field visits completed this month
-- open community matters
-- open resident feedback
-- open service-recovery actions
-- records needing review
-- open/overdue meeting actions
-- open event actions
-- upcoming appointments
-- average days from case creation to formal closure where valid closure timestamps exist
+The placeholder UAT document has been replaced with:
 
-These are descriptive office counts, not staff ratings or performance scores.
+- `UAT_TEST_PLAN.md`
 
-## Formal closure reporting
+It defines 15 end-to-end acceptance scenarios covering:
 
-The management response includes:
+- authentication and role boundaries
+- resident intake/profile
+- case operations
+- application/correspondence/field integration
+- reusable evidence
+- community/event/meeting integration
+- unified Today
+- resident-safe communication
+- formal closure
+- central management reporting
+- publishing
+- roster/coverage
+- search/audit/traceability
+- responsive/accessibility use
+- reliability/backup/recovery
 
-- case status distribution
-- formal closure-reason distribution
-- case category totals/open/closed
-- six-month cases-opened vs formally-closed trend
-- case-owner workload distribution
+## UAT Centre
 
-Closure reason reporting uses the formal `closure_reason` field introduced earlier in the case workflow.
+`/staff/uat.html` has been rebuilt.
 
-Cases without a recorded formal reason are explicitly shown as **Not recorded** rather than silently discarded.
+It now provides:
+- scenario cards rather than a wide legacy table
+- Critical/High severity indicators
+- Pass / Fail / Blocked / Not tested results
+- tester notes
+- evidence-reference fields
+- defect register
+- manual sign-off gates
+- staging environment/readiness snapshot
+- exported UAT JSON evidence package
+- issue CSV export
+- direct routes to Release Control and Records Centre
 
-## Management Reports
+The old duplicate V159/global navigation has been removed.
 
-`/staff/reports.html` has been rebuilt as a responsive central reporting workspace.
+## UAT state and evidence
 
-Tabs:
+The UAT worksheet intentionally stores temporary test-session state in the browser.
 
-- Overview
-- Formal closures
-- Case mix
-- Six-month flow
-- Workload distribution
+This is acceptable because it is **test evidence**, not operational resident data.
 
-The page clearly labels workload distribution as descriptive counts rather than staff ranking.
+It is not the authoritative sign-off record.
 
-It includes:
-- live central refresh
-- print / save PDF support
-- tablet/mobile layouts
-- no duplicate legacy navigation
-- no browser-local report fallback
+After a formal UAT session, staff must export the UAT package and retain the approved evidence in Records Centre or another approved testing-evidence location.
 
-## Management Briefing
+## No silent fallback
 
-`/staff/briefing.html` has been replaced with a central-only briefing.
+The UAT Centre checks:
+- application version
+- server readiness
+- database readiness
+- private storage readiness
+- Resident Profiles schema
+- Meetings schema
+- reusable evidence-link schema
+- Direct API isolation
 
-It combines:
-- `/api/reports/management`
-- `/api/today`
+A failed environment check is shown as attention rather than substituted with browser operational data.
 
-to show:
-- open and overdue cases
-- cross-module due-today work
-- formal closure totals
-- closures this month
-- open meeting actions
-- priority attention items
-- current operational pressure
-- closure reasons
-- current-month throughput
+## Reporting baseline retained from V268
 
-The previous localStorage/browser-test fallback has been removed.
-
-If central reporting is unavailable, the briefing shows that it is unavailable instead of substituting potentially stale browser data.
+The freeze baseline includes central:
+- Management Reports
+- Management Briefing
+- formal closure reason reporting
+- six-month opened vs closed flow
+- current workload distribution
 
 ## Verification
 
-Preflight checks:
-- Management Reports
-- Management Briefing
+Preflight now requires:
+- UAT Centre
+- feature-freeze document
+- current UAT test plan
 
-Authenticated smoke testing verifies:
-- both pages
-- `/api/reports/management`
-- management response includes headline data plus status, closure, category, six-month trend and workload arrays
+Smoke testing verifies:
+- unauthenticated UAT redirect
+- authenticated UAT page availability
 
 ## Backend release identity
 
-The server package version is now `268.0.0`.
+The staging freeze baseline is:
 
-## Consolidation direction
+- `269.0.0`
 
-With Today, Case Workspace, evidence, closure and central reporting now connected, the next phase should be a **feature freeze and structured UAT pass** rather than another major feature expansion.
+## Exit from freeze
 
-## Production boundary
+Feature freeze should end only after structured UAT is complete, Critical/High defects are resolved or formally mitigated, backup/restore is verified, production hosting/security/storage are verified, staff roles/training are confirmed, release evidence is reviewed, and the required THA IT / management authorization is given.
 
-V268 improves operational reporting. It does not create staff rankings, political/electoral measures, production authorization, or replace management review of consequential figures.
+A green automated deployment alone is not production approval.
