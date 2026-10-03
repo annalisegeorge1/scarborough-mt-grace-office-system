@@ -85,6 +85,14 @@ if(email&&password){
     await check('Authenticated Correspondence','/staff/correspondence.html');
     await check('Authenticated Field Operations','/staff/field.html');
     await check('Authenticated Records Centre','/staff/records.html');
+    if(d.permissions.includes('*')||d.permissions.includes('records.read')){
+      try{
+        const recordsR=await req('/api/records'),recordsD=recordsR.ok?await recordsR.json():{};
+        const recordsOk=recordsR.ok&&Array.isArray(recordsD.records)&&recordsD.records.every(x=>Array.isArray(x.links));
+        console.log(`${recordsOk?'PASS':'FAIL'} — Records API evidence links: ${recordsR.status}`);
+        if(!recordsOk)failures++;
+      }catch(e){console.log('FAIL — Records API evidence links: '+e.message);failures++;}
+    }
     await check('Authenticated Resident Feedback','/staff/feedback.html');
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
@@ -116,8 +124,8 @@ if(email&&password){
       console.log(`${casesR.ok?'PASS':'FAIL'} — Cases API for integrated workspace: ${casesR.status}`);if(!casesR.ok)failures++;
       if(hasCase){
         const wsR=await req('/api/cases/'+encodeURIComponent(first.id)+'/workspace'),wsD=wsR.ok?await wsR.json():{};
-        const wsOk=wsR.ok&&Array.isArray(wsD.events)&&Array.isArray(wsD.meetings)&&Array.isArray(wsD.applications)&&Array.isArray(wsD.documents);
-        console.log(`${wsOk?'PASS':'FAIL'} — Integrated case workspace + related work: ${wsR.status}`);
+        const wsOk=wsR.ok&&Array.isArray(wsD.events)&&Array.isArray(wsD.meetings)&&Array.isArray(wsD.applications)&&Array.isArray(wsD.documents)&&wsD.documents.every(x=>Array.isArray(x.evidence_links));
+        console.log(`${wsOk?'PASS':'FAIL'} — Integrated case workspace + related work + evidence: ${wsR.status}`);
         if(!wsOk)failures++;
       }else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
     }catch(e){console.log('FAIL — Integrated case workspace API discovery: '+e.message);failures++;}
