@@ -14,6 +14,9 @@ ALTER TABLE public_content ADD COLUMN IF NOT EXISTS published_at timestamptz;
 ALTER TABLE public_content ADD COLUMN IF NOT EXISTS archived_by uuid REFERENCES users(id);
 ALTER TABLE public_content ADD COLUMN IF NOT EXISTS archived_at timestamptz;
 ALTER TABLE public_content ADD COLUMN IF NOT EXISTS version integer NOT NULL DEFAULT 1;
+ALTER TABLE public_content ADD COLUMN IF NOT EXISTS published_snapshot jsonb;
+ALTER TABLE public_content ADD COLUMN IF NOT EXISTS published_snapshot_at timestamptz;
+ALTER TABLE public_content ADD COLUMN IF NOT EXISTS published_snapshot_active boolean NOT NULL DEFAULT false;
 
 UPDATE public_content
 SET published_at=COALESCE(publish_on,updated_at)
@@ -22,6 +25,35 @@ WHERE workflow='Published' AND published_at IS NULL;
 UPDATE public_content
 SET verified_at=updated_at
 WHERE verified=true AND verified_at IS NULL;
+
+UPDATE public_content
+SET
+  published_snapshot=jsonb_build_object(
+    'id',id,
+    'type',type,
+    'section',section,
+    'category',category,
+    'title',title,
+    'summary',summary,
+    'body',body,
+    'publicUrl',public_url,
+    'publicStatus',public_status,
+    'statusNote',status_note,
+    'responsibleAuthority',responsible_authority,
+    'eventDate',event_date,
+    'sortOrder',sort_order,
+    'documentId',document_id,
+    'isFeatured',is_featured,
+    'metadata',metadata,
+    'publishOn',publish_on,
+    'expireOn',expire_on,
+    'updatedAt',updated_at
+  ),
+  published_snapshot_at=COALESCE(published_at,publish_on,updated_at),
+  published_snapshot_active=true
+WHERE workflow='Published'
+  AND verified=true
+  AND published_snapshot IS NULL;
 
 CREATE TABLE IF NOT EXISTS public_content_revisions(
   id bigserial PRIMARY KEY,
