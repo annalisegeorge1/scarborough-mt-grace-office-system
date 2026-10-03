@@ -80,9 +80,7 @@
     '<header class="v237-flow-head">'+
       '<div class="v237-flow-head-copy"><small>'+cfg.kicker+'</small><strong>'+cfg.title+'</strong><span>'+cfg.intro+'</span></div>'+
       '<span class="v237-flow-controls">'+
-        '<button class="v237-flow-nav v237-flow-prev" type="button" aria-label="Previous flow stage">‹</button>'+
         '<span class="v237-flow-state" aria-live="polite">'+(cfg.state||"Stage 1 of 4")+'</span>'+
-        '<button class="v237-flow-nav v237-flow-next" type="button" aria-label="Next flow stage">›</button>'+
       '</span>'+
     '</header>'+
     '<nav class="v237-flow-track" aria-label="'+cfg.title+'">'+
@@ -119,14 +117,11 @@
   }
 
   const stateEl=root.querySelector(".v237-flow-state");
-  const prevButton=root.querySelector(".v237-flow-prev");
-  const nextButton=root.querySelector(".v237-flow-next");
   const track=root.querySelector(".v237-flow-track");
   const steps=[...root.querySelectorAll(".v237-flow-step")];
   let activeIndex=0;
   let trackRaf=0;
   let pageRaf=0;
-  let autoTrackUntil=0;
   let pageSyncHoldUntil=0;
 
   function holdPageSync(ms=1200){
@@ -154,56 +149,7 @@
     return true;
   }
 
-  function moveActiveCardIntoView(index){
-    if(!track)return;
-    if(window.matchMedia("(max-width: 900px)").matches)return;
-    const step=steps[index];
-    if(!step)return;
-
-    const inset=10;
-    autoTrackUntil=Date.now()+(reduce()?180:900);
-
-    // Measure against the visible rail rather than relying on offsetLeft.
-    // This is more reliable on Android/tablet layouts where nested positioned
-    // ancestors and scroll snapping can make offsetLeft misleading.
-    const move=()=>{
-      const trackRect=track.getBoundingClientRect();
-      const stepRect=step.getBoundingClientRect();
-      let delta=0;
-
-      if(stepRect.left<trackRect.left+inset){
-        delta=stepRect.left-(trackRect.left+inset);
-      }else if(stepRect.right>trackRect.right-inset){
-        delta=stepRect.right-(trackRect.right-inset);
-      }
-
-      if(Math.abs(delta)>2){
-        const max=Math.max(0,track.scrollWidth-track.clientWidth);
-        const desired=Math.max(0,Math.min(max,track.scrollLeft+delta));
-        track.scrollLeft=desired;
-      }
-    };
-
-    // Temporarily suspend snapping while the arrow-selected card is moved.
-    // Mandatory snap was preventing the final card from reaching the viewport
-    // on some tablet/mobile browsers.
-    const previousSnap=track.style.scrollSnapType;
-    const previousBehavior=track.style.scrollBehavior;
-    track.style.scrollSnapType="none";
-    track.style.scrollBehavior="auto";
-
-    move();
-    requestAnimationFrame(()=>{
-      move();
-      window.setTimeout(()=>{
-        move();
-        track.style.scrollSnapType=previousSnap;
-        track.style.scrollBehavior=previousBehavior;
-      },90);
-    });
-  }
-
-  function apply(index,{revealCard=false}={}){
+  function apply(index){
     const capped=Math.max(0,Math.min(cfg.steps.length-1,index));
     activeIndex=capped;
     steps.forEach((step,i)=>{
@@ -215,52 +161,38 @@
     const progress=cfg.steps.length>1?(capped/(cfg.steps.length-1))*75:0;
     root.style.setProperty("--v237-progress",progress+"%");
     if(stateEl)stateEl.textContent=focused?("Stage "+(capped+1)+" of "+cfg.steps.length):(cfg.state||"Choose a starting point");
-    if(prevButton)prevButton.disabled=capped<=0;
-    if(nextButton)nextButton.disabled=capped>=cfg.steps.length-1;
-    if(revealCard)moveActiveCardIntoView(capped);
   }
 
   function nearestCardIndex(){
     if(!track||!steps.length)return activeIndex;
-    const rect=track.getBoundingClientRect();
-    const center=rect.left+rect.width/2;
+    const leadingEdge=track.getBoundingClientRect().left+12;
     let best=activeIndex,bestDistance=Infinity;
     steps.forEach((step,index)=>{
       const r=step.getBoundingClientRect();
       if(!r.width)return;
-      const distance=Math.abs((r.left+r.width/2)-center);
+      const distance=Math.abs(r.left-leadingEdge);
       if(distance<bestDistance){bestDistance=distance;best=index}
     });
     return best;
   }
 
-  if(prevButton)prevButton.addEventListener("click",()=>{
-    holdPageSync();
-    apply(activeIndex-1,{revealCard:true});
-  });
-  if(nextButton)nextButton.addEventListener("click",()=>{
-    holdPageSync();
-    apply(activeIndex+1,{revealCard:true});
-  });
-
   if(track){
     track.addEventListener("scroll",()=>{
-      if(Date.now()<autoTrackUntil)return;
       if(trackRaf)return;
       trackRaf=requestAnimationFrame(()=>{
         trackRaf=0;
-        apply(nearestCardIndex(),{revealCard:false});
+        apply(nearestCardIndex());
       });
     },{passive:true});
-    track.addEventListener("pointerdown",()=>{autoTrackUntil=0;holdPageSync()},{passive:true});
-    track.addEventListener("touchstart",()=>{autoTrackUntil=0;holdPageSync()},{passive:true});
+    track.addEventListener("pointerdown",()=>holdPageSync(),{passive:true});
+    track.addEventListener("touchstart",()=>holdPageSync(),{passive:true});
   }
 
   root.addEventListener("click",event=>{
     const link=event.target.closest(".v237-flow-step");
     if(!link)return;
     const index=steps.indexOf(link);
-    if(index>=0)apply(index,{revealCard:true});
+    if(index>=0)apply(index);
     const id=link.dataset.v237Target;
     if(!id||!document.getElementById(id))return;
     event.preventDefault();
@@ -290,7 +222,7 @@
       const distance=Math.abs(centerish-targetY)+(r.bottom<targetY?60:0);
       if(distance<best){best=distance;hit=item}
     });
-    apply(hit.index,{revealCard:true});
+    apply(hit.index);
   }
 
   function queuePageSync(){
@@ -317,7 +249,7 @@
 
   const initial=decodeURIComponent((location.hash||"").replace(/^#/,""));
   const initialIndex=cfg.steps.findIndex(step=>step.target===initial);
-  apply(initialIndex>=0?initialIndex:0,{revealCard:true});
+  apply(initialIndex>=0?initialIndex:0);
   window.setTimeout(syncFromPage,120);
   window.setTimeout(syncFromPage,420);
 })();
