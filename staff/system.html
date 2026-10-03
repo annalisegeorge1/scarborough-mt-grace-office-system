@@ -18,16 +18,14 @@ body{background:var(--sa-paper);color:#17394e}.hero{padding:22px 24px 18px;backg
 .routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:14px 15px}.route{padding:11px;border:1px solid #dce6ea;border-radius:10px;background:#f9fbfc;text-decoration:none}.route strong{display:block;color:#0b3553;font-size:10px}.route span{display:block;margin-top:4px;color:#728792;font-size:8px;line-height:1.4}.toolbar2{display:flex;gap:7px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #e9eff2;background:#f9fbfc}.btn2{border:1px solid #d2dfe5;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none}.btn2.primary{background:#0b3553;color:#fff;border-color:#0b3553}
 @media(max-width:900px){.metrics2{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}@media(max-width:560px){.shell{width:calc(100% - 18px)}.hero{padding:18px 14px}.routes{grid-template-columns:1fr}.nav2{overflow-x:auto;flex-wrap:nowrap}.nav2 a{white-space:nowrap}.check{grid-template-columns:24px minmax(0,1fr)}.pill{grid-column:2;justify-self:start}}
 </style>
-<link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head>
+<link rel="stylesheet" href="admin-cohesion-v261.css"><link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head>
 <body>
-<header class="hero">
-  <span class="authline" data-auth>Checking session…</span>
-  <span class="eyebrow">V249 • SYSTEM HEALTH</span>
+<header class="hero v261-admin-hero">
+  <span class="eyebrow">V261 • SYSTEM HEALTH</span>
   <h1>System Administration</h1>
   <p>A concise live view of application, database, security and publishing readiness. Detailed release decisions remain in Production Control and Release Control rather than being duplicated here.</p>
-  <nav class="nav2" aria-label="System administration navigation"><a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a href="access.html">Access</a><a href="audit.html">Audit</a><a class="active" aria-current="page" href="system.html">System</a><a href="production.html">Production</a><a href="readiness.html">Release Control</a></nav>
 </header>
-<main class="shell">
+<main class="shell v261-admin-shell">
   <div id="msg" class="notice2">Loading live system health…</div>
   <section class="metrics2">
     <article class="metric2"><small>Application API</small><strong id="apiState">Checking</strong><span id="apiDetail">Liveness.</span></article>
