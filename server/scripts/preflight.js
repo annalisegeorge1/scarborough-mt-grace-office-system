@@ -42,6 +42,7 @@ add('Release Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','rea
 add('Go-Live Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','go-live.html')),'staff/go-live.html');
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
 add('Resident profile migration exists',fs.existsSync(path.join(__dirname,'..','migrations','007_resident_profiles.sql')),'migrations/007_resident_profiles.sql');
+add('Operational hardening migration exists',fs.existsSync(path.join(__dirname,'..','migrations','008_operational_indexes_and_function_hardening.sql')),'migrations/008_operational_indexes_and_function_hardening.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
 const failed=results.filter(r=>r.required&&!r.ok);
