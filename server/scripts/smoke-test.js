@@ -4,6 +4,20 @@ const email=process.env.SMOKE_EMAIL||'';
 const password=process.env.SMOKE_PASSWORD||'';
 let cookie=''; let csrf=''; let failures=0;
 async function req(path,opt={}){const headers={...(opt.headers||{})};if(cookie)headers.Cookie=cookie;if(csrf&&!['GET','HEAD'].includes((opt.method||'GET').toUpperCase()))headers['X-SMG-CSRF']=csrf;const r=await fetch(base+path,{redirect:'manual',...opt,headers});const set=r.headers.get('set-cookie');if(set)cookie=set.split(';')[0];return r;}
+async function checkAssetText(name,path,{contains=[],excludes=[]}={}){
+  const r=await check(name,path);
+  if(!r?.ok)return;
+  const body=await r.text();
+  const missing=contains.filter(token=>!body.includes(token));
+  const forbidden=excludes.filter(token=>body.includes(token));
+  const ok=!missing.length&&!forbidden.length;
+  console.log(`${ok?'PASS':'FAIL'} — ${name} contract`);
+  if(!ok){
+    if(missing.length)console.log('  Missing: '+missing.join(', '));
+    if(forbidden.length)console.log('  Obsolete: '+forbidden.join(', '));
+    failures++;
+  }
+}
 async function check(name,path,expect=[200]){
   const transient=new Set([429,502,503,504]);
   let last=null,lastError=null;
@@ -28,8 +42,13 @@ await check('Liveness','/api/health/live');
 await check('Health','/api/health',[200,503]);
 await check('Readiness','/api/health/readiness',[200,503]);
 await check('Public homepage','/');
-await check('Public Civic Flow script','/assets/district-civic-flow-v237.js');
-await check('Public Civic Flow styles','/assets/district-civic-flow-v237.css');
+await checkAssetText('Public Civic Flow script','/assets/district-civic-flow-v237.js',{
+  excludes:['v237-flow-next','v237-flow-prev','moveActiveCardIntoView','autoTrackUntil']
+});
+await checkAssetText('Public Civic Flow styles','/assets/district-civic-flow-v237.css',{
+  contains:['overflow-x:auto!important','scroll-snap-type:none!important','Swipe cards ↔'],
+  excludes:['.v237-flow-nav']
+});
 await check('Public content API','/api/public/content');
 await check('Resident tracker','/track/');
 await check('Resident portal hub','/portals/');
