@@ -86,14 +86,24 @@ function renderHealth(){
   const checks=health.checks||{};
   const rows=[
     ['Database',!!checks.database,'Database connection'],
+    ['Production mode',!!checks.productionMode,'NODE_ENV is production'],
     ['Production origin',!!checks.productionOrigin,'HTTPS production origin'],
+    ['Trusted proxy',!!checks.trustProxy,'Reverse-proxy trust is configured'],
+    ['Idle session policy',!!checks.sessionIdlePolicy,'Idle timeout is within the approved range'],
+    ['Absolute session policy',!!checks.sessionAbsolutePolicy,'Absolute session lifetime is within the approved range'],
     ['Private storage',!!checks.privateStorage,'Private upload storage'],
     ['Malware scanner',!!checks.malwareScanner,'Upload malware scanning']
   ];
   $('server-checks').innerHTML=rows.map(([label,ok,detail])=>'<article class="check '+(ok?'':'bad')+'"><span class="mark">'+(ok?'✓':'!')+'</span><span><strong>'+esc(label)+'</strong><p>'+esc(detail)+'</p></span><span class="severity">'+(ok?'pass':'blocker')+'</span></article>').join('');
   const failed=rows.filter(x=>!x[1]).map(x=>x[0]);
   $('server-detail').textContent=failed.length?'Failed: '+failed.join(', '):'All server readiness checks currently pass.';
-  $('server-summary').innerHTML=[['Uploads',health.uploadsEnabled?'Enabled':'Disabled'],['Endpoint',health.ready?'Ready':'Not ready']].map(x=>'<div class="mini-item"><small>'+esc(x[0])+'</small><strong>'+esc(x[1])+'</strong></div>').join('');
+  const env=health.environment||{};
+  $('server-summary').innerHTML=[
+    ['Uploads',health.uploadsEnabled?'Enabled':'Disabled'],
+    ['Storage',env.storageDriver||'—'],
+    ['Idle timeout',env.sessionIdleMinutes?env.sessionIdleMinutes+' min':'—'],
+    ['Absolute session',env.sessionAbsoluteHours?env.sessionAbsoluteHours+' hr':'—']
+  ].map(x=>'<div class="mini-item"><small>'+esc(x[0])+'</small><strong>'+esc(x[1])+'</strong></div>').join('');
 }
 function renderPublishing(){
   if(!publishing){$('publishing-state').textContent='Unavailable';$('publishing-detail').textContent='Publishing evidence could not be loaded.';$('publishing-checks').innerHTML='<div class="empty">Open Publishing QA for detailed diagnosis.</div>';return}
