@@ -26,7 +26,7 @@ const areas=[
     ['Publishing QA','publishing-qa.html','content.write']
   ]},
   {id:'admin',label:'Administration',icon:'⚙',roles:['Manager','Administrative'],items:[
-    ['Roster & Coverage','roster.html','reports.read'],['Access Control','access.html',null,['Manager','Administrative']],
+    ['Roster & Coverage','roster.html','reports.read'],['Access Control','access.html',null,['Manager']],
     ['Audit Review','audit.html','audit.read'],['System Administration','system.html',null,['Manager','Administrative']],
     ['Production Control','production.html',null,['Manager','Administrative']],['Release Control','readiness.html',null,['Manager','Administrative']],
     ['Training','training.html','reports.read'],['UAT','uat.html','reports.read'],['Pilot','pilot.html','reports.read'],
