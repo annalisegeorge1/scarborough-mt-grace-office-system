@@ -18,6 +18,7 @@ await check('Staff login','/staff/login.html');
 await check('Protected Staff Home redirects','/staff/home.html',[302]);
 await check('Protected Resident Directory redirects','/staff/residents.html',[302]);
 await check('Protected Resident Profile redirects','/staff/resident.html?id=test',[302]);
+await check('Protected New Case redirects','/staff/new-case.html',[302]);
 await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
@@ -44,6 +45,10 @@ if(email&&password){
     await check('Authenticated role-aware Today API','/api/today');
     await check('Authenticated Resident Directory','/staff/residents.html');
     await check('Authenticated Resident Profile shell','/staff/resident.html');
+    await check('Authenticated New Case workflow','/staff/new-case.html');
+    const canCaseWrite=d.permissions.includes('*')||d.permissions.includes('cases.write')||d.permissions.includes('cases.write.assigned');
+    if(canCaseWrite)await check('Case creation options API','/api/cases/options');
+    else console.log('SKIP — Case creation options API (smoke role cannot create cases).');
     await check('Authenticated Case Management','/staff/index.html');
     await check('Authenticated Applications','/staff/applications.html');
     await check('Authenticated Correspondence','/staff/correspondence.html');
