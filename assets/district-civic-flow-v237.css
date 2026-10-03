@@ -87,32 +87,6 @@ body:not(.v203-focused-view) .v237-flow{
   gap:5px;
 }
 
-.v237-flow-nav{
-  display:none;
-  width:28px;
-  height:28px;
-  place-items:center;
-  border:1px solid color-mix(in srgb,var(--v237-accent) 18%,transparent);
-  border-radius:50%;
-  background:#fff;
-  color:var(--v237-accent);
-  cursor:pointer;
-  font:900 15px/1 system-ui;
-  box-shadow:0 3px 10px rgba(7,35,55,.05);
-}
-
-.v237-flow-nav:disabled{
-  opacity:.34;
-  cursor:default;
-}
-
-.v237-flow-nav:not(:disabled):hover,
-.v237-flow-nav:not(:disabled):focus-visible{
-  border-color:color-mix(in srgb,var(--v237-accent) 38%,transparent);
-  background:var(--v237-accent-soft);
-  outline:none;
-}
-
 .v237-flow-state{
   flex:0 0 auto;
   min-height:27px;
@@ -317,16 +291,6 @@ body.v112-dark .v237-flow-num{
 }
 body.v112-dark .v237-flow-step strong{color:#eef5f7}
 body.v112-dark .v237-flow-step small{color:#a9bec8}
-body.v112-dark .v237-flow-nav{
-  border-color:rgba(255,255,255,.10);
-  background:#123247;
-  color:#e7f0f4;
-}
-body.v112-dark .v237-flow-nav:not(:disabled):hover,
-body.v112-dark .v237-flow-nav:not(:disabled):focus-visible{
-  background:#173b50;
-}
-
 body.v112-dark .v237-flow-step.is-active strong,
 body.v112-dark .v237-flow-step[aria-current="step"] strong{color:#e4d4aa}
 body.v112-dark .v237-flow-step.is-active .v237-flow-num,
@@ -340,7 +304,7 @@ body.v112-dark .v237-flow-foot{background:rgba(5,28,43,.34)}
 body.v112-dark .v237-flow-foot span{color:#9fb5bf}
 body.v112-dark .v237-flow-foot a{color:#d8c7a0}
 
-/* Tablet/mobile: retain four stages in one swipe rail instead of stacking. */
+/* Tablet/mobile: native horizontal swipe rail. No scripted carousel or snap. */
 @media(max-width:900px){
   .v237-flow{
     border-radius:17px;
@@ -375,7 +339,7 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     scrollbar-width:thin;
     -webkit-overflow-scrolling:touch;
     scroll-behavior:auto!important;
-    touch-action:pan-x pinch-zoom;
+    touch-action:auto;
     cursor:grab;
   }
   .v237-flow-track:active{cursor:grabbing}
@@ -424,10 +388,6 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     background:var(--v237-accent-soft);
     box-shadow:0 8px 20px rgba(7,35,55,.08);
     transform:translateY(-1px);
-  }
-
-  .v237-flow-nav{
-    display:none!important;
   }
 
   .v237-flow-controls::after{
