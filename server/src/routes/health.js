@@ -20,6 +20,7 @@ router.get('/readiness',async(req,res)=>{
     privateStorage:!config.uploadsEnabled||storage.readiness(),
     malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured(),
     residentProfiles:false,
+    meetingOperations:false,
     directApiIsolation:false
   };
   try{
@@ -30,6 +31,10 @@ router.get('/readiness',async(req,res)=>{
         SELECT 1 FROM information_schema.columns
         WHERE table_schema='public' AND table_name='cases' AND column_name='resident_id'
       ) resident_id_column,
+      (to_regclass('public.meetings') IS NOT NULL
+       AND to_regclass('public.meeting_attendance') IS NOT NULL
+       AND to_regclass('public.meeting_actions') IS NOT NULL
+       AND to_regclass('public.meeting_timeline') IS NOT NULL) meeting_operations,
       NOT EXISTS(
         SELECT 1
         FROM information_schema.role_table_grants
@@ -39,6 +44,7 @@ router.get('/readiness',async(req,res)=>{
           AND privilege_type IN ('SELECT','INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER')
       ) direct_api_isolation`);
     checks.residentProfiles=!!(rp.rows[0]?.residents_table&&rp.rows[0]?.resident_id_column);
+    checks.meetingOperations=!!rp.rows[0]?.meeting_operations;
     checks.directApiIsolation=!!rp.rows[0]?.direct_api_isolation;
   }catch{}
   const ready=Object.values(checks).every(Boolean);
