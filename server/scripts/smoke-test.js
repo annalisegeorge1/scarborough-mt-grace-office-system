@@ -4,7 +4,25 @@ const email=process.env.SMOKE_EMAIL||'';
 const password=process.env.SMOKE_PASSWORD||'';
 let cookie=''; let csrf=''; let failures=0;
 async function req(path,opt={}){const headers={...(opt.headers||{})};if(cookie)headers.Cookie=cookie;if(csrf&&!['GET','HEAD'].includes((opt.method||'GET').toUpperCase()))headers['X-SMG-CSRF']=csrf;const r=await fetch(base+path,{redirect:'manual',...opt,headers});const set=r.headers.get('set-cookie');if(set)cookie=set.split(';')[0];return r;}
-async function check(name,path,expect=[200]){try{const r=await req(path);const ok=expect.includes(r.status);console.log(`${ok?'PASS':'FAIL'} — ${name}: ${r.status}`);if(!ok)failures++;return r;}catch(e){console.log(`FAIL — ${name}: ${e.message}`);failures++;}}
+async function check(name,path,expect=[200]){
+  const transient=new Set([429,502,503,504]);
+  let last=null,lastError=null;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      const r=await req(path);last=r;
+      if(expect.includes(r.status)){console.log(`PASS — ${name}: ${r.status}${attempt>1?` (attempt ${attempt})`:''}`);return r;}
+      if(!transient.has(r.status)||attempt===3)break;
+      console.log(`RETRY — ${name}: transient ${r.status} (attempt ${attempt}/3)`);
+    }catch(e){
+      lastError=e;
+      if(attempt===3)break;
+      console.log(`RETRY — ${name}: ${e.message} (attempt ${attempt}/3)`);
+    }
+    await new Promise(resolve=>setTimeout(resolve,2500*attempt));
+  }
+  if(last){console.log(`FAIL — ${name}: ${last.status}`);failures++;return last;}
+  console.log(`FAIL — ${name}: ${lastError?.message||'request failed'}`);failures++;
+}
 (async()=>{
 await check('Liveness','/api/health/live');
 await check('Health','/api/health',[200,503]);
