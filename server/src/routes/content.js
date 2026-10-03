@@ -252,6 +252,7 @@ function workflowTransition(current,action){
     'submit-review':{from:['Draft'],to:'In Review'},
     'return-draft':{from:['In Review','Approved'],to:'Draft'},
     'approve':{from:['In Review'],to:'Approved'},
+    'revise':{from:['Published'],to:'In Review'},
     'publish':{from:['Approved'],to:'Published'},
     'archive':{from:['Draft','In Review','Approved','Published'],to:'Archived'},
     'restore':{from:['Archived'],to:'Draft'}
@@ -316,8 +317,17 @@ router.post('/',requirePermission('content.write'),async(req,res,next)=>{
         workflow==='Published'?req.user.id:null,workflow==='Published'?new Date():null,
         workflow==='Archived'?req.user.id:null,workflow==='Archived'?new Date():null
       ]);
-      await writeRevision(client,q.rows[0],'create',req.user.id);
-      return q.rows[0];
+      let created=q.rows[0];
+      if(workflow==='Published'&&verified){
+        const snap={...publicPayload(created),publishOn:created.publish_on||new Date().toISOString(),updatedAt:new Date().toISOString()};
+        const sq=await client.query(
+          'UPDATE public_content SET published_snapshot=$2::jsonb,published_snapshot_at=now(),published_snapshot_active=true WHERE id=$1 RETURNING *',
+          [created.id,JSON.stringify(snap)]
+        );
+        created=sq.rows[0];
+      }
+      await writeRevision(client,created,'create',req.user.id);
+      return created;
     });
     await audit(db,{actorUserId:req.user.id,eventType:'content.create',objectType:'public_content',objectId:row.id,metadata:{workflow:row.workflow,type:row.type,section:row.section,version:row.version}});
     res.status(201).json({content:row});
@@ -381,8 +391,17 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
         next.responsibleAuthority,next.eventDate,next.sortOrder,next.documentId,next.isFeatured,
         JSON.stringify(next.metadata),next.internalNotes,next.sourceReference,next.verificationNote,req.user.id
       ]);
-      await writeRevision(client,q.rows[0],'update',req.user.id);
-      return q.rows[0];
+      let updatedRow=q.rows[0];
+      if(updatedRow.workflow==='Published'&&updatedRow.verified){
+        const snap={...publicPayload(updatedRow),publishOn:updatedRow.publish_on||new Date().toISOString(),updatedAt:new Date().toISOString()};
+        const sq=await client.query(
+          'UPDATE public_content SET published_snapshot=$2::jsonb,published_snapshot_at=now(),published_snapshot_active=true WHERE id=$1 RETURNING *',
+          [updatedRow.id,JSON.stringify(snap)]
+        );
+        updatedRow=sq.rows[0];
+      }
+      await writeRevision(client,updatedRow,'update',req.user.id);
+      return updatedRow;
     });
     await audit(db,{actorUserId:req.user.id,eventType:'content.update',objectType:'public_content',objectId:req.params.id,metadata:{workflow:row.workflow,type:row.type,section:row.section,version:row.version}});
     res.json({content:row});
@@ -405,7 +424,9 @@ router.get('/:id/preview',requirePermission('content.write'),async(req,res,next)
         reviewedAt:row.reviewed_at,
         verifiedAt:row.verified_at,
         publishedAt:row.published_at,
-        archivedAt:row.archived_at
+        archivedAt:row.archived_at,
+        liveSnapshotActive:!!row.published_snapshot_active,
+        liveSnapshotAt:row.published_snapshot_at
       },
       internal:internalPayload(row),
       readiness:publishValidation(row),
@@ -473,23 +494,32 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
           err.statusCode=400;throw err;
         }
       }
+      const nowIso=new Date().toISOString();
+      const publishSnapshot={...publicPayload(cur),publishOn:cur.publish_on||nowIso,updatedAt:nowIso};
       const q=await client.query(`
         UPDATE public_content SET
           workflow=$2,
-          reviewed_by=CASE WHEN $3='submit-review' THEN $4 ELSE reviewed_by END,
-          reviewed_at=CASE WHEN $3='submit-review' THEN now() ELSE reviewed_at END,
+          reviewed_by=CASE WHEN $3 IN ('submit-review','revise') THEN $4 ELSE reviewed_by END,
+          reviewed_at=CASE WHEN $3 IN ('submit-review','revise') THEN now() ELSE reviewed_at END,
           approved_by=CASE WHEN $3='approve' THEN $4 ELSE approved_by END,
           published_by=CASE WHEN $3='publish' THEN $4 ELSE published_by END,
           published_at=CASE WHEN $3='publish' THEN now() ELSE published_at END,
           publish_on=CASE WHEN $3='publish' THEN COALESCE(publish_on,now()) ELSE publish_on END,
           archived_by=CASE WHEN $3='archive' THEN $4 WHEN $3='restore' THEN NULL ELSE archived_by END,
           archived_at=CASE WHEN $3='archive' THEN now() WHEN $3='restore' THEN NULL ELSE archived_at END,
-          verified=CASE WHEN $3='restore' THEN false ELSE verified END,
-          verified_by=CASE WHEN $3='restore' THEN NULL ELSE verified_by END,
-          verified_at=CASE WHEN $3='restore' THEN NULL ELSE verified_at END,
+          verified=CASE WHEN $3 IN ('restore','revise') THEN false ELSE verified END,
+          verified_by=CASE WHEN $3 IN ('restore','revise') THEN NULL ELSE verified_by END,
+          verified_at=CASE WHEN $3 IN ('restore','revise') THEN NULL ELSE verified_at END,
+          published_snapshot=CASE WHEN $3='publish' THEN $5::jsonb ELSE published_snapshot END,
+          published_snapshot_at=CASE WHEN $3='publish' THEN now() ELSE published_snapshot_at END,
+          published_snapshot_active=CASE
+            WHEN $3='publish' THEN true
+            WHEN $3 IN ('archive','restore') THEN false
+            ELSE published_snapshot_active
+          END,
           version=version+1,updated_at=now()
         WHERE id=$1 RETURNING *
-      `,[req.params.id,rule.to,action,req.user.id]);
+      `,[req.params.id,rule.to,action,req.user.id,JSON.stringify(publishSnapshot)]);
       const updated=await contentWithDocument(client,req.params.id);
       await writeRevision(client,updated,action,req.user.id);
       return updated;
