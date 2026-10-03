@@ -1,0 +1,267 @@
+/* V252 — focused Case Management surface */
+body.smg-shell-active>.v60-staff-suite,
+body.smg-shell-active>.v108-staff-mailbox,
+body.smg-shell-active>.v62-state-note,
+body.smg-shell-active>.v61-module-hero,
+body.smg-shell-active>.v61-test-guard,
+body.smg-shell-active>.demo-banner,
+body.smg-shell-active>.v146-security{display:none!important}
+
+/* The shared V250 shell is now the only global navigation. */
+body.smg-shell-active #portal>.topbar,
+body.smg-shell-active #portal .layout>.sidebar{display:none!important}
+body.smg-shell-active #portal .layout{display:block!important;min-height:0!important}
+body.smg-shell-active #portal .main{
+  width:min(1460px,calc(100% - 28px));
+  margin:0 auto;
+  padding:22px 0 64px!important;
+}
+
+/* Move secondary/management functions to their proper modules. */
+body.smg-shell-active #main-content>.v40-system-strip,
+body.smg-shell-active #main-content>.v42-backend-callout,
+body.smg-shell-active #main-content>.v37-report-callout,
+body.smg-shell-active #main-content>.v75-case-state,
+body.smg-shell-active #main-content>.v75-actions,
+body.smg-shell-active #v137-operations-control,
+body.smg-shell-active #v136-attention-centre,
+body.smg-shell-active #v135-webmanager,
+body.smg-shell-active #v138-hub{display:none!important}
+
+body.smg-shell-active #main-content>.page-head{
+  align-items:center;
+  margin:0 0 12px;
+  padding:0 2px;
+}
+body.smg-shell-active #main-content>.page-head span{
+  color:#87691f;
+  font-size:8px;
+  letter-spacing:.13em;
+}
+body.smg-shell-active #main-content>.page-head h2{
+  margin-top:4px;
+  font-size:28px;
+}
+body.smg-shell-active #main-content>.page-head p{
+  max-width:760px;
+  margin-top:4px;
+  font-size:10px;
+  line-height:1.5;
+}
+body.smg-shell-active #main-content>.page-head .head-actions{
+  align-items:center;
+}
+body.smg-shell-active #reset-demo{display:none!important}
+body.smg-shell-active #export-csv{
+  background:#0b3553!important;
+  color:#fff!important;
+  border-color:#0b3553!important;
+  border-radius:9px!important;
+  padding:9px 12px!important;
+}
+
+body.smg-shell-active #main-content>.notice{
+  margin:0 0 12px;
+  padding:9px 11px;
+  border:1px solid #e2d7aa;
+  border-left:3px solid #c9a34a;
+  background:#fffaf0;
+  color:#6f612f;
+  border-radius:9px;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.v252-casebar{
+  margin:0 0 12px;
+  padding:11px 12px;
+  border:1px solid rgba(10,47,73,.12);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 7px 18px rgba(6,31,51,.035);
+}
+.v252-casebar-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.v252-casebar-copy small{
+  display:block;
+  color:#87691f;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.11em;
+}
+.v252-casebar-copy strong{
+  display:block;
+  margin-top:2px;
+  color:#173f58;
+  font:500 15px Georgia,serif;
+}
+.v252-casebar-copy span{
+  display:block;
+  margin-top:3px;
+  color:#7a8c96;
+  font-size:8px;
+}
+.v252-live{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:999px;
+  background:#e8f3ed;
+  color:#356d53;
+  padding:6px 8px;
+  font-size:7px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.v252-live.offline{background:#f8e8e6;color:#8c4b45}
+.v252-live:before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:currentColor;
+}
+.v252-casebar-controls{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.v252-queue{
+  border:1px solid #d8e3e8;
+  border-radius:8px;
+  background:#f7fafb;
+  color:#31596f;
+  padding:8px 9px;
+  font-size:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+.v252-queue:hover{background:#edf4f7}
+.v252-queue.active{
+  background:#0b3553;
+  border-color:#0b3553;
+  color:#fff;
+}
+.v252-queue .v252-n{
+  display:inline-grid;
+  min-width:18px;height:18px;
+  place-items:center;
+  margin-left:5px;
+  padding:0 4px;
+  border-radius:999px;
+  background:rgba(49,89,111,.1);
+  font-size:7px;
+}
+.v252-queue.active .v252-n{background:rgba(255,255,255,.14)}
+.v252-status-wrap{margin-left:auto;display:flex;align-items:center;gap:6px}
+.v252-status-wrap label{
+  color:#768a95;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+.v252-status-wrap select{
+  min-width:150px;
+  border:1px solid #d7e2e7;
+  border-radius:8px;
+  background:#fff;
+  color:#31596f;
+  padding:8px 9px;
+  font-size:8px;
+  font-weight:800;
+}
+.v252-mini-action{
+  border:1px solid #d7e2e7;
+  border-radius:8px;
+  background:#fff;
+  color:#31596f;
+  padding:8px 9px;
+  font-size:8px;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+}
+.v252-mini-action:hover{background:#edf4f7}
+
+body.smg-shell-active #main-content>.metrics{
+  margin-bottom:10px;
+  gap:8px;
+}
+body.smg-shell-active #main-content>.metrics .metric{
+  padding:13px 14px;
+  border-radius:11px;
+  box-shadow:none;
+}
+body.smg-shell-active #main-content>.metrics .metric strong{font-size:23px}
+body.smg-shell-active #main-content>.metrics .metric small{font-size:8px}
+
+body.smg-shell-active #main-content>.toolbar{
+  border-radius:11px 11px 0 0;
+  padding:9px;
+  gap:6px;
+}
+body.smg-shell-active #main-content>.v75-filter-note{
+  margin:6px 2px 9px;
+  color:#82939c;
+  font-size:8px;
+}
+body.smg-shell-active #main-content>.table-wrap{
+  border-radius:0 0 11px 11px;
+  box-shadow:0 8px 22px rgba(6,31,51,.035);
+}
+body.smg-shell-active #main-content th{font-size:8px;padding:9px 10px}
+body.smg-shell-active #main-content td{padding:10px;font-size:9px}
+
+/* Make the Residents context bar easier to read on touch devices. */
+body.smg-shell-active .smg-context-tabs a{
+  color:#3e6174;
+  font-weight:850;
+}
+body.smg-shell-active .smg-context-tabs a.active{
+  background:#0b3553;
+  color:#fff;
+}
+
+@media(max-width:900px){
+  body.smg-shell-active #portal .main{
+    width:calc(100% - 18px);
+    padding-top:14px!important;
+  }
+  body.smg-shell-active #main-content>.page-head{
+    display:block;
+  }
+  body.smg-shell-active #main-content>.page-head .head-actions{
+    margin-top:9px;
+  }
+  .v252-casebar-top{align-items:flex-start}
+  .v252-status-wrap{
+    width:100%;
+    margin-left:0;
+  }
+  .v252-status-wrap select{flex:1}
+  body.smg-shell-active .smg-context-tabs a{
+    background:#f4f8fa;
+    border:1px solid #e2eaee;
+    color:#31596f;
+    padding:7px 9px;
+  }
+  body.smg-shell-active .smg-context-tabs a.active{
+    background:#0b3553;
+    border-color:#0b3553;
+    color:#fff;
+  }
+}
+@media(max-width:620px){
+  body.smg-shell-active #main-content>.metrics{grid-template-columns:1fr 1fr}
+  body.smg-shell-active #main-content>.toolbar{grid-template-columns:1fr 1fr}
+  .v252-casebar-controls{align-items:stretch}
+  .v252-queue{flex:1 1 calc(50% - 6px)}
+}
+@media(max-width:430px){
+  body.smg-shell-active #main-content>.metrics{grid-template-columns:1fr 1fr}
+  body.smg-shell-active #main-content>.toolbar{grid-template-columns:1fr}
+}
