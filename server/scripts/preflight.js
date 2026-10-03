@@ -18,9 +18,11 @@ add('Private storage production-safe',storageReady,cfg.storageDriver==='local'?'
 add('Malware scanning configured for uploads',!cfg.uploadsEnabled||!!cfg.clamav.host,cfg.uploadsEnabled?(cfg.clamav.host||'scanner missing'):'uploads disabled',cfg.uploadsEnabled);
 add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-self-contained.html')),'index-self-contained.html');
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
+add('Production Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','production.html')),'staff/production.html');
 add('Publishing Desk exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing.html')),'staff/publishing.html');
 add('Publishing QA exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing-qa.html')),'staff/publishing-qa.html');
 add('Release Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','readiness.html')),'staff/readiness.html');
+add('Go-Live Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','go-live.html')),'staff/go-live.html');
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
