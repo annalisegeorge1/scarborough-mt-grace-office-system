@@ -124,8 +124,9 @@ if(email&&password){
       console.log(`${casesR.ok?'PASS':'FAIL'} — Cases API for integrated workspace: ${casesR.status}`);if(!casesR.ok)failures++;
       if(hasCase){
         const wsR=await req('/api/cases/'+encodeURIComponent(first.id)+'/workspace'),wsD=wsR.ok?await wsR.json():{};
-        const wsOk=wsR.ok&&Array.isArray(wsD.events)&&Array.isArray(wsD.meetings)&&Array.isArray(wsD.applications)&&Array.isArray(wsD.documents)&&wsD.documents.every(x=>Array.isArray(x.evidence_links));
-        console.log(`${wsOk?'PASS':'FAIL'} — Integrated case workspace + related work + evidence: ${wsR.status}`);
+        const cr=wsD.closureReadiness||{};
+        const wsOk=wsR.ok&&Array.isArray(wsD.events)&&Array.isArray(wsD.meetings)&&Array.isArray(wsD.applications)&&Array.isArray(wsD.documents)&&wsD.documents.every(x=>Array.isArray(x.evidence_links))&&Array.isArray(cr.blockers)&&Array.isArray(cr.warnings)&&typeof cr.ready==='boolean'&&typeof cr.canFormalClose==='boolean';
+        console.log(`${wsOk?'PASS':'FAIL'} — Integrated case workspace + related work + evidence + closure readiness: ${wsR.status}`);
         if(!wsOk)failures++;
       }else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
     }catch(e){console.log('FAIL — Integrated case workspace API discovery: '+e.message);failures++;}
