@@ -22,3 +22,8 @@ Smoke now verifies the shared Civic Flow JS/CSS assets.
 Release identity: 270.0.0.
 
 No major feature added; this is allowed under the V269 feature freeze as a UAT/responsive defect fix.
+
+Post-release hotfix:
+- Fixed a self-triggering MutationObserver that could change Stage 2 back to Stage 1 immediately after Next/Previous or swipe navigation.
+- Added a short manual-navigation guard so card navigation is not overwritten by page-position synchronization.
+- Bumped the public service-worker cache revision so the corrected Civic Flow script replaces stale cached copies.
