@@ -246,343 +246,96 @@ async function sendPublicIndex(req,res,next){
     if(!cachedPublicIndex||!config.production){
       const file=path.join(config.staticRoot,'index-self-contained.html');
       let html=currentCalderHallNames(await fs.readFile(file,'utf8'));
-      const runtimeFile=path.join(config.staticRoot,'assets','public-content-runtime.js');
-      const sidebarCssFile=path.join(config.staticRoot,'assets','district-sidebar-v202.css');
-      const sidebarJsFile=path.join(config.staticRoot,'assets','district-sidebar-v202.js');
-      const focusedCssFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.css');
-      const focusedJsFile=path.join(config.staticRoot,'assets','district-focused-pages-v203.js');
-      const focusedLayoutCssFile=path.join(config.staticRoot,'assets','district-focused-layout-v204.css');
-      const focusedLayoutJsFile=path.join(config.staticRoot,'assets','district-focused-layout-v204.js');
-      const routeCssFile=path.join(config.staticRoot,'assets','public-route-integration-v205.css');
-      const routeJsFile=path.join(config.staticRoot,'assets','public-route-integration-v205.js');
-      const visualQaCssFile=path.join(config.staticRoot,'assets','district-visual-qa-v206.css');
-      const pageIdentityCssFile=path.join(config.staticRoot,'assets','district-page-identity-v207.css');
-      const pageIdentityJsFile=path.join(config.staticRoot,'assets','district-page-identity-v207.js');
-      const hierarchyCssFile=path.join(config.staticRoot,'assets','district-content-hierarchy-v208.css');
-      const hierarchyJsFile=path.join(config.staticRoot,'assets','district-content-hierarchy-v208.js');
-      const lightHierarchyCssFile=path.join(config.staticRoot,'assets','district-light-hierarchy-v209.css');
-      const lightHierarchyJsFile=path.join(config.staticRoot,'assets','district-light-hierarchy-v209.js');
-      const aestheticCssFile=path.join(config.staticRoot,'assets','district-aesthetic-restoration-v210.css');
-      const aestheticJsFile=path.join(config.staticRoot,'assets','district-aesthetic-restoration-v210.js');
-      const homeAestheticCssFile=path.join(config.staticRoot,'assets','district-homepage-aesthetic-v211.css');
-      const homeAestheticJsFile=path.join(config.staticRoot,'assets','district-homepage-aesthetic-v211.js');
-      const globalPolishCssFile=path.join(config.staticRoot,'assets','district-global-polish-v212.css');
-      const globalPolishJsFile=path.join(config.staticRoot,'assets','district-global-polish-v212.js');
-      const digitalFeedCssFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.css');
-      const digitalFeedJsFile=path.join(config.staticRoot,'assets','district-digital-feed-v213.js');
-      const feedPublishingCssFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.css');
-      const feedPublishingJsFile=path.join(config.staticRoot,'assets','district-feed-publishing-v214.js');
-      const progressThreadsCssFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.css');
-      const progressThreadsJsFile=path.join(config.staticRoot,'assets','district-progress-threads-v215.js');
-      const mobileCorrectionsCssFile=path.join(config.staticRoot,'assets','district-mobile-corrections-v216.css');
-      const mobilePolishCssFile=path.join(config.staticRoot,'assets','district-mobile-polish-v217.css');
-      const mobileNavigationCssFile=path.join(config.staticRoot,'assets','district-mobile-navigation-v218.css');
-      const mobileNavigationJsFile=path.join(config.staticRoot,'assets','district-mobile-navigation-v218.js');
-      const contrastAccessibilityCssFile=path.join(config.staticRoot,'assets','district-contrast-accessibility-v219.css');
-      const contrastAccessibilityJsFile=path.join(config.staticRoot,'assets','district-contrast-accessibility-v219.js');
-      const performanceInteractionCssFile=path.join(config.staticRoot,'assets','district-performance-interaction-v220.css');
-      const performanceInteractionJsFile=path.join(config.staticRoot,'assets','district-performance-interaction-v220.js');
-      const darkDesktopCssFile=path.join(config.staticRoot,'assets','district-dark-desktop-v221.css');
-      const darkDesktopJsFile=path.join(config.staticRoot,'assets','district-dark-desktop-v221.js');
-      const componentCohesionCssFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.css');
-      const componentCohesionJsFile=path.join(config.staticRoot,'assets','district-component-cohesion-v222.js');
-      const publicDiscoveryCssFile=path.join(config.staticRoot,'assets','district-public-discovery-v223.css');
-      const commandCenterCssFile=path.join(config.staticRoot,'assets','district-command-center-v224.css');
-      const commandCenterJsFile=path.join(config.staticRoot,'assets','district-command-center-v224.js');
-      const residentJourneyCssFile=path.join(config.staticRoot,'assets','district-resident-journey-v225.css');
-      const residentJourneyJsFile=path.join(config.staticRoot,'assets','district-resident-journey-v225.js');
-      const smartNextStepCssFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.css');
-      const smartNextStepJsFile=path.join(config.staticRoot,'assets','district-smart-next-step-v226.js');
-      const livingPulseCssFile=path.join(config.staticRoot,'assets','district-living-pulse-v227.css');
-      const livingPulseJsFile=path.join(config.staticRoot,'assets','district-living-pulse-v227.js');
-      const residentReadinessCssFile=path.join(config.staticRoot,'assets','district-resident-readiness-v228.css');
-      const residentReadinessJsFile=path.join(config.staticRoot,'assets','district-resident-readiness-v228.js');
-      const pwaCssFile=path.join(config.staticRoot,'assets','district-pwa-v229.css');
-      const pwaJsFile=path.join(config.staticRoot,'assets','district-pwa-v229.js');
-      const landscapeCorrectionsCssFile=path.join(config.staticRoot,'assets','district-landscape-corrections-v230.css');
-      const serviceIntelligenceCssFile=path.join(config.staticRoot,'assets','district-service-intelligence-v231.css');
-      const serviceIntelligenceJsFile=path.join(config.staticRoot,'assets','district-service-intelligence-v231.js');
-      const formLandscapeCssFile=path.join(config.staticRoot,'assets','district-form-landscape-v232.css');
-      const screenshotPolishCssFile=path.join(config.staticRoot,'assets','district-screenshot-polish-v233.css');
-      const darkFormGalleryCssFile=path.join(config.staticRoot,'assets','district-dark-form-gallery-v234.css');
-      const residentServiceWorkspaceCssFile=path.join(config.staticRoot,'assets','district-resident-service-workspace-v235.css');
-      const residentServiceWorkspaceJsFile=path.join(config.staticRoot,'assets','district-resident-service-workspace-v235.js');
-      const focusedRouteCoherenceCssFile=path.join(config.staticRoot,'assets','district-focused-route-coherence-v236.css');
-      const civicFlowCssFile=path.join(config.staticRoot,'assets','district-civic-flow-v237.css');
-      const civicFlowJsFile=path.join(config.staticRoot,'assets','district-civic-flow-v237.js');
-      const darkFormStabilizationCssFile=path.join(config.staticRoot,'assets','district-dark-form-stabilization-v238.css');
-      const darkFormStabilizationJsFile=path.join(config.staticRoot,'assets','district-dark-form-stabilization-v238.js');
-      const civicShellCssFile=path.join(config.staticRoot,'assets','district-civic-shell-v239.css');
-      const civicShellJsFile=path.join(config.staticRoot,'assets','district-civic-shell-v239.js');
-      const responsiveHardeningCssFile=path.join(config.staticRoot,'assets','district-responsive-hardening-v240.css');
-      const responsiveHardeningJsFile=path.join(config.staticRoot,'assets','district-responsive-hardening-v240.js');
-      const exploreDrawerCssFile=path.join(config.staticRoot,'assets','district-explore-drawer-v241.css');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer,formLandscapeCssBuffer,screenshotPolishCssBuffer,darkFormGalleryCssBuffer,residentServiceWorkspaceCssBuffer,residentServiceWorkspaceJsBuffer,focusedRouteCoherenceCssBuffer,civicFlowCssBuffer,civicFlowJsBuffer,darkFormStabilizationCssBuffer,darkFormStabilizationJsBuffer,civicShellCssBuffer,civicShellJsBuffer,responsiveHardeningCssBuffer,responsiveHardeningJsBuffer,exploreDrawerCssBuffer]=await Promise.all([
-        fs.readFile(runtimeFile),
-        fs.readFile(sidebarCssFile),
-        fs.readFile(sidebarJsFile),
-        fs.readFile(focusedCssFile),
-        fs.readFile(focusedJsFile),
-        fs.readFile(focusedLayoutCssFile),
-        fs.readFile(focusedLayoutJsFile),
-        fs.readFile(routeCssFile),
-        fs.readFile(routeJsFile),
-        fs.readFile(visualQaCssFile),
-        fs.readFile(pageIdentityCssFile),
-        fs.readFile(pageIdentityJsFile),
-        fs.readFile(hierarchyCssFile),
-        fs.readFile(hierarchyJsFile),
-        fs.readFile(lightHierarchyCssFile),
-        fs.readFile(lightHierarchyJsFile),
-        fs.readFile(aestheticCssFile),
-        fs.readFile(aestheticJsFile),
-        fs.readFile(homeAestheticCssFile),
-        fs.readFile(homeAestheticJsFile),
-        fs.readFile(globalPolishCssFile),
-        fs.readFile(globalPolishJsFile),
-        fs.readFile(digitalFeedCssFile),
-        fs.readFile(digitalFeedJsFile),
-        fs.readFile(feedPublishingCssFile),
-        fs.readFile(feedPublishingJsFile),
-        fs.readFile(progressThreadsCssFile),
-        fs.readFile(progressThreadsJsFile),
-        fs.readFile(mobileCorrectionsCssFile),
-        fs.readFile(mobilePolishCssFile),
-        fs.readFile(mobileNavigationCssFile),
-        fs.readFile(mobileNavigationJsFile),
-        fs.readFile(contrastAccessibilityCssFile),
-        fs.readFile(contrastAccessibilityJsFile),
-        fs.readFile(performanceInteractionCssFile),
-        fs.readFile(performanceInteractionJsFile),
-        fs.readFile(darkDesktopCssFile),
-        fs.readFile(darkDesktopJsFile),
-        fs.readFile(componentCohesionCssFile),
-        fs.readFile(componentCohesionJsFile),
-        fs.readFile(publicDiscoveryCssFile),
-        fs.readFile(commandCenterCssFile),
-        fs.readFile(commandCenterJsFile),
-        fs.readFile(residentJourneyCssFile),
-        fs.readFile(residentJourneyJsFile),
-        fs.readFile(smartNextStepCssFile),
-        fs.readFile(smartNextStepJsFile),
-        fs.readFile(livingPulseCssFile),
-        fs.readFile(livingPulseJsFile),
-        fs.readFile(residentReadinessCssFile),
-        fs.readFile(residentReadinessJsFile),
-        fs.readFile(pwaCssFile),
-        fs.readFile(pwaJsFile),
-        fs.readFile(landscapeCorrectionsCssFile),
-        fs.readFile(serviceIntelligenceCssFile),
-        fs.readFile(serviceIntelligenceJsFile),
-        fs.readFile(formLandscapeCssFile),
-        fs.readFile(screenshotPolishCssFile),
-        fs.readFile(darkFormGalleryCssFile),
-        fs.readFile(residentServiceWorkspaceCssFile),
-        fs.readFile(residentServiceWorkspaceJsFile),
-        fs.readFile(focusedRouteCoherenceCssFile),
-        fs.readFile(civicFlowCssFile),
-        fs.readFile(civicFlowJsFile),
-        fs.readFile(darkFormStabilizationCssFile),
-        fs.readFile(darkFormStabilizationJsFile),
-        fs.readFile(civicShellCssFile),
-        fs.readFile(civicShellJsFile),
-        fs.readFile(responsiveHardeningCssFile),
-        fs.readFile(responsiveHardeningJsFile),
-        fs.readFile(exploreDrawerCssFile)
-      ]);
-      const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
-      const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
-      const sidebarCss=`<link rel="stylesheet" href="/assets/district-sidebar-v202.css?v=${versionFor(sidebarCssBuffer)}">`;
-      const sidebarJs=`<script src="/assets/district-sidebar-v202.js?v=${versionFor(sidebarJsBuffer)}" defer></script>`;
-      const focusedCss=`<link rel="stylesheet" href="/assets/district-focused-pages-v203.css?v=${versionFor(focusedCssBuffer)}">`;
-      const focusedJs=`<script src="/assets/district-focused-pages-v203.js?v=${versionFor(focusedJsBuffer)}" defer></script>`;
-      const focusedLayoutCss=`<link rel="stylesheet" href="/assets/district-focused-layout-v204.css?v=${versionFor(focusedLayoutCssBuffer)}">`;
-      const focusedLayoutJs=`<script src="/assets/district-focused-layout-v204.js?v=${versionFor(focusedLayoutJsBuffer)}" defer></script>`;
-      const routeCss=`<link rel="stylesheet" href="/assets/public-route-integration-v205.css?v=${versionFor(routeCssBuffer)}">`;
-      const routeJs=`<script src="/assets/public-route-integration-v205.js?v=${versionFor(routeJsBuffer)}" defer></script>`;
-      const visualQaCss=`<link rel="stylesheet" href="/assets/district-visual-qa-v206.css?v=${versionFor(visualQaCssBuffer)}">`;
-      const pageIdentityCss=`<link rel="stylesheet" href="/assets/district-page-identity-v207.css?v=${versionFor(pageIdentityCssBuffer)}">`;
-      const pageIdentityJs=`<script src="/assets/district-page-identity-v207.js?v=${versionFor(pageIdentityJsBuffer)}" defer></script>`;
-      const hierarchyCss=`<link rel="stylesheet" href="/assets/district-content-hierarchy-v208.css?v=${versionFor(hierarchyCssBuffer)}">`;
-      const hierarchyJs=`<script src="/assets/district-content-hierarchy-v208.js?v=${versionFor(hierarchyJsBuffer)}" defer></script>`;
-      const lightHierarchyCss=`<link rel="stylesheet" href="/assets/district-light-hierarchy-v209.css?v=${versionFor(lightHierarchyCssBuffer)}">`;
-      const lightHierarchyJs=`<script src="/assets/district-light-hierarchy-v209.js?v=${versionFor(lightHierarchyJsBuffer)}" defer></script>`;
-      const aestheticCss=`<link rel="stylesheet" href="/assets/district-aesthetic-restoration-v210.css?v=${versionFor(aestheticCssBuffer)}">`;
-      const aestheticJs=`<script src="/assets/district-aesthetic-restoration-v210.js?v=${versionFor(aestheticJsBuffer)}" defer></script>`;
-      const homeAestheticCss=`<link rel="stylesheet" href="/assets/district-homepage-aesthetic-v211.css?v=${versionFor(homeAestheticCssBuffer)}">`;
-      const homeAestheticJs=`<script src="/assets/district-homepage-aesthetic-v211.js?v=${versionFor(homeAestheticJsBuffer)}" defer></script>`;
-      const globalPolishCss=`<link rel="stylesheet" href="/assets/district-global-polish-v212.css?v=${versionFor(globalPolishCssBuffer)}">`;
-      const globalPolishJs=`<script src="/assets/district-global-polish-v212.js?v=${versionFor(globalPolishJsBuffer)}" defer></script>`;
-      const digitalFeedCss=`<link rel="stylesheet" href="/assets/district-digital-feed-v213.css?v=${versionFor(digitalFeedCssBuffer)}">`;
-      const digitalFeedJs=`<script src="/assets/district-digital-feed-v213.js?v=${versionFor(digitalFeedJsBuffer)}" defer></script>`;
-      const feedPublishingCss=`<link rel="stylesheet" href="/assets/district-feed-publishing-v214.css?v=${versionFor(feedPublishingCssBuffer)}">`;
-      const feedPublishingJs=`<script src="/assets/district-feed-publishing-v214.js?v=${versionFor(feedPublishingJsBuffer)}" defer></script>`;
-      const progressThreadsCss=`<link rel="stylesheet" href="/assets/district-progress-threads-v215.css?v=${versionFor(progressThreadsCssBuffer)}">`;
-      const progressThreadsJs=`<script src="/assets/district-progress-threads-v215.js?v=${versionFor(progressThreadsJsBuffer)}" defer></script>`;
-      const mobileCorrectionsCss=`<link rel="stylesheet" href="/assets/district-mobile-corrections-v216.css?v=${versionFor(mobileCorrectionsCssBuffer)}">`;
-      const mobilePolishCss=`<link rel="stylesheet" href="/assets/district-mobile-polish-v217.css?v=${versionFor(mobilePolishCssBuffer)}">`;
-      const mobileNavigationCss=`<link rel="stylesheet" href="/assets/district-mobile-navigation-v218.css?v=${versionFor(mobileNavigationCssBuffer)}">`;
-      const mobileNavigationJs=`<script src="/assets/district-mobile-navigation-v218.js?v=${versionFor(mobileNavigationJsBuffer)}" defer></script>`;
-      const contrastAccessibilityCss=`<link rel="stylesheet" href="/assets/district-contrast-accessibility-v219.css?v=${versionFor(contrastAccessibilityCssBuffer)}">`;
-      const contrastAccessibilityJs=`<script src="/assets/district-contrast-accessibility-v219.js?v=${versionFor(contrastAccessibilityJsBuffer)}" defer></script>`;
-      const performanceInteractionCss=`<link rel="stylesheet" href="/assets/district-performance-interaction-v220.css?v=${versionFor(performanceInteractionCssBuffer)}">`;
-      const performanceInteractionJs=`<script src="/assets/district-performance-interaction-v220.js?v=${versionFor(performanceInteractionJsBuffer)}" defer></script>`;
-      const darkDesktopCss=`<link rel="stylesheet" href="/assets/district-dark-desktop-v221.css?v=${versionFor(darkDesktopCssBuffer)}">`;
-      const darkDesktopJs=`<script src="/assets/district-dark-desktop-v221.js?v=${versionFor(darkDesktopJsBuffer)}" defer></script>`;
-      const componentCohesionCss=`<link rel="stylesheet" href="/assets/district-component-cohesion-v222.css?v=${versionFor(componentCohesionCssBuffer)}">`;
-      const componentCohesionJs=`<script src="/assets/district-component-cohesion-v222.js?v=${versionFor(componentCohesionJsBuffer)}" defer></script>`;
-      const publicDiscoveryCss=`<link rel="stylesheet" href="/assets/district-public-discovery-v223.css?v=${versionFor(publicDiscoveryCssBuffer)}">`;
-      const commandCenterCss=`<link rel="stylesheet" href="/assets/district-command-center-v224.css?v=${versionFor(commandCenterCssBuffer)}">`;
-      const commandCenterJs=`<script src="/assets/district-command-center-v224.js?v=${versionFor(commandCenterJsBuffer)}" defer></script>`;
-      const residentJourneyCss=`<link rel="stylesheet" href="/assets/district-resident-journey-v225.css?v=${versionFor(residentJourneyCssBuffer)}">`;
-      const residentJourneyJs=`<script src="/assets/district-resident-journey-v225.js?v=${versionFor(residentJourneyJsBuffer)}" defer></script>`;
-      const smartNextStepCss=`<link rel="stylesheet" href="/assets/district-smart-next-step-v226.css?v=${versionFor(smartNextStepCssBuffer)}">`;
-      const smartNextStepJs=`<script src="/assets/district-smart-next-step-v226.js?v=${versionFor(smartNextStepJsBuffer)}" defer></script>`;
-      const livingPulseCss=`<link rel="stylesheet" href="/assets/district-living-pulse-v227.css?v=${versionFor(livingPulseCssBuffer)}">`;
-      const livingPulseJs=`<script src="/assets/district-living-pulse-v227.js?v=${versionFor(livingPulseJsBuffer)}" defer></script>`;
-      const residentReadinessCss=`<link rel="stylesheet" href="/assets/district-resident-readiness-v228.css?v=${versionFor(residentReadinessCssBuffer)}">`;
-      const residentReadinessJs=`<script src="/assets/district-resident-readiness-v228.js?v=${versionFor(residentReadinessJsBuffer)}" defer></script>`;
-      const pwaCss=`<link rel="stylesheet" href="/assets/district-pwa-v229.css?v=${versionFor(pwaCssBuffer)}">`;
-      const pwaJs=`<script src="/assets/district-pwa-v229.js?v=${versionFor(pwaJsBuffer)}" defer></script>`;
-      const landscapeCorrectionsCss=`<link rel="stylesheet" href="/assets/district-landscape-corrections-v230.css?v=${versionFor(landscapeCorrectionsCssBuffer)}">`;
-      const serviceIntelligenceCss=`<link rel="stylesheet" href="/assets/district-service-intelligence-v231.css?v=${versionFor(serviceIntelligenceCssBuffer)}">`;
-      const serviceIntelligenceJs=`<script src="/assets/district-service-intelligence-v231.js?v=${versionFor(serviceIntelligenceJsBuffer)}" defer></script>`;
-      const formLandscapeCss=`<link rel="stylesheet" href="/assets/district-form-landscape-v232.css?v=${versionFor(formLandscapeCssBuffer)}">`;
-      const screenshotPolishCss=`<link rel="stylesheet" href="/assets/district-screenshot-polish-v233.css?v=${versionFor(screenshotPolishCssBuffer)}">`;
-      const darkFormGalleryCss=`<link rel="stylesheet" href="/assets/district-dark-form-gallery-v234.css?v=${versionFor(darkFormGalleryCssBuffer)}">`;
-      const residentServiceWorkspaceCss=`<link rel="stylesheet" href="/assets/district-resident-service-workspace-v235.css?v=${versionFor(residentServiceWorkspaceCssBuffer)}">`;
-      const residentServiceWorkspaceJs=`<script src="/assets/district-resident-service-workspace-v235.js?v=${versionFor(residentServiceWorkspaceJsBuffer)}" defer></script>`;
-      const focusedRouteCoherenceCss=`<link rel="stylesheet" href="/assets/district-focused-route-coherence-v236.css?v=${versionFor(focusedRouteCoherenceCssBuffer)}">`;
-      const civicFlowCss=`<link rel="stylesheet" href="/assets/district-civic-flow-v237.css?v=${versionFor(civicFlowCssBuffer)}">`;
-      const civicFlowJs=`<script src="/assets/district-civic-flow-v237.js?v=${versionFor(civicFlowJsBuffer)}" defer></script>`;
-      const darkFormStabilizationCss=`<link rel="stylesheet" href="/assets/district-dark-form-stabilization-v238.css?v=${versionFor(darkFormStabilizationCssBuffer)}">`;
-      const darkFormStabilizationJs=`<script src="/assets/district-dark-form-stabilization-v238.js?v=${versionFor(darkFormStabilizationJsBuffer)}" defer></script>`;
-      const civicShellCss=`<link rel="stylesheet" href="/assets/district-civic-shell-v239.css?v=${versionFor(civicShellCssBuffer)}">`;
-      const civicShellJs=`<script src="/assets/district-civic-shell-v239.js?v=${versionFor(civicShellJsBuffer)}" defer></script>`;
-      const responsiveHardeningCss=`<link rel="stylesheet" href="/assets/district-responsive-hardening-v240.css?v=${versionFor(responsiveHardeningCssBuffer)}">`;
-      const responsiveHardeningJs=`<script src="/assets/district-responsive-hardening-v240.js?v=${versionFor(responsiveHardeningJsBuffer)}" defer></script>`;
-      const exploreDrawerCss=`<link rel="stylesheet" href="/assets/district-explore-drawer-v241.css?v=${versionFor(exploreDrawerCssBuffer)}">`;
+      const styleAssets=[
+        'district-sidebar-v202.css',
+        'district-focused-pages-v203.css',
+        'district-focused-layout-v204.css',
+        'public-route-integration-v205.css',
+        'district-visual-qa-v206.css',
+        'district-page-identity-v207.css',
+        'district-content-hierarchy-v208.css',
+        'district-light-hierarchy-v209.css',
+        'district-aesthetic-restoration-v210.css',
+        'district-homepage-aesthetic-v211.css',
+        'district-global-polish-v212.css',
+        'district-digital-feed-v213.css',
+        'district-feed-publishing-v214.css',
+        'district-progress-threads-v215.css',
+        'district-mobile-corrections-v216.css',
+        'district-mobile-polish-v217.css',
+        'district-mobile-navigation-v218.css',
+        'district-contrast-accessibility-v219.css',
+        'district-performance-interaction-v220.css',
+        'district-dark-desktop-v221.css',
+        'district-component-cohesion-v222.css',
+        'district-public-discovery-v223.css',
+        'district-command-center-v224.css',
+        'district-resident-journey-v225.css',
+        'district-smart-next-step-v226.css',
+        'district-living-pulse-v227.css',
+        'district-resident-readiness-v228.css',
+        'district-pwa-v229.css',
+        'district-landscape-corrections-v230.css',
+        'district-service-intelligence-v231.css',
+        'district-form-landscape-v232.css',
+        'district-screenshot-polish-v233.css',
+        'district-dark-form-gallery-v234.css',
+        'district-resident-service-workspace-v235.css',
+        'district-focused-route-coherence-v236.css',
+        'district-civic-flow-v237.css',
+        'district-dark-form-stabilization-v238.css',
+        'district-civic-shell-v239.css',
+        'district-responsive-hardening-v240.css',
+        'district-explore-drawer-v241.css'
+      ];
+      const scriptAssets=[
+        'public-content-runtime.js',
+        'district-sidebar-v202.js',
+        'district-focused-pages-v203.js',
+        'district-focused-layout-v204.js',
+        'public-route-integration-v205.js',
+        'district-page-identity-v207.js',
+        'district-content-hierarchy-v208.js',
+        'district-light-hierarchy-v209.js',
+        'district-aesthetic-restoration-v210.js',
+        'district-homepage-aesthetic-v211.js',
+        'district-global-polish-v212.js',
+        'district-digital-feed-v213.js',
+        'district-feed-publishing-v214.js',
+        'district-progress-threads-v215.js',
+        'district-mobile-navigation-v218.js',
+        'district-contrast-accessibility-v219.js',
+        'district-performance-interaction-v220.js',
+        'district-dark-desktop-v221.js',
+        'district-component-cohesion-v222.js',
+        'district-command-center-v224.js',
+        'district-resident-journey-v225.js',
+        'district-smart-next-step-v226.js',
+        'district-living-pulse-v227.js',
+        'district-resident-readiness-v228.js',
+        'district-pwa-v229.js',
+        'district-service-intelligence-v231.js',
+        'district-resident-service-workspace-v235.js',
+        'district-civic-flow-v237.js',
+        'district-dark-form-stabilization-v238.js',
+        'district-civic-shell-v239.js',
+        'district-responsive-hardening-v240.js'
+      ];
+      const assetNames=[...styleAssets,...scriptAssets];
+      const assetBuffers=await Promise.all(
+        assetNames.map(name=>fs.readFile(path.join(config.staticRoot,'assets',name)))
+      );
+      const versionFor=buffer=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
+      const assetVersion=new Map(assetNames.map((name,index)=>[name,versionFor(assetBuffers[index])]));
+      const styleTag=name=>`<link rel="stylesheet" href="/assets/${name}?v=${assetVersion.get(name)}">`;
+      const scriptTag=name=>`<script src="/assets/${name}?v=${assetVersion.get(name)}" defer></script>`;
       const pwaHead='<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="/assets/district-app-icon-v229.svg"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SMG Office">';
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
-      if(!html.includes('/assets/district-sidebar-v202.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,sidebarCss+'</head>'):sidebarCss+html;
-      }
-      if(!html.includes('/assets/district-focused-pages-v203.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedCss+'</head>'):focusedCss+html;
-      }
-      if(!html.includes('/assets/district-focused-layout-v204.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedLayoutCss+'</head>'):focusedLayoutCss+html;
-      }
-      if(!html.includes('/assets/public-route-integration-v205.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,routeCss+'</head>'):routeCss+html;
-      }
-      if(!html.includes('/assets/district-visual-qa-v206.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,visualQaCss+'</head>'):visualQaCss+html;
-      }
-      if(!html.includes('/assets/district-page-identity-v207.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pageIdentityCss+'</head>'):pageIdentityCss+html;
-      }
-      if(!html.includes('/assets/district-content-hierarchy-v208.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,hierarchyCss+'</head>'):hierarchyCss+html;
-      }
-      if(!html.includes('/assets/district-light-hierarchy-v209.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,lightHierarchyCss+'</head>'):lightHierarchyCss+html;
-      }
-      if(!html.includes('/assets/district-aesthetic-restoration-v210.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,aestheticCss+'</head>'):aestheticCss+html;
-      }
-      if(!html.includes('/assets/district-homepage-aesthetic-v211.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,homeAestheticCss+'</head>'):homeAestheticCss+html;
-      }
-      if(!html.includes('/assets/district-global-polish-v212.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,globalPolishCss+'</head>'):globalPolishCss+html;
-      }
-      if(!html.includes('/assets/district-digital-feed-v213.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,digitalFeedCss+'</head>'):digitalFeedCss+html;
-      }
-      if(!html.includes('/assets/district-feed-publishing-v214.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,feedPublishingCss+'</head>'):feedPublishingCss+html;
-      }
-      if(!html.includes('/assets/district-progress-threads-v215.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,progressThreadsCss+'</head>'):progressThreadsCss+html;
-      }
-      if(!html.includes('/assets/district-mobile-corrections-v216.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobileCorrectionsCss+'</head>'):mobileCorrectionsCss+html;
-      }
-      if(!html.includes('/assets/district-mobile-polish-v217.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobilePolishCss+'</head>'):mobilePolishCss+html;
-      }
-      if(!html.includes('/assets/district-mobile-navigation-v218.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,mobileNavigationCss+'</head>'):mobileNavigationCss+html;
-      }
-      if(!html.includes('/assets/district-contrast-accessibility-v219.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,contrastAccessibilityCss+'</head>'):contrastAccessibilityCss+html;
-      }
-      if(!html.includes('/assets/district-performance-interaction-v220.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,performanceInteractionCss+'</head>'):performanceInteractionCss+html;
-      }
-      if(!html.includes('/assets/district-dark-desktop-v221.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,darkDesktopCss+'</head>'):darkDesktopCss+html;
-      }
-      if(!html.includes('/assets/district-component-cohesion-v222.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,componentCohesionCss+'</head>'):componentCohesionCss+html;
-      }
-      if(!html.includes('/assets/district-public-discovery-v223.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,publicDiscoveryCss+'</head>'):publicDiscoveryCss+html;
-      }
-      if(!html.includes('/assets/district-command-center-v224.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,commandCenterCss+'</head>'):commandCenterCss+html;
-      }
-      if(!html.includes('/assets/district-resident-journey-v225.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentJourneyCss+'</head>'):residentJourneyCss+html;
-      }
-      if(!html.includes('/assets/district-smart-next-step-v226.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,smartNextStepCss+'</head>'):smartNextStepCss+html;
-      }
-      if(!html.includes('/assets/district-living-pulse-v227.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,livingPulseCss+'</head>'):livingPulseCss+html;
-      }
-      if(!html.includes('/assets/district-resident-readiness-v228.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentReadinessCss+'</head>'):residentReadinessCss+html;
-      }
-      if(!html.includes('/assets/district-pwa-v229.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaCss+'</head>'):pwaCss+html;
-      }
-      if(!html.includes('/assets/district-landscape-corrections-v230.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,landscapeCorrectionsCss+'</head>'):landscapeCorrectionsCss+html;
-      }
-      if(!html.includes('/assets/district-service-intelligence-v231.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,serviceIntelligenceCss+'</head>'):serviceIntelligenceCss+html;
-      }
-      if(!html.includes('/assets/district-form-landscape-v232.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,formLandscapeCss+'</head>'):formLandscapeCss+html;
-      }
-      if(!html.includes('/assets/district-screenshot-polish-v233.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,screenshotPolishCss+'</head>'):screenshotPolishCss+html;
-      }
-      if(!html.includes('/assets/district-dark-form-gallery-v234.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,darkFormGalleryCss+'</head>'):darkFormGalleryCss+html;
-      }
-      if(!html.includes('/assets/district-resident-service-workspace-v235.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentServiceWorkspaceCss+'</head>'):residentServiceWorkspaceCss+html;
-      }
-      if(!html.includes('/assets/district-focused-route-coherence-v236.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedRouteCoherenceCss+'</head>'):focusedRouteCoherenceCss+html;
-      }
-      if(!html.includes('/assets/district-civic-flow-v237.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,civicFlowCss+'</head>'):civicFlowCss+html;
-      }
-      if(!html.includes('/assets/district-dark-form-stabilization-v238.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,darkFormStabilizationCss+'</head>'):darkFormStabilizationCss+html;
-      }
-      if(!html.includes('/assets/district-civic-shell-v239.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,civicShellCss+'</head>'):civicShellCss+html;
-      }
-      if(!html.includes('/assets/district-responsive-hardening-v240.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,responsiveHardeningCss+'</head>'):responsiveHardeningCss+html;
-      }
-      if(!html.includes('/assets/district-explore-drawer-v241.css')){
-        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,exploreDrawerCss+'</head>'):exploreDrawerCss+html;
+      for(const name of styleAssets){
+        const marker='/assets/'+name;
+        if(html.includes(marker))continue;
+        const tag=styleTag(name);
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,tag+'</head>'):tag+html;
       }
       if(!html.includes('/manifest.webmanifest')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaHead+'</head>'):pwaHead+html;
@@ -590,98 +343,11 @@ async function sendPublicIndex(req,res,next){
       if(!html.includes('/api/public/feed.xml')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,rssLink+'</head>'):rssLink+html;
       }
-      if(!html.includes('/assets/public-content-runtime.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,runtime+'</body>'):html+runtime;
-      }
-      if(!html.includes('/assets/district-sidebar-v202.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,sidebarJs+'</body>'):html+sidebarJs;
-      }
-      if(!html.includes('/assets/district-focused-pages-v203.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,focusedJs+'</body>'):html+focusedJs;
-      }
-      if(!html.includes('/assets/district-focused-layout-v204.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,focusedLayoutJs+'</body>'):html+focusedLayoutJs;
-      }
-      if(!html.includes('/assets/public-route-integration-v205.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,routeJs+'</body>'):html+routeJs;
-      }
-      if(!html.includes('/assets/district-page-identity-v207.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pageIdentityJs+'</body>'):html+pageIdentityJs;
-      }
-      if(!html.includes('/assets/district-content-hierarchy-v208.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,hierarchyJs+'</body>'):html+hierarchyJs;
-      }
-      if(!html.includes('/assets/district-light-hierarchy-v209.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,lightHierarchyJs+'</body>'):html+lightHierarchyJs;
-      }
-      if(!html.includes('/assets/district-aesthetic-restoration-v210.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,aestheticJs+'</body>'):html+aestheticJs;
-      }
-      if(!html.includes('/assets/district-homepage-aesthetic-v211.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,homeAestheticJs+'</body>'):html+homeAestheticJs;
-      }
-      if(!html.includes('/assets/district-global-polish-v212.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,globalPolishJs+'</body>'):html+globalPolishJs;
-      }
-      if(!html.includes('/assets/district-digital-feed-v213.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,digitalFeedJs+'</body>'):html+digitalFeedJs;
-      }
-      if(!html.includes('/assets/district-feed-publishing-v214.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,feedPublishingJs+'</body>'):html+feedPublishingJs;
-      }
-      if(!html.includes('/assets/district-progress-threads-v215.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,progressThreadsJs+'</body>'):html+progressThreadsJs;
-      }
-      if(!html.includes('/assets/district-mobile-navigation-v218.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,mobileNavigationJs+'</body>'):html+mobileNavigationJs;
-      }
-      if(!html.includes('/assets/district-contrast-accessibility-v219.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,contrastAccessibilityJs+'</body>'):html+contrastAccessibilityJs;
-      }
-      if(!html.includes('/assets/district-performance-interaction-v220.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,performanceInteractionJs+'</body>'):html+performanceInteractionJs;
-      }
-      if(!html.includes('/assets/district-dark-desktop-v221.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,darkDesktopJs+'</body>'):html+darkDesktopJs;
-      }
-      if(!html.includes('/assets/district-component-cohesion-v222.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,componentCohesionJs+'</body>'):html+componentCohesionJs;
-      }
-      if(!html.includes('/assets/district-command-center-v224.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,commandCenterJs+'</body>'):html+commandCenterJs;
-      }
-      if(!html.includes('/assets/district-resident-journey-v225.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,residentJourneyJs+'</body>'):html+residentJourneyJs;
-      }
-      if(!html.includes('/assets/district-smart-next-step-v226.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,smartNextStepJs+'</body>'):html+smartNextStepJs;
-      }
-      if(!html.includes('/assets/district-living-pulse-v227.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,livingPulseJs+'</body>'):html+livingPulseJs;
-      }
-      if(!html.includes('/assets/district-resident-readiness-v228.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,residentReadinessJs+'</body>'):html+residentReadinessJs;
-      }
-      if(!html.includes('/assets/district-pwa-v229.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,pwaJs+'</body>'):html+pwaJs;
-      }
-      if(!html.includes('/assets/district-service-intelligence-v231.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,serviceIntelligenceJs+'</body>'):html+serviceIntelligenceJs;
-      }
-      if(!html.includes('/assets/district-resident-service-workspace-v235.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,residentServiceWorkspaceJs+'</body>'):html+residentServiceWorkspaceJs;
-      }
-      if(!html.includes('/assets/district-civic-flow-v237.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,civicFlowJs+'</body>'):html+civicFlowJs;
-      }
-      if(!html.includes('/assets/district-dark-form-stabilization-v238.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,darkFormStabilizationJs+'</body>'):html+darkFormStabilizationJs;
-      }
-      if(!html.includes('/assets/district-civic-shell-v239.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,civicShellJs+'</body>'):html+civicShellJs;
-      }
-      if(!html.includes('/assets/district-responsive-hardening-v240.js')){
-        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,responsiveHardeningJs+'</body>'):html+responsiveHardeningJs;
+      for(const name of scriptAssets){
+        const marker='/assets/'+name;
+        if(html.includes(marker))continue;
+        const tag=scriptTag(name);
+        html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,tag+'</body>'):html+tag;
       }
       cachedPublicIndex=html;
     }
