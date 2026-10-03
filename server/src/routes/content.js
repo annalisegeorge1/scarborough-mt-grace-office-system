@@ -427,7 +427,7 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       'verified_by','verified_at','published_by','published_at','archived_by','archived_at',
       'version','published_snapshot','published_snapshot_at','published_snapshot_active'
     ];
-    const [migration,columns,revisions,counts,mismatch,documents]=await Promise.all([
+    const [migration,columns,revisions]=await Promise.all([
       db.query("SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",['006_content_publishing_workflow.sql']),
       db.query(`
         SELECT column_name
@@ -436,69 +436,89 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
           AND table_name='public_content'
           AND column_name=ANY($1::text[])
       `,[requiredColumns]),
-      db.query("SELECT to_regclass('public.public_content_revisions') AS table_name"),
-      db.query(`
-        SELECT
-          count(*)::int AS total,
-          count(*) FILTER (WHERE workflow='Draft')::int AS draft,
-          count(*) FILTER (WHERE workflow='In Review')::int AS in_review,
-          count(*) FILTER (WHERE workflow='Approved')::int AS approved,
-          count(*) FILTER (WHERE workflow='Published')::int AS published,
-          count(*) FILTER (WHERE workflow='Archived')::int AS archived,
-          count(*) FILTER (WHERE workflow='Published' AND verified=false)::int AS published_unverified,
-          count(*) FILTER (WHERE workflow='Archived' AND published_snapshot_active=true)::int AS archived_active_snapshot,
-          count(*) FILTER (WHERE published_snapshot_active=true AND published_snapshot IS NULL)::int AS active_snapshot_missing_payload,
-          count(*) FILTER (
-            WHERE workflow='Published' AND verified=true
-              AND COALESCE(published_snapshot_active,false)=false
-          )::int AS published_missing_snapshot,
-          count(*) FILTER (
-            WHERE workflow<>'Published' AND published_snapshot_active=true
-          )::int AS revision_snapshots_live
-        FROM public_content
-      `),
-      db.query(`
-        SELECT count(*)::int AS mismatches
-        FROM public_content pc
-        LEFT JOIN LATERAL (
-          SELECT max(version) AS max_version
-          FROM public_content_revisions r
-          WHERE r.content_id=pc.id
-        ) rv ON true
-        WHERE COALESCE(rv.max_version,0)<>pc.version
-      `),
-      db.query(`
-        SELECT count(*)::int AS invalid_public_documents
-        FROM public_content pc
-        JOIN documents d ON d.id=CASE
-          WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
-          ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
-        END
-        WHERE (
-          (pc.workflow='Published' AND pc.verified=true)
-          OR pc.published_snapshot_active=true
-        )
-          AND (d.sensitivity<>'Public' OR d.review_status<>'Approved')
-      `)
+      db.query("SELECT to_regclass('public.public_content_revisions') AS table_name")
     ]);
+    const migrationApplied=!!migration.rows[0]?.applied;
     const present=new Set(columns.rows.map(x=>x.column_name));
     const missingColumns=requiredColumns.filter(x=>!present.has(x));
-    const stats=counts.rows[0]||{};
-    const integrity={
-      publishedUnverified:Number(stats.published_unverified)||0,
-      archivedActiveSnapshot:Number(stats.archived_active_snapshot)||0,
-      activeSnapshotMissingPayload:Number(stats.active_snapshot_missing_payload)||0,
-      publishedMissingSnapshot:Number(stats.published_missing_snapshot)||0,
-      revisionVersionMismatches:Number(mismatch.rows[0]?.mismatches)||0,
-      invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0
+    const revisionsTable=!!revisions.rows[0]?.table_name;
+    const schemaReady=migrationApplied&&missingColumns.length===0&&revisionsTable;
+    let stats={
+      total:0,draft:0,in_review:0,approved:0,published:0,archived:0,
+      published_unverified:0,archived_active_snapshot:0,active_snapshot_missing_payload:0,
+      published_missing_snapshot:0,revision_snapshots_live:0
     };
+    let integrity={
+      publishedUnverified:0,
+      archivedActiveSnapshot:0,
+      activeSnapshotMissingPayload:0,
+      publishedMissingSnapshot:0,
+      revisionVersionMismatches:0,
+      invalidPublicDocuments:0
+    };
+    if(schemaReady){
+      const [counts,mismatch,documents]=await Promise.all([
+        db.query(`
+          SELECT
+            count(*)::int AS total,
+            count(*) FILTER (WHERE workflow='Draft')::int AS draft,
+            count(*) FILTER (WHERE workflow='In Review')::int AS in_review,
+            count(*) FILTER (WHERE workflow='Approved')::int AS approved,
+            count(*) FILTER (WHERE workflow='Published')::int AS published,
+            count(*) FILTER (WHERE workflow='Archived')::int AS archived,
+            count(*) FILTER (WHERE workflow='Published' AND verified=false)::int AS published_unverified,
+            count(*) FILTER (WHERE workflow='Archived' AND published_snapshot_active=true)::int AS archived_active_snapshot,
+            count(*) FILTER (WHERE published_snapshot_active=true AND published_snapshot IS NULL)::int AS active_snapshot_missing_payload,
+            count(*) FILTER (
+              WHERE workflow='Published' AND verified=true
+                AND COALESCE(published_snapshot_active,false)=false
+            )::int AS published_missing_snapshot,
+            count(*) FILTER (
+              WHERE workflow<>'Published' AND published_snapshot_active=true
+            )::int AS revision_snapshots_live
+          FROM public_content
+        `),
+        db.query(`
+          SELECT count(*)::int AS mismatches
+          FROM public_content pc
+          LEFT JOIN LATERAL (
+            SELECT max(version) AS max_version
+            FROM public_content_revisions r
+            WHERE r.content_id=pc.id
+          ) rv ON true
+          WHERE COALESCE(rv.max_version,0)<>pc.version
+        `),
+        db.query(`
+          SELECT count(*)::int AS invalid_public_documents
+          FROM public_content pc
+          JOIN documents d ON d.id=CASE
+            WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
+            ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+          END
+          WHERE (
+            (pc.workflow='Published' AND pc.verified=true)
+            OR pc.published_snapshot_active=true
+          )
+            AND (d.sensitivity<>'Public' OR d.review_status<>'Approved')
+        `)
+      ]);
+      stats={...stats,...(counts.rows[0]||{})};
+      integrity={
+        publishedUnverified:Number(stats.published_unverified)||0,
+        archivedActiveSnapshot:Number(stats.archived_active_snapshot)||0,
+        activeSnapshotMissingPayload:Number(stats.active_snapshot_missing_payload)||0,
+        publishedMissingSnapshot:Number(stats.published_missing_snapshot)||0,
+        revisionVersionMismatches:Number(mismatch.rows[0]?.mismatches)||0,
+        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0
+      };
+    }
     const checks=[
       {
         key:'migration',
         label:'V242 publishing migration applied',
-        ok:!!migration.rows[0]?.applied,
+        ok:migrationApplied,
         severity:'blocker',
-        detail:'Migration 006_content_publishing_workflow.sql must be recorded before the Publishing Desk is used.'
+        detail:migrationApplied?'Migration 006 is recorded.':'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
       },
       {
         key:'columns',
@@ -510,63 +530,76 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       {
         key:'revisions-table',
         label:'Revision history table present',
-        ok:!!revisions.rows[0]?.table_name,
+        ok:revisionsTable,
         severity:'blocker',
-        detail:'public_content_revisions stores the versioned publishing audit trail.'
-      },
-      {
-        key:'published-verification',
-        label:'No Published records bypass verification',
-        ok:integrity.publishedUnverified===0,
-        severity:'blocker',
-        detail:integrity.publishedUnverified?`${integrity.publishedUnverified} Published record(s) are not verified.`:'Published content is respecting the verification gate.'
-      },
-      {
-        key:'archive-snapshot',
-        label:'Archived content is not still live',
-        ok:integrity.archivedActiveSnapshot===0,
-        severity:'blocker',
-        detail:integrity.archivedActiveSnapshot?`${integrity.archivedActiveSnapshot} archived record(s) still have an active public snapshot.`:'Archived records have no active public snapshot.'
-      },
-      {
-        key:'snapshot-payload',
-        label:'Active public snapshots have payloads',
-        ok:integrity.activeSnapshotMissingPayload===0,
-        severity:'blocker',
-        detail:integrity.activeSnapshotMissingPayload?`${integrity.activeSnapshotMissingPayload} active snapshot(s) are missing their public payload.`:'Every active snapshot has a resident-facing payload.'
-      },
-      {
-        key:'published-snapshot',
-        label:'Published + Verified records have a stable snapshot',
-        ok:integrity.publishedMissingSnapshot===0,
-        severity:'blocker',
-        detail:integrity.publishedMissingSnapshot?`${integrity.publishedMissingSnapshot} current published record(s) are missing a stable snapshot.`:'Published records have a stable snapshot for revision continuity.'
-      },
-      {
-        key:'revision-parity',
-        label:'Content versions match revision history',
-        ok:integrity.revisionVersionMismatches===0,
-        severity:'blocker',
-        detail:integrity.revisionVersionMismatches?`${integrity.revisionVersionMismatches} record(s) have a version/revision mismatch.`:'Every current content version has a matching revision entry.'
-      },
-      {
-        key:'public-documents',
-        label:'Exposed documents are Public + Approved',
-        ok:integrity.invalidPublicDocuments===0,
-        severity:'blocker',
-        detail:integrity.invalidPublicDocuments?`${integrity.invalidPublicDocuments} exposed document link(s) fail Records Centre approval/sensitivity rules.`:'Public document exposure respects Records Centre controls.'
+        detail:revisionsTable?'public_content_revisions is available.':'public_content_revisions is not available.'
       }
     ];
+    if(schemaReady){
+      checks.push(
+        {
+          key:'published-verification',
+          label:'No Published records bypass verification',
+          ok:integrity.publishedUnverified===0,
+          severity:'blocker',
+          detail:integrity.publishedUnverified?`${integrity.publishedUnverified} Published record(s) are not verified.`:'Published content is respecting the verification gate.'
+        },
+        {
+          key:'archive-snapshot',
+          label:'Archived content is not still live',
+          ok:integrity.archivedActiveSnapshot===0,
+          severity:'blocker',
+          detail:integrity.archivedActiveSnapshot?`${integrity.archivedActiveSnapshot} archived record(s) still have an active public snapshot.`:'Archived records have no active public snapshot.'
+        },
+        {
+          key:'snapshot-payload',
+          label:'Active public snapshots have payloads',
+          ok:integrity.activeSnapshotMissingPayload===0,
+          severity:'blocker',
+          detail:integrity.activeSnapshotMissingPayload?`${integrity.activeSnapshotMissingPayload} active snapshot(s) are missing their public payload.`:'Every active snapshot has a resident-facing payload.'
+        },
+        {
+          key:'published-snapshot',
+          label:'Published + Verified records have a stable snapshot',
+          ok:integrity.publishedMissingSnapshot===0,
+          severity:'blocker',
+          detail:integrity.publishedMissingSnapshot?`${integrity.publishedMissingSnapshot} current published record(s) are missing a stable snapshot.`:'Published records have a stable snapshot for revision continuity.'
+        },
+        {
+          key:'revision-parity',
+          label:'Content versions match revision history',
+          ok:integrity.revisionVersionMismatches===0,
+          severity:'blocker',
+          detail:integrity.revisionVersionMismatches?`${integrity.revisionVersionMismatches} record(s) have a version/revision mismatch.`:'Every current content version has a matching revision entry.'
+        },
+        {
+          key:'public-documents',
+          label:'Exposed documents are Public + Approved',
+          ok:integrity.invalidPublicDocuments===0,
+          severity:'blocker',
+          detail:integrity.invalidPublicDocuments?`${integrity.invalidPublicDocuments} exposed document link(s) fail Records Centre approval/sensitivity rules.`:'Public document exposure respects Records Centre controls.'
+        }
+      );
+    }else{
+      checks.push({
+        key:'integrity-pending',
+        label:'Publishing integrity checks can run',
+        ok:false,
+        severity:'blocker',
+        detail:'Apply/repair migration 006 first; content, snapshot, revision and public-document integrity checks are intentionally skipped until the publishing schema is complete.'
+      });
+    }
     const ready=checks.every(x=>x.severity!=='blocker'||x.ok);
     res.json({
       ready,
       checkedAt:new Date().toISOString(),
       schema:{
-        migrationApplied:!!migration.rows[0]?.applied,
+        migrationApplied,
         requiredColumns:requiredColumns.length,
         presentColumns:present.size,
         missingColumns,
-        revisionsTable:!!revisions.rows[0]?.table_name
+        revisionsTable,
+        schemaReady
       },
       content:{
         total:Number(stats.total)||0,
