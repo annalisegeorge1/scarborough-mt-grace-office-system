@@ -110,3 +110,97 @@ The following columns are staff-only and are not selected by `/api/public/conten
 - `verification_note`
 - review/verify/publish/archive actor IDs and timestamps
 - revision history
+
+
+## V243 Publishing QA
+
+V243 adds an authenticated, server-backed validation surface for the V242 publishing bridge.
+
+### GET `/api/content/publishing-readiness`
+Permission: `content.write`
+
+Returns:
+- whether migration `006_content_publishing_workflow.sql` is recorded
+- whether all required V242 publishing columns exist
+- whether `public_content_revisions` exists
+- workflow counts
+- count of active prior-version snapshots during revisions
+- integrity checks for:
+  - Published records without verification
+  - Archived records with an active public snapshot
+  - active snapshots missing payloads
+  - Published + Verified records missing a stable snapshot
+  - content-version / revision-history mismatches
+  - exposed documents that are not both Public and Approved
+- a `ready` boolean that is true only when all blocker checks pass
+
+This endpoint is authenticated staff-only. It does not expose resident information through the public API.
+
+### Staff Publishing QA page
+
+Protected page:
+- `/staff/publishing-qa.html`
+
+The page combines:
+- `/api/content/publishing-readiness`
+- `/api/health/readiness`
+- the authenticated content register
+- per-record preview/revision history
+
+It shows actual server/database evidence rather than a browser-only checklist.
+
+For a selected content record, it derives workflow evidence for:
+- Draft captured
+- review entered
+- source verified
+- Approved reached
+- Published reached
+- revision started
+- replacement republished
+- archived
+- restored to Draft
+
+It also links directly to the Publishing Desk and the record's resident-facing route.
+
+### Progress-history revision integrity
+
+V243 changes Activity Hub progress add/remove operations so they:
+- run transactionally
+- increment `public_content.version`
+- write `public_content_revisions` entries
+- preserve audit events
+- refresh the stable published snapshot when the parent record is currently Published + Verified
+
+Revision actions are recorded as:
+- `progress-add`
+- `progress-remove`
+
+This closes a V242 audit gap where public progress metadata could change without a matching content revision version.
+
+### Deployment smoke/preflight coverage
+
+`server/scripts/smoke-test.js` now checks:
+- public content API
+- unauthenticated Publishing Desk redirect
+- unauthenticated Publishing QA redirect
+- authenticated Publishing Desk
+- authenticated Publishing QA
+- authenticated publishing-readiness API
+
+Authenticated checks require the smoke-test account to have the relevant content permission.
+
+`server/scripts/preflight.js` now checks that:
+- Publishing Desk exists
+- Publishing QA exists
+- migration 006 exists in the deployment package
+
+### Certification boundary
+
+Publishing QA verifies application/database state. It does not independently prove:
+- DNS correctness
+- Cloudflare account state
+- Render account/billing state
+- successful backup restoration
+- human management authorization
+
+Those remain part of the separate Production Readiness and Go-Live controls.
