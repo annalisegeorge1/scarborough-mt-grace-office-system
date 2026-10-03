@@ -62,7 +62,7 @@ Permission: `content.publish`
 JSON:
 ```json
 {
-  "action": "submit-review | return-draft | approve | verify | unverify | publish | archive | restore",
+  "action": "submit-review | return-draft | approve | revise | verify | unverify | publish | archive | restore",
   "sourceReference": "optional source/reference used during verification",
   "note": "optional verification note"
 }
@@ -72,7 +72,7 @@ Controlled workflow:
 - Draft → In Review
 - In Review → Draft or Approved
 - Approved → Draft or Published
-- Published → Archived
+- Published → In Review (Start a revision) or Archived
 - Archived → Draft
 
 Verification is a separate gate. Publication requires:
@@ -81,6 +81,22 @@ Verification is a separate gate. Publication requires:
 - all publication blockers passing
 
 Restore intentionally clears verification so restored content is checked again before republication.
+
+### Stable published snapshot during revisions
+
+When controlled staff workflow moves a Published item into **Start a revision**:
+
+- the editable record moves to `In Review`
+- verification is cleared for the new revision
+- the last Published + Verified resident-facing payload remains active in `published_snapshot`
+- `/api/public/content`, RSS, and public document exposure continue to use that last published snapshot
+- internal notes, source references, verification notes, and revision history remain staff-only
+
+Publishing the approved replacement advances the snapshot atomically to the newly verified public payload.
+
+Archiving deliberately deactivates the published snapshot. Restoring an archived record returns it to Draft with the snapshot inactive, so staff must review, verify, and publish again before it becomes public.
+
+The legacy Website CMS remains backward-compatible in V242. The Publishing Desk is the preferred controlled editorial workflow; existing CMS save/override behavior is preserved so staff-side functions are not broken during the transition.
 
 ### Revision boundary
 
