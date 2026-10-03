@@ -155,30 +155,50 @@
   }
 
   function moveActiveCardIntoView(index){
-    if(!track||track.scrollWidth<=track.clientWidth+2)return;
+    if(!track)return;
     const step=steps[index];
     if(!step)return;
 
-    const max=Math.max(0,track.scrollWidth-track.clientWidth);
     const inset=10;
-    const desired=Math.max(0,Math.min(max,step.offsetLeft-inset));
-    if(Math.abs(track.scrollLeft-desired)<4)return;
+    autoTrackUntil=Date.now()+(reduce()?180:900);
 
-    autoTrackUntil=Date.now()+(reduce()?120:760);
+    // Measure against the visible rail rather than relying on offsetLeft.
+    // This is more reliable on Android/tablet layouts where nested positioned
+    // ancestors and scroll snapping can make offsetLeft misleading.
+    const move=()=>{
+      const trackRect=track.getBoundingClientRect();
+      const stepRect=step.getBoundingClientRect();
+      let delta=0;
 
-    // Use scrollLeft as the authoritative movement. Some Android/WebView
-    // combinations update the active stage but ignore element.scrollTo()
-    // when scroll snapping and smooth scrolling are both enabled.
-    track.scrollLeft=desired;
+      if(stepRect.left<trackRect.left+inset){
+        delta=stepRect.left-(trackRect.left+inset);
+      }else if(stepRect.right>trackRect.right-inset){
+        delta=stepRect.right-(trackRect.right-inset);
+      }
 
-    // Re-assert after layout/scroll-snap settles so the selected card,
-    // especially stage 4, cannot remain clipped off-screen.
+      if(Math.abs(delta)>2){
+        const max=Math.max(0,track.scrollWidth-track.clientWidth);
+        const desired=Math.max(0,Math.min(max,track.scrollLeft+delta));
+        track.scrollLeft=desired;
+      }
+    };
+
+    // Temporarily suspend snapping while the arrow-selected card is moved.
+    // Mandatory snap was preventing the final card from reaching the viewport
+    // on some tablet/mobile browsers.
+    const previousSnap=track.style.scrollSnapType;
+    const previousBehavior=track.style.scrollBehavior;
+    track.style.scrollSnapType="none";
+    track.style.scrollBehavior="auto";
+
+    move();
     requestAnimationFrame(()=>{
-      const currentStep=steps[index];
-      if(!currentStep)return;
-      const finalMax=Math.max(0,track.scrollWidth-track.clientWidth);
-      const finalLeft=Math.max(0,Math.min(finalMax,currentStep.offsetLeft-inset));
-      if(Math.abs(track.scrollLeft-finalLeft)>4)track.scrollLeft=finalLeft;
+      move();
+      window.setTimeout(()=>{
+        move();
+        track.style.scrollSnapType=previousSnap;
+        track.style.scrollBehavior=previousBehavior;
+      },90);
     });
   }
 
