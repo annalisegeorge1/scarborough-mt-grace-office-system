@@ -10,32 +10,32 @@
 <script src="production-client.js"></script>
 <style>
 :root{--dw-navy:#08263d;--dw-blue:#174f74;--dw-gold:#c9a34a;--dw-paper:#eef4f6;--dw-line:#d9e4e9;--dw-red:#984b46}
-body{background:var(--dw-paper);color:#17394e}.hero{padding:22px 24px 18px;background:linear-gradient(115deg,#061f33,#0b3553 66%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}
-.hero h1{margin:5px 0;font:500 31px Georgia,serif}.hero p{max-width:900px;color:#b8ccd6;font-size:12px;line-height:1.55}.eyebrow{font-size:8px;font-weight:900;letter-spacing:.14em;color:#d7c27c}.nav2{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.nav2 a{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.11);color:#d8e4e9;text-decoration:none;font-size:10px;font-weight:800}.nav2 a.active{background:#fff;color:#0b3553}
+body{background:var(--dw-paper);color:#17394e}.hero{width:min(1380px,calc(100% - 28px));margin:16px auto 0;padding:17px 19px;background:linear-gradient(115deg,#061f33,#0b3553 66%,#174f74);color:#fff;border-radius:14px;border-bottom:3px solid rgba(201,163,74,.7)}
+.hero h1{margin:4px 0 3px;font:500 27px Georgia,serif}.hero p{max-width:900px;margin:0;color:#b8ccd6;font-size:9px;line-height:1.45}.eyebrow{font-size:8px;font-weight:900;letter-spacing:.14em;color:#d7c27c}.nav2{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.nav2 a{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.11);color:#d8e4e9;text-decoration:none;font-size:10px;font-weight:800}.nav2 a.active{background:#fff;color:#0b3553}
 .shell{width:min(1380px,calc(100% - 28px));margin:18px auto 70px}.notice2{padding:11px 13px;border:1px solid #d8e5ea;border-left:4px solid var(--dw-gold);border-radius:10px;background:#fff;color:#5f7480;font-size:10px;line-height:1.5}
-.metrics2{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.metric2,.panel{background:#fff;border:1px solid var(--dw-line);border-radius:14px;box-shadow:0 9px 24px rgba(7,35,55,.045)}.metric2{padding:15px}.metric2 small{font-size:8px;font-weight:900;letter-spacing:.08em;color:#718690;text-transform:uppercase}.metric2 strong{display:block;margin-top:4px;color:#0b3553;font:600 25px Georgia,serif}.metric2 span{display:block;margin-top:4px;color:#7a8c96;font-size:8px;line-height:1.4}
+.metrics2{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:10px 0}.metric2,.panel{background:#fff;border:1px solid var(--dw-line);border-radius:14px;box-shadow:0 9px 24px rgba(7,35,55,.045)}.metric2{padding:11px 12px}.metric2 small{font-size:8px;font-weight:900;letter-spacing:.08em;color:#718690;text-transform:uppercase}.metric2 strong{display:block;margin-top:3px;color:#0b3553;font:600 21px Georgia,serif}.metric2 span{display:block;margin-top:4px;color:#7a8c96;font-size:8px;line-height:1.4}
 .panel{overflow:hidden}.head{padding:15px 16px 12px;border-bottom:1px solid #e9eff2}.head small{font-size:8px;font-weight:900;letter-spacing:.1em;color:#87691f}.head h2{margin:4px 0 3px;color:#0b3553;font:500 22px Georgia,serif}.head p{margin:0;color:#70848f;font-size:10px;line-height:1.45}
 .queuegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;padding:14px 15px}.queue{display:flex;flex-direction:column;min-height:135px;border:1px solid #dce6ea;border-radius:11px;background:#f9fbfc;padding:12px}.queue small{font-size:7px;font-weight:900;letter-spacing:.08em;color:#87691f}.queue strong{display:block;margin-top:5px;color:#0b3553;font:500 16px Georgia,serif}.queue span{display:block;margin-top:5px;color:#71858f;font-size:8px;line-height:1.45}.queue a{margin-top:auto;padding-top:10px;color:#31596f;text-decoration:none;font-size:8px;font-weight:900}.queue a:hover{text-decoration:underline}
 .toolbar2{display:flex;gap:7px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #e9eff2;background:#f9fbfc}.btn2{border:1px solid #d2dfe5;border-radius:8px;background:#fff;color:#31596f;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none}.btn2.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn2.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}
-@media(max-width:1050px){.metrics2{grid-template-columns:repeat(3,1fr)}.queuegrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.shell{width:calc(100% - 18px)}.hero{padding:18px 14px}.metrics2{grid-template-columns:1fr 1fr}.queuegrid{grid-template-columns:1fr}.nav2{overflow-x:auto;flex-wrap:nowrap}.nav2 a{white-space:nowrap}}
+@media(max-width:1050px){.metrics2{grid-template-columns:repeat(3,1fr)}.queuegrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.shell,.hero{width:calc(100% - 18px)}.hero{padding:15px 14px}.metrics2{grid-template-columns:1fr 1fr}.queuegrid{grid-template-columns:1fr}.nav2{overflow-x:auto;flex-wrap:nowrap}.nav2 a{white-space:nowrap}}
 </style>
 <link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head>
 <body>
 <header class="hero">
-  <span class="authline" data-auth>Checking session…</span>
-  <span class="eyebrow">V253 • DAILY OPERATIONS</span>
+  
+  <span class="eyebrow">V264 • DAILY OPERATIONS</span>
   <h1>Daily Workboard</h1>
   <p>A role-aware view of today’s operational workload, with direct routes into the authoritative workspaces where staff complete the work.</p>
-  <nav class="nav2" aria-label="Daily work navigation"><a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a class="active" aria-current="page" href="workflow.html">Daily Work</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="records.html">Records</a><a href="reports.html">Reports</a></nav>
 </header>
 <main class="shell">
   <div id="msg" class="notice2">Loading your live operational workload…</div>
   <section class="metrics2">
+    <article class="metric2"><small>Overdue attention</small><strong id="attentionOverdue">—</strong><span>Past-due work across accessible modules.</span></article>
+    <article class="metric2"><small>Due today</small><strong id="attentionToday">—</strong><span>Cross-module attention due today.</span></article>
     <article class="metric2"><small>Open cases</small><strong id="casesOpen">—</strong><span>Current resident case workload.</span></article>
-    <article class="metric2"><small>Overdue case follow-ups</small><strong id="casesOverdue">—</strong><span>Case follow-ups requiring attention.</span></article>
     <article class="metric2"><small>Open applications</small><strong id="applicationsOpen">—</strong><span>Applications/referrals still in progress.</span></article>
     <article class="metric2"><small>Open field activity</small><strong id="fieldOpen">—</strong><span>Field work not yet closed.</span></article>
-    <article class="metric2"><small>Upcoming appointments</small><strong id="recordsReview">—</strong><span>Scheduled work from today forward.</span></article>
+    <article class="metric2"><small>Meeting actions</small><strong id="meetingActions">—</strong><span>Open follow-up from central Meetings.</span></article>
   </section>
 
   <section class="panel">
@@ -48,6 +48,7 @@ body{background:var(--dw-paper);color:#17394e}.hero{padding:22px 24px 18px;backg
       <article class="queue"><small>COMMUNITY</small><strong>Community matters</strong><span>Open community issues, partners and local initiatives.</span><a href="community.html">OPEN COMMUNITY →</a></article>
       <article class="queue"><small>RECOVERY</small><strong>Resident feedback</strong><span>Complaints, service recovery and unresolved resident experience matters.</span><a href="feedback.html">OPEN FEEDBACK →</a></article>
       <article class="queue"><small>EVENTS</small><strong>Upcoming events</strong><span>Town halls, outreach and scheduled community activity.</span><a href="events.html">OPEN EVENTS →</a></article>
+      <article class="queue"><small>MEETINGS</small><strong>Decisions & actions</strong><span>Meeting records, attendance, decisions and assigned follow-up.</span><a href="meetings.html">OPEN MEETINGS →</a></article>
       <article class="queue"><small>ATTENTION</small><strong>Reminders</strong><span>Controlled reminders and follow-up attention scanning.</span><a href="automation.html">OPEN ATTENTION CENTRE →</a></article>
     </div>
     <div class="toolbar2"><button class="btn2 primary" id="refresh" type="button">Refresh workload</button><a class="btn2 gold" href="reports.html">Open full reports</a><a class="btn2" href="index.html">Case workspace</a></div>
@@ -60,12 +61,13 @@ async function load(){
   $('msg').textContent='Refreshing live workload…';
   try{
     const d=await SMG.api('/api/today'),s=d.summary||{};
+    $('attentionOverdue').textContent=s.attentionOverdue??0;
+    $('attentionToday').textContent=s.attentionDueToday??0;
     $('casesOpen').textContent=s.casesOpen??0;
-    $('casesOverdue').textContent=s.casesOverdue??0;
     $('applicationsOpen').textContent=d.permissions?.applications?(s.applicationsOpen??0):'—';
     $('fieldOpen').textContent=d.permissions?.field?(s.fieldOpen??0):'—';
-    $('recordsReview').textContent=d.permissions?.appointments?(s.upcomingAppointments??0):'—';
-    $('msg').textContent='Role-aware workload refreshed at '+new Date().toLocaleString('en-TT')+'. Use the queue cards below to work in the authoritative module.';
+    $('meetingActions').textContent=d.permissions?.community?(s.meetingActionsOpen??0):'—';
+    $('msg').textContent='Unified operational workload refreshed at '+new Date().toLocaleString('en-TT')+'. Use the queue cards below to work in the authoritative module.';
   }catch(e){
     $('msg').textContent='Live workload could not be loaded: '+e.message;
   }
