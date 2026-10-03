@@ -94,6 +94,7 @@ function renderHealth(){
     ['Private storage',!!checks.privateStorage,'Private upload storage'],
     ['Malware scanner',!!checks.malwareScanner,'Upload malware scanning'],
     ['Resident profile schema',!!checks.residentProfiles,'Resident Profiles and cases.resident_id are available'],
+    ['Central Meetings schema',!!checks.meetingOperations,'Meetings, attendance, actions and timeline tables are available'],
     ['Direct API isolation',!!checks.directApiIsolation,'Sensitive resident/revision tables have no direct anon/authenticated grants']
   ];
   $('server-checks').innerHTML=rows.map(([label,ok,detail])=>'<article class="check '+(ok?'':'bad')+'"><span class="mark">'+(ok?'✓':'!')+'</span><span><strong>'+esc(label)+'</strong><p>'+esc(detail)+'</p></span><span class="severity">'+(ok?'pass':'blocker')+'</span></article>').join('');
