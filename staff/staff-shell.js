@@ -92,7 +92,7 @@ function hydrateUser(session){
 }
 function triggerRequestedCreate(file){
   const mode=new URLSearchParams(location.search).get('new');if(!mode)return;
-  const ids={'residents.html':'newResident','applications.html':'new','correspondence.html':'new','field.html':'new','records.html':'new','events.html':'new','community.html':'addMatter'};
+  const ids={'residents.html':'newResident','applications.html':'new','correspondence.html':'new','field.html':'new','records.html':'new','events.html':'new','community.html':'openMatterForm'};
   const id=ids[file];if(!id)return;
   setTimeout(()=>document.getElementById(id)?.click(),250);
 }
