@@ -18,9 +18,16 @@ router.get('/readiness',async(req,res)=>{
     sessionIdlePolicy:config.sessionIdleMinutes>=5&&config.sessionIdleMinutes<=120,
     sessionAbsolutePolicy:config.sessionAbsoluteHours>=1&&config.sessionAbsoluteHours<=24,
     privateStorage:!config.uploadsEnabled||storage.readiness(),
-    malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured()
+    malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured(),
+    residentProfiles:false
   };
-  try{await db.query('SELECT 1');checks.database=true;}catch{}
+  try{
+    await db.query('SELECT 1');checks.database=true;
+    const rp=await db.query(`SELECT
+      to_regclass('public.residents') IS NOT NULL residents_table,
+      EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='cases' AND column_name='resident_id') resident_id_column`);
+    checks.residentProfiles=!!(rp.rows[0]?.residents_table&&rp.rows[0]?.resident_id_column);
+  }catch{}
   const ready=Object.values(checks).every(Boolean);
   res.status(ready?200:503).json({
     ready,
