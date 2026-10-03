@@ -371,7 +371,7 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     overflow-x:auto;
     overflow-y:hidden;
     overscroll-behavior-x:contain;
-    scroll-snap-type:x mandatory;
+    scroll-snap-type:x proximity;
     scrollbar-width:none;
     -webkit-overflow-scrolling:touch;
     scroll-padding-inline:10px;
@@ -396,7 +396,6 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     border-radius:12px;
     background:rgba(255,255,255,.48);
     scroll-snap-align:start;
-    scroll-snap-stop:always;
     transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
   }
 
