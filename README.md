@@ -1,134 +1,119 @@
-# Scarborough / Mt. Grace District Office Service System — V263
+# Scarborough / Mt. Grace District Office Service System — V264
 
-**Current status: controlled pre-launch / staging candidate**
+**Current status: consolidation / staging candidate**
 
-V263 replaces the old browser-only Meetings training page with a responsive, central, audited Meetings workspace.
+V264 begins the deliberate consolidation phase: fewer disconnected dashboards, stronger workflow integration, and a clearer daily operating path.
 
-## Why this release was necessary
+## Consolidation direction
 
-Live tablet screenshots exposed two problems:
+The intended staff flow is now:
 
-1. portrait mode was rendering the old Meetings page like a squeezed desktop canvas, leaving a large unused area and making the form difficult to use;
-2. Meetings was still stored only in browser localStorage, unlike the newer server-backed Community and Events modules.
+**Today → record/workspace → action → follow-up → evidence → close/report**
 
-V263 fixes both together.
+V264 focuses specifically on the first step: **Today**.
 
-## Central Meetings data model
+## Unified office attention
 
-New migration:
+`GET /api/today` now builds one normalized attention queue across the modules the signed-in role is allowed to use.
 
-- `009_meeting_operations.sql`
+The queue can include:
+- resident case follow-ups
+- applications/referrals due for follow-up
+- field visits/activity due or already scheduled
+- community matter follow-ups
+- central Meeting action items
+- resident feedback where follow-up has been requested
 
-It adds:
+The underlying modules remain authoritative. Today does not duplicate editing logic.
 
-- `meetings`
-- `meeting_attendance`
-- `meeting_actions`
-- `meeting_timeline`
+## Attention priority
 
-Meeting references use the format:
+The queue is ordered:
 
-- `SMG-MTG-YYYY-00001`
+1. overdue
+2. due today
+3. undated items explicitly requiring attention
+4. future/upcoming items where applicable
 
-The migration has been applied to the connected Supabase project and recorded in the application's `public.schema_migrations` ledger.
+Role restrictions still apply. Field Officers remain limited to the operational records already scoped to them by existing RBAC/query rules.
 
-## Meetings API
+## Staff Home
 
-New authenticated Community Operations endpoints include:
+`/staff/home.html` now shows:
+- **Overdue work** across accessible modules
+- **Due today** across accessible modules
+- Open cases
+- Upcoming appointments
+- Open applications
+- Open field work
+- Community follow-ups
+- Open meeting actions
+- Open feedback
+- Urgent/high-priority cases
 
-- `GET /api/ops/meetings`
-- `POST /api/ops/meetings`
-- `GET /api/ops/meetings/:id`
-- `PATCH /api/ops/meetings/:id`
-- attendance add/remove
-- action add/update/remove
-- timeline updates
+The main Home panel is now:
 
-The API uses the existing `community.write` permission.
+**What needs action now**
 
-Changes are recorded through the server audit log.
+rather than a Case-only attention list.
 
-Meeting records themselves are not given a casual hard-delete control; staff close or cancel records instead.
+Each attention item identifies its source module and routes staff into the authoritative workspace.
 
-## Meetings workspace
+## Meeting-action deep links
 
-`/staff/meetings.html` is now organized into:
+Today can link directly to:
 
-- Meeting register
-- Meeting editor
-- Attendance & actions
-- Timeline
+`meetings.html?meeting=<id>&tab=manage`
 
-The register is the default view.
+The Meetings workspace now accepts those query parameters and opens the selected meeting directly in the requested operational tab.
 
-The page preserves the richer meeting fields:
-- meeting type
-- status
-- title
-- area/community
-- date and start time
-- venue
-- lead/chair
-- minute taker
-- linked record type/reference
-- purpose/objective
-- agenda
-- internal minutes
-- decisions/commitments
-- resident-safe public outcome summary
-- next follow-up
+This removes the previous extra step of opening Meetings and searching again.
 
-## Privacy split
+## Daily Workboard
 
-Attendance names and internal minutes remain staff-only records.
+The Daily Workboard now uses the same cross-module Today summary.
 
-The public/resident-safe outcome summary remains a separate field and is not automatically published. Public release still belongs to the Website CMS / publishing workflow.
+Its top metrics are:
+- overdue attention
+- due today
+- open cases
+- open applications
+- open field activity
+- open meeting actions
 
-## Responsive behavior
+The duplicate legacy auth/header navigation has been removed from the page.
 
-The old fixed desktop grid and legacy navigation have been removed.
+The Workboard remains a routing/overview surface rather than a second editing system.
 
-On tablet/mobile:
-- the page uses the full available viewport
-- metrics collapse from 6 to 3 to 2 columns
-- register cards replace the oversized desktop table
-- editor fields collapse from four columns to two and then one
-- attendance/actions become stacked panels
-- the tab bar scrolls horizontally rather than shrinking the content canvas
+## Legacy/consolidation audit
 
-## Quick Create
+At the start of this phase, repository-wide searches no longer found the broad legacy patterns targeted earlier:
+- old V159 global navigation
+- old duplicate auth-line markup
+- old hero-nav/nav2 patterns in the audited search pass
+- browser-local meeting storage has already been replaced by V263 central Meetings
 
-The shared **+ New** menu now includes:
-
-- New meeting
-
-which opens the Meeting editor directly.
-
-## Readiness
-
-`/api/health/readiness` now includes:
-
-- `meetingOperations`
-
-It passes only when all four central meeting tables are present.
-
-System Administration, Production Control and Release Control display **Central Meetings schema** explicitly.
+The focus can therefore move from wholesale legacy removal toward integration, consistency and operational reliability.
 
 ## Verification
 
-Preflight now checks:
-- Meetings workspace
-- migration 009
+Source validation confirms:
+- Today API JavaScript parses
+- Staff Home inline JavaScript parses
+- Daily Workboard inline JavaScript parses
+- Meetings deep-link JavaScript parses
 
-Smoke testing now checks:
-- unauthenticated Meetings redirect
-- authenticated Meetings page
-- authenticated Meetings API when the smoke role has Community write access
+Authenticated smoke testing now validates the Today response structure itself and requires:
+- an `attention` array
+- `summary.attentionOverdue`
+- `summary.attentionDueToday`
+
+rather than checking HTTP status alone.
 
 ## Backend release identity
 
-The server package version is now `263.0.0`.
+The server package version is now `264.0.0`.
 
 ## Production boundary
 
-V263 moves Meetings into durable central storage and improves tablet usability. It does not publish internal minutes or attendance, broaden role access, or constitute production authorization.
+V264 consolidates operational attention. It does not broaden role access, move authority away from the underlying modules, publish confidential records, or constitute final production authorization.
