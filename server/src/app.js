@@ -13,6 +13,7 @@ const automationRoutes=require('./routes/automation');
 const qualityRoutes=require('./routes/quality');
 const workspaceRoutes=require('./routes/workspace');
 const reportRoutes=require('./routes/reports');
+const todayRoutes=require('./routes/today');
 const auditRoutes=require('./routes/audit');
 const searchRoutes=require('./routes/search');
 const contentRoutes=require('./routes/content');
@@ -65,6 +66,7 @@ app.use('/api/automation',requireCsrf,automationRoutes);
 app.use('/api/quality',requireCsrf,qualityRoutes);
 app.use('/api/workspaces',requireCsrf,workspaceRoutes);
 app.use('/api/reports',requireCsrf,reportRoutes);
+app.use('/api/today',requireCsrf,todayRoutes);
 
 const staticOpts={dotfiles:'deny',etag:true,maxAge:config.production?'1h':0,index:false};
 app.use('/assets',express.static(path.join(config.staticRoot,'assets'),staticOpts));
