@@ -84,6 +84,7 @@ async function load(){
     ['Malware scanner',!!c.malwareScanner,'Upload scanning policy is satisfied.'],
     ['Resident profile schema',!!c.residentProfiles,'Resident Profiles migration and case linkage are available.'],
     ['Central Meetings schema',!!c.meetingOperations,'Meetings, attendance, actions and timeline tables are available.'],
+    ['Evidence link schema',!!c.evidenceLinks,'Reusable document-to-work evidence links are available.'],
     ['Direct API isolation',!!c.directApiIsolation,'Sensitive resident/revision tables are not granted directly to Supabase anon/authenticated roles.'],
     ['Publishing integrity',publishOk,publishOk?'Publishing checks pass.':(blockers?blockers+' blocker(s) reported.':'Evidence unavailable.')]
   ];
