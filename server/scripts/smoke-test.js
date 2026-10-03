@@ -40,6 +40,8 @@ await check('Protected New Case redirects','/staff/new-case.html',[302]);
 await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
+await check('Protected Management Reports redirects','/staff/reports.html',[302]);
+await check('Protected Management Briefing redirects','/staff/briefing.html',[302]);
 await check('Protected Community Operations redirects','/staff/community.html',[302]);
 await check('Protected Events and Volunteers redirects','/staff/events.html',[302]);
 await check('Protected Meetings redirects','/staff/meetings.html',[302]);
@@ -108,6 +110,16 @@ if(email&&password){
     await check('Authenticated Release Control','/staff/readiness.html');
     await check('Authenticated Go-Live Control','/staff/go-live.html');
     await check('Management summary API','/api/reports/summary');
+    if(d.permissions.includes('*')||d.permissions.includes('reports.read')){
+      await check('Authenticated Management Reports','/staff/reports.html');
+      await check('Authenticated Management Briefing','/staff/briefing.html');
+      try{
+        const mr=await req('/api/reports/management'),md=mr.ok?await mr.json():{};
+        const managementOk=mr.ok&&md.headline&&Array.isArray(md.caseStatuses)&&Array.isArray(md.closureReasons)&&Array.isArray(md.categories)&&Array.isArray(md.sixMonthTrend)&&Array.isArray(md.ownerWorkload);
+        console.log(`${managementOk?'PASS':'FAIL'} — Central management outcomes API: ${mr.status}`);
+        if(!managementOk)failures++;
+      }catch(e){console.log('FAIL — Central management outcomes API: '+e.message);failures++;}
+    }
     await check('Publishing readiness API','/api/content/publishing-readiness');
     try{
       const residentsR=await req('/api/residents'),residentsD=residentsR.ok?await residentsR.json():{};
