@@ -1,0 +1,38 @@
+Scarborough / Mt. Grace District Office — V257
+
+DATABASE / RESIDENT DATA HARDENING
+
+1. Migration 008
+- Added operational indexes supporting Resident Profiles, Case Workspace, Today dashboard and Field Officer queries.
+- Hardened next_resident_reference() search_path.
+- Applied successfully to the connected Supabase project.
+- Recorded in public.schema_migrations so Render will not reapply it.
+
+2. Supabase verification
+- Project status: ACTIVE_HEALTHY.
+- Migration 007 present.
+- Migration 008 present.
+- Existing case has a resident_id.
+- Existing resident/case counts reconcile.
+
+3. Advisor results
+- Mutable function search_path warning cleared.
+- Unindexed foreign-key findings reduced from 51 to 42.
+
+4. Direct API isolation
+- anon/authenticated have no direct resident SELECT/INSERT/UPDATE access.
+- anon/authenticated also lack direct read/write grants to public_content_revisions.
+- /api/health/readiness now exposes directApiIsolation.
+
+5. Staff diagnostics
+System Administration, Production Control and Release Control display:
+- Resident profile schema
+- Direct API isolation
+
+6. RLS warning
+Supabase still reports RLS disabled on residents and public_content_revisions.
+This is not auto-remediated because enabling RLS/policies is an explicit access-policy decision.
+The server-only design currently depends on no direct anon/authenticated grants.
+
+7. Release identity
+Backend version advanced to 257.0.0.
