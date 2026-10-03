@@ -1,0 +1,211 @@
+Scarborough / Mt. Grace District Office — V237
+
+CIVIC FLOW
+
+V237 continues the coherence strategy introduced in V235/V236.
+
+GOAL
+Give the homepage, Community, Forms and Updates the same resident-facing action rhythm without adding another isolated tool.
+
+The common model is:
+Discover / Understand / Act / Follow
+
+Each route expresses that model using language appropriate to the task.
+
+1. Homepage flow
+The homepage receives a compact “Digital front door” Civic Flow after Resident Start.
+
+Stages:
+- Services
+- Forms
+- Updates
+- Contact
+
+The flow is intentionally compact and does not create another large hero.
+
+2. Community flow
+Community uses:
+- See
+- Follow
+- Participate
+- Explore
+
+Destinations:
+- Activity Hub
+- Projects & Progress
+- Community Engagement
+- Gallery
+
+3. Forms flow
+Forms & Portals uses:
+- Choose
+- Find
+- Send
+- Track
+
+Destinations:
+- Portal Hub
+- Service Forms
+- Enquiry
+- Resident Tracker
+
+4. Updates flow
+Updates & Information uses:
+- Latest
+- Activity
+- Progress
+- Plans
+
+Destinations:
+- Live Updates
+- Activity Hub
+- Projects & Progress
+- Public Plans
+
+5. Old focused action deck consolidation
+On Community, Forms and Updates:
+- the older V204 four-card action deck is hidden
+- V237 becomes the primary route action sequence
+
+The underlying V204 route configuration remains untouched.
+Office, Services and Contact retain their own current behavior.
+
+6. Services preservation
+V235 Resident Service Workspace remains authoritative on /services/.
+
+V237 explicitly does not run as a focused-route flow on Services.
+
+7. Active stage tracking
+On Community, Forms and Updates:
+- IntersectionObserver tracks relevant content sections
+- current stage receives aria-current="step"
+- completed stages receive a completed state
+- progress line advances across the four-stage sequence
+- stage indicator updates from Stage 1 of 4 through Stage 4 of 4
+
+8. Same-page navigation
+Civic Flow section links:
+- use smooth scrolling unless reduced motion is preferred
+- update the URL hash
+- reuse V222 destination highlighting
+- expand V208/V209 secondary sections first when necessary
+
+9. Homepage behavior
+Homepage stages link to focused public routes rather than creating duplicate homepage sections.
+
+10. Footer prompts
+Each flow retains one small secondary route:
+Homepage -> Resident Services
+Community -> Enquiry
+Forms -> Resident Guide
+Updates -> Community
+
+11. Responsive design
+Desktop:
+- four equal stages
+- connected visual progress line
+
+Tablet/mobile:
+- stages become a horizontal snap rail
+- no four-card vertical stack
+- current state remains readable
+- header becomes more compact
+
+12. Visual language
+V237 uses:
+- navy civic base
+- route-specific Community / Forms / Updates accents
+- restrained brass progression line
+- editorial heading typography
+- compact functional sans-serif text
+
+13. Dark mode
+Full dark-mode styling is included for:
+- header
+- active stage
+- completed stages
+- progress track
+- footer
+- mobile cards
+
+14. Accessibility
+Includes:
+- nav landmark
+- route/action labels
+- aria-live stage indicator
+- aria-current on active stage
+- keyboard-accessible links
+- reduced-motion behavior
+
+15. Privacy / data
+V237:
+- performs no fetch/API request
+- uses no localStorage
+- uses no sessionStorage
+- reads no resident form fields
+- writes no resident information
+- performs no POST/PATCH/DELETE
+
+16. Preservation
+No changes to:
+- staff CMS
+- authentication
+- publishing / verification
+- public content endpoint
+- enquiry submission
+- resident tracker
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness
+- V229 PWA/service worker
+- V231 Service Intelligence
+- V232–V234 layout corrections
+- V235 Resident Service Workspace
+- V236 focused-route coherence
+
+17. QA
+Passed:
+- V237 JavaScript syntax
+- server JavaScript syntax
+- CSS brace balance
+- CSS/JS injection
+- V237 CSS loads after V236
+- V237 JS loads after V235
+- Home route present
+- Community route present
+- Forms route present
+- Updates route present
+- Services focused route excluded
+- legacy action deck consolidation present
+- four-stage desktop layout present
+- active-stage IntersectionObserver present
+- aria-current state present
+- progress state present
+- V208/V209 reveal behavior present
+- V222 highlight reuse present
+- homepage placement present
+- Community stage sequence present
+- Forms stage sequence present
+- Updates stage sequence present
+- tablet/mobile swipe rail present
+- dark mode present
+- print suppression present
+- no fetch
+- no browser storage
+- no write request
+- no resident-field access
+
+Files added:
+- assets/district-civic-flow-v237.css
+- assets/district-civic-flow-v237.js
+- V237_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V237 is a source-level coherence release. A fresh deployed screenshot pass remains the final visual confirmation.

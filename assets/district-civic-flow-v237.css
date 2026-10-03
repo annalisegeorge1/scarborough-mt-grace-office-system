@@ -1,0 +1,410 @@
+/* Scarborough / Mt. Grace District Office — V237
+   Civic Flow
+   Unifies Home, Community, Forms and Updates around one four-stage public action
+   language. Replaces older focused-route action decks on selected routes. */
+
+:root{
+  --v237-navy:#0b3553;
+  --v237-blue:#174f74;
+  --v237-teal:#2b7569;
+  --v237-brass:#a78f5e;
+  --v237-line:rgba(11,46,72,.10);
+}
+
+/* Selected focused routes use Civic Flow instead of the older four-card deck. */
+body[data-district-view="community"] .v204-action-deck,
+body[data-district-view="forms"] .v204-action-deck,
+body[data-district-view="updates"] .v204-action-deck{
+  display:none!important;
+}
+
+.v237-flow{
+  --v237-accent:#174f74;
+  --v237-accent-soft:#edf4f7;
+  --v237-progress:0%;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--v237-line);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 96% 0,rgba(216,199,160,.07),transparent 10rem),
+    linear-gradient(145deg,#fff,#f6f9fa);
+  box-shadow:0 10px 28px rgba(7,35,55,.05);
+}
+
+body[data-district-view="community"] .v237-flow{
+  --v237-accent:#2b7569;
+  --v237-accent-soft:#eef7f4;
+}
+body[data-district-view="forms"] .v237-flow{
+  --v237-accent:#4c5f8e;
+  --v237-accent-soft:#f0f2f8;
+}
+body[data-district-view="updates"] .v237-flow{
+  --v237-accent:#6c5d82;
+  --v237-accent-soft:#f2f0f6;
+}
+body:not(.v203-focused-view) .v237-flow{
+  --v237-accent:#174f74;
+  --v237-accent-soft:#edf4f7;
+}
+
+.v237-flow-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding:13px 15px 10px;
+  border-bottom:1px solid rgba(11,46,72,.07);
+}
+
+.v237-flow-head-copy small{
+  display:block;
+  color:#8a7448;
+  font:900 6.2px/1 system-ui;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.v237-flow-head-copy strong{
+  display:block;
+  margin-top:4px;
+  color:#123f59;
+  font:600 17px/1.15 Georgia,"Times New Roman",serif;
+}
+
+.v237-flow-head-copy span{
+  display:block;
+  margin-top:3px;
+  color:#6f8590;
+  font:650 7.6px/1.4 system-ui;
+}
+
+.v237-flow-state{
+  flex:0 0 auto;
+  min-height:27px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:0 8px;
+  border:1px solid color-mix(in srgb,var(--v237-accent) 18%,transparent);
+  border-radius:999px;
+  background:var(--v237-accent-soft);
+  color:var(--v237-accent);
+  font:850 6.2px/1 system-ui;
+  white-space:nowrap;
+}
+
+.v237-flow-state:before{
+  content:"";
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--v237-accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--v237-accent) 10%,transparent);
+}
+
+.v237-flow-track{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.v237-flow-track:before{
+  content:"";
+  position:absolute;
+  left:12.5%;
+  right:12.5%;
+  top:24px;
+  height:2px;
+  border-radius:999px;
+  background:#dfe8eb;
+  z-index:0;
+}
+
+.v237-flow-track:after{
+  content:"";
+  position:absolute;
+  left:12.5%;
+  top:24px;
+  width:var(--v237-progress);
+  max-width:75%;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--v237-accent),#a78f5e);
+  z-index:1;
+  transition:width .22s ease;
+}
+
+.v237-flow-step{
+  position:relative;
+  z-index:2;
+  min-width:0;
+  min-height:100px;
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  justify-items:start;
+  gap:6px;
+  padding:13px 12px 12px;
+  border:0;
+  border-left:1px solid rgba(11,46,72,.065);
+  background:transparent;
+  color:#173f58;
+  text-align:left;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.v237-flow-step:first-child{border-left:0}
+
+.v237-flow-step:hover,
+.v237-flow-step:focus-visible{
+  background:rgba(255,255,255,.68);
+  outline:none;
+}
+
+.v237-flow-num{
+  width:24px;height:24px;
+  display:grid;place-items:center;
+  border:1px solid rgba(11,46,72,.12);
+  border-radius:50%;
+  background:#fff;
+  color:#7b8f99;
+  box-shadow:0 0 0 4px #f6f9fa;
+  font:900 6.5px/1 system-ui;
+}
+
+.v237-flow-step.is-active .v237-flow-num,
+.v237-flow-step[aria-current="step"] .v237-flow-num{
+  border-color:var(--v237-accent);
+  background:var(--v237-accent);
+  color:#fff;
+  box-shadow:0 0 0 4px var(--v237-accent-soft);
+}
+
+.v237-flow-step.is-complete .v237-flow-num{
+  border-color:#2b7569;
+  background:#2b7569;
+  color:#fff;
+}
+
+.v237-flow-step strong{
+  color:#173f58;
+  font:850 9px/1.25 system-ui;
+}
+
+.v237-flow-step small{
+  color:#738993;
+  font:650 7.1px/1.38 system-ui;
+}
+
+.v237-flow-step.is-active strong,
+.v237-flow-step[aria-current="step"] strong{
+  color:var(--v237-accent);
+}
+
+.v237-flow-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:36px;
+  padding:7px 12px 8px;
+  border-top:1px solid rgba(11,46,72,.065);
+  background:rgba(247,250,251,.72);
+}
+
+.v237-flow-foot span{
+  color:#7b909a;
+  font:700 6.7px/1.35 system-ui;
+}
+
+.v237-flow-foot a{
+  color:var(--v237-accent);
+  text-decoration:none;
+  font:850 6.8px/1 system-ui;
+  white-space:nowrap;
+}
+
+.v237-flow-foot a:hover,
+.v237-flow-foot a:focus-visible{
+  color:#8a7448;
+  text-decoration:underline;
+  outline:none;
+}
+
+/* Home placement: a slim civic gateway immediately after the resident-start
+   section, not another full hero. */
+body:not(.v203-focused-view) .v237-flow{
+  width:min(1460px,calc(100% - 40px));
+  margin:18px auto 22px;
+}
+
+/* Focused routes: align with the V204 main column. */
+body.v203-focused-view .v237-flow{
+  width:100%;
+  max-width:none;
+}
+
+/* Dark mode */
+body.v112-dark .v237-flow{
+  border-color:rgba(255,255,255,.08);
+  background:
+    radial-gradient(circle at 96% 0,rgba(216,199,160,.055),transparent 10rem),
+    linear-gradient(145deg,#0a2638,#102f42);
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+
+body.v112-dark .v237-flow-head,
+body.v112-dark .v237-flow-foot{
+  border-color:rgba(255,255,255,.07);
+}
+body.v112-dark .v237-flow-head-copy small{color:#dfc98f}
+body.v112-dark .v237-flow-head-copy strong{color:#fff}
+body.v112-dark .v237-flow-head-copy span{color:#abc0ca}
+body.v112-dark .v237-flow-state{
+  border-color:rgba(216,199,160,.15);
+  background:#173a4e;
+  color:#d8c7a0;
+}
+body.v112-dark .v237-flow-state:before{background:#d8c7a0}
+body.v112-dark .v237-flow-track:before{background:#244458}
+body.v112-dark .v237-flow-step{
+  border-color:rgba(255,255,255,.065);
+  color:#e8f0f3;
+}
+body.v112-dark .v237-flow-step:hover,
+body.v112-dark .v237-flow-step:focus-visible{
+  background:rgba(255,255,255,.03);
+}
+body.v112-dark .v237-flow-num{
+  border-color:rgba(255,255,255,.11);
+  background:#123247;
+  color:#aec1ca;
+  box-shadow:0 0 0 4px #0f2d40;
+}
+body.v112-dark .v237-flow-step strong{color:#eef5f7}
+body.v112-dark .v237-flow-step small{color:#a9bec8}
+body.v112-dark .v237-flow-step.is-active strong,
+body.v112-dark .v237-flow-step[aria-current="step"] strong{color:#e4d4aa}
+body.v112-dark .v237-flow-step.is-active .v237-flow-num,
+body.v112-dark .v237-flow-step[aria-current="step"] .v237-flow-num{
+  border-color:#d8c7a0;
+  background:#d8c7a0;
+  color:#0b3553;
+  box-shadow:0 0 0 4px rgba(216,199,160,.08);
+}
+body.v112-dark .v237-flow-foot{background:rgba(5,28,43,.34)}
+body.v112-dark .v237-flow-foot span{color:#9fb5bf}
+body.v112-dark .v237-flow-foot a{color:#d8c7a0}
+
+/* Tablet/mobile: retain four stages in one swipe rail instead of stacking. */
+@media(max-width:900px){
+  .v237-flow{
+    border-radius:17px;
+  }
+
+  .v237-flow-head{
+    padding:11px 12px 9px;
+  }
+
+  .v237-flow-head-copy strong{
+    font-size:15px;
+  }
+
+  .v237-flow-head-copy span{
+    display:none;
+  }
+
+  .v237-flow-state{
+    min-height:25px;
+    font-size:5.8px;
+  }
+
+  .v237-flow-track{
+    display:flex;
+    grid-template-columns:none;
+    gap:7px;
+    padding:10px 10px 11px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .v237-flow-track::-webkit-scrollbar{display:none}
+
+  .v237-flow-track:before,
+  .v237-flow-track:after{
+    display:none;
+  }
+
+  .v237-flow-step{
+    flex:0 0 min(205px,72vw);
+    min-height:86px;
+    grid-template-columns:26px minmax(0,1fr);
+    grid-template-rows:auto 1fr;
+    align-items:start;
+    gap:5px 8px;
+    padding:10px;
+    border:1px solid rgba(11,46,72,.08);
+    border-radius:12px;
+    background:rgba(255,255,255,.48);
+    scroll-snap-align:start;
+  }
+
+  .v237-flow-step .v237-flow-num{
+    grid-column:1;
+    grid-row:1/3;
+  }
+
+  .v237-flow-step strong{
+    grid-column:2;
+    grid-row:1;
+  }
+
+  .v237-flow-step small{
+    grid-column:2;
+    grid-row:2;
+  }
+
+  body.v112-dark .v237-flow-step{
+    border-color:rgba(255,255,255,.07);
+    background:rgba(255,255,255,.025);
+  }
+
+  .v237-flow-foot{
+    padding-inline:11px;
+  }
+
+  body:not(.v203-focused-view) .v237-flow{
+    width:calc(100% - 24px);
+    margin:14px auto 18px;
+  }
+}
+
+@media(max-width:520px){
+  .v237-flow-head{
+    grid-template-columns:1fr;
+  }
+
+  .v237-flow-state{
+    display:none;
+  }
+
+  .v237-flow-step{
+    flex-basis:min(190px,78vw);
+  }
+
+  .v237-flow-foot span{
+    max-width:68%;
+  }
+}
+
+@media print{
+  .v237-flow{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v237-flow-track:after{transition:none!important}
+}
