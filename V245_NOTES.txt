@@ -1,0 +1,93 @@
+Scarborough / Mt. Grace District Office — V245
+
+UNIFIED RELEASE CONTROL
+
+V245 consolidates pre-launch evidence without changing resident workflows, staff case-management behavior, publishing transitions, authentication rules or public-content exposure.
+
+1. Release Control
+staff/readiness.html is upgraded from a local-only checklist into a unified pre-launch control surface.
+
+It now shows:
+- live server readiness from /api/health/readiness
+- live publishing integrity from /api/content/publishing-readiness
+- the existing twelve administrative launch gates
+- a single release posture that remains explicitly pre-launch
+
+2. Separation of evidence
+Automated technical evidence and human/IT approval remain separate.
+
+The page never treats a checkbox as proof that a control has been configured, and it never grants production authorization.
+
+3. Existing checklist continuity
+V245 preserves the existing localStorage key:
+- smg_v146_readiness
+
+This keeps the Go-Live page and any previously recorded administrative checks compatible.
+
+4. Server evidence
+The Release Control page surfaces:
+- database readiness
+- production HTTPS origin
+- private storage readiness
+- malware-scanner readiness when uploads require it
+
+5. Publishing evidence
+The Release Control page reuses V243/V244 server-backed checks for:
+- migration registry and migration 006
+- required publishing columns
+- revision table
+- verified publishing state
+- stable public snapshots
+- revision parity
+- controlled public documents
+- valid snapshot document identifiers
+
+Detailed diagnosis remains available in Publishing QA.
+
+6. Release posture
+The page distinguishes:
+- Pre-launch
+- Technical gates pass
+
+Even when all automated checks pass and all twelve administrative items are checked, the page states that THA IT and management authorization is still required.
+
+7. Evidence export
+Staff can export one JSON evidence package containing:
+- generation time
+- server readiness response
+- publishing readiness response
+- twelve administrative gates and their state
+- explicit pre-launch / no-authorization boundary
+
+8. Data-safety boundary
+Until the external production review is complete:
+- system remains pre-launch
+- synthetic/test data only
+- no assumption that Render, Cloudflare, DNS, TLS, backups or production account ownership have been certified merely because source checks pass
+
+9. Smoke coverage
+server/scripts/smoke-test.js now verifies:
+- unauthenticated Release Control redirects to staff login
+- authenticated Release Control loads successfully when smoke credentials are provided
+
+10. Preservation
+V245 does not change:
+- resident enquiry submission
+- resident tracking
+- case management
+- applications/referrals
+- correspondence
+- field operations
+- records/reports
+- Website CMS
+- Publishing Desk workflow
+- Publishing QA logic
+- Activity Hub progress controls
+- public-content privacy boundaries
+
+11. Validation
+Source-level validation completed for:
+- staff/readiness.html inline JavaScript
+- server/scripts/smoke-test.js
+
+Live Render/database behavior still requires deployment and execution against the staging environment before any live-environment claim is made.
