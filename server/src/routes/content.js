@@ -454,7 +454,7 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
     let stats={
       total:0,draft:0,in_review:0,approved:0,published:0,archived:0,
       published_unverified:0,archived_active_snapshot:0,active_snapshot_missing_payload:0,
-      published_missing_snapshot:0,revision_snapshots_live:0
+      published_missing_snapshot:0,revision_snapshots_live:0,malformed_snapshot_document_id:0
     };
     let integrity={
       publishedUnverified:0,
@@ -462,7 +462,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       activeSnapshotMissingPayload:0,
       publishedMissingSnapshot:0,
       revisionVersionMismatches:0,
-      invalidPublicDocuments:0
+      invalidPublicDocuments:0,
+      malformedSnapshotDocumentIds:0
     };
     if(schemaReady){
       const [counts,mismatch,documents]=await Promise.all([
@@ -483,7 +484,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
             )::int AS published_missing_snapshot,
             count(*) FILTER (
               WHERE workflow<>'Published' AND published_snapshot_active=true
-            )::int AS revision_snapshots_live
+            )::int AS revision_snapshots_live,
+            count(*) FILTER (
+              WHERE published_snapshot_active=true
+                AND COALESCE(published_snapshot->>'documentId','')<>''
+                AND NOT (
+                  COALESCE(published_snapshot->>'documentId','') ~*
+                  '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+                )
+            )::int AS malformed_snapshot_document_id
           FROM public_content
         `),
         db.query(`
@@ -519,7 +528,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
         activeSnapshotMissingPayload:Number(stats.active_snapshot_missing_payload)||0,
         publishedMissingSnapshot:Number(stats.published_missing_snapshot)||0,
         revisionVersionMismatches:Number(mismatch.rows[0]?.mismatches)||0,
-        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0
+        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0,
+        malformedSnapshotDocumentIds:Number(stats.malformed_snapshot_document_id)||0
       };
     }
     const checks=[
@@ -592,6 +602,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
           ok:integrity.invalidPublicDocuments===0,
           severity:'blocker',
           detail:integrity.invalidPublicDocuments?`${integrity.invalidPublicDocuments} exposed document link(s) fail Records Centre approval/sensitivity rules.`:'Public document exposure respects Records Centre controls.'
+        },
+        {
+          key:'snapshot-document-id',
+          label:'Snapshot document identifiers are valid',
+          ok:integrity.malformedSnapshotDocumentIds===0,
+          severity:'blocker',
+          detail:integrity.malformedSnapshotDocumentIds
+            ?`${integrity.malformedSnapshotDocumentIds} active public snapshot(s) contain a malformed document identifier.`
+            :'Active snapshot document identifiers are valid UUIDs.'
         }
       );
     }else{
