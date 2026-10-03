@@ -1,0 +1,32 @@
+Scarborough / Mt. Grace District Office — V260
+
+ADMINISTRATION WORKSPACE MODERNIZATION
+
+1. Access Control rebuilt
+- Responsive account cards
+- Search/filter
+- Create account
+- Manage display name, role, active status and MFA-required flag
+- Optional password reset
+- View/revoke active sessions
+- No duplicate legacy navigation
+
+2. Audit Review rebuilt
+- Removed browser-only training audit
+- Uses the real /api/audit server log
+- Live metrics, filters and responsive timeline
+- Filtered CSV export
+- Read-only audit history
+
+3. Tablet consistency
+Roster, Access and Audit now share a compact Administration design language.
+
+4. Staging smoke resilience
+Transient 429/502/503/504 responses are retried up to three times before failure.
+
+5. Verification
+Preflight checks Access/Audit assets.
+Authenticated smoke covers Access and Audit when the smoke role has the required permissions.
+
+6. Release identity
+Backend advanced to 260.0.0.
