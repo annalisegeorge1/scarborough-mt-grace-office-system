@@ -16,7 +16,7 @@ Completed cleanup
 7. Removed the unused service-worker runtime cache.
 8. Documented that routine asset edits do not require manual service-worker version bumps because public asset URLs are content-hashed.
 9. Added smoke-test contracts that fail if obsolete Civic Flow carousel controls return.
-10. Release identity advanced to 271.0.0.
+10. Consolidated the public asset loader into ordered CSS/JS manifests while preserving the existing load order.\n11. Reduced server/src/app.js from roughly 50.7 KB to 18.7 KB by removing repetitive asset-loading boilerplate.\n12. Removed Civic Flow rail behavior from the global responsive-hardening layer so the component owns its swipe behavior.\n13. Release identity advanced to 271.0.0.
 
 Cleanup rule
 - Do not add another corrective layer when an existing component can be simplified.
