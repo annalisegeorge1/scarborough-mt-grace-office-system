@@ -1,83 +1,162 @@
-# Scarborough / Mt. Grace District Office Service System — V254
+# Scarborough / Mt. Grace District Office Service System — V255
 
 **Current status: controlled pre-launch / staging candidate**
 
-V254 makes the shared staff navigation permission-aware. Staff no longer see every module simply because it exists.
+V255 adds a first-class Resident Profile layer on top of the V250–V254 staff architecture.
 
-## Permission-aware navigation
+The system can now treat a resident as a person with a continuing office history rather than treating every case as an isolated identity.
 
-The authentication API now returns the signed-in role's effective permission list alongside the user/session payload.
+## Resident data model
 
-The shared staff shell filters both:
-- primary sidebar areas
-- contextual subpage tabs
+New migration:
 
-using the same permission names defined by server RBAC.
+- `007_resident_profiles.sql`
 
-The backend remains the security boundary. Navigation filtering is a usability layer and does not replace API permission enforcement.
+It adds:
+- `residents`
+- resident references such as `SMG-RES-2026-000001`
+- `cases.resident_id`
+- indexes for resident name, phone, email and case linkage
 
-## Examples
+### Safe migration rule
 
-### Field Officer
-The sidebar is reduced to operational destinations such as:
-- Home
-- Daily Workboard
-- Case Management for assigned work
-- Applications for assigned work
-- Field Visits
-- Community
-- Search
+Existing records are **not automatically merged** based on similar names, phone numbers, addresses or email addresses.
 
-Administrative, publishing, reporting, records-management and release-control pages are not presented when the role cannot use them.
+During migration, every existing case without a resident link receives its own resident profile.
 
-### Senior Officer
-The shell emphasizes:
-- Home
+This deliberately avoids incorrectly combining two different people.
+
+Staff can then explicitly reassign/link cases to the correct resident profile when they have verified that the records belong to the same person.
+
+## Resident Directory
+
+New staff page:
+
+- `/staff/residents.html`
+
+Staff can search profiles by:
+- resident profile reference
+- name
+- phone
+- email
+- address
+
+The directory shows case totals, open-case totals and recent case activity.
+
+Field Officers only receive resident profiles associated with cases they are permitted to access.
+
+## Resident Profile
+
+New staff page:
+
+- `/staff/resident.html?id=<resident-id>`
+
+A Resident Profile combines the resident's authorized office history into tabs for:
+
+- Overview
 - Cases
 - Applications
 - Correspondence
-- Field
+- Field Visits
+- Documents
 - Feedback
-- Community
-- Search
+- Activity
 
-Management reporting and system administration remain hidden unless permitted.
+Permission-restricted sections remain unavailable when the signed-in role does not have access to the underlying module.
 
-### Administrative / Manager
-Broader operational, records, communications and administration areas remain visible according to the server permission model.
+## Resident Profile API
 
-## Direct-page behavior
+New endpoints include:
 
-If a user manually opens a known staff page that their role cannot use, the shell redirects to Staff Home rather than leaving them on a page whose APIs will only return permission errors.
+- `GET /api/residents`
+- `GET /api/residents/:id`
+- `POST /api/residents`
+- `PATCH /api/residents/:id`
+- `POST /api/residents/:id/link-case`
 
-This does not grant or revoke permissions; the server APIs continue enforcing RBAC.
+The API reuses existing RBAC permissions.
 
-## Staff root
+For Field Officers, profile access is limited to residents attached to cases assigned to or owned by that officer.
 
-Authenticated visits to `/staff` now redirect to:
+## Case integration
 
-- `/staff/home.html`
+Cases now carry `residentId` through the shared case shape.
 
-rather than Case Management.
+When a new case is created without an existing resident profile, the server creates the resident and case in the same database transaction.
 
-## Auth payloads
+When a verified existing resident profile is supplied, the new case can link to that resident instead.
 
-Both:
-- `POST /api/auth/login`
-- `GET /api/auth/me`
+Existing Case Workspace drawers now include:
 
-now include a `permissions` array.
+**Open Resident Profile →**
 
-The shared production client retains that permission list for staff UI behavior.
+## Linking existing cases
+
+Resident Profile allows staff with case-write authority to enter a case reference and explicitly link it to the current resident.
+
+If the case already belongs to another resident profile, the API returns a conflict and requires explicit reassignment confirmation.
+
+No silent resident merges occur.
+
+## Global Search
+
+Global Search now includes authorized Resident Profile results.
+
+Resident search is migration-safe: if the resident table is not present yet, the rest of Global Search continues functioning.
+
+## Navigation
+
+Within the **Residents** area, the shared shell now presents:
+
+- Resident Profiles
+- Case Management
+- Applications & Referrals
+- Correspondence
+- Field Visits
+- Resident Feedback
+
+The individual `resident.html` page remains inside the Resident Profiles navigation context.
+
+## Live readiness
+
+`/api/health/readiness` now includes:
+
+- `residentProfiles`
+
+This check passes only when both:
+- the `residents` table exists
+- `cases.resident_id` exists
+
+A deployment therefore cannot report fully ready while the V255 schema migration is missing.
 
 ## Backend release identity
 
-The server package version is now `254.0.0`.
+The server package version is now `255.0.0`.
+
+## Required deployment step
+
+Before exercising Resident Profiles on a deployed environment, run:
+
+`npm run migrate`
+
+This applies migration 007 after the previously recorded migrations.
 
 ## Verification
 
-Authenticated smoke testing now requires permission arrays in the login and `/api/auth/me` responses in addition to the existing protected-page and workflow checks.
+Preflight now checks:
+- Resident Directory
+- Resident Profile workspace
+- Resident Profile API route
+- migration 007
+
+Authenticated smoke testing checks:
+- Resident Directory page
+- Resident Profile shell
+- Resident Profile list API
+- first accessible Resident Profile detail when one exists
 
 ## Production boundary
 
-V254 reduces visible complexity. It does not weaken API permissions, broaden role access, alter resident data or authorize production use.
+V255 creates a structured resident identity layer but does not authorize production use or change the office's privacy obligations.
+
+Resident data remains subject to approved hosting, access, retention, backup, audit and THA IT / management controls.
