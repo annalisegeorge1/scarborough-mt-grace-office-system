@@ -427,8 +427,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       'verified_by','verified_at','published_by','published_at','archived_by','archived_at',
       'version','published_snapshot','published_snapshot_at','published_snapshot_active'
     ];
-    const [migration,columns,revisions]=await Promise.all([
-      db.query("SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",['006_content_publishing_workflow.sql']),
+    const [migrationTable,columns,revisions]=await Promise.all([
+      db.query("SELECT to_regclass('public.schema_migrations') AS table_name"),
       db.query(`
         SELECT column_name
         FROM information_schema.columns
@@ -438,7 +438,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       `,[requiredColumns]),
       db.query("SELECT to_regclass('public.public_content_revisions') AS table_name")
     ]);
-    const migrationApplied=!!migration.rows[0]?.applied;
+    const migrationTablePresent=!!migrationTable.rows[0]?.table_name;
+    let migrationApplied=false;
+    if(migrationTablePresent){
+      const migration=await db.query(
+        "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",
+        ['006_content_publishing_workflow.sql']
+      );
+      migrationApplied=!!migration.rows[0]?.applied;
+    }
     const present=new Set(columns.rows.map(x=>x.column_name));
     const missingColumns=requiredColumns.filter(x=>!present.has(x));
     const revisionsTable=!!revisions.rows[0]?.table_name;
@@ -446,7 +454,7 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
     let stats={
       total:0,draft:0,in_review:0,approved:0,published:0,archived:0,
       published_unverified:0,archived_active_snapshot:0,active_snapshot_missing_payload:0,
-      published_missing_snapshot:0,revision_snapshots_live:0
+      published_missing_snapshot:0,revision_snapshots_live:0,malformed_snapshot_document_id:0
     };
     let integrity={
       publishedUnverified:0,
@@ -454,7 +462,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       activeSnapshotMissingPayload:0,
       publishedMissingSnapshot:0,
       revisionVersionMismatches:0,
-      invalidPublicDocuments:0
+      invalidPublicDocuments:0,
+      malformedSnapshotDocumentIds:0
     };
     if(schemaReady){
       const [counts,mismatch,documents]=await Promise.all([
@@ -475,7 +484,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
             )::int AS published_missing_snapshot,
             count(*) FILTER (
               WHERE workflow<>'Published' AND published_snapshot_active=true
-            )::int AS revision_snapshots_live
+            )::int AS revision_snapshots_live,
+            count(*) FILTER (
+              WHERE published_snapshot_active=true
+                AND COALESCE(published_snapshot->>'documentId','')<>''
+                AND NOT (
+                  COALESCE(published_snapshot->>'documentId','') ~*
+                  '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+                )
+            )::int AS malformed_snapshot_document_id
           FROM public_content
         `),
         db.query(`
@@ -493,7 +510,9 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
           FROM public_content pc
           JOIN documents d ON d.id=CASE
             WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
-            ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+            WHEN COALESCE(pc.published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+              THEN (pc.published_snapshot->>'documentId')::uuid
+            ELSE NULL
           END
           WHERE (
             (pc.workflow='Published' AND pc.verified=true)
@@ -509,7 +528,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
         activeSnapshotMissingPayload:Number(stats.active_snapshot_missing_payload)||0,
         publishedMissingSnapshot:Number(stats.published_missing_snapshot)||0,
         revisionVersionMismatches:Number(mismatch.rows[0]?.mismatches)||0,
-        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0
+        invalidPublicDocuments:Number(documents.rows[0]?.invalid_public_documents)||0,
+        malformedSnapshotDocumentIds:Number(stats.malformed_snapshot_document_id)||0
       };
     }
     const checks=[
@@ -518,7 +538,11 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
         label:'V242 publishing migration applied',
         ok:migrationApplied,
         severity:'blocker',
-        detail:migrationApplied?'Migration 006 is recorded.':'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
+        detail:migrationApplied
+          ?'Migration 006 is recorded.'
+          :(migrationTablePresent
+            ?'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
+            :'schema_migrations is not present; run the server migration process before using Publishing Desk.')
       },
       {
         key:'columns',
@@ -578,6 +602,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
           ok:integrity.invalidPublicDocuments===0,
           severity:'blocker',
           detail:integrity.invalidPublicDocuments?`${integrity.invalidPublicDocuments} exposed document link(s) fail Records Centre approval/sensitivity rules.`:'Public document exposure respects Records Centre controls.'
+        },
+        {
+          key:'snapshot-document-id',
+          label:'Snapshot document identifiers are valid',
+          ok:integrity.malformedSnapshotDocumentIds===0,
+          severity:'blocker',
+          detail:integrity.malformedSnapshotDocumentIds
+            ?`${integrity.malformedSnapshotDocumentIds} active public snapshot(s) contain a malformed document identifier.`
+            :'Active snapshot document identifiers are valid UUIDs.'
         }
       );
     }else{
@@ -594,6 +627,7 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       ready,
       checkedAt:new Date().toISOString(),
       schema:{
+        migrationTablePresent,
         migrationApplied,
         requiredColumns:requiredColumns.length,
         presentColumns:present.size,

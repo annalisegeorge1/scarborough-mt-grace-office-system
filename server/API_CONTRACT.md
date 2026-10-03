@@ -204,3 +204,61 @@ Publishing QA verifies application/database state. It does not independently pro
 - human management authorization
 
 Those remain part of the separate Production Readiness and Go-Live controls.
+
+
+## V244 Publishing Resilience
+
+V244 hardens the V243 Publishing QA and the V242 stable-snapshot public path against incomplete deployments and malformed legacy snapshot metadata.
+
+### Migration-registry resilience
+
+`GET /api/content/publishing-readiness` now checks whether `schema_migrations` itself exists before querying migration 006.
+
+If the migration registry is absent:
+- the endpoint returns `ready=false`
+- the schema section reports `migrationTablePresent=false`
+- migration-dependent integrity checks remain blocked
+- the diagnostic endpoint does not fail merely because the migration registry is missing
+
+### Malformed snapshot document identifiers
+
+Publishing QA now counts active public snapshots whose `documentId` value is non-empty but is not a UUID.
+
+The blocker appears as:
+- `snapshot-document-id`
+
+The response exposes:
+- `integrity.malformedSnapshotDocumentIds`
+
+The staff Publishing QA page surfaces the same value under **Snapshot document IDs**.
+
+### Public document lookup hardening
+
+The public content and public-document routes no longer blindly cast snapshot `documentId` strings to PostgreSQL UUID values.
+
+Snapshot document joins now:
+- validate UUID shape before casting
+- ignore malformed legacy values safely
+
+`GET /api/public/documents/:id` also validates the route parameter before issuing a UUID-backed database query. Invalid identifiers return the same public-safe 404 response instead of reaching PostgreSQL as malformed UUID input.
+
+### Effective public payload behavior
+
+When a legacy public snapshot contains a malformed `documentId`:
+- the malformed identifier is removed from the effective public payload
+- the public API does not construct a document-download URL from it
+- any independent valid public URL already stored on the snapshot can remain available
+- Publishing QA reports the integrity defect for staff correction
+
+### Preservation
+
+V244 does not change:
+- staff publishing workflow transitions
+- verification rules
+- archive/restore behavior
+- existing CMS editing
+- resident enquiries or tracking
+- Activity Hub progress workflows
+- public-content privacy boundaries
+
+The change is defensive and diagnostic.

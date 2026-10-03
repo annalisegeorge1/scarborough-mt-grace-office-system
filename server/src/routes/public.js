@@ -26,6 +26,7 @@ router.get('/upload-status',(req,res)=>res.json({enabled:uploadsReady(),maxFiles
 
 const digits=s=>String(s||'').replace(/\D/g,'');
 const xml=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+const uuidText=v=>/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(v||''));
 async function matchedCase(reference,contact){
   const ref=String(reference||'').trim().toUpperCase(),c=String(contact||'').trim();
   if(!ref||!c)return null;
@@ -49,7 +50,8 @@ function effectivePublicPayload(row){
   if(row.published_snapshot_active&&row.published_snapshot&&typeof row.published_snapshot==='object'){
     const p={...row.published_snapshot};
     p.id=p.id||row.id;
-    p.publicUrl=p.documentId?`/api/public/documents/${p.documentId}`:(p.publicUrl||null);
+    if(p.documentId&&uuidText(p.documentId))p.publicUrl=`/api/public/documents/${p.documentId}`;
+    else{p.documentId=null;p.publicUrl=p.publicUrl||null}
     p.metadata=p.metadata&&typeof p.metadata==='object'&&!Array.isArray(p.metadata)?p.metadata:{};
     p.sortOrder=Number(p.sortOrder)||0;
     p.isFeatured=!!p.isFeatured;
@@ -79,7 +81,9 @@ router.get('/content',async(req,res,next)=>{
       FROM public_content pc
       LEFT JOIN documents d ON d.id=CASE
         WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
-        ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+        WHEN COALESCE(pc.published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          THEN (pc.published_snapshot->>'documentId')::uuid
+        ELSE NULL
       END
       WHERE (pc.workflow='Published' AND pc.verified=true)
          OR pc.published_snapshot_active=true
@@ -161,13 +165,18 @@ ${items}
    currently Published + Verified content and marked Public in the records table. */
 router.get('/documents/:id',async(req,res,next)=>{
   try{
+    if(!uuidText(req.params.id))return res.status(404).json({detail:'Public document not found.'});
     const cq=await db.query(`
       SELECT id,type,section,category,title,summary,body,public_url,public_status,status_note,
              responsible_authority,event_date,sort_order,document_id,is_featured,metadata,
              publish_on,expire_on,updated_at,workflow,verified,published_snapshot,published_snapshot_active
       FROM public_content
       WHERE document_id=$1
-         OR NULLIF(published_snapshot->>'documentId','')::uuid=$1
+         OR CASE
+              WHEN COALESCE(published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+                THEN (published_snapshot->>'documentId')::uuid=$1
+              ELSE false
+            END
     `,[req.params.id]);
     const now=Date.now();
     const exposed=cq.rows.some(row=>{

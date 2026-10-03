@@ -1,0 +1,156 @@
+Scarborough / Mt. Grace District Office — V244
+
+PUBLISHING RESILIENCE HARDENING
+
+V244 hardens the V242/V243 publishing bridge and Publishing QA against incomplete migrations and malformed legacy public-snapshot document identifiers.
+
+1. Migration-registry resilience
+GET /api/content/publishing-readiness now checks whether schema_migrations itself exists before querying migration 006.
+
+If the migration registry is absent:
+- readiness returns false
+- schema.migrationTablePresent=false
+- the diagnostic endpoint remains usable
+- migration-dependent integrity checks stay blocked until the schema is repaired
+
+2. Safe partial-deployment behavior
+Publishing QA already staged migration-dependent checks behind schemaReady.
+
+V244 closes the remaining failure mode where schema_migrations itself could be absent.
+
+3. Malformed snapshot document-ID detection
+Publishing readiness now counts active public snapshots whose documentId:
+- is non-empty
+- is not UUID-shaped
+
+New integrity field:
+- malformedSnapshotDocumentIds
+
+New blocker:
+- Snapshot document identifiers are valid
+
+4. Publishing QA UI
+The staff Publishing QA environment summary now shows:
+- Migration registry
+- Migration 006
+- Publishing columns
+- Revision table
+- Revision parity
+- Stable public snapshots
+- Public documents
+- Snapshot document IDs
+
+5. Safe public-content document joins
+/api/public/content no longer blindly casts published_snapshot.documentId to PostgreSQL uuid.
+
+The SQL join:
+- validates UUID shape first
+- casts only a valid UUID-shaped value
+- otherwise treats the snapshot document identifier as null
+
+This prevents malformed legacy snapshot metadata from breaking the public content endpoint.
+
+6. Safe public-document route
+GET /api/public/documents/:id now validates the route parameter before issuing a UUID-backed query.
+
+Malformed IDs return:
+- 404 Public document not found
+
+They do not reach PostgreSQL as invalid UUID input.
+
+7. Safe snapshot lookup
+The public document route also validates snapshot document IDs before casting them.
+
+Malformed legacy snapshot IDs are ignored safely.
+
+8. Effective public payload protection
+When a legacy public snapshot contains a malformed documentId:
+- the invalid documentId is removed from the effective public payload
+- no document-download URL is generated from it
+- an independent valid publicUrl can remain available
+- Publishing QA reports the defect for staff correction
+
+9. Existing public document gate preserved
+A downloadable document still requires:
+- an active effective public content record
+- open publish/expiry window
+- document sensitivity = Public
+- document review status = Approved
+
+10. Privacy preserved
+V244 does not add internal publishing fields to the public API.
+
+The public API still does not expose:
+- internal_notes
+- source_reference
+- verification_note
+- workflow actor IDs
+- revision history
+
+11. Workflow preserved
+V244 does not change:
+- Draft → In Review
+- In Review → Approved
+- separate verification
+- Approved → Published
+- Published → Start a revision
+- Archive
+- Restore
+- stable prior public version during controlled revision
+
+12. Staff system preserved
+V244 does not remove or replace:
+- Website CMS
+- Publishing Desk
+- Publishing QA
+- case management
+- applications/referrals
+- correspondence
+- field operations
+- records
+- reports
+- resident enquiries
+- resident tracking
+- Activity Hub progress controls
+
+13. Source-level QA passed
+Syntax:
+- server/src/routes/content.js
+- server/src/routes/public.js
+- staff/publishing-qa.html inline JavaScript
+- server/scripts/smoke-test.js
+- server/scripts/preflight.js
+
+Structure:
+- one content router export
+- one public router export
+- one publishing-readiness route
+- one public-content route
+- one public-document route
+
+Diagnostics:
+- migration registry detection
+- schema readiness guard
+- malformed snapshot document-ID counter
+- malformed snapshot blocker
+- revision parity
+- public document integrity
+
+Public safety:
+- UUID validation helper
+- safe snapshot document join
+- safe snapshot document lookup
+- route-parameter UUID guard
+- malformed-link suppression
+- Public + Approved document gate retained
+
+Publishing QA UI:
+- migration registry state
+- malformed snapshot document-ID state
+- server readiness
+- publishing readiness
+
+14. Live-environment note
+V244 has passed source-level validation only.
+
+No claim is made that Render staging, DNS, Cloudflare, or the deployed database has passed V244 until the updated main branch is deployed and /staff/publishing-qa.html is run against the live staging environment.
