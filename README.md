@@ -1,73 +1,90 @@
-# Scarborough / Mt. Grace District Office Service System — V258
+# Scarborough / Mt. Grace District Office Service System — V259
 
 **Current status: controlled pre-launch / staging candidate**
 
-V258 closes the deployment-verification gap by adding GitHub Actions checks that validate source quality and independently verify the Render staging deployment from GitHub's network.
+V259 rebuilds **Roster & Coverage** for practical tablet use after live screenshots showed that the previous page was too tall, visually repetitive and difficult to scan.
 
-## Automated verification
+## Roster & Coverage redesign
 
-New workflow:
+The page now follows a tighter workflow:
 
-- `.github/workflows/verify-and-smoke.yml`
+**Continuity summary → Add record → Current continuity records**
 
-It runs on every push to `main` and can also be started manually.
+Instead of rendering three large forms at once, staff choose one compact tab:
 
-### Source QA
+- Duty roster
+- Absence
+- Temporary coverage
 
-The first job:
-- checks out the repository
-- installs Node 20
-- installs server dependencies
-- runs `npm run check`
-- runs `npm test`
-- runs production-structured `npm run preflight`
+Only the active form is shown.
 
-A failed source/test/preflight check now produces a visible GitHub Actions failure instead of silently relying on Render.
+## Continuity summary
 
-### Render staging smoke
+The page now shows:
+- total stored roster assignments
+- absences active today
+- coverage arrangements active today
+- active staff not absent today
 
-After Source QA passes, GitHub independently calls:
+These numbers are derived from the live roster/absence/coverage data returned by the existing operations API.
 
-- `https://scarborough-mt-grace-staging.onrender.com/api/health/live`
+## Tablet and mobile behavior
 
-The workflow reads the expected application version from `server/package.json` and waits until Render reports that exact version.
+The old wide continuity tables no longer dominate smaller screens.
 
-This prevents a smoke test from accidentally validating an older deployment.
+At tablet widths:
+- the form becomes two-column, then one-column on smaller devices
+- continuity records render as stacked cards
+- oversized controls are reduced
+- duplicated legacy page navigation/header is removed
+- the shared V250+ staff shell remains the only global navigation layer
 
-Once the expected version is live, the workflow runs:
+Desktop retains a compact combined table beneath the card summaries.
 
-- `npm run smoke`
+## Coverage safeguards
 
-against the Render staging service.
+The UI now prevents:
+- selecting the same person as both unavailable and covering staff
+- reversed coverage date ranges
+- reversed absence date ranges
+- choosing a covering officer with an overlapping operational absence already loaded on the page
 
-The public smoke suite covers:
-- liveness and health
-- public pages/APIs
-- tracker/portal/guide
-- protected staff-page redirects
+The database already contains hard constraints preventing:
+- coverage end dates before start dates
+- absence end dates before start dates
+- a staff member covering themselves
 
-If repository secrets `SMOKE_EMAIL` and `SMOKE_PASSWORD` are configured, the existing smoke script also exercises authenticated staff pages and APIs. Without those secrets, authenticated checks are intentionally skipped.
+The V259 UI therefore improves usability while retaining the existing database safeguards.
 
-## Direct Render inspection
+## Data-minimization reminder
 
-A Render connection for ChatGPT is available separately. Connecting it allows direct inspection of Render services, deploys, logs, metrics and environment variables from this conversation. The GitHub workflow remains valuable even with that connection because it provides persistent commit-level verification.
+The page explicitly states that this is an operational continuity tool, not an HR medical record.
 
-## Database status retained from V257
+Staff are instructed to record only information needed to maintain duty coverage.
 
-The connected Supabase project remains ACTIVE_HEALTHY.
+## Verification
 
-Confirmed:
-- resident migration 007 applied
-- hardening migration 008 applied
-- existing case linked to Resident Profile
-- operational indexes present
-- resident reference function search path hardened
-- direct anon/authenticated access to sensitive resident/revision tables not granted
+Preflight now checks that `staff/roster.html` exists.
+
+Smoke testing verifies:
+- the page is protected when unauthenticated
+- the page loads for authenticated roles with reporting access
 
 ## Backend release identity
 
-The server package version is now `258.0.0`.
+The server package version is now `259.0.0`.
+
+## Automated deployment verification
+
+The V258 GitHub Actions workflow remains active.
+
+After V259 reaches `main`, GitHub will:
+- run syntax checks
+- run unit tests
+- run production preflight
+- wait for Render staging to report version `259.0.0`
+- run the staging smoke suite
 
 ## Production boundary
 
-A green GitHub workflow and healthy staging deployment are technical evidence, not final production authorization. Confidential resident use still requires the approved operational, backup, privacy and THA IT / management controls.
+Roster & Coverage remains an operational continuity feature and must not be used to store unnecessary medical or confidential HR information.
