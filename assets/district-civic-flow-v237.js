@@ -158,11 +158,28 @@
     if(!track||track.scrollWidth<=track.clientWidth+2)return;
     const step=steps[index];
     if(!step)return;
+
     const max=Math.max(0,track.scrollWidth-track.clientWidth);
-    const left=Math.max(0,Math.min(max,step.offsetLeft-(track.clientWidth-step.offsetWidth)/2));
-    if(Math.abs(track.scrollLeft-left)<4)return;
-    autoTrackUntil=Date.now()+(reduce()?80:520);
-    track.scrollTo({left,behavior:reduce()?"auto":"smooth"});
+    const inset=10;
+    const desired=Math.max(0,Math.min(max,step.offsetLeft-inset));
+    if(Math.abs(track.scrollLeft-desired)<4)return;
+
+    autoTrackUntil=Date.now()+(reduce()?120:760);
+
+    // Use scrollLeft as the authoritative movement. Some Android/WebView
+    // combinations update the active stage but ignore element.scrollTo()
+    // when scroll snapping and smooth scrolling are both enabled.
+    track.scrollLeft=desired;
+
+    // Re-assert after layout/scroll-snap settles so the selected card,
+    // especially stage 4, cannot remain clipped off-screen.
+    requestAnimationFrame(()=>{
+      const currentStep=steps[index];
+      if(!currentStep)return;
+      const finalMax=Math.max(0,track.scrollWidth-track.clientWidth);
+      const finalLeft=Math.max(0,Math.min(finalMax,currentStep.offsetLeft-inset));
+      if(Math.abs(track.scrollLeft-finalLeft)>4)track.scrollLeft=finalLeft;
+    });
   }
 
   function apply(index,{revealCard=false}={}){
