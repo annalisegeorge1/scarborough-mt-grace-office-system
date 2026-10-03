@@ -41,6 +41,8 @@ await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
 await check('Protected Roster and Coverage redirects','/staff/roster.html',[302]);
+await check('Protected Access Control redirects','/staff/access.html',[302]);
+await check('Protected Audit Review redirects','/staff/audit.html',[302]);
 await check('Protected System Administration redirects','/staff/system.html',[302]);
 await check('Protected Production Control redirects','/staff/production.html',[302]);
 await check('Protected Publishing Desk redirects','/staff/publishing.html',[302]);
@@ -77,6 +79,8 @@ if(email&&password){
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
     if(d.permissions.includes('*')||d.permissions.includes('reports.read'))await check('Authenticated Roster and Coverage','/staff/roster.html');
+    if(d.permissions.includes('*')||d.permissions.includes('accessAdmin'))await check('Authenticated Access Control','/staff/access.html');
+    if(d.permissions.includes('*')||d.permissions.includes('audit.read')){await check('Authenticated Audit Review','/staff/audit.html');await check('Authenticated Audit API','/api/audit?limit=5');}
     await check('Authenticated System Administration','/staff/system.html');
     await check('Authenticated Production Control','/staff/production.html');
     await check('Authenticated Publishing Desk','/staff/publishing.html');
