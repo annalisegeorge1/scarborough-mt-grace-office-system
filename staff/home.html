@@ -15,13 +15,13 @@ body{background:var(--h-paper);color:#17394e}
 .welcome{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;padding:20px 22px;border-radius:16px;background:linear-gradient(115deg,#061f33,#0b3553 68%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7);box-shadow:0 12px 30px rgba(6,31,51,.10)}
 .welcome small{display:block;color:#d7c27c;font-size:8px;font-weight:900;letter-spacing:.13em}.welcome h1{margin:5px 0 4px;font:500 31px Georgia,serif}.welcome p{margin:0;color:#b9cdd7;font-size:10px;line-height:1.5}.stamp{text-align:right;color:#a8c0cc;font-size:8px;line-height:1.45}.stamp strong{display:block;color:#fff;font-size:10px}
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric,.panel,.mini{background:#fff;border:1px solid var(--h-line);border-radius:13px;box-shadow:0 8px 22px rgba(6,31,51,.04)}.metric{padding:14px 15px;text-decoration:none}.metric small{display:block;color:#718690;font-size:7px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.metric strong{display:block;margin-top:4px;color:#0b3553;font:600 27px Georgia,serif}.metric span{display:block;margin-top:4px;color:#7a8c96;font-size:8px;line-height:1.4}.metric.alert{border-left:4px solid #b85d54}.metric.warn{border-left:4px solid #c9a34a}
-.submetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}.mini{padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;text-decoration:none}.mini span{color:#6c818d;font-size:8px;font-weight:800}.mini strong{color:#173f58;font:600 18px Georgia,serif}
+.submetrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:12px}.mini{padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;text-decoration:none}.mini span{color:#6c818d;font-size:8px;font-weight:800}.mini strong{color:#173f58;font:600 18px Georgia,serif}
 .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:12px;align-items:start}.panel{overflow:hidden}.head{padding:14px 15px 11px;border-bottom:1px solid #e9eff2}.head small{font-size:7px;font-weight:900;letter-spacing:.1em;color:#87691f}.head h2{margin:4px 0 2px;color:#0b3553;font:500 21px Georgia,serif}.head p{margin:0;color:#71858f;font-size:9px;line-height:1.45}
 .list{padding:6px 14px 12px}.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 0;border-bottom:1px solid #edf2f4;text-decoration:none}.item:last-child{border-bottom:0}.item strong{display:block;color:#31596f;font-size:10px}.item small{display:block;margin-top:3px;color:#7b8d97;font-size:8px;line-height:1.4}.item p{margin:4px 0 0;color:#607783;font-size:8.5px;line-height:1.4}.badge{align-self:start;padding:4px 6px;border-radius:999px;background:#edf3f6;color:#536d7b;font-size:7px;font-weight:900;white-space:nowrap}.badge.red{background:#f7e7e5;color:#934a44}.badge.gold{background:#faf1dc;color:#80631f}.empty{padding:18px;text-align:center;color:#7b8e98;font-size:9px}
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px}.quick a{min-height:74px;padding:11px;border:1px solid #dce6ea;border-radius:10px;background:#f9fbfc;text-decoration:none}.quick a:hover{border-color:#ccb46f;background:#fffdf7}.quick small{display:block;color:#87691f;font-size:7px;font-weight:900;letter-spacing:.08em}.quick strong{display:block;margin-top:4px;color:#0b3553;font:500 15px Georgia,serif}.quick span{display:block;margin-top:4px;color:#748892;font-size:8px;line-height:1.4}
 .activity{padding:6px 14px 12px}.event{display:grid;grid-template-columns:8px minmax(0,1fr);gap:9px;padding:9px 0;border-bottom:1px solid #edf2f4}.event:last-child{border-bottom:0}.dot{width:8px;height:8px;border-radius:50%;background:#6f93a6;margin-top:4px}.event strong{display:block;color:#31596f;font-size:9px}.event small{display:block;margin-top:2px;color:#80919a;font-size:7.5px}.event p{margin:4px 0 0;color:#607783;font-size:8px;line-height:1.4}
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid #e9eff2;background:#f9fbfc}.btnx{border:1px solid #d5e1e6;border-radius:8px;background:#fff;color:#31596f;padding:8px 10px;text-decoration:none;font-size:8px;font-weight:900;cursor:pointer}.btnx.primary{background:#0b3553;color:#fff;border-color:#0b3553}
-@media(max-width:980px){.metrics{grid-template-columns:repeat(2,1fr)}.submetrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:580px){.home{width:calc(100% - 18px);margin-top:10px}.welcome{grid-template-columns:1fr;padding:17px}.stamp{text-align:left}.metrics,.submetrics{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr}.metric strong{font-size:24px}}@media(max-width:390px){.metrics,.submetrics{grid-template-columns:1fr}}
+@media(max-width:1100px){.submetrics{grid-template-columns:repeat(3,1fr)}}@media(max-width:980px){.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:580px){.home{width:calc(100% - 18px);margin-top:10px}.welcome{grid-template-columns:1fr;padding:17px}.stamp{text-align:left}.metrics,.submetrics{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr}.metric strong{font-size:24px}}@media(max-width:390px){.metrics,.submetrics{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script>
 </head>
@@ -33,8 +33,8 @@ body{background:var(--h-paper);color:#17394e}
   </section>
 
   <section class="metrics" aria-label="Today metrics">
-    <a class="metric warn" href="index.html"><small>Due today</small><strong id="dueToday">—</strong><span>Case follow-ups due today.</span></a>
-    <a class="metric alert" href="index.html"><small>Overdue</small><strong id="overdue">—</strong><span>Open case follow-ups already past due.</span></a>
+    <a class="metric warn" href="#attention"><small>Due today</small><strong id="dueToday">—</strong><span>Attention items due today across your accessible work.</span></a>
+    <a class="metric alert" href="#attention"><small>Overdue work</small><strong id="overdue">—</strong><span>Past-due work across your accessible modules.</span></a>
     <a class="metric" href="index.html"><small>Open cases</small><strong id="openCases">—</strong><span id="caseScope">Current case workload.</span></a>
     <a class="metric" href="#appointments"><small>Upcoming appointments</small><strong id="appointments">—</strong><span>Scheduled from today forward.</span></a>
   </section>
@@ -42,13 +42,15 @@ body{background:var(--h-paper);color:#17394e}
   <section class="submetrics">
     <a class="mini" href="applications.html"><span>Open applications</span><strong id="apps">—</strong></a>
     <a class="mini" href="field.html"><span>Open field work</span><strong id="field">—</strong></a>
+    <a class="mini" href="community.html"><span>Community follow-ups</span><strong id="communityFollow">—</strong></a>
+    <a class="mini" href="meetings.html"><span>Open meeting actions</span><strong id="meetingActions">—</strong></a>
     <a class="mini" href="feedback.html"><span>Open feedback</span><strong id="feedback">—</strong></a>
     <a class="mini" href="index.html"><span>Urgent / high cases</span><strong id="high">—</strong></a>
   </section>
 
   <div class="grid">
-    <section class="panel">
-      <header class="head"><small>ATTENTION</small><h2>Cases that need action</h2><p>Prioritized by overdue follow-up, today’s work and urgency.</p></header>
+    <section class="panel" id="attention">
+      <header class="head"><small>ATTENTION</small><h2>What needs action now</h2><p>Cases, applications, field work, community follow-ups, meeting actions and resident feedback—prioritized in one queue.</p></header>
       <div id="cases" class="list"><div class="empty">Loading cases…</div></div>
       <div class="toolbar"><a class="btnx primary" href="index.html">Open Case Management</a><a class="btnx" href="workflow.html">Daily Workboard</a><a class="btnx" href="search.html">Global Search</a></div>
     </section>
@@ -84,9 +86,11 @@ const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');
 function when(v){if(!v)return 'Not scheduled';try{return new Intl.DateTimeFormat('en-TT',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(new Date(v))}catch{return String(v)}}
 function dateOnly(v){if(!v)return 'No follow-up date';try{return new Intl.DateTimeFormat('en-TT',{month:'short',day:'numeric',year:'numeric'}).format(new Date(v+'T12:00:00'))}catch{return String(v)}}
 function salutation(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening'}
-function caseBadge(r){
-  const today=new Date();today.setHours(0,0,0,0);const f=r.next_follow_up?new Date(r.next_follow_up+'T12:00:00'):null;if(f)f.setHours(0,0,0,0);
-  if(f&&f<today)return ['Overdue','red'];if(f&&f.getTime()===today.getTime())return ['Due today','gold'];if(['Urgent','High'].includes(r.priority))return [r.priority,'gold'];return [r.status||'Open',''];
+function attentionBadge(r){
+  if(r.state==='overdue')return ['Overdue','red'];
+  if(r.state==='today')return ['Due today','gold'];
+  if(r.state==='attention')return ['Needs attention','gold'];
+  return ['Upcoming',''];
 }
 async function load(){
   $('refreshed').textContent='Refreshing…';
@@ -96,9 +100,9 @@ async function load(){
     $('scope').textContent=d.scope==='assigned'?'Your assigned work and immediate attention items.':'Office-wide operational attention and current work.';
     $('caseScope').textContent=d.scope==='assigned'?'Cases assigned to you.':'Open office case workload.';
     $('todayDate').textContent=new Intl.DateTimeFormat('en-TT',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).format(new Date());
-    $('dueToday').textContent=s.casesDueToday??0;$('overdue').textContent=s.casesOverdue??0;$('openCases').textContent=s.casesOpen??0;$('appointments').textContent=s.upcomingAppointments??0;
-    $('apps').textContent=d.permissions?.applications?(s.applicationsOpen??0):'—';$('field').textContent=d.permissions?.field?(s.fieldOpen??0):'—';$('feedback').textContent=d.permissions?.feedback?(s.feedbackOpen??0):'—';$('high').textContent=s.highPriority??0;
-    $('cases').innerHTML=d.cases?.length?d.cases.slice(0,8).map(r=>{const [label,cls]=caseBadge(r);return '<a class="item" href="index.html?case='+encodeURIComponent(r.id)+'"><div><strong>'+esc(r.reference)+' · '+esc(r.resident_name)+'</strong><small>'+esc(r.priority||'Standard')+' · '+esc(r.status||'Open')+' · Follow-up '+esc(dateOnly(r.next_follow_up))+'</small><p>'+esc(r.next_action||'No next action recorded.')+'</p></div><span class="badge '+cls+'">'+esc(label)+'</span></a>'}).join(''):'<div class="empty">No accessible case attention items.</div>';
+    $('dueToday').textContent=s.attentionDueToday??0;$('overdue').textContent=s.attentionOverdue??0;$('openCases').textContent=s.casesOpen??0;$('appointments').textContent=s.upcomingAppointments??0;
+    $('apps').textContent=d.permissions?.applications?(s.applicationsOpen??0):'—';$('field').textContent=d.permissions?.field?(s.fieldOpen??0):'—';$('communityFollow').textContent=d.permissions?.community?(s.communityFollowUps??0):'—';$('meetingActions').textContent=d.permissions?.community?(s.meetingActionsOpen??0):'—';$('feedback').textContent=d.permissions?.feedback?(s.feedbackOpen??0):'—';$('high').textContent=s.highPriority??0;
+    $('cases').innerHTML=d.attention?.length?d.attention.slice(0,10).map(r=>{const [label,cls]=attentionBadge(r);const due=r.dueDate?' · Due '+dateOnly(String(r.dueDate).slice(0,10)):'';return '<a class="item" href="'+esc(r.url||'home.html')+'"><div><strong>'+esc(r.reference||r.kind)+' · '+esc(r.title||'Attention item')+'</strong><small>'+esc(r.kind||'Work')+' · '+esc(r.subtitle||'')+esc(due)+'</small><p>'+esc(r.detail||'Follow-up required.')+'</p></div><span class="badge '+cls+'">'+esc(label)+'</span></a>'}).join(''):'<div class="empty">Nothing is currently due or flagged for your attention.</div>';
     $('appointmentList').innerHTML=d.permissions?.appointments?(d.appointments?.length?d.appointments.slice(0,7).map(a=>'<article class="item"><div><strong>'+esc(a.appointment_type||'Appointment')+'</strong><small>'+esc(when(a.starts_at))+' · '+esc(a.location||'Location not recorded')+'</small><p>'+esc(a.note||'No additional note.')+'</p></div><span class="badge">'+esc(a.status||'Scheduled')+'</span></article>').join(''):'<div class="empty">No upcoming appointments.</div>'):'<div class="empty">Appointments are not available for your role.</div>';
     $('activity').innerHTML=d.recentActivity?.length?d.recentActivity.slice(0,8).map(a=>'<article class="event"><span class="dot"></span><div><strong>'+esc(a.reference||'Case')+' · '+esc(a.activity_type||'Activity')+'</strong><small>'+esc(when(a.occurred_at))+(a.resident_name?' · '+esc(a.resident_name):'')+'</small><p>'+esc(a.description||'Activity recorded.')+'</p></div></article>').join(''):'<div class="empty">No recent case activity.</div>';
     $('refreshed').textContent='Updated '+new Date(d.generatedAt||Date.now()).toLocaleTimeString('en-TT',{hour:'numeric',minute:'2-digit'});
