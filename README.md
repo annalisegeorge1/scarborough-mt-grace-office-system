@@ -1,44 +1,88 @@
-# Scarborough / Mt. Grace District Office — V163
+# Scarborough / Mt. Grace District Office Service System — V247
 
-**Zero-Cost Staging Deployment Candidate: Render + Supabase**
+**Current status: controlled pre-launch / staging candidate**
 
-V163 builds on V162 and prepares the system for the first real cloud staging deployment without requiring a hosting payment. It adds a Render Blueprint, Supabase/Render connection safeguards, provider-specific readiness checks, first-Manager bootstrap guidance, Cloudflare staging-domain instructions and a strict synthetic-data-only staging policy.
+V247 aligns the repository documentation and Production Control surface with the actual V242–V246 publishing, readiness and release-control work. The system must **not** be treated as production-authorized merely because technical checks pass.
 
-Start with `V163_STAGING_DEPLOYMENT.md` and `V163_READINESS_CHECKLIST.md`.
+## Current control surfaces
 
----
-
-# Scarborough / Mt. Grace District Office Service System — V162
-
-V162 is the **Production QA & Deployment Candidate** release. It preserves V161 functionality while adding deployment verification, environment separation, release QA and additional HTTP hardening.
-
-The package contains the public district website, resident enquiry tracker, protected Staff Portal, Node.js/Express API, PostgreSQL migrations, server-side authentication and authorization, audit logging, private-storage integration, automation/reminder services, management reporting and deployment documentation.
-
-## Production entry points
-- Public site: `/`
+- Public website: `/`
 - Resident tracker: `/track/`
+- Resident portal hub: `/portals/`
 - Staff sign-in: `/staff/login.html`
-- Staff portal after authentication: `/staff/index.html`
-- Health check: `/api/health`
-- Readiness check: `/api/health/readiness`
+- Staff home / case management: `/staff/index.html`
+- Website CMS: `/staff/cms.html`
+- Publishing Desk: `/staff/publishing.html`
+- Publishing QA: `/staff/publishing-qa.html`
+- Release Control: `/staff/readiness.html`
+- Production Control: `/staff/production.html`
+- Go-Live & Migration: `/staff/go-live.html`
+- Liveness: `/api/health/live`
+- Health: `/api/health`
+- Readiness: `/api/health/readiness`
 
-`index-self-contained.html` is the production public page and does **not** embed staff pages. `index-self-contained-demo.html` is retained only for package review/offline demonstration and must not be used as the production public page.
+## What V242–V247 added
 
-## Start here for deployment
-1. Read `PRODUCTION_BACKEND.md`.
-2. Configure `server/.env` from `.env.example` using real secrets outside source control.
-3. Provision PostgreSQL.
-4. Run `npm run migrate` inside `server/`.
-5. Create the first Manager with `npm run seed:admin`.
-6. Configure private object storage before enabling uploads.
-7. Run backend tests and UAT.
-8. Deploy through staging before production.
+### Controlled public publishing
+The CMS now has a governed publishing path with Draft, In Review, Approved, Published, revision, archive and restore behavior. Publishing preserves stable public snapshots while staff revise approved content.
 
-V161 remains the rollback baseline.
+### Publishing QA
+`/staff/publishing-qa.html` verifies the deployed publishing migration, required schema, revision parity, stable public snapshots, public-document controls and malformed legacy snapshot document identifiers.
 
+### Live Release Control
+`/staff/readiness.html` combines:
+- live server readiness
+- expanded security/environment policy checks
+- publishing integrity
+- a separate twelve-gate administrative evidence checklist
 
-## V162 release verification
-- Static package QA: `python tools/release_qa.py`
-- Backend syntax/tests/preflight: `npm run qa` inside `server/`
-- Live environment smoke test: `npm run smoke` inside `server/`
-- Launch gate: `PRODUCTION_LAUNCH_CHECKLIST.md`
+The administrative checklist is evidence tracking only. It does not configure infrastructure or grant production approval.
+
+### Production Control
+`/staff/production.html` is the operational release hub. It surfaces application, database, storage, server-readiness and publishing-integrity state and links staff directly to operations, publishing, UAT, pilot and go-live controls.
+
+## Technical release verification
+
+Run from `server/`:
+
+- `npm run check` — JavaScript syntax validation
+- `npm test` — backend automated tests
+- `npm run preflight` — environment/package policy checks
+- `npm run qa` — check + tests + preflight
+- `npm run smoke` — live endpoint and protected-route smoke checks
+- `npm run migrate` — apply database migrations
+
+Package-level static QA:
+- `python tools/release_qa.py`
+
+## Required production boundary
+
+A green API, green Publishing QA and a completed Release Control checklist are **necessary evidence, not authorization**.
+
+Before real resident data or public production launch, the office still requires documented review of:
+- hosting ownership and support responsibility
+- final DNS, domain and TLS/HTTPS state
+- production secrets and account ownership
+- staff roles and individual accounts
+- privacy, retention and records handling
+- private document storage
+- backup schedule and successful restore test
+- incident/rollback procedure
+- migration reconciliation
+- mobile/desktop UAT and pilot sign-off
+- post-deployment monitoring and smoke testing
+- THA IT / management authorization
+
+See `PRODUCTION_LAUNCH_CHECKLIST.md` for the evidence checklist.
+
+## Historical deployment baseline
+
+The earlier V163 zero-cost Render + Supabase staging guidance remains useful as provider setup history, including:
+- `V163_STAGING_DEPLOYMENT.md`
+- `V163_READINESS_CHECKLIST.md`
+
+Those documents are not the current release-status summary. V247 and the live Release Control surfaces are the current reference points.
+
+## Data rule until authorization
+
+Use synthetic/test data in staging until the required production review is complete. Do not interpret browser checkboxes, a healthy server, or a successful deployment as permission to migrate confidential resident records.
