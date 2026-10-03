@@ -1,0 +1,225 @@
+Scarborough / Mt. Grace District Office — V239
+
+CIVIC SHELL
+
+V239 is a whole-site coherence release. It does not add another resident dashboard or staff feature. It strengthens the public frame around the systems already built.
+
+GOAL
+Make the site feel like one finished civic digital product from the moment a resident enters until the footer.
+
+1. Route-aware shell
+V239 derives the current public route from the URL and applies a route key to the body.
+
+Supported route identities:
+- Home
+- Your District Office
+- Resident Services
+- Community
+- Forms & Portals
+- Updates & Information
+- Contact & Enquiries
+
+Each route receives the existing route-specific accent language without changing page content.
+
+2. Sticky civic navigation
+The existing site navigation remains authoritative.
+
+V239 makes it:
+- sticky once reached
+- translucent/navy with backdrop blur
+- slightly more compact after the resident scrolls
+- visually stronger after the masthead moves away
+
+Desktop-only compaction includes:
+- smaller seal
+- collapsed brand subtitle
+- slightly shorter nav controls
+
+No navigation item is removed.
+
+3. Route indicator
+On large desktop, after scrolling, the navigation quietly displays the current route name beside the District Office brand.
+
+This preserves orientation when the large page masthead is no longer visible.
+
+The route indicator is decorative/contextual and hidden from assistive technology because the route is already represented by the page heading and navigation state.
+
+4. Reading progress
+A 2–3px route-aware progress line sits at the top of the viewport.
+
+It:
+- reflects document scroll progress
+- uses the current route accent into brass
+- performs no tracking
+- stores no data
+- has aria-hidden=true
+
+5. Mobile navigation
+The existing V125 mobile navigation becomes sticky once reached.
+
+Its active destination uses the same route accent as the rest of the site.
+
+No mobile destination is removed.
+
+6. Ambient page material
+The page background receives a very restrained route-aware radial treatment between existing sections.
+
+Existing section backgrounds, cards, images and content remain authoritative.
+
+7. Explore integration
+The V202 Explore control now inherits the current route accent:
+- route-aware edge color
+- route-aware gradient treatment
+- current-group accent
+- active subsection indicator
+
+Explore logic is unchanged.
+
+8. Resident dock integration
+The existing fixed resident dock keeps exactly the same:
+- Call
+- WhatsApp
+- Enquiry
+- Track
+
+V239 changes only its material treatment:
+- compact civic surface
+- subtle route-aware top line
+- glass/blur treatment
+- route-aware hover/focus for non-WhatsApp actions
+
+WhatsApp keeps its established green identity.
+
+9. Footer Civic Deck
+V239 groups three existing footer elements into one composed layout:
+- District Office signature
+- Accessible Public Service note
+- Staff Access entry
+
+No text or link is deleted.
+
+Desktop:
+- District signature spans the width
+- Accessibility and Staff Access sit side by side beneath it
+
+Tablet/mobile:
+- all three stack cleanly
+
+The remaining footer contact/resource/privacy links stay below the Civic Deck.
+
+10. Safe DOM composition
+The footer elements themselves are moved, not cloned.
+
+This preserves:
+- their existing links
+- their text
+- their IDs/classes
+- any existing behavior
+
+The new wrapper is anchored directly under the footer root to avoid accidental nesting inside legacy footer wrappers.
+
+11. Page entrance
+V239 adds one restrained opacity entrance when a public route mounts.
+
+There is:
+- no transform
+- no content movement
+- no layout shift
+
+The animation is disabled when reduced motion is preferred.
+
+12. Dark mode
+The Civic Shell is compatible with the established dark system:
+- sticky nav
+- ambient route background
+- Explore
+- resident dock
+- footer deck
+
+13. Accessibility
+V239 preserves:
+- skip links
+- existing focus-visible language
+- keyboard navigation
+- page headings
+- navigation landmarks
+- reduced-motion preference
+- route semantics already present elsewhere
+
+The progress line and route indicator are not announced redundantly.
+
+14. Privacy / data
+V239:
+- performs no fetch/API request
+- uses no localStorage
+- uses no sessionStorage
+- reads no resident form fields
+- sends no analytics
+- performs no POST/PATCH/DELETE
+- touches no staff route
+
+15. Preservation
+No changes to:
+- staff CMS
+- staff authentication
+- staff publishing
+- public verification
+- public content API
+- enquiry submission
+- notification/reminder consent
+- document uploads
+- resident tracker
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step
+- V227 District Pulse
+- V228 Readiness
+- V229 PWA/service worker
+- V231 Service Intelligence
+- V232–V234 correction layers
+- V235 Resident Service Workspace
+- V236 route coherence
+- V237 Civic Flow
+- V238 preference/dark-mode stabilization
+
+16. QA
+Passed:
+- V239 JavaScript syntax
+- server JavaScript syntax
+- CSS brace balance
+- V239 CSS/JS injection
+- V239 CSS loads after V238
+- V239 JS loads after V238
+- route map present
+- route body attribute present
+- reading-progress logic present
+- sticky desktop navigation present
+- scroll compaction state present
+- route indicator present
+- sticky mobile navigation present
+- route accent tokens present
+- Explore accent integration present
+- resident dock integration present
+- footer deck DOM composition present
+- footer wrapper anchored at footer root
+- reduced-motion support present
+- print handling present
+- no fetch
+- no browser storage
+- no write requests
+- no resident form-field access
+- no staff mutation
+- no API references
+
+Files added:
+- assets/district-civic-shell-v239.css
+- assets/district-civic-shell-v239.js
+- V239_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V239 is a source-level public-shell coherence pass. A fresh deployed screenshot on tablet/phone/desktop remains the final visual confirmation.
