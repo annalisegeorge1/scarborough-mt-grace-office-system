@@ -1,161 +1,148 @@
-# Scarborough / Mt. Grace District Office Service System — V266
+# Scarborough / Mt. Grace District Office Service System — V267
 
 **Current status: consolidation / staging candidate**
 
-V266 strengthens the **evidence layer** of the office workflow.
+V267 strengthens the **closure** step of the office workflow.
 
 The consolidation path remains:
 
 **Today → record/workspace → action → follow-up → evidence → close/report**
 
-V266 focuses on **evidence**.
+V267 focuses on **formal case closure**.
 
-## One document, multiple legitimate contexts
+## Completed vs Closed
 
-Historically, a document had one primary relationship:
+The system now treats these statuses deliberately:
 
-- `documents.linked_type`
-- `documents.linked_id`
+- **Completed** — operational work may be complete.
+- **Closed** — the case file has been formally closed.
 
-That remains for backward compatibility.
+This preserves the existing workflow distinction instead of treating both labels as interchangeable.
 
-V266 adds:
+## Formal closure authority
 
-- `document_links`
+Formal transition to **Closed** is server-enforced for:
 
-so one stored document can support multiple work records without duplicate uploads.
+- Manager
+- Administrative
 
-Example:
+A case cannot be created directly in the Closed state.
 
-A site photograph can remain one private file while being linked to:
-- the Resident Case
-- the Field Visit that produced it
-- a related Meeting if it was formally considered there
+A formally closed case cannot be edited/reopened through the normal case update path by a role without formal closure authority.
 
-The file itself is stored once.
+This aligns the backend with the long-standing Case Management closure control.
 
-## Migration 010
+## Formal closure requirements
 
-New migration:
+Before entering Closed, the server requires:
 
-- `010_document_evidence_links.sql`
+- a closure reason
+- for resident-visible cases, public status must be **Completed** or **Closed**
+- for resident-visible cases, a resident-facing completion/closure update must be recorded
 
-It creates:
-- `document_links`
-- uniqueness protection
-- target/document indexes
-- backfill of existing primary links
-- explicit revocation of direct `anon` / `authenticated` table access
+These are true server-side controls, not only browser checks.
 
-Migration 010 has been applied to the connected Supabase project and recorded in the application's `public.schema_migrations` ledger.
+## Closure timestamp
 
-At migration time there were no pre-existing linked documents to backfill, so no historical document relationships were altered.
+The existing `cases.closed_at` field is now maintained correctly:
 
-## Security model
+- entering Closed sets the timestamp
+- reopening clears it
+- existing timestamp is preserved while a case remains Closed
 
-The evidence-link registry follows the existing server-mediated Records model.
+The client case shape now exposes:
 
-Direct Supabase role checks confirm:
-- `anon` cannot SELECT or INSERT evidence links
-- `authenticated` cannot SELECT or INSERT evidence links
+- `closedAt`
 
-`/api/health/readiness` now requires:
-- `document_links` to exist
-- direct API isolation to continue covering `document_links`
+## Closure readiness
 
-A future grant mistake will therefore turn readiness red.
+The Case Workspace API now returns:
 
-## Records API
+- `closureReadiness`
 
-`GET /api/records` now returns a `links` collection for every record.
+It contains:
+- whether the current role can formally close
+- whether the case is already formally closed
+- closure timestamp
+- required blockers
+- unresolved linked-work warnings
+- calculated readiness
 
-New endpoints:
+### Required blockers
 
-- `POST /api/records/:id/links`
-- `DELETE /api/records/:id/links/:linkId`
+The checklist can require:
+- closure reason
+- resident-facing Completed/Closed status
+- resident-facing completion/closure update
 
-Secondary links can be added or removed without deleting the underlying document.
+### Review warnings
 
-Primary links are maintained through the document metadata record so there remains one clear primary context.
+The workspace also surfaces unresolved work such as:
+- open applications
+- incomplete field visits
+- correspondence not yet issued/archived
+- open resident feedback
+- open service-recovery actions
+- future appointments
+- open event actions
+- open meeting actions
+- evidence still needing records review
+- referral follow-up still open
 
-New document registrations and secure uploads automatically synchronize their primary link into `document_links`.
+Warnings are intentionally advisory rather than universal hard blockers because legitimate transfer/referral closure scenarios may leave external work continuing elsewhere.
 
-## Records Centre
+## Case Workspace
 
-`/staff/records.html` has been rebuilt around the evidence model.
+A new tab has been added:
 
-The page now provides:
+**Closure**
 
-- Records register
-- Document metadata
-- Secure upload
-- Evidence links
+It displays:
+- formal closure authority
+- required prerequisites
+- unresolved linked-work warnings
+- formal closure timestamp when closed
+- a route back to Case Management to resolve required fields
 
-It also shows:
-- total registered records
-- records with private files
-- records needing review
-- total evidence-link count
+This gives staff a clear final review before closing the case file.
 
-The previous duplicated legacy page header/navigation has been removed.
+## Activity and audit
 
-## Case Workspace evidence roll-up
+Formal closure now records:
+- a **Case closed** activity event with the closure reason
+- audit metadata indicating formal closure
 
-A case no longer shows only documents directly attached to the Case.
+Reopening records:
+- a **Case reopened** activity event
+- audit metadata indicating reopening
 
-The Case Workspace can now show evidence explicitly linked to:
+## Policy wording cleanup
 
-- the Case itself
-- Applications attached to the case
-- Correspondence attached to the case
-- Field Visits attached to the case
-- Appointments attached to the case
-- Resident Feedback attached to the case
-- Events explicitly linked to the case
-- Meetings explicitly linked to the case
+The older Case Management operating note previously bundled assignment and closure into one statement.
 
-This is a **roll-up of explicit relationships**, not inferred matching.
+It now states:
+- formal closure requires Manager/Administrative authority
+- assignment controls remain role-based
 
-Documents remain authoritative in Records Centre.
-
-## Evidence context
-
-Case Workspace document cards now show the evidence contexts that caused the document to appear.
-
-This helps staff understand whether a document supports:
-- the Case
-- a Field Visit
-- an Application
-- a Meeting
-- or another explicitly linked work record
-
-## Readiness visibility
-
-System Administration, Production Control and Release Control now display:
-
-- **Evidence link schema**
-
-alongside Resident Profiles, Central Meetings and Direct API isolation.
+No assignment permission was changed in V267.
 
 ## Verification
 
-Source validation covers:
-- Records API
-- Upload API
-- Cases / Case Workspace API
-- Records Centre
-- Case Workspace helper
+Source validation confirms:
+- Cases API parses
+- case-shape helper parses
+- Case Workspace helper parses
 
-Preflight requires migration 010.
-
-Authenticated smoke testing verifies:
-- Records API returns a `links` array for every record
-- Case Workspace returns `evidence_links` arrays for rolled-up documents
+Authenticated smoke testing now requires `closureReadiness` to contain:
+- `blockers` array
+- `warnings` array
+- boolean `ready`
+- boolean `canFormalClose`
 
 ## Backend release identity
 
-The server package version is now `266.0.0`.
+The server package version is now `267.0.0`.
 
 ## Production boundary
 
-V266 improves evidence traceability. It does not weaken record sensitivity, duplicate private files, infer relationships, or authorize production use.
+V267 adds closure integrity and visibility. It does not automatically decide that unresolved linked work is acceptable, change assignment policy, or constitute final production authorization.
