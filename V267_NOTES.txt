@@ -1,0 +1,55 @@
+Scarborough / Mt. Grace District Office — V267
+
+FORMAL CASE CLOSURE GOVERNANCE
+
+1. Completed vs Closed
+- Completed = operationally complete.
+- Closed = formally closed file.
+
+2. Server-enforced formal closure
+- Manager / Administrative only.
+- Cannot create directly as Closed.
+- Closed cases cannot be changed/reopened by roles without formal closure authority.
+
+3. Required before formal closure
+- closure reason
+- if resident-visible: public status Completed/Closed
+- if resident-visible: resident-facing completion/closure update
+
+4. closed_at
+- set on formal close
+- retained while closed
+- cleared on reopen
+- exposed to client as closedAt
+
+5. Case Workspace Closure tab
+Shows:
+- authority
+- required blockers
+- unresolved linked work
+- closed timestamp
+
+6. Advisory linked-work warnings
+- open applications
+- field work
+- correspondence
+- feedback/recovery
+- future appointments
+- event actions
+- meeting actions
+- evidence needing review
+- open referral follow-up
+
+Warnings are not universal blockers.
+
+7. Activity/audit
+- Case closed event
+- Case reopened event
+- formalClosure/reopened audit metadata
+
+8. Assignment permissions unchanged.
+Old UI wording clarified.
+
+9. Smoke verifies closureReadiness structure.
+
+10. Backend version 267.0.0.
