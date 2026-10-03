@@ -1,0 +1,48 @@
+Scarborough / Mt. Grace District Office — V250
+
+SHARED STAFF NAVIGATION ARCHITECTURE
+
+1. Six-area staff model
+- Home
+- Residents
+- Community
+- Records & Knowledge
+- Communications
+- Administration
+
+2. Permanent sidebar
+A shared collapsible sidebar is now used across every protected staff HTML page except login.
+
+3. Side tab
+Desktop users can collapse the sidebar into a narrow rail.
+Mobile users get a slide-out side drawer opened by the same edge control.
+The collapsed desktop preference is remembered locally.
+
+4. Contextual tabs
+The fixed top context bar shows only the subpages belonging to the current primary area.
+This replaces long repeated navigation rows with a predictable Area → Subpage model.
+
+5. Existing navigation cleanup
+When the shell loads it suppresses older duplicated global-nav, header-nav, hero-nav, nav2 and quicknav rows without deleting page functionality.
+
+6. Authentication context
+The sidebar surfaces the authenticated staff name/role and provides one sign-out action.
+Login remains outside the shell.
+
+7. Rollout scope
+The shared shell is attached to all protected staff HTML pages:
+- operational/home modules
+- resident-service modules
+- community modules
+- records/reporting/quality modules
+- CMS/publishing modules
+- administration/release/UAT/pilot/go-live modules
+
+8. Verification
+- staff-shell.js passes JavaScript syntax validation
+- preflight verifies both shell assets exist
+- authenticated smoke testing verifies both shell assets are served
+- server package version advanced to 250.0.0
+
+9. Preservation
+V250 does not alter database schema, resident data, permissions, API workflows, publishing transitions or production authorization boundaries.
