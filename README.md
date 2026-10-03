@@ -1,8 +1,8 @@
-# Scarborough / Mt. Grace District Office Service System — V247
+# Scarborough / Mt. Grace District Office Service System — V248
 
 **Current status: controlled pre-launch / staging candidate**
 
-V247 aligns the repository documentation and Production Control surface with the actual V242–V246 publishing, readiness and release-control work. The system must **not** be treated as production-authorized merely because technical checks pass.
+V248 completes the modernization of the core release-control surfaces introduced across V242–V247. Production Control, Publishing QA, Release Control and Go-Live now present a consistent operational model: live technical evidence is visible, migration preparation is separated from production import, and formal authorization remains a distinct THA IT / management decision.
 
 ## Current control surfaces
 
@@ -21,25 +21,22 @@ V247 aligns the repository documentation and Production Control surface with the
 - Health: `/api/health`
 - Readiness: `/api/health/readiness`
 
-## What V242–V247 added
+## What V242–V248 added
 
 ### Controlled public publishing
-The CMS now has a governed publishing path with Draft, In Review, Approved, Published, revision, archive and restore behavior. Publishing preserves stable public snapshots while staff revise approved content.
+The CMS has a governed publishing path with Draft, In Review, Approved, Published, revision, archive and restore behavior. Stable public snapshots remain available while staff work on controlled revisions.
 
 ### Publishing QA
 `/staff/publishing-qa.html` verifies the deployed publishing migration, required schema, revision parity, stable public snapshots, public-document controls and malformed legacy snapshot document identifiers.
 
-### Live Release Control
-`/staff/readiness.html` combines:
-- live server readiness
-- expanded security/environment policy checks
-- publishing integrity
-- a separate twelve-gate administrative evidence checklist
-
-The administrative checklist is evidence tracking only. It does not configure infrastructure or grant production approval.
+### Release Control
+`/staff/readiness.html` combines live server readiness, expanded security/environment policy checks, publishing integrity and a separate twelve-gate administrative evidence checklist.
 
 ### Production Control
-`/staff/production.html` is the operational release hub. It surfaces application, database, storage, server-readiness and publishing-integrity state and links staff directly to operations, publishing, UAT, pilot and go-live controls.
+`/staff/production.html` is the operational release hub. It surfaces application, database, storage, server-readiness and publishing-integrity state and routes staff to operations, publishing, UAT, pilot and go-live controls.
+
+### Go-Live & Migration
+`/staff/go-live.html` combines live release evidence with the existing local-only CSV staging workflow. Selected CSV files are parsed in the browser for mapping and validation; the page does not perform a production database import.
 
 ## Technical release verification
 
@@ -57,32 +54,32 @@ Package-level static QA:
 
 ## Required production boundary
 
-A green API, green Publishing QA and a completed Release Control checklist are **necessary evidence, not authorization**.
+Green technical checks and completed browser evidence are necessary but do **not** authorize production.
 
-Before real resident data or public production launch, the office still requires documented review of:
+Before real resident data or public production launch, document and approve:
 - hosting ownership and support responsibility
 - final DNS, domain and TLS/HTTPS state
 - production secrets and account ownership
-- staff roles and individual accounts
+- individual staff roles and access
 - privacy, retention and records handling
 - private document storage
 - backup schedule and successful restore test
 - incident/rollback procedure
 - migration reconciliation
 - mobile/desktop UAT and pilot sign-off
-- post-deployment monitoring and smoke testing
+- monitoring and post-deployment smoke testing
 - THA IT / management authorization
 
-See `PRODUCTION_LAUNCH_CHECKLIST.md` for the evidence checklist.
+See `PRODUCTION_LAUNCH_CHECKLIST.md` for the detailed evidence checklist.
 
 ## Historical deployment baseline
 
-The earlier V163 zero-cost Render + Supabase staging guidance remains useful as provider setup history, including:
+The earlier V163 Render + Supabase staging documents remain useful provider-setup history:
 - `V163_STAGING_DEPLOYMENT.md`
 - `V163_READINESS_CHECKLIST.md`
 
-Those documents are not the current release-status summary. V247 and the live Release Control surfaces are the current reference points.
+They are not the current release-state summary. V248 and the live control surfaces above are the current reference points.
 
 ## Data rule until authorization
 
-Use synthetic/test data in staging until the required production review is complete. Do not interpret browser checkboxes, a healthy server, or a successful deployment as permission to migrate confidential resident records.
+Use synthetic/test data in staging until the required production review is complete. A healthy server, completed checklist, clean migration CSV or successful deployment must not be interpreted as permission to migrate confidential resident records.
