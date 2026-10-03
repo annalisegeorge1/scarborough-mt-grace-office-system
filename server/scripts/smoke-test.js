@@ -16,6 +16,9 @@ await check('Resident portal hub','/portals/');
 await check('Resident guide','/resident-guide/');
 await check('Staff login','/staff/login.html');
 await check('Protected staff page redirects','/staff/index.html',[302]);
+await check('Protected staff directory redirects','/staff/sections.html',[302]);
+await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
+await check('Protected System Administration redirects','/staff/system.html',[302]);
 await check('Protected Production Control redirects','/staff/production.html',[302]);
 await check('Protected Publishing Desk redirects','/staff/publishing.html',[302]);
 await check('Protected Publishing QA redirects','/staff/publishing-qa.html',[302]);
@@ -27,11 +30,15 @@ if(email&&password){
   const ok=r.status===200&&d.csrf;console.log(`${ok?'PASS':'FAIL'} — Staff authentication: ${r.status}`);if(!ok)failures++;else{
     csrf=d.csrf;
     await check('Authenticated staff home','/staff/index.html');
+    await check('Authenticated staff directory','/staff/sections.html');
+    await check('Authenticated Daily Workboard','/staff/workflow.html');
+    await check('Authenticated System Administration','/staff/system.html');
     await check('Authenticated Production Control','/staff/production.html');
     await check('Authenticated Publishing Desk','/staff/publishing.html');
     await check('Authenticated Publishing QA','/staff/publishing-qa.html');
     await check('Authenticated Release Control','/staff/readiness.html');
     await check('Authenticated Go-Live Control','/staff/go-live.html');
+    await check('Management summary API','/api/reports/summary');
     await check('Publishing readiness API','/api/content/publishing-readiness');
     const me=await req('/api/auth/me');console.log(`${me.ok?'PASS':'FAIL'} — Authenticated /me: ${me.status}`);if(!me.ok)failures++;
   }
