@@ -312,7 +312,8 @@ async function sendPublicIndex(req,res,next){
       const civicShellJsFile=path.join(config.staticRoot,'assets','district-civic-shell-v239.js');
       const responsiveHardeningCssFile=path.join(config.staticRoot,'assets','district-responsive-hardening-v240.css');
       const responsiveHardeningJsFile=path.join(config.staticRoot,'assets','district-responsive-hardening-v240.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer,formLandscapeCssBuffer,screenshotPolishCssBuffer,darkFormGalleryCssBuffer,residentServiceWorkspaceCssBuffer,residentServiceWorkspaceJsBuffer,focusedRouteCoherenceCssBuffer,civicFlowCssBuffer,civicFlowJsBuffer,darkFormStabilizationCssBuffer,darkFormStabilizationJsBuffer,civicShellCssBuffer,civicShellJsBuffer,responsiveHardeningCssBuffer,responsiveHardeningJsBuffer]=await Promise.all([
+      const exploreDrawerCssFile=path.join(config.staticRoot,'assets','district-explore-drawer-v241.css');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer,formLandscapeCssBuffer,screenshotPolishCssBuffer,darkFormGalleryCssBuffer,residentServiceWorkspaceCssBuffer,residentServiceWorkspaceJsBuffer,focusedRouteCoherenceCssBuffer,civicFlowCssBuffer,civicFlowJsBuffer,darkFormStabilizationCssBuffer,darkFormStabilizationJsBuffer,civicShellCssBuffer,civicShellJsBuffer,responsiveHardeningCssBuffer,responsiveHardeningJsBuffer,exploreDrawerCssBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -382,7 +383,8 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(civicShellCssFile),
         fs.readFile(civicShellJsFile),
         fs.readFile(responsiveHardeningCssFile),
-        fs.readFile(responsiveHardeningJsFile)
+        fs.readFile(responsiveHardeningJsFile),
+        fs.readFile(exploreDrawerCssFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -455,6 +457,7 @@ async function sendPublicIndex(req,res,next){
       const civicShellJs=`<script src="/assets/district-civic-shell-v239.js?v=${versionFor(civicShellJsBuffer)}" defer></script>`;
       const responsiveHardeningCss=`<link rel="stylesheet" href="/assets/district-responsive-hardening-v240.css?v=${versionFor(responsiveHardeningCssBuffer)}">`;
       const responsiveHardeningJs=`<script src="/assets/district-responsive-hardening-v240.js?v=${versionFor(responsiveHardeningJsBuffer)}" defer></script>`;
+      const exploreDrawerCss=`<link rel="stylesheet" href="/assets/district-explore-drawer-v241.css?v=${versionFor(exploreDrawerCssBuffer)}">`;
       const pwaHead='<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="/assets/district-app-icon-v229.svg"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SMG Office">';
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
@@ -573,6 +576,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-responsive-hardening-v240.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,responsiveHardeningCss+'</head>'):responsiveHardeningCss+html;
+      }
+      if(!html.includes('/assets/district-explore-drawer-v241.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,exploreDrawerCss+'</head>'):exploreDrawerCss+html;
       }
       if(!html.includes('/manifest.webmanifest')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaHead+'</head>'):pwaHead+html;
