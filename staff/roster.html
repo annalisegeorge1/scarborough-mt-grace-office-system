@@ -1,1 +1,183 @@
-<!doctype html><html lang="en"><head><base href="/staff/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Staff Roster, Leave & Coverage | Scarborough / Mt. Grace</title><link rel="stylesheet" href="production-ui.css"><script src="production-client.js"></script><link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head><body><header class="top"><span class="authline" data-auth>Checking session…</span><h1>Staff Roster, Leave & Coverage</h1><div class="sub">Production operational continuity and temporary coverage.</div><div class="nav"><a href="index.html">Home</a><a href="workflow.html">Daily Work</a><a href="applications.html">Applications</a><a href="correspondence.html">Correspondence</a><a href="field.html">Field</a><a href="community.html">Community</a><a href="events.html">Events</a><a href="records.html">Records</a><a href="search.html">Search</a><a href="reports.html">Reports</a><a href="cms.html">Website</a><a href="sections.html">All Sections</a></div></header><main class="wrap"><div id="msg" class="notice">This is an operational continuity tool, not an HR medical file. Record only the minimum information needed for duty coverage.</div><div class="grid"><section class="card third"><h2>Duty roster</h2><label>Staff user</label><select id="rUser"></select><label>Date</label><input type="date" id="rDate"><label>Status</label><select id="rStatus"><option>Office</option><option>Field / External</option><option>Remote / Administrative</option><option>Training</option><option>Off Duty</option></select><label>Primary duty</label><input id="rDuty"><button class="btn gold" id="addRoster">Add roster assignment</button></section><section class="card third"><h2>Operational absence</h2><label>Staff user</label><select id="aUser"></select><label>Start</label><input type="date" id="aStart"><label>End</label><input type="date" id="aEnd"><label>Category</label><select id="aCategory"><option>Annual Leave</option><option>Sick Leave</option><option>Official Duty</option><option>Training</option><option>Other</option></select><label>Coverage required</label><select id="aCoverage"><option value="false">No</option><option value="true">Yes</option></select><button class="btn gold" id="addAbsence">Add absence</button></section><section class="card third"><h2>Temporary coverage</h2><label>Unavailable staff</label><select id="cFrom"></select><label>Covering staff</label><select id="cTo"></select><label>Start</label><input type="date" id="cStart"><label>End</label><input type="date" id="cEnd"><label>Responsibilities</label><textarea id="cResp"></textarea><button class="btn gold" id="addCoverage">Add coverage</button></section><section class="card"><h2>Continuity position</h2><div id="lists"></div></section></div></main><script>let users=[],d={roster:[],absences:[],coverage:[],handovers:[]};const $=id=>document.getElementById(id);async function load(){try{const [u,r]=await Promise.all([SMG.api('/api/users/active'),SMG.api('/api/ops/roster')]);users=u.users||[];d=r;const opts=users.map(x=>`<option value="${x.id}">${SMG.esc(x.display_name)} · ${SMG.esc(x.role)}</option>`).join('');['rUser','aUser','cFrom','cTo'].forEach(id=>$(id).innerHTML=opts);render()}catch(e){SMG.msg(e.message,'danger')}}function name(id){return users.find(x=>x.id===id)?.display_name||id||'—'}function render(){$('lists').innerHTML=`<h3>Roster</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Staff</th><th>Status</th><th>Duty</th></tr></thead><tbody>${(d.roster||[]).map(x=>`<tr><td>${SMG.esc(x.duty_date)}</td><td>${SMG.esc(name(x.user_id))}</td><td>${SMG.esc(x.duty_status)}</td><td>${SMG.esc(x.primary_duty||'—')}</td></tr>`).join('')}</tbody></table></div><h3>Absences</h3><div class="tablewrap"><table><thead><tr><th>Staff</th><th>Dates</th><th>Category</th><th>Coverage?</th></tr></thead><tbody>${(d.absences||[]).map(x=>`<tr><td>${SMG.esc(name(x.user_id))}</td><td>${x.start_date} → ${x.end_date}</td><td>${SMG.esc(x.category)}</td><td>${x.coverage_required?'Yes':'No'}</td></tr>`).join('')}</tbody></table></div><h3>Coverage</h3><div class="tablewrap"><table><thead><tr><th>Unavailable</th><th>Covering</th><th>Dates</th><th>Responsibilities</th></tr></thead><tbody>${(d.coverage||[]).map(x=>`<tr><td>${SMG.esc(name(x.unavailable_user_id))}</td><td>${SMG.esc(name(x.covering_user_id))}</td><td>${x.start_date} → ${x.end_date}</td><td>${SMG.esc(x.responsibilities||'')}</td></tr>`).join('')}</tbody></table></div>`}async function post(kind,body){try{await SMG.api('/api/ops/roster/'+kind,{method:'POST',body});SMG.msg('Continuity record saved.','ok');await load()}catch(e){SMG.msg(e.message,'danger')}}$('addRoster').onclick=()=>post('assignment',{userId:SMG.val('rUser'),dutyDate:SMG.val('rDate'),dutyStatus:SMG.val('rStatus'),primaryDuty:SMG.val('rDuty')});$('addAbsence').onclick=()=>post('absence',{userId:SMG.val('aUser'),startDate:SMG.val('aStart'),endDate:SMG.val('aEnd'),category:SMG.val('aCategory'),coverageRequired:SMG.val('aCoverage')==='true',operationalStatus:'Confirmed'});$('addCoverage').onclick=()=>post('coverage',{unavailableUserId:SMG.val('cFrom'),coveringUserId:SMG.val('cTo'),startDate:SMG.val('cStart'),endDate:SMG.val('cEnd'),responsibilities:SMG.val('cResp')});load();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/staff/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>Roster & Coverage | Scarborough / Mt. Grace</title>
+<link rel="stylesheet" href="production-ui.css">
+<script src="production-client.js"></script>
+<style>
+:root{--navy:#08263d;--blue:#174f74;--gold:#c9a34a;--paper:#eef4f6;--line:#d9e4e9;--muted:#71858f}
+body{background:var(--paper);color:#17394e}
+.roster-wrap{width:min(1380px,calc(100% - 28px));margin:16px auto 70px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;padding:17px 19px;border-radius:14px;background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74);color:#fff;border-bottom:3px solid rgba(201,163,74,.7)}
+.hero small{display:block;color:#d7c27c;font-size:8px;font-weight:900;letter-spacing:.12em}.hero h1{margin:4px 0 3px;font:500 27px Georgia,serif}.hero p{margin:0;color:#b7cbd5;font-size:9px;line-height:1.45}.hero .stamp{color:#a8c0cc;font-size:8px;text-align:right}
+.notice2{margin:10px 0;padding:9px 11px;border-left:3px solid var(--gold);border-radius:8px;background:#fff9e9;color:#68582e;font-size:8px;line-height:1.45}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}.metric2{padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff}.metric2 small{display:block;color:#748893;font-size:7px;font-weight:900;letter-spacing:.06em}.metric2 strong{display:block;margin-top:3px;color:#0b3553;font:600 21px Georgia,serif}.metric2 span{display:block;margin-top:2px;color:#7f9098;font-size:7.5px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 7px 18px rgba(6,31,51,.035)}.panel+.panel{margin-top:10px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 10px;border-bottom:1px solid #e9eff2}.panel-head small{display:block;color:#87691f;font-size:7px;font-weight:900;letter-spacing:.09em}.panel-head h2{margin:3px 0 0;color:#0b3553;font:500 19px Georgia,serif}.panel-head p{margin:3px 0 0;color:#748892;font-size:8px}.panel-body{padding:12px 14px}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}.tabs button{border:1px solid #d9e4e9;border-radius:8px;background:#f5f9fa;color:#426479;padding:7px 9px;font-size:8px;font-weight:900;cursor:pointer}.tabs button.active{background:#0b3553;border-color:#0b3553;color:#fff}
+.form-pane{display:none}.form-pane.active{display:block}.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.field{min-width:0}.field.span2{grid-column:span 2}.field.span4{grid-column:1/-1}.field label{display:block;margin:0 0 4px;color:#607784;font-size:7px;font-weight:900;letter-spacing:.03em}.field input,.field select,.field textarea{width:100%;min-height:36px;border:1px solid #d5e0e5;border-radius:8px;background:#fbfdfe;color:#17394e;padding:7px 9px;font-size:9px}.field textarea{min-height:68px;resize:vertical}.form-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin-top:9px}.statusline{margin-right:auto;color:#70838e;font-size:8px}.btn2{border:1px solid #d3dfe5;border-radius:8px;background:#fff;color:#31596f;padding:8px 10px;font-size:8px;font-weight:900;cursor:pointer}.btn2.primary{background:#0b3553;color:#fff;border-color:#0b3553}.btn2.gold{background:#c9a34a;color:#08263d;border-color:#c9a34a}.btn2:disabled{opacity:.55;cursor:not-allowed}
+.sections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.section-card{border:1px solid #e0e8ec;border-radius:10px;background:#fbfdfe;overflow:hidden}.section-title{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-bottom:1px solid #e8eef1}.section-title strong{color:#234f66;font-size:9px}.section-title span{border-radius:999px;background:#edf3f6;color:#526e7b;padding:4px 6px;font-size:7px;font-weight:900}.list{display:grid}.record{padding:9px 10px;border-bottom:1px solid #edf2f4}.record:last-child{border-bottom:0}.record strong{display:block;color:#31596f;font-size:8.5px}.record small{display:block;margin-top:2px;color:#7d8f98;font-size:7.5px;line-height:1.4}.record p{margin:4px 0 0;color:#657b87;font-size:8px;line-height:1.4}.empty{padding:14px 10px;text-align:center;color:#83949d;font-size:8px}
+.desktop-table{margin-top:9px;overflow:auto;border:1px solid #e1e9ed;border-radius:9px}.desktop-table table{width:100%;min-width:760px;border-collapse:collapse}.desktop-table th,.desktop-table td{padding:8px 9px;border-bottom:1px solid #e8eef1;text-align:left;font-size:8px}.desktop-table th{background:#0b3553;color:#fff;font-size:7px}.desktop-table tr:last-child td{border-bottom:0}
+@media(max-width:1050px){.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.field.span4{grid-column:1/-1}.sections{grid-template-columns:1fr}.desktop-table{display:none}}
+@media(max-width:720px){.roster-wrap{width:calc(100% - 18px);margin-top:10px}.hero{grid-template-columns:1fr}.hero .stamp{text-align:left}.metrics{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}.field.span2,.field.span4{grid-column:auto}.panel-head{align-items:flex-start;flex-direction:column}.form-actions{justify-content:stretch;flex-wrap:wrap}.form-actions .btn2{flex:1}.statusline{width:100%;margin-bottom:2px}.tabs{width:100%}.tabs button{flex:1}}
+</style>
+<link rel="stylesheet" href="staff-shell.css">
+<script src="staff-shell.js" defer></script>
+</head>
+<body>
+<main class="roster-wrap">
+  <section class="hero">
+    <div><small>ADMINISTRATION · CONTINUITY</small><h1>Roster & Coverage</h1><p>Duty planning, operational absences and temporary responsibility coverage in one compact workspace.</p></div>
+    <div class="stamp" id="refreshed">Loading current position…</div>
+  </section>
+
+  <div class="notice2">Operational continuity only. Record the minimum information needed to maintain office coverage; do not place medical details or confidential HR notes here.</div>
+
+  <section class="metrics" aria-label="Continuity metrics">
+    <article class="metric2"><small>ROSTER RECORDS</small><strong id="mRoster">—</strong><span>Current stored duty assignments</span></article>
+    <article class="metric2"><small>ACTIVE ABSENCES</small><strong id="mAbsences">—</strong><span>Absences covering today</span></article>
+    <article class="metric2"><small>ACTIVE COVERAGE</small><strong id="mCoverage">—</strong><span>Coverage arrangements today</span></article>
+    <article class="metric2"><small>STAFF AVAILABLE</small><strong id="mAvailable">—</strong><span>Active staff not absent today</span></article>
+  </section>
+
+  <section class="panel">
+    <header class="panel-head">
+      <div><small>ADD RECORD</small><h2>Update continuity position</h2><p>Choose one record type instead of scrolling through three full forms.</p></div>
+      <nav class="tabs" id="formTabs"><button class="active" data-tab="roster" type="button">Duty roster</button><button data-tab="absence" type="button">Absence</button><button data-tab="coverage" type="button">Temporary coverage</button></nav>
+    </header>
+    <div class="panel-body">
+      <section class="form-pane active" data-pane="roster">
+        <div class="form-grid">
+          <div class="field span2"><label>STAFF USER</label><select id="rUser"></select></div>
+          <div class="field"><label>DATE</label><input type="date" id="rDate"></div>
+          <div class="field"><label>STATUS</label><select id="rStatus"><option>Office</option><option>Field / External</option><option>Remote / Administrative</option><option>Training</option><option>Off Duty</option></select></div>
+          <div class="field span4"><label>PRIMARY DUTY</label><input id="rDuty" placeholder="Optional duty / focus"></div>
+        </div>
+        <div class="form-actions"><span class="statusline" id="rStatusLine"></span><button class="btn2 gold" id="addRoster" type="button">Add roster assignment</button></div>
+      </section>
+
+      <section class="form-pane" data-pane="absence">
+        <div class="form-grid">
+          <div class="field span2"><label>STAFF USER</label><select id="aUser"></select></div>
+          <div class="field"><label>START</label><input type="date" id="aStart"></div>
+          <div class="field"><label>END</label><input type="date" id="aEnd"></div>
+          <div class="field span2"><label>CATEGORY</label><select id="aCategory"><option>Annual Leave</option><option>Sick Leave</option><option>Official Duty</option><option>Training</option><option>Other</option></select></div>
+          <div class="field span2"><label>COVERAGE REQUIRED</label><select id="aCoverage"><option value="false">No</option><option value="true">Yes</option></select></div>
+        </div>
+        <div class="form-actions"><span class="statusline" id="aStatusLine"></span><button class="btn2 gold" id="addAbsence" type="button">Add absence</button></div>
+      </section>
+
+      <section class="form-pane" data-pane="coverage">
+        <div class="form-grid">
+          <div class="field span2"><label>UNAVAILABLE STAFF</label><select id="cFrom"></select></div>
+          <div class="field span2"><label>COVERING STAFF</label><select id="cTo"></select></div>
+          <div class="field"><label>START</label><input type="date" id="cStart"></div>
+          <div class="field"><label>END</label><input type="date" id="cEnd"></div>
+          <div class="field span4"><label>RESPONSIBILITIES</label><textarea id="cResp" placeholder="Only the responsibilities being covered; avoid unnecessary HR detail."></textarea></div>
+        </div>
+        <div class="form-actions"><span class="statusline" id="cStatusLine"></span><button class="btn2 gold" id="addCoverage" type="button">Add coverage</button></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="panel">
+    <header class="panel-head"><div><small>CURRENT POSITION</small><h2>Continuity records</h2><p>Recent duty, absence and coverage records.</p></div><button class="btn2" id="refresh" type="button">Refresh</button></header>
+    <div class="panel-body">
+      <div id="cards" class="sections"></div>
+      <div id="desktopTables"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(()=>{'use strict';
+let users=[],data={roster:[],absences:[],coverage:[],handovers:[]};
+const $=id=>document.getElementById(id),esc=v=>SMG.esc(v??'');
+const today=()=>new Date().toISOString().slice(0,10);
+function name(id){const u=users.find(x=>x.id===id);return u?u.display_name+' · '+u.role:'—'}
+function date(v){if(!v)return '—';try{return new Date(v+'T12:00:00').toLocaleDateString('en-TT',{year:'numeric',month:'short',day:'numeric'})}catch{return String(v)}}
+function activeRange(x,d=today()){return !!x.start_date&&!!x.end_date&&x.start_date<=d&&x.end_date>=d}
+function userOptions(exclude=''){return users.filter(x=>x.id!==exclude).map(x=>'<option value="'+x.id+'">'+esc(x.display_name)+' · '+esc(x.role)+'</option>').join('')}
+function setCoverageOptions(){
+  const from=$('cFrom').value,current=$('cTo').value;
+  $('cTo').innerHTML=userOptions(from);
+  if([...$('cTo').options].some(o=>o.value===current))$('cTo').value=current;
+}
+function setDefaults(){
+  const d=today();
+  if(!$('rDate').value)$('rDate').value=d;
+  if(!$('aStart').value)$('aStart').value=d;
+  if(!$('aEnd').value)$('aEnd').value=d;
+  if(!$('cStart').value)$('cStart').value=d;
+  if(!$('cEnd').value)$('cEnd').value=d;
+}
+function validateRange(start,end,label){
+  if(!start||!end)return label+' start and end dates are required.';
+  if(end<start)return label+' end date cannot be before the start date.';
+  return '';
+}
+function renderMetrics(){
+  const d=today(),activeAbs=(data.absences||[]).filter(x=>activeRange(x,d)&&x.operational_status!=='Cancelled'),activeCov=(data.coverage||[]).filter(x=>activeRange(x,d));
+  $('mRoster').textContent=(data.roster||[]).length;$('mAbsences').textContent=activeAbs.length;$('mCoverage').textContent=activeCov.length;
+  const absent=new Set(activeAbs.map(x=>x.user_id));$('mAvailable').textContent=Math.max(0,users.length-absent.size);
+}
+function rec(title,sub,detail){return '<article class="record"><strong>'+esc(title)+'</strong><small>'+esc(sub)+'</small>'+(detail?'<p>'+esc(detail)+'</p>':'')+'</article>'}
+function card(title,count,html){return '<section class="section-card"><header class="section-title"><strong>'+esc(title)+'</strong><span>'+count+'</span></header><div class="list">'+(html||'<div class="empty">No records.</div>')+'</div></section>'}
+function render(){
+  renderMetrics();
+  const roster=(data.roster||[]).slice(0,12),abs=(data.absences||[]).slice(0,12),cov=(data.coverage||[]).slice(0,12);
+  $('cards').innerHTML=
+    card('Duty roster',roster.length,roster.map(x=>rec(date(x.duty_date)+' · '+name(x.user_id),x.duty_status,x.primary_duty||'')).join(''))+
+    card('Operational absences',abs.length,abs.map(x=>rec(name(x.user_id),date(x.start_date)+' → '+date(x.end_date),x.category+(x.coverage_required?' · Coverage required':''))).join(''))+
+    card('Temporary coverage',cov.length,cov.map(x=>rec(name(x.unavailable_user_id)+' → '+name(x.covering_user_id),date(x.start_date)+' → '+date(x.end_date),x.responsibilities||'')).join(''));
+  $('desktopTables').innerHTML=
+    '<div class="desktop-table"><table><thead><tr><th>Type</th><th>Staff</th><th>Dates</th><th>Status / Category</th><th>Duty / Responsibility</th></tr></thead><tbody>'+
+    roster.map(x=>'<tr><td>Roster</td><td>'+esc(name(x.user_id))+'</td><td>'+esc(date(x.duty_date))+'</td><td>'+esc(x.duty_status)+'</td><td>'+esc(x.primary_duty||'—')+'</td></tr>').join('')+
+    abs.map(x=>'<tr><td>Absence</td><td>'+esc(name(x.user_id))+'</td><td>'+esc(date(x.start_date)+' → '+date(x.end_date))+'</td><td>'+esc(x.category)+'</td><td>'+(x.coverage_required?'Coverage required':'No coverage required')+'</td></tr>').join('')+
+    cov.map(x=>'<tr><td>Coverage</td><td>'+esc(name(x.unavailable_user_id)+' → '+name(x.covering_user_id))+'</td><td>'+esc(date(x.start_date)+' → '+date(x.end_date))+'</td><td>Temporary coverage</td><td>'+esc(x.responsibilities||'—')+'</td></tr>').join('')+
+    '</tbody></table></div>';
+}
+async function load(){
+  $('refreshed').textContent='Refreshing…';
+  try{
+    const [u,r]=await Promise.all([SMG.api('/api/users/active'),SMG.api('/api/ops/roster')]);
+    users=u.users||[];data=r||data;
+    const opts=userOptions();
+    ['rUser','aUser','cFrom'].forEach(id=>$(id).innerHTML=opts);
+    setCoverageOptions();setDefaults();render();
+    $('refreshed').textContent='Updated '+new Date().toLocaleTimeString('en-TT',{hour:'numeric',minute:'2-digit'});
+  }catch(e){$('refreshed').textContent=e.message}
+}
+async function post(kind,body,line,button){
+  const b=$(button);b.disabled=true;$(line).textContent='Saving…';
+  try{await SMG.api('/api/ops/roster/'+kind,{method:'POST',body});$(line).textContent='Saved.';await load()}
+  catch(e){$(line).textContent=e.message}
+  finally{b.disabled=false}
+}
+$('addRoster').onclick=()=>{
+  if(!$('rUser').value||!$('rDate').value){$('rStatusLine').textContent='Staff member and date are required.';return}
+  post('assignment',{userId:$('rUser').value,dutyDate:$('rDate').value,dutyStatus:$('rStatus').value,primaryDuty:$('rDuty').value.trim()},'rStatusLine','addRoster');
+};
+$('addAbsence').onclick=()=>{
+  const err=validateRange($('aStart').value,$('aEnd').value,'Absence');if(err){$('aStatusLine').textContent=err;return}
+  post('absence',{userId:$('aUser').value,startDate:$('aStart').value,endDate:$('aEnd').value,category:$('aCategory').value,coverageRequired:$('aCoverage').value==='true',operationalStatus:'Confirmed'},'aStatusLine','addAbsence');
+};
+$('addCoverage').onclick=()=>{
+  const err=validateRange($('cStart').value,$('cEnd').value,'Coverage');if(err){$('cStatusLine').textContent=err;return}
+  if(!$('cFrom').value||!$('cTo').value){$('cStatusLine').textContent='Unavailable and covering staff are required.';return}
+  if($('cFrom').value===$('cTo').value){$('cStatusLine').textContent='A staff member cannot cover themselves.';return}
+  const overlap=(data.absences||[]).some(x=>x.user_id===$('cTo').value&&x.operational_status!=='Cancelled'&&x.start_date<=$('cEnd').value&&x.end_date>=$('cStart').value);
+  if(overlap){$('cStatusLine').textContent='Covering staff has an overlapping absence.';return}
+  post('coverage',{unavailableUserId:$('cFrom').value,coveringUserId:$('cTo').value,startDate:$('cStart').value,endDate:$('cEnd').value,responsibilities:$('cResp').value.trim()},'cStatusLine','addCoverage');
+};
+$('cFrom').onchange=setCoverageOptions;$('refresh').onclick=load;
+document.querySelectorAll('#formTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#formTabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.form-pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===b.dataset.tab))});
+load();
+})();
+</script>
+</body>
+</html>
