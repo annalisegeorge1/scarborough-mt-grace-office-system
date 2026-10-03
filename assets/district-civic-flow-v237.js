@@ -79,7 +79,11 @@
   root.innerHTML=
     '<header class="v237-flow-head">'+
       '<div class="v237-flow-head-copy"><small>'+cfg.kicker+'</small><strong>'+cfg.title+'</strong><span>'+cfg.intro+'</span></div>'+
-      '<span class="v237-flow-state" aria-live="polite">'+(cfg.state||"Stage 1 of 4")+'</span>'+
+      '<span class="v237-flow-controls">'+
+        '<button class="v237-flow-nav v237-flow-prev" type="button" aria-label="Previous flow stage">‹</button>'+
+        '<span class="v237-flow-state" aria-live="polite">'+(cfg.state||"Stage 1 of 4")+'</span>'+
+        '<button class="v237-flow-nav v237-flow-next" type="button" aria-label="Next flow stage">›</button>'+
+      '</span>'+
     '</header>'+
     '<nav class="v237-flow-track" aria-label="'+cfg.title+'">'+
       cfg.steps.map((step,index)=>
@@ -115,6 +119,8 @@
   }
 
   const stateEl=root.querySelector(".v237-flow-state");
+  const prevButton=root.querySelector(".v237-flow-prev");
+  const nextButton=root.querySelector(".v237-flow-next");
   const track=root.querySelector(".v237-flow-track");
   const steps=[...root.querySelectorAll(".v237-flow-step")];
   let activeIndex=0;
@@ -165,7 +171,9 @@
     });
     const progress=cfg.steps.length>1?(capped/(cfg.steps.length-1))*75:0;
     root.style.setProperty("--v237-progress",progress+"%");
-    if(stateEl)stateEl.textContent="Stage "+(capped+1)+" of "+cfg.steps.length;
+    if(stateEl)stateEl.textContent=focused?("Stage "+(capped+1)+" of "+cfg.steps.length):(cfg.state||"Choose a starting point");
+    if(prevButton)prevButton.disabled=capped<=0;
+    if(nextButton)nextButton.disabled=capped>=cfg.steps.length-1;
     if(revealCard)moveActiveCardIntoView(capped);
   }
 
@@ -182,6 +190,9 @@
     });
     return best;
   }
+
+  if(prevButton)prevButton.addEventListener("click",()=>apply(activeIndex-1,{revealCard:true}));
+  if(nextButton)nextButton.addEventListener("click",()=>apply(activeIndex+1,{revealCard:true}));
 
   if(track){
     track.addEventListener("scroll",()=>{
