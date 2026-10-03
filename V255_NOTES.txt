@@ -1,0 +1,51 @@
+Scarborough / Mt. Grace District Office — V255
+
+FIRST-CLASS RESIDENT PROFILES
+
+1. Data model
+- Added residents table and resident reference sequence.
+- Added cases.resident_id.
+- Existing cases receive separate resident profiles during migration.
+- No automatic deduplication or person merging is performed.
+
+2. Resident Directory
+- Search by reference, name, phone, email or address.
+- Shows linked/open case totals.
+- Field Officer results remain assignment-scoped.
+
+3. Resident Profile workspace
+Tabs:
+- Overview
+- Cases
+- Applications
+- Correspondence
+- Field Visits
+- Documents
+- Feedback
+- Activity
+
+4. Explicit case linking
+- Staff may link a verified case reference to a resident.
+- Reassignment from another resident requires explicit confirmation.
+
+5. Case integration
+- Cases carry residentId.
+- New case creation can create a resident and case transactionally or link an existing profile.
+- Case drawer links directly to Resident Profile.
+
+6. Search
+- Global Search includes permission-aware resident results.
+
+7. Navigation
+Residents area begins with Resident Profiles, followed by operational modules.
+
+8. Readiness
+Live health readiness now fails residentProfiles until the residents table and cases.resident_id exist.
+
+9. Release identity
+Backend advanced to 255.0.0.
+
+Deployment requirement:
+npm run migrate
+
+No automatic identity merging is allowed.
