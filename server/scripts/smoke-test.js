@@ -56,6 +56,7 @@ if(email&&password){
     csrf=d.csrf;
     await check('Authenticated staff shell styles','/staff/staff-shell.css');
     await check('Authenticated staff shell script','/staff/staff-shell.js');
+    await check('Authenticated Administration cohesion styles','/staff/admin-cohesion-v261.css');
     await check('Authenticated case workspace styles','/staff/case-workspace-v251.css');
     await check('Authenticated case workspace script','/staff/case-workspace-v251.js');
     await check('Authenticated case-context styles','/staff/case-context-v251.css');
