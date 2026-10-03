@@ -19,14 +19,27 @@ router.get('/readiness',async(req,res)=>{
     sessionAbsolutePolicy:config.sessionAbsoluteHours>=1&&config.sessionAbsoluteHours<=24,
     privateStorage:!config.uploadsEnabled||storage.readiness(),
     malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured(),
-    residentProfiles:false
+    residentProfiles:false,
+    directApiIsolation:false
   };
   try{
     await db.query('SELECT 1');checks.database=true;
     const rp=await db.query(`SELECT
       to_regclass('public.residents') IS NOT NULL residents_table,
-      EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='cases' AND column_name='resident_id') resident_id_column`);
+      EXISTS(
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema='public' AND table_name='cases' AND column_name='resident_id'
+      ) resident_id_column,
+      NOT EXISTS(
+        SELECT 1
+        FROM information_schema.role_table_grants
+        WHERE table_schema='public'
+          AND table_name IN ('residents','public_content_revisions')
+          AND grantee IN ('anon','authenticated')
+          AND privilege_type IN ('SELECT','INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER')
+      ) direct_api_isolation`);
     checks.residentProfiles=!!(rp.rows[0]?.residents_table&&rp.rows[0]?.resident_id_column);
+    checks.directApiIsolation=!!rp.rows[0]?.direct_api_isolation;
   }catch{}
   const ready=Object.values(checks).every(Boolean);
   res.status(ready?200:503).json({
