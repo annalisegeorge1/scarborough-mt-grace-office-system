@@ -18,6 +18,9 @@ add('Private storage production-safe',storageReady,cfg.storageDriver==='local'?'
 add('Malware scanning configured for uploads',!cfg.uploadsEnabled||!!cfg.clamav.host,cfg.uploadsEnabled?(cfg.clamav.host||'scanner missing'):'uploads disabled',cfg.uploadsEnabled);
 add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-self-contained.html')),'index-self-contained.html');
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
+add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sections.html')),'staff/sections.html');
+add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
+add('System Administration exists',fs.existsSync(path.join(cfg.staticRoot,'staff','system.html')),'staff/system.html');
 add('Production Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','production.html')),'staff/production.html');
 add('Publishing Desk exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing.html')),'staff/publishing.html');
 add('Publishing QA exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing-qa.html')),'staff/publishing-qa.html');
