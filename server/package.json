@@ -1,6 +1,6 @@
 {
   "name": "scarborough-mt-grace-office-server",
-  "version": "255.0.0",
+  "version": "256.0.0",
   "private": true,
   "description": "Provider-ready staging backend for the Scarborough / Mt. Grace District Office service system.",
   "main": "src/app.js",
