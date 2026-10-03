@@ -120,6 +120,8 @@ async function run(){
     ['Absolute session policy',!!rc.sessionAbsolutePolicy,'Absolute session lifetime is inside the approved production range.'],
     ['Private storage',!!rc.privateStorage,'Document storage policy is acceptable for the current upload setting.'],
     ['Malware scanner',!!rc.malwareScanner,'Malware scanning policy is satisfied for the current upload setting.'],
+    ['Resident profile schema',!!rc.residentProfiles,'Resident Profiles and case linkage are available in the database.'],
+    ['Direct API isolation',!!rc.directApiIsolation,'Sensitive resident/revision tables are isolated from direct Supabase anon/authenticated access.'],
     ['Publishing bridge',publishOk,publishOk?'Publishing integrity checks pass.':(publishBlockers?publishBlockers+' blocker(s) reported by Publishing QA.':'Publishing QA could not be loaded.')]
   ];
   $('checks').innerHTML=rows.map(x=>checkRow(...x)).join('');
