@@ -1,128 +1,82 @@
-# Scarborough / Mt. Grace District Office Service System — V269
+# Scarborough / Mt. Grace District Office Service System — V270
 
-**Current status: feature freeze / structured UAT staging baseline**
+**Current status: feature freeze / UAT defect-fix staging candidate**
 
-V269 deliberately pauses major feature expansion.
+V270 is a feature-freeze maintenance release. It fixes a public tablet/mobile usability defect identified during visual UAT.
 
-The system has reached the point where the priority is proving that the existing office workflow is integrated, usable, secure enough for approved staging use, recoverable, and understandable to staff.
+No major feature was added.
 
-The operating path under test is:
+## Civic Flow defect
 
-**Today → record/workspace → action → follow-up → evidence → close/report**
+The shared Civic Flow component used on focused public routes such as:
 
-## Feature freeze
+- Community
+- Forms
+- Updates
 
-Freeze rules are documented in:
+was visually presenting a four-stage resident flow, but on tablet/mobile the cards could appear frozen on **Stage 1 of 4**.
 
-- `FEATURE_FREEZE_V269.md`
+The underlying cause was that the flow state primarily followed vertical page-section observers while the cards themselves became a horizontal swipe rail on smaller screens.
 
-During the freeze, changes should address:
-- failed/blocked UAT scenarios
-- data-integrity and relationship defects
-- authorization/privacy/security defects
-- deployment/migration/backup/recovery defects
-- accessibility/responsive defects that materially hinder work
-- misleading/inconsistent operational wording
-- broken links, calculations, navigation or reporting
-- removal of duplicate/legacy behavior
+That meant:
+- horizontal card movement and the stage label were not reliably synchronized;
+- active cards were not automatically brought into view when page progress changed;
+- section targets inserted later by other public-page scripts could be missed at initialization.
 
-New major modules and speculative feature expansion are deferred.
+## V270 repair
 
-## Structured UAT plan
+The shared `district-civic-flow-v237.js` logic now:
 
-The placeholder UAT document has been replaced with:
+- synchronizes the active stage when the horizontal card rail is swiped;
+- automatically scrolls the active card into view as the resident moves through the page;
+- dynamically re-resolves page targets instead of depending only on targets present at initial load;
+- resynchronizes after public-page DOM changes;
+- supports current URL hash state;
+- keeps the homepage's non-stage wording intact.
 
-- `UAT_TEST_PLAN.md`
+## Tablet/mobile controls
 
-It defines 15 end-to-end acceptance scenarios covering:
+The shared flow header now also includes:
 
-- authentication and role boundaries
-- resident intake/profile
-- case operations
-- application/correspondence/field integration
-- reusable evidence
-- community/event/meeting integration
-- unified Today
-- resident-safe communication
-- formal closure
-- central management reporting
-- publishing
-- roster/coverage
-- search/audit/traceability
-- responsive/accessibility use
-- reliability/backup/recovery
+- previous-stage button
+- next-stage button
 
-## UAT Centre
+on tablet/mobile.
 
-`/staff/uat.html` has been rebuilt.
+Residents can therefore move the staged cards by:
+- swiping the card rail;
+- tapping previous/next;
+- scrolling through the corresponding page sections;
+- tapping a flow card to jump to its destination.
 
-It now provides:
-- scenario cards rather than a wide legacy table
-- Critical/High severity indicators
-- Pass / Fail / Blocked / Not tested results
-- tester notes
-- evidence-reference fields
-- defect register
-- manual sign-off gates
-- staging environment/readiness snapshot
-- exported UAT JSON evidence package
-- issue CSV export
-- direct routes to Release Control and Records Centre
+The active card receives a stronger visual state.
 
-The old duplicate V159/global navigation has been removed.
+## Accessibility / reduced motion
 
-## UAT state and evidence
+Reduced-motion preferences remain respected.
 
-The UAT worksheet intentionally stores temporary test-session state in the browser.
+The navigation buttons expose accessible labels and disable correctly at the first/last stage.
 
-This is acceptable because it is **test evidence**, not operational resident data.
+## Feature-freeze rule
 
-It is not the authoritative sign-off record.
+This release is permitted under the V269 freeze because it repairs a responsive/UAT defect rather than expanding system scope.
 
-After a formal UAT session, staff must export the UAT package and retain the approved evidence in Records Centre or another approved testing-evidence location.
-
-## No silent fallback
-
-The UAT Centre checks:
-- application version
-- server readiness
-- database readiness
-- private storage readiness
-- Resident Profiles schema
-- Meetings schema
-- reusable evidence-link schema
-- Direct API isolation
-
-A failed environment check is shown as attention rather than substituted with browser operational data.
-
-## Reporting baseline retained from V268
-
-The freeze baseline includes central:
-- Management Reports
-- Management Briefing
-- formal closure reason reporting
-- six-month opened vs closed flow
-- current workload distribution
+The feature-freeze rules and structured UAT plan remain in effect.
 
 ## Verification
 
-Preflight now requires:
-- UAT Centre
-- feature-freeze document
-- current UAT test plan
+Source validation confirms the Civic Flow JavaScript parses.
 
-Smoke testing verifies:
-- unauthenticated UAT redirect
-- authenticated UAT page availability
+The staging smoke suite now explicitly checks:
+- `/assets/district-civic-flow-v237.js`
+- `/assets/district-civic-flow-v237.css`
+
+in addition to the existing public page smoke checks.
 
 ## Backend release identity
 
-The staging freeze baseline is:
+The server package version is now `270.0.0`.
 
-- `269.0.0`
+## Production boundary
 
-## Exit from freeze
-
-Feature freeze should end only after structured UAT is complete, Critical/High defects are resolved or formally mitigated, backup/restore is verified, production hosting/security/storage are verified, staff roles/training are confirmed, release evidence is reviewed, and the required THA IT / management authorization is given.
-
-A green automated deployment alone is not production approval.
+V270 is a public-interface defect fix. It does not alter resident data, staff permissions, publishing authority, production authorization or the V269 feature-freeze discipline.
