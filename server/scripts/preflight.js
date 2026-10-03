@@ -20,6 +20,7 @@ add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-s
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
 add('Publishing Desk exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing.html')),'staff/publishing.html');
 add('Publishing QA exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing-qa.html')),'staff/publishing-qa.html');
+add('Release Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','readiness.html')),'staff/readiness.html');
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
