@@ -1,0 +1,106 @@
+name: Verify and Smoke Staging
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-staging-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source-qa:
+    name: Source QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install server dependencies
+        working-directory: server
+        run: npm install --omit=dev --no-audit --no-fund
+
+      - name: JavaScript syntax checks
+        working-directory: server
+        run: npm run check
+
+      - name: Unit tests
+        working-directory: server
+        run: npm test
+
+      - name: Production preflight structure
+        working-directory: server
+        env:
+          NODE_ENV: production
+          PUBLIC_ORIGIN: https://staging.scarboroughmtgrace.page
+          DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/ci
+          DATABASE_SSL: disable
+          TRUST_PROXY: '1'
+          SESSION_IDLE_MINUTES: '30'
+          SESSION_ABSOLUTE_HOURS: '8'
+          UPLOADS_ENABLED: 'false'
+          PRIVATE_STORAGE_DRIVER: local
+          ALLOW_LOCAL_PRIVATE_STORAGE: 'false'
+          MALWARE_SCAN_REQUIRED: 'false'
+        run: npm run preflight
+
+  staging-smoke:
+    name: Render Staging Smoke
+    needs: source-qa
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SMOKE_BASE_URL: https://scarborough-mt-grace-staging.onrender.com
+      SMOKE_EMAIL: ${{ secrets.SMOKE_EMAIL }}
+      SMOKE_PASSWORD: ${{ secrets.SMOKE_PASSWORD }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install server dependencies
+        working-directory: server
+        run: npm install --omit=dev --no-audit --no-fund
+
+      - name: Wait for Render to deploy this application version
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_VERSION="$(node -p "require('./server/package.json').version")"
+          echo "Waiting for staging to report version $EXPECTED_VERSION"
+          for attempt in $(seq 1 40); do
+            BODY="$(curl --silent --show-error --max-time 20 "$SMOKE_BASE_URL/api/health/live" || true)"
+            LIVE_VERSION="$(printf '%s' "$BODY" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).version||'')}catch{console.log('')}})")"
+            if [ "$LIVE_VERSION" = "$EXPECTED_VERSION" ]; then
+              echo "Render staging is on version $LIVE_VERSION"
+              exit 0
+            fi
+            echo "Attempt $attempt/40: staging version is '${LIVE_VERSION:-unavailable}', expected '$EXPECTED_VERSION'"
+            sleep 15
+          done
+          echo "Render staging did not reach application version $EXPECTED_VERSION in time."
+          exit 1
+
+      - name: Run public/protected-route smoke suite
+        working-directory: server
+        run: npm run smoke
+
+      - name: Authenticated smoke note
+        if: ${{ env.SMOKE_EMAIL == '' || env.SMOKE_PASSWORD == '' }}
+        run: |
+          echo "Authenticated smoke was skipped because SMOKE_EMAIL/SMOKE_PASSWORD repository secrets are not configured."
+          echo "Public health, public pages and protected-route redirects were still tested."
