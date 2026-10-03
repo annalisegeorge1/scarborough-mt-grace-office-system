@@ -58,7 +58,9 @@
     deck.setAttribute("data-v239-composed","true");
 
     const first=items[0];
-    first.parentNode.insertBefore(deck,first);
+    let anchor=first;
+    while(anchor.parentElement&&anchor.parentElement!==footer)anchor=anchor.parentElement;
+    footer.insertBefore(deck,anchor);
     items.forEach(item=>deck.appendChild(item));
   }
 
