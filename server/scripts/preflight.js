@@ -26,6 +26,7 @@ add('Resident profile API route exists',fs.existsSync(path.join(__dirname,'..','
 add('Role-aware Today route exists',fs.existsSync(path.join(__dirname,'..','src','routes','today.js')),'src/routes/today.js');
 add('Shared staff shell styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.css')),'staff/staff-shell.css');
 add('Shared staff shell script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.js')),'staff/staff-shell.js');
+add('Administration cohesion styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','admin-cohesion-v261.css')),'staff/admin-cohesion-v261.css');
 add('Integrated case workspace styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.css')),'staff/case-workspace-v251.css');
 add('Integrated case workspace script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.js')),'staff/case-workspace-v251.js');
 add('Case-context styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.css')),'staff/case-context-v251.css');
