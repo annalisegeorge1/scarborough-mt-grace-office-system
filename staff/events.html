@@ -82,8 +82,12 @@ async function save(){const body={eventType:SMG.val('type'),status:SMG.val('stat
 $('addAtt').onclick=async()=>{if(!current){$('selected').textContent='Open an event first.';return}const name=SMG.val('attName');if(!name){$('selected').textContent='Participant name is required.';return}try{await SMG.api('/api/ops/events/'+current.id+'/attendance',{method:'POST',body:{attendeeName:name,participantType:SMG.val('attType'),organization:SMG.val('attOrg')}});SMG.set('attName','');SMG.set('attOrg','');await details(current.id)}catch(e){$('selected').textContent=e.message}};
 $('addAction').onclick=async()=>{if(!current){$('selected').textContent='Open an event first.';return}const action=SMG.val('action');if(!action){$('selected').textContent='Action text is required.';return}try{await SMG.api('/api/ops/events/'+current.id+'/actions',{method:'POST',body:{actionText:action,dueDate:SMG.val('actionDue')||null,linkedReference:SMG.val('actionRef')}});SMG.set('action','');SMG.set('actionDue','');SMG.set('actionRef','');await details(current.id)}catch(e){$('selected').textContent=e.message}};
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));$('save').onclick=save;$('new').onclick=()=>{clear();show('editor')};$('cancelEdit').onclick=()=>show('register');$('refresh').onclick=load;
-if(new URLSearchParams(location.search).get('new')==='1'){clear();show('editor')}
-load();
+(async()=>{
+  const params=new URLSearchParams(location.search),eventId=params.get('event'),tab=params.get('tab');
+  if(params.get('new')==='1'){clear();show('editor');await load();return}
+  await load();
+  if(eventId)openRec(eventId,['editor','manage'].includes(tab)?tab:'manage');
+})().catch(e=>{$('registerState').textContent=e.message});
 })();
 </script>
 </body>
