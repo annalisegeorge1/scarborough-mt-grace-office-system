@@ -454,10 +454,10 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
         if(cur.workflow==='Published'){const err=new Error('Published content must leave Published before verification can be removed.');err.statusCode=400;throw err}
         const q=await client.query(`
           UPDATE public_content SET verified=false,verified_by=NULL,verified_at=NULL,
-            verification_note=COALESCE(NULLIF($3,''),verification_note),
+            verification_note=COALESCE(NULLIF($2,''),verification_note),
             version=version+1,updated_at=now()
           WHERE id=$1 RETURNING *
-        `,[req.params.id,req.user.id,note]);
+        `,[req.params.id,note]);
         await writeRevision(client,q.rows[0],'unverify',req.user.id);
         return q.rows[0];
       }
