@@ -22,6 +22,7 @@ await check('Protected New Case redirects','/staff/new-case.html',[302]);
 await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected staff directory redirects','/staff/sections.html',[302]);
 await check('Protected Daily Workboard redirects','/staff/workflow.html',[302]);
+await check('Protected Roster and Coverage redirects','/staff/roster.html',[302]);
 await check('Protected System Administration redirects','/staff/system.html',[302]);
 await check('Protected Production Control redirects','/staff/production.html',[302]);
 await check('Protected Publishing Desk redirects','/staff/publishing.html',[302]);
@@ -57,6 +58,7 @@ if(email&&password){
     await check('Authenticated Resident Feedback','/staff/feedback.html');
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
+    if(d.permissions.includes('*')||d.permissions.includes('reports.read'))await check('Authenticated Roster and Coverage','/staff/roster.html');
     await check('Authenticated System Administration','/staff/system.html');
     await check('Authenticated Production Control','/staff/production.html');
     await check('Authenticated Publishing Desk','/staff/publishing.html');
