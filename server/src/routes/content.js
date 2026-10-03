@@ -427,8 +427,8 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       'verified_by','verified_at','published_by','published_at','archived_by','archived_at',
       'version','published_snapshot','published_snapshot_at','published_snapshot_active'
     ];
-    const [migration,columns,revisions]=await Promise.all([
-      db.query("SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",['006_content_publishing_workflow.sql']),
+    const [migrationTable,columns,revisions]=await Promise.all([
+      db.query("SELECT to_regclass('public.schema_migrations') AS table_name"),
       db.query(`
         SELECT column_name
         FROM information_schema.columns
@@ -438,7 +438,15 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       `,[requiredColumns]),
       db.query("SELECT to_regclass('public.public_content_revisions') AS table_name")
     ]);
-    const migrationApplied=!!migration.rows[0]?.applied;
+    const migrationTablePresent=!!migrationTable.rows[0]?.table_name;
+    let migrationApplied=false;
+    if(migrationTablePresent){
+      const migration=await db.query(
+        "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version=$1) AS applied",
+        ['006_content_publishing_workflow.sql']
+      );
+      migrationApplied=!!migration.rows[0]?.applied;
+    }
     const present=new Set(columns.rows.map(x=>x.column_name));
     const missingColumns=requiredColumns.filter(x=>!present.has(x));
     const revisionsTable=!!revisions.rows[0]?.table_name;
@@ -493,7 +501,9 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
           FROM public_content pc
           JOIN documents d ON d.id=CASE
             WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
-            ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+            WHEN COALESCE(pc.published_snapshot->>'documentId','') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+              THEN (pc.published_snapshot->>'documentId')::uuid
+            ELSE NULL
           END
           WHERE (
             (pc.workflow='Published' AND pc.verified=true)
@@ -518,7 +528,11 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
         label:'V242 publishing migration applied',
         ok:migrationApplied,
         severity:'blocker',
-        detail:migrationApplied?'Migration 006 is recorded.':'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
+        detail:migrationApplied
+          ?'Migration 006 is recorded.'
+          :(migrationTablePresent
+            ?'Migration 006_content_publishing_workflow.sql is not recorded in schema_migrations.'
+            :'schema_migrations is not present; run the server migration process before using Publishing Desk.')
       },
       {
         key:'columns',
@@ -594,6 +608,7 @@ router.get('/publishing-readiness',requirePermission('content.write'),async(req,
       ready,
       checkedAt:new Date().toISOString(),
       schema:{
+        migrationTablePresent,
         migrationApplied,
         requiredColumns:requiredColumns.length,
         presentColumns:present.size,
