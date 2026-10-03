@@ -1,0 +1,59 @@
+Scarborough / Mt. Grace District Office — V246
+
+LIVE READINESS POLICY ALIGNMENT
+
+V246 strengthens the Release Control introduced in V245 by aligning the deployed readiness endpoint with the production-security policy already enforced by command-line preflight checks.
+
+1. Expanded live readiness checks
+GET /api/health/readiness now checks:
+- database connectivity
+- production mode
+- HTTPS production origin
+- trusted reverse-proxy configuration
+- idle session timeout policy
+- absolute session lifetime policy
+- private storage readiness
+- malware-scanner readiness when uploads require it
+
+2. Safe environment summary
+The readiness endpoint exposes only non-secret operational metadata:
+- whether production mode is active
+- trust-proxy value
+- session idle minutes
+- session absolute hours
+- selected storage driver
+- upload-enabled state
+
+No passwords, tokens, database URLs, storage credentials or other secrets are exposed.
+
+3. Release Control UI
+staff/readiness.html now surfaces all expanded readiness checks instead of only database/origin/storage/scanner state.
+
+The live environment summary now shows:
+- uploads
+- storage driver
+- idle timeout
+- absolute session lifetime
+
+4. Preflight parity
+server/scripts/preflight.js now explicitly verifies that the Release Control page exists in the production package.
+
+5. Deployment safety
+Render health monitoring remains pointed at /api/health/live, so stricter readiness policy does not replace the basic liveness probe.
+
+6. Preservation
+V246 does not change:
+- resident enquiries
+- resident tracking
+- staff case workflows
+- publishing transitions
+- CMS editing
+- public-content exposure
+- authentication credentials
+- document permissions
+- migration behavior
+
+7. Release boundary
+A green readiness result is technical evidence only.
+
+The system remains pre-launch until THA IT and management complete the required review and authorize production use.
