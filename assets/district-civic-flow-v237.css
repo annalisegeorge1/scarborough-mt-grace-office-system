@@ -366,18 +366,24 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
   .v237-flow-track{
     display:flex;
     grid-template-columns:none;
-    gap:7px;
-    padding:10px 10px 11px;
-    overflow-x:auto;
-    overflow-y:hidden;
+    gap:8px;
+    padding:10px 12px 12px;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
     overscroll-behavior-x:contain;
-    scroll-snap-type:x proximity;
-    scrollbar-width:none;
+    scroll-snap-type:none!important;
+    scrollbar-width:thin;
     -webkit-overflow-scrolling:touch;
-    scroll-padding-inline:10px;
-    scroll-behavior:smooth;
+    scroll-behavior:auto!important;
+    touch-action:pan-x pinch-zoom;
+    cursor:grab;
   }
-  .v237-flow-track::-webkit-scrollbar{display:none}
+  .v237-flow-track:active{cursor:grabbing}
+  .v237-flow-track::-webkit-scrollbar{height:5px}
+  .v237-flow-track::-webkit-scrollbar-thumb{
+    background:color-mix(in srgb,var(--v237-accent) 28%,transparent);
+    border-radius:999px;
+  }
 
   .v237-flow-track:before,
   .v237-flow-track:after{
@@ -395,7 +401,6 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     border:1px solid rgba(11,46,72,.08);
     border-radius:12px;
     background:rgba(255,255,255,.48);
-    scroll-snap-align:start;
     transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
   }
 
@@ -422,7 +427,21 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
   }
 
   .v237-flow-nav{
-    display:grid;
+    display:none!important;
+  }
+
+  .v237-flow-controls::after{
+    content:"Swipe cards ↔";
+    min-height:25px;
+    display:inline-flex;
+    align-items:center;
+    padding:0 8px;
+    border:1px solid color-mix(in srgb,var(--v237-accent) 18%,transparent);
+    border-radius:999px;
+    background:var(--v237-accent-soft);
+    color:var(--v237-accent);
+    font:850 6.2px/1 system-ui;
+    white-space:nowrap;
   }
 
   body.v112-dark .v237-flow-step{
@@ -446,7 +465,7 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
   }
 
   .v237-flow-state{
-    display:none;
+    display:inline-flex;
   }
 
   .v237-flow-step{
