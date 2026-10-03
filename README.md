@@ -1,126 +1,89 @@
-# Scarborough / Mt. Grace District Office Service System — V251
+# Scarborough / Mt. Grace District Office Service System — V252
 
 **Current status: controlled pre-launch / staging candidate**
 
-V251 builds on the V250 navigation architecture by turning Case Management into a central resident workspace rather than forcing staff to treat Applications, Correspondence, Field Visits, Records and Feedback as disconnected systems.
+V252 responds directly to the remaining visual clutter seen on the deployed Case Management screen. The shared V250/V251 navigation is now treated as the only global staff navigation layer, and Case Management is reduced to a focused resident-case workspace instead of carrying legacy launch, training, website and administration dashboards on the same page.
 
-## Staff information architecture
+## Case Management hierarchy
 
-The V250 six-area shell remains:
+The intended Case Management screen is now:
 
-1. **Home**
-2. **Residents**
-3. **Community**
-4. **Records & Knowledge**
-5. **Communications**
-6. **Administration**
+**Residents → Case Management → Case Queues → Metrics → Filters → Case Register → Case Workspace Tabs**
 
-V251 adds the next level of hierarchy inside Residents:
+Opening a case continues into the V251 integrated workspace:
 
-**Residents → Case Management → Case Workspace Tabs → Linked Record**
-
-## Integrated case workspace
-
-Opening a case now reorganizes the case drawer into tabs:
-
-- **Overview**
-- **Activity**
-- **Applications**
-- **Correspondence**
-- **Field Visits**
-- **Documents**
-- **Feedback**
-- **Timeline**
-
-The original case-management controls are preserved and moved into the appropriate tabs rather than rewritten.
-
-### Overview
-Resident identity, enquiry, case management, community/project linkage and resident-record summary.
-
-### Activity
-Appointments/notifications, resident-facing updates and permanent internal case notes.
-
-### Applications
-Applications attached through the database `applications.case_id`, plus the existing referral controls.
-
-### Correspondence
-Correspondence linked to the case by type/reference.
-
-### Field Visits
-Field records linked to the case reference or ID.
-
-### Documents
-Central Records Centre documents linked to the case.
-
-### Feedback
-Resident feedback and service-recovery context linked to the case.
-
-### Timeline
-Server-backed `case_activity` history.
-
-## Permission-aware aggregation
-
-New endpoint:
-
-- `GET /api/cases/:id/workspace`
-
-The endpoint does not bypass module permissions. It returns each linked section only when the signed-in role already has the corresponding permission.
-
-Field Officers remain restricted to assigned case/application/field/appointment records where applicable.
-
-## Permanent case notes and activity
-
-V251 starts using the existing production tables that were already present in the core schema:
-
-- `case_notes`
-- `case_activity`
-
-New endpoint:
-
-- `POST /api/cases/:id/notes`
-
-Internal notes are now stored centrally and create a corresponding case-activity event.
-
-Case creation also creates a central activity entry, and central case updates record important changes such as status, priority, ownership, follow-up, target date, escalation, next action, referral agency and public status.
-
-No new database migration is required for V251 because these tables already existed in migration 001.
-
-## Case-context subpages
-
-When staff leave the case workspace for a dedicated module, V251 carries case context into:
-
-- Applications & Referrals
+- Overview
+- Activity
+- Applications
 - Correspondence
-- Field Operations
-- Records Centre
-- Resident Feedback
+- Field Visits
+- Documents
+- Feedback
+- Timeline
 
-These pages show a case-context banner, prefill the appropriate linkage fields and scope the displayed register where possible.
+## V252 cleanup
 
-Applications created from case context now persist the case ID through `applications.case_id`.
+On Case Management, the shared staff shell now visually replaces older duplicated layers including:
 
-Opening those modules directly without case parameters still shows the normal full register.
+- the legacy District Office Staff System module row
+- the internal mailbox banner
+- the old operations-suite notice
+- the old Case Operations hero card
+- repeated pre-launch data-guard banners
+- Production Security Foundation cards
+- Go-Live cards
+- Training / UAT / Pilot cards
+- the old internal portal topbar
+- the old internal module/sidebar navigation
+- embedded Operations Control
+- embedded Attention Centre
+- embedded Website Management
+- embedded Notifications & Appointments hub
 
-## V251 assets
+Those capabilities still exist in their proper staff areas and pages. They are no longer stacked on the Cases page.
 
-- `/staff/case-workspace-v251.css`
-- `/staff/case-workspace-v251.js`
-- `/staff/case-context-v251.css`
-- `/staff/case-context-v251.js`
+## Case queues
+
+V252 adds a compact queue controller above the case register:
+
+- All Cases
+- My Cases
+- Overdue
+- Urgent / High
+- Status selector
+- Refresh
+- Today
+- Global Search
+
+The controls proxy the existing queue logic, preserving the underlying case-filter behavior and counts.
+
+## Mobile / tablet organization
+
+The shared contextual subpage tabs now use stronger contrast, borders and active-state emphasis on touch-sized screens so inactive tabs do not appear disabled.
+
+The side-navigation control remains:
+- collapsible rail on desktop
+- slide-out drawer on mobile/tablet
+
+## V252 assets
+
+- `/staff/case-focus-v252.css`
+- `/staff/case-focus-v252.js`
+
+V250 and V251 assets remain in use:
+- shared staff shell
+- integrated case workspace
+- case-context helpers
 
 ## Backend release identity
 
-The server package version is now `251.0.0`.
+The server package version is now `252.0.0`.
 
 ## Verification
 
-Preflight verifies all V250 staff-shell assets plus all V251 case-workspace/context assets.
+Preflight verifies the V252 focused Case Management assets.
 
-Authenticated smoke testing now verifies:
-- V251 assets are served
-- core case-linked modules are accessible
-- Cases API is available
-- the integrated workspace endpoint is tested against the first accessible case when one exists
+Authenticated smoke testing verifies that the focused-case CSS and JavaScript are served.
 
 Run from `server/`:
 
@@ -132,4 +95,4 @@ Run from `server/`:
 
 ## Production boundary
 
-V251 changes staff organization and uses existing server-backed case relationships. It does not change the production authorization boundary. Real resident data should only be used after the required production review, security controls and THA IT / management authorization are complete.
+V252 is an information-architecture and presentation cleanup. It does not remove backend capabilities, change resident data, weaken RBAC, alter publishing rules, or authorize production use.
