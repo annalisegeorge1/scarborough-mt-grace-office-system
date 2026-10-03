@@ -41,6 +41,7 @@ const quickItems=[
   ['New field visit','field.html?new=1','field.write',null,'Field activity'],
   ['New community matter','community.html?new=matter','community.write',null,'Community matter'],
   ['New event','events.html?new=1','community.write',null,'Event / outreach'],
+  ['New meeting','meetings.html?new=1','community.write',null,'Meeting / follow-up'],
   ['New record','records.html?new=1','records.write',null,'Document record']
 ];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -92,7 +93,7 @@ function hydrateUser(session){
 }
 function triggerRequestedCreate(file){
   const mode=new URLSearchParams(location.search).get('new');if(!mode)return;
-  const ids={'residents.html':'newResident','applications.html':'new','correspondence.html':'new','field.html':'new','records.html':'new','events.html':'new','community.html':'openMatterForm'};
+  const ids={'residents.html':'newResident','applications.html':'new','correspondence.html':'new','field.html':'new','records.html':'new','events.html':'new','meetings.html':'newBtn','community.html':'openMatterForm'};
   const id=ids[file];if(!id)return;
   setTimeout(()=>document.getElementById(id)?.click(),250);
 }
