@@ -24,18 +24,14 @@ body{background:var(--pc-paper);color:#17394e}
 .boundary{margin-top:12px;padding:13px 14px;border-left:4px solid var(--pc-gold);background:#fffdf5;border-radius:10px;color:#61747d;font-size:10px;line-height:1.55}.boundary strong{color:#0b3553}
 @media(max-width:1050px){.metrics{grid-template-columns:repeat(3,1fr)}.two-col{grid-template-columns:1fr}.route-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.shell{width:calc(100% - 18px)}.hero{padding:18px 14px}.metrics{grid-template-columns:1fr 1fr}.route-grid,.release-path{grid-template-columns:1fr}.stage::after{display:none}.check{grid-template-columns:26px minmax(0,1fr)}.pill{grid-column:2;justify-self:start}}
 </style>
-<link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head>
+<link rel="stylesheet" href="admin-cohesion-v261.css"><link rel="stylesheet" href="staff-shell.css"><script src="staff-shell.js" defer></script></head>
 <body>
-<header class="hero">
-  <span class="authline" data-auth>Checking session…</span>
-  <span class="eyebrow">V247 • OPERATIONS + RELEASE CONTROL</span>
+<header class="hero v261-admin-hero">
+  <span class="eyebrow">V261 • OPERATIONS + RELEASE CONTROL</span>
   <h1>Production Control Centre</h1>
   <p>A live operational overview of the application, database, storage, security readiness and publishing bridge—plus direct routes to the staff systems used to prepare a controlled launch.</p>
-  <nav class="hero-nav" aria-label="Production control navigation">
-    <a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a href="cms.html">Website CMS</a><a href="publishing.html">Publishing Desk</a><a href="publishing-qa.html">Publishing QA</a><a href="readiness.html">Release Control</a><a href="go-live.html">Go-Live</a><a class="active" aria-current="page" href="production.html">Production</a>
-  </nav>
 </header>
-<main class="shell">
+<main class="shell v261-admin-shell">
   <div id="msg" class="noticebar">Running live infrastructure checks…</div>
   <section class="metrics">
     <article class="metric-card"><small>Application</small><strong id="apiState">Checking</strong><span id="apiDetail">Liveness and API health.</span></article>
