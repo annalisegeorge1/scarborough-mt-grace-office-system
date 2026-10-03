@@ -1,0 +1,161 @@
+/* V261 Administration cohesion — System + Production */
+:root{
+  --v261-admin-navy:#08263d;
+  --v261-admin-blue:#174f74;
+  --v261-admin-gold:#c9a34a;
+  --v261-admin-line:#d9e4e9;
+  --v261-admin-paper:#eef4f6;
+}
+body{background:var(--v261-admin-paper)!important;color:#17394e}
+
+.hero.v261-admin-hero{
+  width:min(1400px,calc(100% - 28px));
+  margin:16px auto 0;
+  padding:17px 19px!important;
+  border:0!important;
+  border-radius:14px;
+  background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74)!important;
+  box-shadow:none!important;
+  border-bottom:3px solid rgba(201,163,74,.7)!important;
+}
+.hero.v261-admin-hero .authline,
+.hero.v261-admin-hero .nav2,
+.hero.v261-admin-hero .hero-nav{display:none!important}
+.hero.v261-admin-hero .eyebrow{
+  display:block;
+  color:#d7c27c!important;
+  font-size:8px!important;
+  font-weight:900!important;
+  letter-spacing:.12em!important;
+}
+.hero.v261-admin-hero h1{
+  margin:4px 0 3px!important;
+  font:500 27px Georgia,serif!important;
+  color:#fff!important;
+}
+.hero.v261-admin-hero p{
+  max-width:980px!important;
+  margin:0!important;
+  color:#b8ccd6!important;
+  font-size:9px!important;
+  line-height:1.45!important;
+}
+
+.shell.v261-admin-shell{
+  width:min(1400px,calc(100% - 28px))!important;
+  margin:10px auto 70px!important;
+}
+
+.v261-admin-shell .notice2,
+.v261-admin-shell .noticebar{
+  margin:0 0 10px!important;
+  padding:9px 11px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+  line-height:1.45!important;
+}
+
+.v261-admin-shell .metrics2,
+.v261-admin-shell .metrics{
+  gap:8px!important;
+  margin:10px 0!important;
+}
+.v261-admin-shell .metric2,
+.v261-admin-shell .metric-card{
+  padding:11px 12px!important;
+  border-radius:11px!important;
+  box-shadow:none!important;
+}
+.v261-admin-shell .metric2 small,
+.v261-admin-shell .metric-card small{
+  font-size:7px!important;
+  letter-spacing:.06em!important;
+}
+.v261-admin-shell .metric2 strong,
+.v261-admin-shell .metric-card strong{
+  margin-top:3px!important;
+  font:600 21px Georgia,serif!important;
+}
+.v261-admin-shell .metric2 span,
+.v261-admin-shell .metric-card span{
+  margin-top:2px!important;
+  font-size:7.5px!important;
+  line-height:1.35!important;
+}
+
+.v261-admin-shell .panel{
+  border-radius:13px!important;
+  box-shadow:0 7px 18px rgba(6,31,51,.035)!important;
+}
+.v261-admin-shell .head,
+.v261-admin-shell .panel-head{
+  padding:12px 14px 10px!important;
+}
+.v261-admin-shell .head small,
+.v261-admin-shell .panel-head small{
+  font-size:7px!important;
+  letter-spacing:.09em!important;
+}
+.v261-admin-shell .head h2,
+.v261-admin-shell .panel-head h2{
+  margin:3px 0 0!important;
+  font:500 19px Georgia,serif!important;
+}
+.v261-admin-shell .head p,
+.v261-admin-shell .panel-head p{
+  margin:3px 0 0!important;
+  font-size:8px!important;
+  line-height:1.4!important;
+}
+
+.v261-admin-shell .checks{padding:6px 14px 12px!important}
+.v261-admin-shell .check{padding:8px 0!important;gap:8px!important}
+.v261-admin-shell .check strong{font-size:9px!important}
+.v261-admin-shell .check p,
+.v261-admin-shell .check span span{font-size:7.5px!important;line-height:1.4!important}
+
+.v261-admin-shell .toolbar,
+.v261-admin-shell .toolbar2{
+  gap:6px!important;
+  padding:10px 14px!important;
+}
+.v261-admin-shell .pc-btn,
+.v261-admin-shell .btn2{
+  padding:8px 10px!important;
+  font-size:8px!important;
+}
+
+.v261-admin-shell .route-grid,
+.v261-admin-shell .routes,
+.v261-admin-shell .release-path{
+  gap:8px!important;
+  padding:12px 14px!important;
+}
+.v261-admin-shell .route,
+.v261-admin-shell .stage{
+  padding:10px!important;
+  border-radius:9px!important;
+}
+.v261-admin-shell .route strong,
+.v261-admin-shell .stage strong{font-size:9px!important}
+.v261-admin-shell .route span,
+.v261-admin-shell .stage span{font-size:7.5px!important;line-height:1.35!important}
+.v261-admin-shell .route a{font-size:8px!important;padding:3px 0!important}
+.v261-admin-shell .boundary{
+  margin-top:10px!important;
+  padding:10px 11px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:900px){
+  .hero.v261-admin-hero,
+  .shell.v261-admin-shell{width:calc(100% - 18px)!important}
+  .hero.v261-admin-hero{margin-top:10px}
+}
+@media(max-width:700px){
+  .hero.v261-admin-hero{padding:15px 14px!important}
+  .hero.v261-admin-hero h1{font-size:24px!important}
+  .v261-admin-shell .metrics{grid-template-columns:repeat(2,1fr)!important}
+}
