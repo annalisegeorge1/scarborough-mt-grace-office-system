@@ -20,6 +20,10 @@ add('Static public index exists',fs.existsSync(path.join(cfg.staticRoot,'index-s
 add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.html')),'staff/login.html');
 add('Shared staff shell styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.css')),'staff/staff-shell.css');
 add('Shared staff shell script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.js')),'staff/staff-shell.js');
+add('Integrated case workspace styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.css')),'staff/case-workspace-v251.css');
+add('Integrated case workspace script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.js')),'staff/case-workspace-v251.js');
+add('Case-context styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.css')),'staff/case-context-v251.css');
+add('Case-context helper exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.js')),'staff/case-context-v251.js');
 add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sections.html')),'staff/sections.html');
 add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
 add('System Administration exists',fs.existsSync(path.join(cfg.staticRoot,'staff','system.html')),'staff/system.html');
