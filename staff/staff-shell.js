@@ -3,7 +3,7 @@ const STORAGE_COLLAPSE='smg_staff_shell_collapsed';
 const STORAGE_AREA='smg_staff_shell_area';
 const areas=[
   {id:'home',label:'Home',icon:'⌂',items:[
-    ['Today','workflow.html'],['Operations Centre','command.html'],['Management Briefing','briefing.html'],['Handover','handover.html'],['Attention & Reminders','automation.html']
+    ['Home','home.html'],['Daily Workboard','workflow.html'],['Operations Centre','command.html'],['Management Briefing','briefing.html'],['Handover','handover.html'],['Attention & Reminders','automation.html']
   ]},
   {id:'residents',label:'Residents',icon:'◉',items:[
     ['Case Management','index.html'],['Applications & Referrals','applications.html'],['Correspondence','correspondence.html'],['Field Visits','field.html'],['Resident Feedback','feedback.html']
