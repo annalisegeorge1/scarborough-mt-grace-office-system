@@ -2,7 +2,7 @@
 const state={caseId:null,workspace:null,csrf:'',loading:false,activeTab:'overview'};
 const tabs=[
   ['overview','Overview'],['activity','Activity'],['applications','Applications'],['correspondence','Correspondence'],
-  ['field','Field Visits'],['documents','Documents'],['feedback','Feedback'],['timeline','Timeline']
+  ['field','Field Visits'],['related','Related Work'],['documents','Documents'],['feedback','Feedback'],['timeline','Timeline']
 ];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=v=>{if(!v)return '—';try{return new Date(v).toLocaleString('en-TT',{dateStyle:'medium',timeStyle:String(v).includes('T')?'short':undefined})}catch{return String(v)}};
@@ -55,6 +55,8 @@ function ensureLayout(){
   const apps=panel('Linked applications','Application and referral records attached to this case.','applications.html','Open Applications');apps.id='v251-applications';pane('applications').prepend(apps);
   const corr=panel('Linked correspondence','Letters and issued correspondence linked to this case.','correspondence.html','Open Correspondence');corr.id='v251-correspondence';pane('correspondence').append(corr);
   const field=panel('Linked field visits','Site visits and field activity linked to this case.','field.html','Open Field Operations');field.id='v251-field';pane('field').append(field);
+  const relatedEvents=panel('Linked events','Events explicitly linked to this case.','events.html','Open Events');relatedEvents.id='v265-events';pane('related').append(relatedEvents);
+  const relatedMeetings=panel('Linked meetings','Meetings, decisions and follow-up explicitly linked to this case.','meetings.html','Open Meetings');relatedMeetings.id='v265-meetings';pane('related').append(relatedMeetings);
   const fb=panel('Resident feedback & recovery','Feedback and service-recovery actions linked to this case.','feedback.html','Open Feedback');fb.id='v251-feedback';pane('feedback').append(fb);
   const timeline=panel('Central case timeline','Server-backed activity recorded against this case.');timeline.id='v251-timeline';pane('timeline').prepend(timeline);
 
@@ -106,7 +108,7 @@ function renderWorkspace(w){
   if(!residentLink&&strip){residentLink=document.createElement('div');residentLink.id='v255-resident-profile-link';residentLink.className='v255-resident-profile-link';strip.after(residentLink)}
   if(residentLink)residentLink.innerHTML=c.residentId?'<a href="resident.html?id='+encodeURIComponent(c.residentId)+'">Open Resident Profile →</a>':'';
 
-  setCount('applications',w.applications?.length);setCount('correspondence',w.correspondence?.length);setCount('field',w.fieldVisits?.length);setCount('documents',w.documents?.length);setCount('feedback',w.feedback?.length);setCount('timeline',w.activity?.length);setCount('activity',(w.notes?.length||0)+(w.appointments?.length||0));
+  setCount('applications',w.applications?.length);setCount('correspondence',w.correspondence?.length);setCount('field',w.fieldVisits?.length);setCount('related',(w.events?.length||0)+(w.meetings?.length||0));setCount('documents',w.documents?.length);setCount('feedback',w.feedback?.length);setCount('timeline',w.activity?.length);setCount('activity',(w.notes?.length||0)+(w.appointments?.length||0));
 
   const appHost=document.getElementById('v251-applications');
   if(!p.applications)restricted(appHost.querySelector('.v251-list'),'Your role does not have Applications access.');
@@ -119,6 +121,16 @@ function renderWorkspace(w){
   const fieldHost=document.getElementById('v251-field');
   if(!p.field)restricted(fieldHost.querySelector('.v251-list'),'Your role does not have Field Operations access.');
   else renderItems(fieldHost,w.fieldVisits,a=>'<article class="v251-item"><div><strong>'+esc(a.visit_type||'Field visit')+' · '+esc(a.location_text||'Location not recorded')+'</strong><small>'+esc(fmt(a.scheduled_at||a.completed_at||a.updated_at))+'</small><p>'+esc(a.next_action||a.public_outcome||a.purpose||'')+'</p></div><span class="v251-badge">'+esc(a.status||'Planned')+'</span></article>','No field visits are linked to this case.');
+
+  const eventHost=document.getElementById('v265-events');
+  const meetingHost=document.getElementById('v265-meetings');
+  if(!p.community){
+    restricted(eventHost.querySelector('.v251-list'),'Your role does not have Community Operations access.');
+    restricted(meetingHost.querySelector('.v251-list'),'Your role does not have Community Operations access.');
+  }else{
+    renderItems(eventHost,w.events,a=>'<a class="v251-item" href="events.html?event='+encodeURIComponent(a.id)+'&tab=manage"><div><strong>'+esc(a.title||'Event')+'</strong><small>'+esc(a.event_type||'Event')+' · '+esc(fmt(a.starts_at||a.updated_at))+' · '+esc(a.venue||'Venue not recorded')+'</small></div><span class="v251-badge">'+esc(a.status||'Planned')+'</span></a>','No events are linked to this case.');
+    renderItems(meetingHost,w.meetings,a=>'<a class="v251-item" href="meetings.html?meeting='+encodeURIComponent(a.id)+'&tab=manage"><div><strong>'+esc(a.reference||'Meeting')+' · '+esc(a.title||'Meeting')+'</strong><small>'+esc(a.meeting_type||'Meeting')+' · '+esc(a.meeting_date||'Date not set')+(a.open_actions?' · '+esc(a.open_actions)+' open action(s)':'')+'</small></div><span class="v251-badge">'+esc(a.status||'Planning')+'</span></a>','No meetings are linked to this case.');
+  }
 
   const fbHost=document.getElementById('v251-feedback');
   if(!p.feedback)restricted(fbHost.querySelector('.v251-list'),'Your role does not have Resident Feedback access.');
