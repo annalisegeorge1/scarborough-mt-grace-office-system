@@ -118,6 +118,95 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
                                  next_follow_up NULLS LAST,updated_at DESC LIMIT 6`)
     : {rows:[]};
 
+
+  const communityFollowups=permissions.community
+    ? await db.query(`SELECT count(*)::int n FROM community_matters
+                       WHERE status<>'Resolved' AND next_follow_up IS NOT NULL AND next_follow_up<=CURRENT_DATE`)
+    : {rows:[{n:0}]};
+
+  const meetingActionCount=permissions.community
+    ? await db.query(`SELECT count(*)::int n FROM meeting_actions
+                       WHERE status NOT IN ('Completed','Cancelled')`)
+    : {rows:[{n:0}]};
+
+  const caseAttention=await db.query(
+    `SELECT c.id,c.reference,c.resident_name,c.status,c.priority,c.next_follow_up,c.next_action
+       FROM cases c
+      WHERE `+caseWhere+`
+        AND c.status NOT IN ('Closed','Completed')
+        AND (c.next_follow_up<=CURRENT_DATE OR c.priority IN ('Urgent','High'))
+      ORDER BY c.next_follow_up NULLS LAST,c.updated_at DESC
+      LIMIT 15`,caseParams);
+
+  const applicationAttention=permissions.applications
+    ? await db.query(
+      isField
+        ? `SELECT id,reference,applicant_name,assistance_type,agency,stage,next_follow_up
+             FROM applications
+            WHERE assigned_user_id=$1 AND stage<>$2 AND next_follow_up<=CURRENT_DATE
+            ORDER BY next_follow_up,updated_at DESC LIMIT 10`
+        : `SELECT id,reference,applicant_name,assistance_type,agency,stage,next_follow_up
+             FROM applications
+            WHERE stage<>$1 AND next_follow_up<=CURRENT_DATE
+            ORDER BY next_follow_up,updated_at DESC LIMIT 10`,
+      isField?[uid,openApplicationStage]:[openApplicationStage])
+    : {rows:[]};
+
+  const fieldAttention=permissions.field
+    ? await db.query(
+      isField
+        ? `SELECT id,visit_type,linked_type,linked_reference,scheduled_at,location_text,next_action,next_follow_up,status
+             FROM field_visits
+            WHERE lead_user_id=$1 AND status<>'Completed'
+              AND (next_follow_up<=CURRENT_DATE OR scheduled_at::date<=CURRENT_DATE)
+            ORDER BY COALESCE(next_follow_up,scheduled_at::date),updated_at DESC LIMIT 10`
+        : `SELECT id,visit_type,linked_type,linked_reference,scheduled_at,location_text,next_action,next_follow_up,status
+             FROM field_visits
+            WHERE status<>'Completed'
+              AND (next_follow_up<=CURRENT_DATE OR scheduled_at::date<=CURRENT_DATE)
+            ORDER BY COALESCE(next_follow_up,scheduled_at::date),updated_at DESC LIMIT 10`,
+      isField?[uid]:[])
+    : {rows:[]};
+
+  const communityAttention=permissions.community
+    ? await db.query(`SELECT id,title,matter_type,area,priority,status,next_follow_up
+                       FROM community_matters
+                      WHERE status<>'Resolved' AND next_follow_up<=CURRENT_DATE
+                      ORDER BY next_follow_up,updated_at DESC LIMIT 10`)
+    : {rows:[]};
+
+  const meetingAttention=permissions.community
+    ? await db.query(`SELECT ma.id,ma.meeting_id,ma.action_text,ma.owner_text,ma.due_date,ma.status,
+                             m.reference,m.title
+                        FROM meeting_actions ma
+                        JOIN meetings m ON m.id=ma.meeting_id
+                       WHERE ma.status NOT IN ('Completed','Cancelled') AND ma.due_date<=CURRENT_DATE
+                       ORDER BY ma.due_date,ma.updated_at DESC LIMIT 12`)
+    : {rows:[]};
+
+  const feedbackAttention=permissions.feedback
+    ? await db.query(`SELECT id,case_reference,feedback_type,theme,status,updated_at
+                       FROM resident_feedback
+                      WHERE status<>'Closed' AND follow_up_requested=true
+                      ORDER BY updated_at DESC LIMIT 8`)
+    : {rows:[]};
+
+  const attention=[
+    ...caseAttention.rows.map(x=>({kind:'Case',reference:x.reference,title:x.resident_name||'Resident case',subtitle:(x.priority||'Standard')+' · '+(x.status||'Open'),detail:x.next_action||'Case follow-up requires attention.',dueDate:x.next_follow_up||null,url:'index.html?case='+encodeURIComponent(x.id)})),
+    ...applicationAttention.rows.map(x=>({kind:'Application',reference:x.reference,title:x.applicant_name||'Application',subtitle:(x.assistance_type||'Assistance')+' · '+(x.stage||'Open'),detail:x.agency?'Agency: '+x.agency:'Application follow-up is due.',dueDate:x.next_follow_up||null,url:'applications.html'})),
+    ...fieldAttention.rows.map(x=>({kind:'Field',reference:x.linked_reference||x.visit_type,title:x.visit_type||'Field visit',subtitle:(x.status||'Planned')+' · '+(x.location_text||'Location not recorded'),detail:x.next_action||'Field activity requires attention.',dueDate:x.next_follow_up||String(x.scheduled_at||'').slice(0,10)||null,url:'field.html'})),
+    ...communityAttention.rows.map(x=>({kind:'Community',reference:x.matter_type||'Community matter',title:x.title,subtitle:(x.area||'No area')+' · '+(x.status||'Open'),detail:'Community follow-up is due.',dueDate:x.next_follow_up||null,url:'community.html'})),
+    ...meetingAttention.rows.map(x=>({kind:'Meeting action',reference:x.reference,title:x.title,subtitle:(x.owner_text||'Unassigned')+' · '+(x.status||'Open'),detail:x.action_text,dueDate:x.due_date||null,url:'meetings.html?meeting='+encodeURIComponent(x.meeting_id)+'&tab=manage'})),
+    ...feedbackAttention.rows.map(x=>({kind:'Feedback',reference:x.case_reference||x.feedback_type||'Resident feedback',title:x.theme||x.feedback_type||'Follow-up requested',subtitle:x.status||'Open',detail:'Resident follow-up has been requested.',dueDate:null,url:'feedback.html'}))
+  ];
+
+  const todayKey=new Date().toISOString().slice(0,10);
+  const stateOf=v=>!v?'attention':String(v).slice(0,10)<todayKey?'overdue':String(v).slice(0,10)===todayKey?'today':'upcoming';
+  attention.forEach(x=>x.state=stateOf(x.dueDate));
+  const rank={overdue:0,today:1,attention:2,upcoming:3};
+  attention.sort((a,b)=>(rank[a.state]??9)-(rank[b.state]??9)||String(a.dueDate||'9999-12-31').localeCompare(String(b.dueDate||'9999-12-31')));
+  const attentionQueue=attention.slice(0,30);
+
   const recent=await db.query(
     `SELECT a.case_id,a.occurred_at,a.activity_type,a.description,c.reference,c.resident_name
        FROM case_activity a JOIN cases c ON c.id=a.case_id
@@ -138,8 +227,14 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
       applicationsOpen:applicationCount.rows[0]?.n||0,
       fieldOpen:fieldCount.rows[0]?.n||0,
       upcomingAppointments:appointmentCount.rows[0]?.n||0,
-      feedbackOpen:feedbackCount.rows[0]?.n||0
+      feedbackOpen:feedbackCount.rows[0]?.n||0,
+      communityFollowUps:communityFollowups.rows[0]?.n||0,
+      meetingActionsOpen:meetingActionCount.rows[0]?.n||0,
+      attentionOpen:attentionQueue.length,
+      attentionOverdue:attentionQueue.filter(x=>x.state==='overdue').length,
+      attentionDueToday:attentionQueue.filter(x=>x.state==='today').length
     },
+    attention:attentionQueue,
     cases:cases.rows,
     applications:applications.rows,
     field:field.rows,
