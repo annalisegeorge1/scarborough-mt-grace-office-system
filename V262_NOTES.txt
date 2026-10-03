@@ -1,0 +1,40 @@
+Scarborough / Mt. Grace District Office — V262
+
+COMMUNITY + WEBSITE TABLET REDESIGN
+
+1. Community Operations rebuilt
+- metrics first
+- tabbed Matter / Initiative / Partner editors
+- one form visible at a time
+- card-based register
+- required-title/name checks
+- duplicate legacy header removed
+
+2. Quick Create fix
+- New community matter now opens the Matter editor
+- no longer clicks the old Save button
+
+3. Events & Volunteers rebuilt
+- Events register
+- Event editor
+- Attendance & actions
+- register-first workflow
+- event metrics
+- tablet event cards
+- compact attendance/action management
+
+4. Website CMS presentation cleanup
+- publishing logic preserved
+- duplicate auth/navigation removed
+- compact header/forms/cards
+- long tables constrained to scrollable panels
+- sticky table headers
+- shared content-cohesion-v262.css
+
+5. Verification
+- source scripts parse
+- preflight covers Community, Events, CMS and V262 content styles
+- authenticated smoke covers these pages when permissions allow
+
+6. Release identity
+- backend version 262.0.0
