@@ -1,9 +1,6 @@
 'use strict';
 
-const VERSION='v270-5';
-const SHELL_CACHE='smg-public-shell-'+VERSION;
-const ASSET_CACHE='smg-public-assets-'+VERSION;
-const RUNTIME_CACHE='smg-public-runtime-'+VERSION;
+// Public asset URLs are content-hashed by the server. Routine CSS/JS edits do\n// not require a service-worker version bump; change this only for cache-policy\n// or shell/precache changes.\nconst CACHE_SCHEMA='v271';\nconst SHELL_CACHE='smg-public-shell-'+CACHE_SCHEMA;\nconst ASSET_CACHE='smg-public-assets-'+CACHE_SCHEMA;
 
 const PUBLIC_SHELL_PATHS=new Set([
   '/',
@@ -72,7 +69,7 @@ self.addEventListener('install',event=>{
 
 self.addEventListener('activate',event=>{
   event.waitUntil((async()=>{
-    const keep=new Set([SHELL_CACHE,ASSET_CACHE,RUNTIME_CACHE]);
+    const keep=new Set([SHELL_CACHE,ASSET_CACHE]);
     const names=await caches.keys();
     await Promise.all(names
       .filter(name=>name.startsWith('smg-public-')&&!keep.has(name))
