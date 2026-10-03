@@ -1,0 +1,165 @@
+/* V262 — Website CMS tablet cohesion */
+.v262-cms{background:#eef4f6!important;color:#17394e}
+.v262-cms .top.v262-cms-hero{
+  width:min(1400px,calc(100% - 28px));
+  margin:16px auto 0;
+  padding:17px 19px!important;
+  border:0!important;
+  border-radius:14px;
+  background:linear-gradient(115deg,#061f33,#0b3553 70%,#174f74)!important;
+  border-bottom:3px solid rgba(201,163,74,.7)!important;
+  box-shadow:none!important;
+}
+.v262-cms .top.v262-cms-hero .authline,
+.v262-cms .top.v262-cms-hero .nav{display:none!important}
+.v262-cms .top.v262-cms-hero h1{
+  margin:0 0 3px!important;
+  color:#fff!important;
+  font:500 27px Georgia,serif!important;
+}
+.v262-cms .top.v262-cms-hero .sub{
+  max-width:980px!important;
+  margin:0!important;
+  color:#b8ccd6!important;
+  font-size:9px!important;
+  line-height:1.45!important;
+}
+
+.v262-cms .wrap.v262-cms-wrap{
+  width:min(1400px,calc(100% - 28px))!important;
+  margin:10px auto 70px!important;
+}
+.v262-cms .v262-cms-wrap>.notice{
+  margin:0 0 10px!important;
+  padding:9px 11px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+  line-height:1.45!important;
+}
+.v262-cms .cm-tabs{
+  gap:5px!important;
+  margin:10px 0!important;
+  padding:6px!important;
+  border:1px solid #d9e4e9;
+  border-radius:10px;
+  background:#fff;
+}
+.v262-cms .cm-tabs button{
+  border:1px solid #d9e4e9!important;
+  border-radius:7px!important;
+  background:#f5f9fa!important;
+  color:#426479!important;
+  padding:7px 9px!important;
+  font-size:8px!important;
+}
+.v262-cms .cm-tabs button.active{
+  background:#0b3553!important;
+  border-color:#0b3553!important;
+  color:#fff!important;
+}
+
+.v262-cms .card{
+  padding:12px 14px!important;
+  border-radius:12px!important;
+  box-shadow:0 7px 18px rgba(6,31,51,.035)!important;
+}
+.v262-cms .card h2{
+  margin:0 0 9px!important;
+  color:#0b3553!important;
+  font:500 19px Georgia,serif!important;
+}
+.v262-cms .card h3,
+.v262-cms .cm-subhead{
+  margin:13px 0 7px!important;
+  color:#31596f!important;
+  font-size:10px!important;
+}
+.v262-cms .cm-help,
+.v262-cms .cm-upload-note,
+.v262-cms .v214-pin-note{
+  font-size:8px!important;
+  line-height:1.45!important;
+}
+.v262-cms .cm-two{gap:10px!important}
+
+.v262-cms .formgrid{gap:7px!important}
+.v262-cms label{
+  margin-bottom:4px!important;
+  color:#617985!important;
+  font-size:7px!important;
+  font-weight:900!important;
+}
+.v262-cms input,
+.v262-cms select,
+.v262-cms textarea{
+  min-height:36px!important;
+  padding:7px 9px!important;
+  border-radius:8px!important;
+  font-size:9px!important;
+}
+.v262-cms textarea{min-height:68px!important}
+.v262-cms input[type="file"]{padding:6px!important}
+.v262-cms .toolbar{
+  gap:6px!important;
+  margin-top:9px!important;
+}
+.v262-cms .btn,
+.v262-cms .cm-actions button{
+  padding:8px 10px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+}
+.v262-cms .cm-status,
+.v262-cms .badge{font-size:7px!important}
+
+.v262-cms .tablewrap{
+  max-height:480px;
+  overflow:auto!important;
+  border:1px solid #e0e8ec!important;
+  border-radius:9px!important;
+  scrollbar-gutter:stable;
+  background:#fff;
+}
+.v262-cms .tablewrap table{
+  min-width:760px!important;
+  margin:0!important;
+}
+.v262-cms .tablewrap thead th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  padding:8px 9px!important;
+  font-size:7px!important;
+}
+.v262-cms .tablewrap td{
+  padding:8px 9px!important;
+  font-size:8px!important;
+  line-height:1.35!important;
+}
+.v262-cms .tablewrap td strong{font-size:8.5px!important}
+.v262-cms .tablewrap .small{font-size:7.5px!important}
+
+.v262-cms .cm-thread-entry{
+  padding:9px 10px 9px 30px!important;
+  border-radius:9px!important;
+}
+.v262-cms .cm-thread-entry small{font-size:7.5px!important}
+.v262-cms .cm-thread-entry strong{font-size:9px!important}
+.v262-cms .cm-thread-entry p{font-size:8px!important;line-height:1.4!important}
+.v262-cms .cm-thread-empty{font-size:8px!important}
+
+@media(max-width:900px){
+  .v262-cms .top.v262-cms-hero,
+  .v262-cms .wrap.v262-cms-wrap{width:calc(100% - 18px)!important}
+  .v262-cms .top.v262-cms-hero{margin-top:10px}
+  .v262-cms .cm-two{grid-template-columns:1fr!important}
+  .v262-cms .tablewrap{max-height:420px}
+}
+@media(max-width:600px){
+  .v262-cms .top.v262-cms-hero{padding:15px 14px!important}
+  .v262-cms .top.v262-cms-hero h1{font-size:24px!important}
+  .v262-cms .cm-tabs{overflow-x:auto;flex-wrap:nowrap!important}
+  .v262-cms .cm-tabs button{flex:0 0 auto;white-space:nowrap}
+  .v262-cms .card{padding:11px!important}
+  .v262-cms .tablewrap{max-height:360px}
+}
