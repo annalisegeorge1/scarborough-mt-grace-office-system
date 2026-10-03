@@ -1,0 +1,37 @@
+Scarborough / Mt. Grace District Office — V248
+
+GO-LIVE CONTROL CENTRE MODERNIZATION
+
+1. Go-Live surface
+- Replaces the old V159-style shell with the current V242+ production-control visual language.
+- Uses the shared staff session client and displays the authenticated staff session.
+- Adds direct routes to Production Control, Publishing Desk, Publishing QA and Release Control.
+
+2. Live release evidence
+Go-Live now surfaces:
+- server readiness
+- publishing integrity
+- current administrative gate completion
+before staff work on migration staging.
+
+3. CSV staging preserved
+The existing local-only CSV workflow remains:
+- local FileReader parsing
+- column mapping
+- duplicate/missing-reference validation
+- clean CSV export
+- issue CSV export
+No selected CSV is uploaded by the browser tool.
+
+4. Cutover sequence
+The screen now separates:
+- freeze/protect
+- controlled import
+- reconciliation
+- launch acceptance
+
+5. Safety boundary
+The page explicitly states that a clean CSV is a reviewed migration package, not a production database import or authorization.
+
+6. Preservation
+V248 does not change database schema, resident records, authentication credentials, case workflows, publishing transitions or public APIs.
