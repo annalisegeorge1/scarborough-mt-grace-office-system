@@ -1,0 +1,33 @@
+Scarborough / Mt. Grace District Office — V269
+
+FEATURE FREEZE + STRUCTURED UAT BASELINE
+
+1. Major feature expansion paused.
+
+2. Added FEATURE_FREEZE_V269.md:
+- allowed freeze fixes
+- deferred expansion
+- release rule
+- exit criteria
+
+3. Replaced placeholder UAT_TEST_PLAN.md with 15 end-to-end scenarios.
+
+4. Rebuilt staff/uat.html:
+- shared staff shell
+- no legacy V159 navigation
+- responsive scenario cards
+- result / note / evidence reference
+- issue register
+- sign-off gates
+- environment/readiness snapshot
+- JSON evidence export
+- issue CSV export
+
+5. UAT worksheet state is intentionally browser-local test evidence.
+Final exported evidence must be retained in approved Records/evidence storage.
+
+6. Preflight verifies UAT/freeze assets.
+7. Smoke verifies protected/authenticated UAT Centre.
+8. Backend/staging baseline version: 269.0.0.
+
+From V269 onward, changes should be driven by UAT, security, reliability, data integrity or release readiness—not feature expansion.
