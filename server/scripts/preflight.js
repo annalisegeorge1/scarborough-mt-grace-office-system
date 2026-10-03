@@ -24,6 +24,8 @@ add('Integrated case workspace styles exist',fs.existsSync(path.join(cfg.staticR
 add('Integrated case workspace script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.js')),'staff/case-workspace-v251.js');
 add('Case-context styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.css')),'staff/case-context-v251.css');
 add('Case-context helper exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.js')),'staff/case-context-v251.js');
+add('Focused case page styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-focus-v252.css')),'staff/case-focus-v252.css');
+add('Focused case page script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-focus-v252.js')),'staff/case-focus-v252.js');
 add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sections.html')),'staff/sections.html');
 add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
 add('System Administration exists',fs.existsSync(path.join(cfg.staticRoot,'staff','system.html')),'staff/system.html');
