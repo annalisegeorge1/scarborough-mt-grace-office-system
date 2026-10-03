@@ -8,7 +8,7 @@ const areas=[
     ['Handover','handover.html','reports.read'],['Attention & Reminders','automation.html','reports.read']
   ]},
   {id:'residents',label:'Residents',icon:'◉',items:[
-    ['Case Management','index.html','cases.read'],['Applications & Referrals','applications.html','applications.read'],
+    ['Resident Profiles','residents.html','cases.read'],['Case Management','index.html','cases.read'],['Applications & Referrals','applications.html','applications.read'],
     ['Correspondence','correspondence.html','correspondence.write'],['Field Visits','field.html','field.write'],
     ['Resident Feedback','feedback.html','feedback.write']
   ]},
@@ -48,17 +48,18 @@ function itemAllowed(item,session){
 function visibleAreas(session){
   return areas.filter(a=>!a.roles||a.roles.includes(session?.user?.role)).map(a=>({...a,items:a.items.filter(i=>itemAllowed(i,session))})).filter(a=>a.items.length);
 }
-function findArea(file,view){for(const a of view)if(a.items.some(([,href])=>href===file))return a;return view[0]}
-function itemLabel(area,file){return area?.items.find(([,href])=>href===file)?.[0]||'Staff System'}
+function isCurrent(href,file){return href===file||(file==='resident.html'&&href==='residents.html')}
+function findArea(file,view){if(file==='resident.html')return view.find(a=>a.id==='residents')||view[0];for(const a of view)if(a.items.some(([,href])=>href===file))return a;return view[0]}
+function itemLabel(area,file){if(file==='resident.html')return 'Resident Profile';return area?.items.find(([,href])=>href===file)?.[0]||'Staff System'}
 function shellMarkup(file,active,view){
   return '<aside class="smg-shell" aria-label="Staff system navigation"><div class="smg-shell-brand"><div class="smg-shell-mark">SMG</div><div class="smg-shell-brandtext"><strong>Staff System</strong><span>Scarborough / Mt. Grace</span></div></div><nav class="smg-shell-nav">'+
-    view.map(a=>{const isActive=a.id===active?.id;return '<section class="smg-nav-group '+(isActive?'active open':'')+'" data-area="'+a.id+'"><button class="smg-nav-parent" type="button" aria-expanded="'+(isActive?'true':'false')+'" title="'+esc(a.label)+'"><span class="smg-nav-icon">'+a.icon+'</span><span class="smg-nav-label">'+esc(a.label)+'</span><span class="smg-nav-caret">›</span></button><div class="smg-nav-children">'+a.items.map(([label,href])=>'<a href="'+href+'" '+(href===file?'class="active" aria-current="page"':'')+'>'+esc(label)+'</a>').join('')+'</div></section>'}).join('')+
+    view.map(a=>{const isActive=a.id===active?.id;return '<section class="smg-nav-group '+(isActive?'active open':'')+'" data-area="'+a.id+'"><button class="smg-nav-parent" type="button" aria-expanded="'+(isActive?'true':'false')+'" title="'+esc(a.label)+'"><span class="smg-nav-icon">'+a.icon+'</span><span class="smg-nav-label">'+esc(a.label)+'</span><span class="smg-nav-caret">›</span></button><div class="smg-nav-children">'+a.items.map(([label,href])=>'<a href="'+href+'" '+(isCurrent(href,file)?'class="active" aria-current="page"':'')+'>'+esc(label)+'</a>').join('')+'</div></section>'}).join('')+
     '</nav><div class="smg-shell-footer"><div class="smg-shell-shortcuts"><a href="sections.html">Directory</a><a href="search.html">Search</a></div><div class="smg-shell-user"><strong id="smgShellUser">Staff session</strong><span id="smgShellRole">Authenticated workspace</span><button id="smgShellLogout" type="button">Sign out</button></div></div></aside>';
 }
 function contextMarkup(file,area){
   if(!area)return '';
   const label=itemLabel(area,file);
-  return '<div class="smg-shell-context" role="navigation" aria-label="'+esc(area.label)+' subpages"><div class="smg-context-title"><span>'+esc(area.label)+'</span><b>›</b>'+esc(label)+'</div><div class="smg-context-tabs">'+area.items.map(([name,href])=>'<a href="'+href+'" '+(href===file?'class="active" aria-current="page"':'')+'>'+esc(name)+'</a>').join('')+'</div><div class="smg-context-actions"><a href="search.html">Search</a><a href="sections.html">All sections</a></div></div>';
+  return '<div class="smg-shell-context" role="navigation" aria-label="'+esc(area.label)+' subpages"><div class="smg-context-title"><span>'+esc(area.label)+'</span><b>›</b>'+esc(label)+'</div><div class="smg-context-tabs">'+area.items.map(([name,href])=>'<a href="'+href+'" '+(isCurrent(href,file)?'class="active" aria-current="page"':'')+'>'+esc(name)+'</a>').join('')+'</div><div class="smg-context-actions"><a href="search.html">Search</a><a href="sections.html">All sections</a></div></div>';
 }
 async function getSession(){
   if(window.SMG?.session)return window.SMG.session();
@@ -83,7 +84,7 @@ function setCollapsed(on){
 async function init(){
   if(document.body.dataset.smgNoShell==='true'||/\/staff\/login\.html$/i.test(location.pathname))return;
   let session;try{session=await getSession()}catch{return}
-  const file=currentFile(),view=visibleAreas(session),allKnown=areas.flatMap(a=>a.items),known=allKnown.find(i=>i[1]===file);
+  const file=currentFile(),view=visibleAreas(session),allKnown=areas.flatMap(a=>a.items),known=allKnown.find(i=>i[1]===file);if(file==='resident.html'&&!hasPermission(session,'cases.read')){location.replace('/staff/home.html?access=limited');return}
   if(known&&!itemAllowed(known,session)){location.replace('/staff/home.html?access=limited');return}
   const active=findArea(file,view);
   document.body.classList.add('smg-shell-active');
