@@ -399,6 +399,15 @@ router.patch('/:id',requirePermission('content.write'),async(req,res,next)=>{
           [updatedRow.id,JSON.stringify(snap)]
         );
         updatedRow=sq.rows[0];
+      }else if(
+        updatedRow.workflow==='Archived' ||
+        (has(b,'workflow')&&cur.workflow==='Published'&&updatedRow.workflow!=='Published')
+      ){
+        const sq=await client.query(
+          'UPDATE public_content SET published_snapshot_active=false WHERE id=$1 RETURNING *',
+          [updatedRow.id]
+        );
+        updatedRow=sq.rows[0];
       }
       await writeRevision(client,updatedRow,'update',req.user.id);
       return updatedRow;
