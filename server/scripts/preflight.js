@@ -35,6 +35,8 @@ add('Focused case page script exists',fs.existsSync(path.join(cfg.staticRoot,'st
 add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sections.html')),'staff/sections.html');
 add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
 add('Roster and Coverage exists',fs.existsSync(path.join(cfg.staticRoot,'staff','roster.html')),'staff/roster.html');
+add('Access Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','access.html')),'staff/access.html');
+add('Audit Review exists',fs.existsSync(path.join(cfg.staticRoot,'staff','audit.html')),'staff/audit.html');
 add('System Administration exists',fs.existsSync(path.join(cfg.staticRoot,'staff','system.html')),'staff/system.html');
 add('Production Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','production.html')),'staff/production.html');
 add('Publishing Desk exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing.html')),'staff/publishing.html');
