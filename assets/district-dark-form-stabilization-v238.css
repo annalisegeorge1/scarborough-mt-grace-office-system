@@ -1,0 +1,302 @@
+/* Scarborough / Mt. Grace District Office — V238
+   Dark-mode + form-control stabilization.
+   Screenshot-driven fixes for notification preferences, dark support hubs,
+   focused page-end links, and Explore drawer footer actions. */
+
+/* ==========================================================================
+   1. RESIDENT UPDATE PREFERENCES
+   V238 JS normalizes the two consent controls into semantic rows. These rules
+   intentionally reset any inherited absolute/grid behavior that caused the
+   labels to overlap.
+   ========================================================================== */
+#enquiry #v138-notification-preferences{
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#enquiry #v138-notification-preferences .v238-preference-list{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:0!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:10px 0 0!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-row{
+  position:relative!important;
+  inset:auto!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:12px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:12px 0!important;
+  border:0!important;
+  background:transparent!important;
+  transform:none!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-row + .v238-pref-row{
+  border-top:1px solid rgba(11,46,72,.12)!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-row > input[type="checkbox"],
+#enquiry #v138-notification-preferences .v238-pref-row > input[type="radio"]{
+  grid-column:1!important;
+  position:static!important;
+  inset:auto!important;
+  width:22px!important;
+  min-width:22px!important;
+  max-width:22px!important;
+  height:22px!important;
+  min-height:22px!important;
+  max-height:22px!important;
+  margin:1px 0 0!important;
+  padding:0!important;
+  transform:none!important;
+  accent-color:#c9a34a!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-row > label{
+  grid-column:2!important;
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  transform:none!important;
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+  line-height:1.45!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-row > label *{
+  position:static!important;
+  transform:none!important;
+}
+
+#enquiry #v138-notification-preferences .v238-pref-note{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:10px 0 0!important;
+  padding:0!important;
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+/* Defensive fallback before/if normalization has not yet run. */
+#enquiry #v138-notification-preferences > label[for="v138-status-consent"],
+#enquiry #v138-notification-preferences > label[for="v138-reminder-consent"]{
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin:0!important;
+  transform:none!important;
+  white-space:normal!important;
+}
+
+/* ==========================================================================
+   2. DARK SUPPORTING-TOOLS HUB
+   Stronger high-specificity rules for V208/V209 labels and descriptions.
+   ========================================================================== */
+body.v112-dark.v203-focused-view #main-content .v208-support-hub,
+body.v112-dark.v203-focused-view #main-content .v209-more-hub{
+  border-color:rgba(255,255,255,.09)!important;
+  background:
+    radial-gradient(circle at 96% 7%,rgba(216,199,160,.055),transparent 10rem),
+    linear-gradient(150deg,#0b2637,#102f42)!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-support-head strong,
+body.v112-dark.v203-focused-view #main-content .v209-more-head strong{
+  color:#f7fbfc!important;
+  -webkit-text-fill-color:#f7fbfc!important;
+  opacity:1!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-support-head p,
+body.v112-dark.v203-focused-view #main-content .v209-more-head p{
+  color:#c0d1d8!important;
+  -webkit-text-fill-color:#c0d1d8!important;
+  opacity:1!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-support-toggle,
+body.v112-dark.v203-focused-view #main-content .v209-more-btn{
+  border-color:rgba(255,255,255,.09)!important;
+  background:#123247!important;
+  color:#eef5f7!important;
+  -webkit-text-fill-color:#eef5f7!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-toggle-copy strong,
+body.v112-dark.v203-focused-view #main-content .v209-more-copy strong{
+  color:#f2f7f9!important;
+  -webkit-text-fill-color:#f2f7f9!important;
+  opacity:1!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-toggle-copy span,
+body.v112-dark.v203-focused-view #main-content .v209-more-copy span{
+  color:#b6c8d0!important;
+  -webkit-text-fill-color:#b6c8d0!important;
+  opacity:1!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-toggle-index{
+  background:#183c51!important;
+  color:#eadfbf!important;
+  -webkit-text-fill-color:#eadfbf!important;
+}
+
+body.v112-dark.v203-focused-view #main-content .v208-collapse-all{
+  border-color:rgba(255,255,255,.10)!important;
+  background:#173a4e!important;
+  color:#f0f5f7!important;
+  -webkit-text-fill-color:#f0f5f7!important;
+}
+
+/* ==========================================================================
+   3. DARK FOCUSED PAGE-END LINKS
+   V236 compressed these links on mobile; V238 forces readable text after all
+   dark-mode runtime layers have loaded.
+   ========================================================================== */
+body.v112-dark.v203-focused-view #main-content + .v203-page-end,
+body.v112-dark.v203-focused-view .v203-page-end{
+  border-color:rgba(255,255,255,.07)!important;
+  background:#0a2435!important;
+}
+
+body.v112-dark.v203-focused-view .v203-page-end a{
+  border-color:rgba(255,255,255,.10)!important;
+  background:#15364a!important;
+  color:#ecf4f7!important;
+  -webkit-text-fill-color:#ecf4f7!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+body.v112-dark.v203-focused-view .v203-page-end a:hover,
+body.v112-dark.v203-focused-view .v203-page-end a:focus-visible{
+  border-color:rgba(216,199,160,.30)!important;
+  background:#d8c7a0!important;
+  color:#0b3553!important;
+  -webkit-text-fill-color:#0b3553!important;
+  outline:none!important;
+}
+
+/* ==========================================================================
+   4. EXPLORE DRAWER FOOTER IN DARK MODE
+   The drawer itself was darkened in V221, but its footer utility links retained
+   their light-mode white cards and inherited near-white text.
+   ========================================================================== */
+body.v112-dark .v202-drawer-foot{
+  border-top-color:rgba(255,255,255,.08)!important;
+  background:#0a2638!important;
+}
+
+body.v112-dark .v202-drawer-foot .v202-quick-grid{
+  gap:8px!important;
+}
+
+body.v112-dark .v202-drawer-foot .v202-utility-link,
+body.v112-dark .v202-drawer-foot button,
+body.v112-dark .v202-drawer-foot a:not(.v202-staff-link){
+  border-color:rgba(255,255,255,.09)!important;
+  background:#15364a!important;
+  color:#edf5f7!important;
+  -webkit-text-fill-color:#edf5f7!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+
+body.v112-dark .v202-drawer-foot .v202-utility-link:hover,
+body.v112-dark .v202-drawer-foot .v202-utility-link:focus-visible,
+body.v112-dark .v202-drawer-foot button:hover,
+body.v112-dark .v202-drawer-foot button:focus-visible{
+  border-color:rgba(216,199,160,.28)!important;
+  background:#1b4055!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  outline:none!important;
+}
+
+body.v112-dark .v202-drawer-foot .v202-staff-link{
+  color:#aebfc7!important;
+  -webkit-text-fill-color:#aebfc7!important;
+  opacity:1!important;
+}
+
+body.v112-dark .v202-drawer-foot .v202-staff-link:hover,
+body.v112-dark .v202-drawer-foot .v202-staff-link:focus-visible{
+  color:#e7d8b0!important;
+  -webkit-text-fill-color:#e7d8b0!important;
+  outline:none!important;
+}
+
+/* Any newer drawer utility inserted by later resident systems inherits the same
+   footer visual language. */
+body.v112-dark .v202-drawer-foot :is(.v225-drawer-journey,.v228-drawer-readiness,.v231-drawer-intel){
+  border-color:rgba(255,255,255,.09)!important;
+  background:#15364a!important;
+  color:#edf5f7!important;
+  -webkit-text-fill-color:#edf5f7!important;
+}
+
+/* ==========================================================================
+   5. PORTRAIT SPACING
+   Reduce the oversized dark gap between focused page-end navigation and footer
+   while preserving space for the fixed resident dock.
+   ========================================================================== */
+@media(max-width:900px) and (orientation:portrait){
+  body.v203-focused-view .v203-page-end{
+    padding-top:9px!important;
+    padding-bottom:calc(84px + env(safe-area-inset-bottom))!important;
+  }
+
+  body.v203-focused-view .v203-page-end + footer,
+  body.v203-focused-view footer{
+    margin-top:0!important;
+  }
+}
+
+/* ==========================================================================
+   6. SMALL-SCREEN FORM PREFERENCES
+   ========================================================================== */
+@media(max-width:760px){
+  #enquiry #v138-notification-preferences .v238-pref-row{
+    grid-template-columns:24px minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:10px 0!important;
+  }
+
+  #enquiry #v138-notification-preferences .v238-pref-row > input[type="checkbox"],
+  #enquiry #v138-notification-preferences .v238-pref-row > input[type="radio"]{
+    width:20px!important;
+    min-width:20px!important;
+    max-width:20px!important;
+    height:20px!important;
+    min-height:20px!important;
+    max-height:20px!important;
+  }
+}
+
+@media print{
+  .v202-drawer-foot{display:none!important}
+}
