@@ -447,8 +447,9 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
             version=version+1,updated_at=now()
           WHERE id=$1 RETURNING *
         `,[req.params.id,req.user.id,note,sourceReference]);
-        await writeRevision(client,q.rows[0],'verify',req.user.id);
-        return q.rows[0];
+        const updated=await contentWithDocument(client,req.params.id);
+        await writeRevision(client,updated,'verify',req.user.id);
+        return updated;
       }
       if(action==='unverify'){
         if(cur.workflow==='Published'){const err=new Error('Published content must leave Published before verification can be removed.');err.statusCode=400;throw err}
@@ -458,8 +459,9 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
             version=version+1,updated_at=now()
           WHERE id=$1 RETURNING *
         `,[req.params.id,note]);
-        await writeRevision(client,q.rows[0],'unverify',req.user.id);
-        return q.rows[0];
+        const updated=await contentWithDocument(client,req.params.id);
+        await writeRevision(client,updated,'unverify',req.user.id);
+        return updated;
       }
       const rule=workflowTransition(cur.workflow,action);
       if(rule.error){const err=new Error(rule.error);err.statusCode=400;throw err}
@@ -488,8 +490,9 @@ router.post('/:id/workflow',requirePermission('content.publish'),async(req,res,n
           version=version+1,updated_at=now()
         WHERE id=$1 RETURNING *
       `,[req.params.id,rule.to,action,req.user.id]);
-      await writeRevision(client,q.rows[0],action,req.user.id);
-      return q.rows[0];
+      const updated=await contentWithDocument(client,req.params.id);
+      await writeRevision(client,updated,action,req.user.id);
+      return updated;
     });
     await audit(db,{
       actorUserId:req.user.id,eventType:'content.workflow',objectType:'public_content',objectId:req.params.id,
