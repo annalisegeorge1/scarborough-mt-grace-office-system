@@ -127,6 +127,11 @@
   let trackRaf=0;
   let pageRaf=0;
   let autoTrackUntil=0;
+  let pageSyncHoldUntil=0;
+
+  function holdPageSync(ms=1200){
+    pageSyncHoldUntil=Math.max(pageSyncHoldUntil,Date.now()+ms);
+  }
 
   function revealTarget(target){
     const collapsed=target.closest(".v208-secondary.v208-collapsed,.v209-secondary.v209-collapsed");
@@ -191,8 +196,14 @@
     return best;
   }
 
-  if(prevButton)prevButton.addEventListener("click",()=>apply(activeIndex-1,{revealCard:true}));
-  if(nextButton)nextButton.addEventListener("click",()=>apply(activeIndex+1,{revealCard:true}));
+  if(prevButton)prevButton.addEventListener("click",()=>{
+    holdPageSync();
+    apply(activeIndex-1,{revealCard:true});
+  });
+  if(nextButton)nextButton.addEventListener("click",()=>{
+    holdPageSync();
+    apply(activeIndex+1,{revealCard:true});
+  });
 
   if(track){
     track.addEventListener("scroll",()=>{
@@ -203,8 +214,8 @@
         apply(nearestCardIndex(),{revealCard:false});
       });
     },{passive:true});
-    track.addEventListener("pointerdown",()=>{autoTrackUntil=0},{passive:true});
-    track.addEventListener("touchstart",()=>{autoTrackUntil=0},{passive:true});
+    track.addEventListener("pointerdown",()=>{autoTrackUntil=0;holdPageSync()},{passive:true});
+    track.addEventListener("touchstart",()=>{autoTrackUntil=0;holdPageSync()},{passive:true});
   }
 
   root.addEventListener("click",event=>{
@@ -230,6 +241,7 @@
   }
 
   function syncFromPage(){
+    if(Date.now()<pageSyncHoldUntil)return;
     const tracked=resolvedTargets();
     if(!tracked.length)return;
     const targetY=Math.max(96,window.innerHeight*.34);
@@ -257,7 +269,9 @@
 
   if("MutationObserver" in window){
     let mutationTimer=0;
-    new MutationObserver(()=>{
+    new MutationObserver(mutations=>{
+      if(mutations.every(mutation=>root.contains(mutation.target)))return;
+      if(Date.now()<pageSyncHoldUntil)return;
       clearTimeout(mutationTimer);
       mutationTimer=window.setTimeout(syncFromPage,90);
     }).observe(host||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","hidden","style","id"]});
