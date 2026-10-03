@@ -15,13 +15,14 @@ await check('Resident tracker','/track/');
 await check('Resident portal hub','/portals/');
 await check('Resident guide','/resident-guide/');
 await check('Staff login','/staff/login.html');
-const protectedPage=await check('Protected staff page redirects','/staff/index.html',[302]);
+await check('Protected staff page redirects','/staff/index.html',[302]);
 await check('Protected Publishing Desk redirects','/staff/publishing.html',[302]);
 await check('Protected Publishing QA redirects','/staff/publishing-qa.html',[302]);
+await check('Protected Release Control redirects','/staff/readiness.html',[302]);
 if(email&&password){
   const r=await req('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
   let d={};try{d=await r.json()}catch{}
-  const ok=r.status===200&&d.csrf;console.log(`${ok?'PASS':'FAIL'} — Staff authentication: ${r.status}`);if(!ok)failures++;else{csrf=d.csrf;await check('Authenticated staff home','/staff/index.html');await check('Authenticated Publishing Desk','/staff/publishing.html');await check('Authenticated Publishing QA','/staff/publishing-qa.html');await check('Publishing readiness API','/api/content/publishing-readiness');const me=await req('/api/auth/me');console.log(`${me.ok?'PASS':'FAIL'} — Authenticated /me: ${me.status}`);if(!me.ok)failures++;}
+  const ok=r.status===200&&d.csrf;console.log(`${ok?'PASS':'FAIL'} — Staff authentication: ${r.status}`);if(!ok)failures++;else{csrf=d.csrf;await check('Authenticated staff home','/staff/index.html');await check('Authenticated Publishing Desk','/staff/publishing.html');await check('Authenticated Publishing QA','/staff/publishing-qa.html');await check('Authenticated Release Control','/staff/readiness.html');await check('Publishing readiness API','/api/content/publishing-readiness');const me=await req('/api/auth/me');console.log(`${me.ok?'PASS':'FAIL'} — Authenticated /me: ${me.status}`);if(!me.ok)failures++;}
 }else console.log('SKIP — Authenticated staff smoke test (set SMOKE_EMAIL and SMOKE_PASSWORD).');
 console.log(`\nSmoke test complete: ${failures} failure(s).`);process.exitCode=failures?1:0;
 })();
