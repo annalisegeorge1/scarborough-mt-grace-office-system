@@ -1,0 +1,40 @@
+Scarborough / Mt. Grace District Office — V253
+
+STAFF HOME / TODAY
+
+1. New Staff Home
+- Adds /staff/home.html.
+- Normal staff sign-in now lands on Home rather than Case Management.
+- Direct next=/staff/... links remain respected.
+
+2. Today API
+- Adds GET /api/today.
+- Requires authenticated case access.
+- Returns role-aware operational attention, counts, appointments and recent case activity.
+- Field Officer data remains limited to assigned/owned operational work where applicable.
+
+3. Home navigation
+Home area now contains:
+- Home
+- Daily Workboard
+- Operations Centre
+- Management Briefing
+- Handover
+- Attention & Reminders
+
+4. Daily Workboard
+- Migrated from /api/reports/summary to /api/today.
+- No longer requires management reporting permission just to view day-to-day work.
+- Fifth metric is Upcoming Appointments instead of Records Review.
+
+5. Information architecture
+Default path is now:
+Sign in → Home → Area → Subpage → Record.
+
+6. Release identity
+Backend version advanced to 253.0.0.
+
+7. Verification
+Preflight and smoke coverage now include Staff Home and /api/today.
+
+No database migration is required.
