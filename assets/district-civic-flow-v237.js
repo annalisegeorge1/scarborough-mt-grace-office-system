@@ -115,7 +115,12 @@
   }
 
   const stateEl=root.querySelector(".v237-flow-state");
+  const track=root.querySelector(".v237-flow-track");
   const steps=[...root.querySelectorAll(".v237-flow-step")];
+  let activeIndex=0;
+  let trackRaf=0;
+  let pageRaf=0;
+  let autoTrackUntil=0;
 
   function revealTarget(target){
     const collapsed=target.closest(".v208-secondary.v208-collapsed,.v209-secondary.v209-collapsed");
@@ -138,26 +143,20 @@
     return true;
   }
 
-  root.addEventListener("click",event=>{
-    const link=event.target.closest("[data-v237-target]");
-    if(!link)return;
-    const id=link.dataset.v237Target;
-    if(!document.getElementById(id))return;
-    event.preventDefault();
-    goTo(id);
-  });
-
-  if(!focused){
-    root.style.setProperty("--v237-progress","0%");
-    return;
+  function moveActiveCardIntoView(index){
+    if(!track||track.scrollWidth<=track.clientWidth+2)return;
+    const step=steps[index];
+    if(!step)return;
+    const max=Math.max(0,track.scrollWidth-track.clientWidth);
+    const left=Math.max(0,Math.min(max,step.offsetLeft-(track.clientWidth-step.offsetWidth)/2));
+    if(Math.abs(track.scrollLeft-left)<4)return;
+    autoTrackUntil=Date.now()+(reduce()?80:520);
+    track.scrollTo({left,behavior:reduce()?"auto":"smooth"});
   }
 
-  const tracked=cfg.steps
-    .map((step,index)=>step.target?{step,index,target:document.getElementById(step.target)}:null)
-    .filter(item=>item?.target);
-
-  function apply(index){
+  function apply(index,{revealCard=false}={}){
     const capped=Math.max(0,Math.min(cfg.steps.length-1,index));
+    activeIndex=capped;
     steps.forEach((step,i)=>{
       step.classList.toggle("is-active",i===capped);
       step.classList.toggle("is-complete",i<capped);
@@ -167,27 +166,95 @@
     const progress=cfg.steps.length>1?(capped/(cfg.steps.length-1))*75:0;
     root.style.setProperty("--v237-progress",progress+"%");
     if(stateEl)stateEl.textContent="Stage "+(capped+1)+" of "+cfg.steps.length;
+    if(revealCard)moveActiveCardIntoView(capped);
   }
 
-  if("IntersectionObserver" in window&&tracked.length){
-    const state=new Map();
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>state.set(entry.target,entry));
-      const visible=[...state.values()]
-        .filter(entry=>entry.isIntersecting&&entry.target.getClientRects().length)
-        .sort((a,b)=>{
-          const targetY=window.innerHeight*.34;
-          return Math.abs(a.boundingClientRect.top-targetY)-Math.abs(b.boundingClientRect.top-targetY);
-        });
-      if(!visible.length)return;
-      const hit=tracked.find(item=>item.target===visible[0].target);
-      if(hit)apply(hit.index);
-    },{root:null,rootMargin:"-16% 0px -58% 0px",threshold:[0,.04,.16,.35]});
+  function nearestCardIndex(){
+    if(!track||!steps.length)return activeIndex;
+    const rect=track.getBoundingClientRect();
+    const center=rect.left+rect.width/2;
+    let best=activeIndex,bestDistance=Infinity;
+    steps.forEach((step,index)=>{
+      const r=step.getBoundingClientRect();
+      if(!r.width)return;
+      const distance=Math.abs((r.left+r.width/2)-center);
+      if(distance<bestDistance){bestDistance=distance;best=index}
+    });
+    return best;
+  }
 
-    tracked.forEach(item=>observer.observe(item.target));
+  if(track){
+    track.addEventListener("scroll",()=>{
+      if(Date.now()<autoTrackUntil)return;
+      if(trackRaf)return;
+      trackRaf=requestAnimationFrame(()=>{
+        trackRaf=0;
+        apply(nearestCardIndex(),{revealCard:false});
+      });
+    },{passive:true});
+    track.addEventListener("pointerdown",()=>{autoTrackUntil=0},{passive:true});
+    track.addEventListener("touchstart",()=>{autoTrackUntil=0},{passive:true});
+  }
+
+  root.addEventListener("click",event=>{
+    const link=event.target.closest(".v237-flow-step");
+    if(!link)return;
+    const index=steps.indexOf(link);
+    if(index>=0)apply(index,{revealCard:true});
+    const id=link.dataset.v237Target;
+    if(!id||!document.getElementById(id))return;
+    event.preventDefault();
+    goTo(id);
+  });
+
+  if(!focused){
+    root.style.setProperty("--v237-progress","0%");
+    return;
+  }
+
+  function resolvedTargets(){
+    return cfg.steps
+      .map((step,index)=>step.target?{step,index,target:document.getElementById(step.target)}:null)
+      .filter(item=>item?.target&&item.target.getClientRects().length);
+  }
+
+  function syncFromPage(){
+    const tracked=resolvedTargets();
+    if(!tracked.length)return;
+    const targetY=Math.max(96,window.innerHeight*.34);
+    let hit=tracked[0],best=Infinity;
+    tracked.forEach(item=>{
+      const r=item.target.getBoundingClientRect();
+      const centerish=Math.min(Math.max(targetY,r.top),r.bottom);
+      const distance=Math.abs(centerish-targetY)+(r.bottom<targetY?60:0);
+      if(distance<best){best=distance;hit=item}
+    });
+    apply(hit.index,{revealCard:true});
+  }
+
+  function queuePageSync(){
+    if(pageRaf)return;
+    pageRaf=requestAnimationFrame(()=>{
+      pageRaf=0;
+      syncFromPage();
+    });
+  }
+
+  window.addEventListener("scroll",queuePageSync,{passive:true});
+  window.addEventListener("resize",queuePageSync,{passive:true});
+  window.addEventListener("hashchange",queuePageSync);
+
+  if("MutationObserver" in window){
+    let mutationTimer=0;
+    new MutationObserver(()=>{
+      clearTimeout(mutationTimer);
+      mutationTimer=window.setTimeout(syncFromPage,90);
+    }).observe(host||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","hidden","style","id"]});
   }
 
   const initial=decodeURIComponent((location.hash||"").replace(/^#/,""));
   const initialIndex=cfg.steps.findIndex(step=>step.target===initial);
-  apply(initialIndex>=0?initialIndex:0);
+  apply(initialIndex>=0?initialIndex:0,{revealCard:true});
+  window.setTimeout(syncFromPage,120);
+  window.setTimeout(syncFromPage,420);
 })();
