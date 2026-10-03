@@ -78,7 +78,7 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
       : db.query('SELECT id,appointment_type,starts_at,ends_at,location,status,note,created_at FROM appointments WHERE case_id=$1 ORDER BY starts_at DESC',[row.id]))
     : empty();
 
-  const [notes,activity,applications,documents,correspondence,fieldVisits,feedback,recovery,appointments,events,meetings]=await Promise.all([
+  const [notes,activity,applications,directDocuments,correspondence,fieldVisits,feedback,recovery,appointments,events,meetings]=await Promise.all([
     db.query(`SELECT n.id,n.note_text,n.created_at,u.display_name author_name FROM case_notes n LEFT JOIN users u ON u.id=n.author_user_id WHERE n.case_id=$1 ORDER BY n.created_at DESC LIMIT 250`,[row.id]),
     db.query(`SELECT a.id,a.occurred_at,a.activity_type,a.description,a.public_visible,u.display_name actor_name FROM case_activity a LEFT JOIN users u ON u.id=a.actor_user_id WHERE a.case_id=$1 ORDER BY a.occurred_at DESC LIMIT 500`,[row.id]),
     appQuery,
@@ -103,13 +103,55 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
       ORDER BY m.meeting_date DESC,m.start_time DESC NULLS LAST`,[refs]):empty()
   ]);
 
+  let documents=directDocuments.rows;
+  if(canRecords){
+    const appRefs=applications.rows.flatMap(x=>[String(x.id),x.reference].filter(Boolean));
+    const corrRefs=correspondence.rows.flatMap(x=>[String(x.id),x.correspondence_reference].filter(Boolean));
+    const fieldRefs=fieldVisits.rows.map(x=>String(x.id));
+    const appointmentRefs=appointments.rows.map(x=>String(x.id));
+    const feedbackRefs=feedback.rows.map(x=>String(x.id));
+    const eventRefs=events.rows.map(x=>String(x.id));
+    const meetingRefs=meetings.rows.flatMap(x=>[String(x.id),x.reference].filter(Boolean));
+
+    const evidence=await db.query(`
+      SELECT DISTINCT d.id,d.record_reference,d.title,d.document_type,d.sensitivity,d.original_filename,d.size_bytes,
+             d.review_status,d.retention_class,d.review_date,d.expiry_date,d.created_at,d.updated_at,
+             COALESCE(x.links,'[]'::json) evidence_links
+      FROM documents d
+      LEFT JOIN LATERAL (
+        SELECT json_agg(json_build_object(
+          'id',dl.id,'linkedType',dl.linked_type,'linkedId',dl.linked_id,'relationship',dl.relationship
+        ) ORDER BY dl.created_at) links
+        FROM document_links dl
+        WHERE dl.document_id=d.id
+      ) x ON true
+      WHERE
+        (lower(coalesce(d.linked_type,''))='case' AND d.linked_id=ANY($1::text[]))
+        OR EXISTS (
+          SELECT 1 FROM document_links dl
+          WHERE dl.document_id=d.id AND (
+            (lower(dl.linked_type)='case' AND dl.linked_id=ANY($1::text[]))
+            OR (lower(dl.linked_type)='application' AND dl.linked_id=ANY($2::text[]))
+            OR (lower(dl.linked_type)='correspondence' AND dl.linked_id=ANY($3::text[]))
+            OR (lower(dl.linked_type)=ANY(ARRAY['field','field visit','field_visit']) AND dl.linked_id=ANY($4::text[]))
+            OR (lower(dl.linked_type)='appointment' AND dl.linked_id=ANY($5::text[]))
+            OR (lower(dl.linked_type)=ANY(ARRAY['feedback','resident feedback']) AND dl.linked_id=ANY($6::text[]))
+            OR (lower(dl.linked_type)='event' AND dl.linked_id=ANY($7::text[]))
+            OR (lower(dl.linked_type)='meeting' AND dl.linked_id=ANY($8::text[]))
+          )
+        )
+      ORDER BY d.updated_at DESC
+    `,[refs,appRefs,corrRefs,fieldRefs,appointmentRefs,feedbackRefs,eventRefs,meetingRefs]);
+    documents=evidence.rows;
+  }
+
   res.json({
     case:toClient(row),
     permissions:{applications:canApplications,records:canRecords,correspondence:canCorrespondence,field:canField,feedback:canFeedback,appointments:canAppointments,community:canCommunity,notes:has(req.user,'cases.write')},
     notes:notes.rows,
     activity:activity.rows,
     applications:applications.rows,
-    documents:documents.rows,
+    documents,
     correspondence:correspondence.rows,
     fieldVisits:fieldVisits.rows,
     feedback:feedback.rows,
