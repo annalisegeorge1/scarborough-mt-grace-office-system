@@ -1,0 +1,45 @@
+Scarborough / Mt. Grace District Office — V268
+
+CENTRAL MANAGEMENT REPORTING
+
+1. Added GET /api/reports/management.
+
+2. Central headline measures include:
+- case workload / overdue
+- Completed vs formally Closed
+- created/closed this month
+- open/overdue applications
+- field work and monthly completions
+- community/feedback/recovery pressure
+- records needing review
+- meeting/event actions
+- upcoming appointments
+- average days to formal close
+
+3. Breakdown data:
+- case statuses
+- closure reasons
+- categories: total/open/closed
+- six-month opened vs closed
+- case-owner workload distribution
+
+4. Management Reports rebuilt
+Tabs:
+- Overview
+- Formal closures
+- Case mix
+- Six-month flow
+- Workload distribution
+
+5. Management Briefing rebuilt
+- central-only
+- combines management report + unified Today
+- old localStorage fallback removed
+
+6. Reporting remains descriptive, not staff scoring/ranking.
+
+7. Preflight and smoke coverage added.
+
+8. Backend version 268.0.0.
+
+Next intended phase: feature freeze + structured UAT.
