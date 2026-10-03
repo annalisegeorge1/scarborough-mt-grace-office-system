@@ -1,0 +1,48 @@
+Scarborough / Mt. Grace District Office — V251
+
+INTEGRATED RESIDENT / CASE WORKSPACE
+
+1. Case workspace tabs
+The existing case drawer is reorganized into:
+- Overview
+- Activity
+- Applications
+- Correspondence
+- Field Visits
+- Documents
+- Feedback
+- Timeline
+
+2. Server-backed aggregation
+GET /api/cases/:id/workspace returns case-linked records from the production database while respecting existing RBAC permissions.
+
+3. Existing schema used
+V251 uses existing:
+- case_notes
+- case_activity
+- applications.case_id
+- documents linked_type/linked_id
+- correspondence linked_type/linked_reference
+- field_visits linked_type/linked_reference
+- resident_feedback.case_reference
+- appointments.case_id
+
+No migration is required.
+
+4. Permanent notes
+POST /api/cases/:id/notes writes permanent internal notes to case_notes and records a case_activity event.
+
+5. Case activity
+Case creation and significant central case updates now add server-side activity entries.
+
+6. Cross-module context
+Applications, Correspondence, Field, Records and Feedback accept case context from the workspace.
+They show a case banner and prefill linkage fields.
+Where the current module already has search/filter controls, context scopes the register automatically.
+Other linked registers are filtered client-side by the passed case reference/ID.
+
+7. Application linkage
+Applications created from a case workspace now persist applications.case_id.
+
+8. Preservation
+Existing case editing, public resident updates, referrals, publishing controls, database schema and authorization model remain intact.
