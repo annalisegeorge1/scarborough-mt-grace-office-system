@@ -102,6 +102,10 @@ function renderWorkspace(w){
     ['Case',c.reference||'—',''],['Status',c.status||'—',''],['Owner',c.caseOwner||c.owner_name||'Unassigned',''],['Next follow-up',c.followUpDate||c.next_follow_up||'Not set','']
   ].map(([a,b,k])=>'<div class="v251-case-stat '+k+'"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
 
+  let residentLink=document.getElementById('v255-resident-profile-link');
+  if(!residentLink&&strip){residentLink=document.createElement('div');residentLink.id='v255-resident-profile-link';residentLink.className='v255-resident-profile-link';strip.after(residentLink)}
+  if(residentLink)residentLink.innerHTML=c.residentId?'<a href="resident.html?id='+encodeURIComponent(c.residentId)+'">Open Resident Profile →</a>':'';
+
   setCount('applications',w.applications?.length);setCount('correspondence',w.correspondence?.length);setCount('field',w.fieldVisits?.length);setCount('documents',w.documents?.length);setCount('feedback',w.feedback?.length);setCount('timeline',w.activity?.length);setCount('activity',(w.notes?.length||0)+(w.appointments?.length||0));
 
   const appHost=document.getElementById('v251-applications');
