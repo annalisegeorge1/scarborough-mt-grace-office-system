@@ -1,0 +1,36 @@
+Scarborough / Mt. Grace District Office — V265
+
+CASE WORKSPACE RELATED WORK
+
+1. Case Workspace API now returns linked:
+- Events
+- Meetings
+
+2. Relationship rule
+Only explicit Case links are used:
+- linked_type = Case
+- linked_reference = case UUID or case reference
+
+3. Case Workspace UI
+Added Related Work tab.
+Shows:
+- Linked Events
+- Linked Meetings
+
+4. Direct navigation
+Linked Event cards open the exact Event record.
+Linked Meeting cards open the exact Meeting record.
+
+5. Events
+Added ?event=<id>&tab=editor|manage support.
+
+6. Permissions
+Related Work follows community.write access.
+
+7. Smoke
+Integrated workspace smoke now requires events and meetings arrays.
+
+8. Release identity
+Backend version 265.0.0.
+
+No new major module was added.
