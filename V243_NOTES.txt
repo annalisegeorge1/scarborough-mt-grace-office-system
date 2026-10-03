@@ -1,0 +1,226 @@
+Scarborough / Mt. Grace District Office — V243
+
+PUBLISHING QA & DEPLOYMENT READINESS
+
+V243 turns the V242 staff publishing bridge into a diagnosable, operationally testable system.
+
+1. New protected Publishing QA screen
+Path:
+- /staff/publishing-qa.html
+
+Purpose:
+- verify the publishing migration and schema
+- inspect live publishing integrity
+- inspect stable public snapshot health
+- inspect public document exposure rules
+- trace a real content record through its actual revision history
+- support staging/go-live verification without relying on a browser-only checklist
+
+2. Server-backed publishing readiness endpoint
+New authenticated endpoint:
+- GET /api/content/publishing-readiness
+Permission:
+- content.write
+
+The endpoint reports:
+- migration 006 status
+- required publishing-column presence
+- revision-history table presence
+- workflow counts
+- count of prior public snapshots currently held live during revisions
+- Published records lacking verification
+- Archived records incorrectly retaining an active snapshot
+- active snapshots missing resident payloads
+- Published + Verified records missing a stable snapshot
+- public_content.version / public_content_revisions parity
+- exposed linked documents failing Public + Approved requirements
+
+3. Partial-migration resilience
+Publishing readiness checks are deliberately staged.
+
+The endpoint first checks:
+- schema_migrations
+- information_schema.columns
+- public_content_revisions availability
+
+If migration 006 is absent or incomplete:
+- the endpoint returns ready=false
+- it reports exactly which schema elements are missing
+- integrity queries that depend on V242 columns are skipped
+- the diagnostic endpoint itself does not crash just because the publishing migration is incomplete
+
+4. Actual workflow evidence
+The Publishing QA page can select an existing public_content record and uses:
+- /api/content/:id/preview
+- /api/content/:id/revisions
+
+It derives real revision evidence for:
+- Draft captured
+- In Review entered
+- source verification recorded
+- Approved reached
+- Published reached
+- Start a revision recorded
+- replacement republished
+- Archived reached
+- restored to Draft
+
+The page also shows:
+- current workflow state
+- version
+- verified state
+- whether the stable public snapshot is active
+- revision log
+- direct link to the Publishing Desk
+- direct link to the resident-facing route
+
+5. Activity Hub progress revision integrity
+V243 closes a V242 audit gap in public progress threads.
+
+POST /api/content/:id/progress now:
+- runs in a database transaction
+- increments public_content.version
+- writes a public_content_revisions entry with action progress-add
+- preserves content.progress_add audit logging
+- refreshes the stable published snapshot when the parent record is Published + Verified
+
+DELETE /api/content/:id/progress/:progressId now:
+- runs in a database transaction
+- increments public_content.version
+- writes a public_content_revisions entry with action progress-remove
+- preserves content.progress_remove audit logging
+- refreshes the stable published snapshot when the parent record is Published + Verified
+
+This allows the V243 revision-parity check to cover progress-history changes as well as ordinary CMS and Publishing Desk changes.
+
+6. Server readiness integration
+Publishing QA also reads:
+- /api/health/readiness
+
+This keeps application/database publishing checks separate from wider deployment checks such as:
+- database availability
+- HTTPS public origin configuration
+- private storage readiness
+- malware-scanner readiness when uploads require it
+
+7. Smoke-test expansion
+server/scripts/smoke-test.js now checks:
+- public content API
+- unauthenticated Publishing Desk redirect
+- unauthenticated Publishing QA redirect
+- authenticated Publishing Desk
+- authenticated Publishing QA
+- publishing-readiness API
+
+Authenticated checks run when SMOKE_EMAIL and SMOKE_PASSWORD are provided.
+
+8. Preflight expansion
+server/scripts/preflight.js now confirms the deployment package includes:
+- staff/publishing.html
+- staff/publishing-qa.html
+- server/migrations/006_content_publishing_workflow.sql
+
+9. Staff navigation
+Publishing QA is linked from:
+- staff home
+- Website CMS
+- Publishing Desk
+- Production Readiness
+- Go-Live Centre
+- All Sections
+
+The Go-Live Centre now includes a dedicated:
+- CHECK PUBLISHING BRIDGE
+
+action.
+
+10. Publishing integrity checks
+All are blocker checks for Publishing QA readiness:
+
+- V242 migration applied
+- all required publishing columns present
+- public_content_revisions present
+- zero Published records without verification
+- zero Archived records with active public snapshots
+- zero active snapshots without payloads
+- zero Published + Verified records without stable snapshots
+- zero content-version / revision-version mismatches
+- zero exposed linked documents that are not Public + Approved
+
+11. Privacy boundary
+Publishing QA is protected by staff authentication and content permissions.
+
+The public API remains unchanged in its privacy boundary:
+- no internal_notes
+- no source_reference
+- no verification_note
+- no publishing actor IDs
+- no revision history
+
+12. Certification boundary
+Publishing QA can verify application/database state but does not independently certify:
+- Cloudflare/DNS configuration
+- Render account ownership or billing
+- backup restoration success
+- management approval
+- organizational privacy/retention approval
+- production launch authorization
+
+Those remain part of Production Readiness and Go-Live governance.
+
+13. Files added
+- staff/publishing-qa.html
+- V243_NOTES.txt
+
+14. Files updated
+- server/src/routes/content.js
+- server/scripts/smoke-test.js
+- server/scripts/preflight.js
+- server/API_CONTRACT.md
+- staff/publishing.html
+- staff/cms.html
+- staff/index.html
+- staff/readiness.html
+- staff/go-live.html
+- staff/sections.html
+
+15. Source-level QA passed
+Syntax:
+- server/src/routes/content.js
+- staff/publishing-qa.html inline JavaScript
+- server/scripts/smoke-test.js
+- server/scripts/preflight.js
+
+Readiness logic:
+- migration check
+- publishing-column check
+- revision-table check
+- partial-migration safe path
+- revision parity
+- archived snapshot check
+- stable snapshot check
+- public document exposure check
+
+Progress integrity:
+- transaction on progress add
+- transaction on progress remove
+- version increment
+- revision entry
+- snapshot refresh for live parents
+- audit event retained
+
+Navigation:
+- Publishing Desk
+- Website CMS
+- staff home
+- Production Readiness
+- Go-Live Centre
+- All Sections
+
+16. Live-environment note
+The Render staging hostname was not accessible from the assistant browser environment during V243 development. V243 therefore does not claim a live Render pass.
+
+After deployment, the office can open:
+- /staff/publishing-qa.html
+
+and use the system's own authenticated server/database checks to verify the deployed publishing bridge.
