@@ -88,10 +88,15 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
     canFeedback?db.query(`SELECT id,feedback_type,theme,rating,clarity_rating,respect_rating,details,follow_up_requested,status,source,created_at,updated_at FROM resident_feedback WHERE case_reference=ANY($1::text[]) ORDER BY updated_at DESC`,[refs]):empty(),
     canFeedback?db.query(`SELECT r.id,r.feedback_id,r.action_text,r.priority,r.due_date,r.status,r.outcome_note,r.created_at,r.updated_at FROM service_recovery_actions r JOIN resident_feedback f ON f.id=r.feedback_id WHERE f.case_reference=ANY($1::text[]) ORDER BY r.updated_at DESC`,[refs]):empty(),
     appointmentQuery,
-    canCommunity?db.query(`SELECT id,event_type,title,status,starts_at,venue,linked_type,linked_reference,expected_attendance,actual_attendance,updated_at
-      FROM events
-      WHERE lower(coalesce(linked_type,''))='case' AND linked_reference=ANY($1::text[])
-      ORDER BY COALESCE(starts_at,updated_at) DESC`,[refs]):empty(),
+    canCommunity?db.query(`SELECT e.id,e.event_type,e.title,e.status,e.starts_at,e.venue,e.linked_type,e.linked_reference,e.expected_attendance,e.actual_attendance,e.updated_at,
+      COALESCE(x.open_actions,0)::int open_actions
+      FROM events e
+      LEFT JOIN LATERAL (
+        SELECT count(*) FILTER (WHERE status NOT IN ('Completed','Cancelled')) open_actions
+        FROM event_actions ea WHERE ea.event_id=e.id
+      ) x ON true
+      WHERE lower(coalesce(e.linked_type,''))='case' AND e.linked_reference=ANY($1::text[])
+      ORDER BY COALESCE(e.starts_at,e.updated_at) DESC`,[refs]):empty(),
     canCommunity?db.query(`SELECT m.id,m.reference,m.meeting_type,m.title,m.status,m.meeting_date,m.start_time,m.venue,m.linked_type,m.linked_reference,m.next_follow_up,m.updated_at,
       COALESCE(x.open_actions,0)::int open_actions
       FROM meetings m
@@ -145,6 +150,34 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
     documents=evidence.rows;
   }
 
+  const canFormalClose=['Manager','Administrative'].includes(req.user.role);
+  const closureBlockers=[];
+  if(!String(row.closure_reason||'').trim())closureBlockers.push({key:'closure_reason',label:'Closure reason',detail:'Select the formal reason for closing this case.'});
+  if(row.resident_visible!==false&&!['Completed','Closed'].includes(row.public_status||''))closureBlockers.push({key:'public_status',label:'Resident-facing status',detail:'Resident-visible cases need a public status of Completed or Closed before formal closure.'});
+  if(row.resident_visible!==false&&!String(row.public_update||'').trim())closureBlockers.push({key:'public_update',label:'Resident-facing completion update',detail:'Resident-visible cases need a completion/closure update before formal closure.'});
+
+  const closureWarnings=[];
+  const addWarning=(key,label,count,detail)=>{if(count>0)closureWarnings.push({key,label,count,detail})};
+  addWarning('applications','Open applications',applications.rows.filter(x=>x.stage!=='Closed').length,'Applications/referrals linked to this case are still open.');
+  addWarning('field','Open field work',fieldVisits.rows.filter(x=>x.status!=='Completed').length,'Field activity linked to this case is not completed.');
+  addWarning('correspondence','Unissued correspondence',correspondence.rows.filter(x=>!['Issued','Archived'].includes(x.workflow)).length,'Linked correspondence is still in a draft/review workflow.');
+  addWarning('feedback','Open feedback',feedback.rows.filter(x=>x.status!=='Closed').length,'Resident feedback linked to this case is still open.');
+  addWarning('recovery','Open service recovery',recovery.rows.filter(x=>!['Completed','Closed','Cancelled'].includes(x.status)).length,'Service-recovery actions linked to this case remain open.');
+  addWarning('appointments','Future appointments',appointments.rows.filter(x=>!['Cancelled','Completed'].includes(x.status)&&new Date(x.starts_at)>=new Date()).length,'Future appointments remain scheduled against this case.');
+  addWarning('event_actions','Open event actions',events.rows.reduce((n,x)=>n+(Number(x.open_actions)||0),0),'Linked events still have open action items.');
+  addWarning('meeting_actions','Open meeting actions',meetings.rows.reduce((n,x)=>n+(Number(x.open_actions)||0),0),'Linked meetings still have open action items.');
+  addWarning('record_review','Evidence needing review',documents.filter(x=>x.review_status==='Needs Review').length,'Evidence rolled into this case still needs records review.');
+  if(row.referral_agency&&!['Closed','Response Received'].includes(row.referral_response_status||''))addWarning('referral','Referral still open',1,'The external referral does not yet show a closed/received response state.');
+
+  const closureReadiness={
+    canFormalClose,
+    closed:row.status==='Closed',
+    closedAt:row.closed_at||null,
+    blockers:closureBlockers,
+    warnings:closureWarnings,
+    ready:canFormalClose&&closureBlockers.length===0
+  };
+
   res.json({
     case:toClient(row),
     permissions:{applications:canApplications,records:canRecords,correspondence:canCorrespondence,field:canField,feedback:canFeedback,appointments:canAppointments,community:canCommunity,notes:has(req.user,'cases.write')},
@@ -159,6 +192,7 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
     appointments:appointments.rows,
     events:events.rows,
     meetings:meetings.rows,
+    closureReadiness,
     generatedAt:new Date().toISOString()
   });
 }catch(e){next(e)}});
@@ -177,6 +211,7 @@ router.post('/:id/notes',requirePermission('cases.write'),async(req,res,next)=>{
 
 router.post('/',requirePermission('cases.write'),async(req,res,next)=>{try{
   const body=req.body?.case||req.body||{},x=fromClient(body);
+  if(x.status==='Closed')return res.status(400).json({detail:'Create the case first, then use the formal closure workflow.'});
   const created=await db.tx(async client=>{
     let residentId=x.resident_id||null,resident=null;
     if(residentId){
@@ -228,17 +263,31 @@ router.put('/:id',requirePermission('cases.write'),async(req,res,next)=>{try{
   const access=await getCaseForUser(req,id);
   if(!access.row)return res.status(access.status).json({detail:access.detail});
   const before=access.row,x=fromClient(body);
+  const formalRole=['Manager','Administrative'].includes(req.user.role);
+  const wasClosed=before.status==='Closed',willClose=x.status==='Closed';
+  const closureReason=x.closure_reason||before.closure_reason||null;
+  if(wasClosed&&!formalRole)return res.status(403).json({detail:'Formal closed-case changes require Manager or Administrative authority.'});
+  if(willClose&&!wasClosed){
+    if(!formalRole)return res.status(403).json({detail:'Formal case closure requires Manager or Administrative authority.'});
+    if(!String(closureReason||'').trim())return res.status(400).json({detail:'Select a closure reason before formally closing the case.'});
+    if(x.resident_visible!==false&&!['Completed','Closed'].includes(x.public_status||''))return res.status(400).json({detail:'Resident-visible cases require a public status of Completed or Closed before formal closure.'});
+    if(x.resident_visible!==false&&!String(x.public_update||'').trim())return res.status(400).json({detail:'Resident-visible cases require a resident-facing completion/closure update before formal closure.'});
+  }
+  if(wasClosed&&!willClose&&!formalRole)return res.status(403).json({detail:'Reopening a formally closed case requires Manager or Administrative authority.'});
+  const closedAt=willClose?(before.closed_at||new Date()):null;
   let assignedId=body.assignedUserId||null,ownerId=body.caseOwnerUserId||null;
   if(!assignedId&&body.assigned&&body.assigned!=='Unassigned'){const u=await db.query('SELECT id FROM users WHERE display_name=$1 AND is_active=true',[body.assigned]);assignedId=u.rows[0]?.id||null;}
   if(!ownerId&&body.caseOwner&&body.caseOwner!=='Unassigned'){const u=await db.query('SELECT id FROM users WHERE display_name=$1 AND is_active=true',[body.caseOwner]);ownerId=u.rows[0]?.id||null;}
-  await db.query(`UPDATE cases SET status=$2,priority=$3,resident_name=$4,phone=$5,email=$6,date_of_birth=$7,address=$8,category=$9,preferred_contact=$10,enquiry_message=$11,assigned_user_id=COALESCE($12,assigned_user_id),case_owner_user_id=COALESCE($13,case_owner_user_id),next_follow_up=$14,due_date=$15,escalation=$16,next_action=$17,referral_agency=$18,referral_reference=$19,referral_date=$20,referral_purpose=$21,referral_contact=$22,referral_ack_date=$23,referral_response_status=$24,referral_follow_up_date=$25,referral_response_note=$26,closure_reason=$27,public_status=$28,public_update=$29,public_next_step=$30,public_updated_at=CASE WHEN public_update IS DISTINCT FROM $29 OR public_status IS DISTINCT FROM $28 THEN now() ELSE public_updated_at END,resident_visible=$31,resident_id=COALESCE($32,resident_id),updated_at=now() WHERE id=$1`,[id,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,assignedId,ownerId,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.referral_agency,x.referral_reference,x.referral_date,x.referral_purpose,x.referral_contact,x.referral_ack_date,x.referral_response_status,x.referral_follow_up_date,x.referral_response_note,x.closure_reason,x.public_status,x.public_update,x.public_next_step,x.resident_visible,body.residentId||null]);
+  await db.query(`UPDATE cases SET status=$2,priority=$3,resident_name=$4,phone=$5,email=$6,date_of_birth=$7,address=$8,category=$9,preferred_contact=$10,enquiry_message=$11,assigned_user_id=COALESCE($12,assigned_user_id),case_owner_user_id=COALESCE($13,case_owner_user_id),next_follow_up=$14,due_date=$15,escalation=$16,next_action=$17,referral_agency=$18,referral_reference=$19,referral_date=$20,referral_purpose=$21,referral_contact=$22,referral_ack_date=$23,referral_response_status=$24,referral_follow_up_date=$25,referral_response_note=$26,closure_reason=$27,public_status=$28,public_update=$29,public_next_step=$30,public_updated_at=CASE WHEN public_update IS DISTINCT FROM $29 OR public_status IS DISTINCT FROM $28 THEN now() ELSE public_updated_at END,resident_visible=$31,resident_id=COALESCE($32,resident_id),closed_at=$33,updated_at=now() WHERE id=$1`,[id,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,assignedId,ownerId,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.referral_agency,x.referral_reference,x.referral_date,x.referral_purpose,x.referral_contact,x.referral_ack_date,x.referral_response_status,x.referral_follow_up_date,x.referral_response_note,closureReason,x.public_status,x.public_update,x.public_next_step,x.resident_visible,body.residentId||null,closedAt]);
   const full=await db.query(CASE_SELECT+' WHERE c.id=$1',[id]);
   if(!full.rowCount)return res.status(404).json({detail:'Case not found.'});
   const after=full.rows[0],changes=[];
   const add=(label,a,b)=>{if(changed(a,b))changes.push(`${label} changed from ${a??'not set'} to ${b??'not set'}.`)};
   add('Status',before.status,after.status);add('Priority',before.priority,after.priority);add('Assigned officer',before.assigned_name,after.assigned_name);add('Case owner',before.owner_name,after.owner_name);add('Follow-up date',before.next_follow_up,after.next_follow_up);add('Target date',before.due_date,after.due_date);add('Escalation',before.escalation,after.escalation);add('Next action',before.next_action,after.next_action);add('Referral agency',before.referral_agency,after.referral_agency);add('Public status',before.public_status,after.public_status);add('Resident profile',before.resident_id,after.resident_id);
   for(const description of changes)await db.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case update',$3,false)`,[id,req.user.id,description]);
-  await audit(db,{actorUserId:req.user.id,eventType:'case.update',objectType:'case',objectId:id,metadata:{reference:body.reference,status:x.status,changeCount:changes.length}});
+  if(!wasClosed&&after.status==='Closed')await db.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case closed',$3,false)`,[id,req.user.id,'Formal closure recorded: '+closureReason+'.']);
+  if(wasClosed&&after.status!=='Closed')await db.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case reopened','Formal closure removed and case reopened.',false)`,[id,req.user.id]);
+  await audit(db,{actorUserId:req.user.id,eventType:'case.update',objectType:'case',objectId:id,metadata:{reference:body.reference,status:x.status,changeCount:changes.length,formalClosure:!wasClosed&&after.status==='Closed',reopened:wasClosed&&after.status!=='Closed'}});
   res.json({case:toClient(after)});
 }catch(e){next(e)}});
 
