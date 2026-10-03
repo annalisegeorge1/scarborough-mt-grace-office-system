@@ -58,6 +58,7 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
   const canField=has(req.user,'field.write');
   const canFeedback=has(req.user,'feedback.write');
   const canAppointments=has(req.user,'appointments.write');
+  const canCommunity=has(req.user,'community.write');
 
   const appQuery=canApplications
     ? (req.user.role==='Field Officer'
@@ -77,7 +78,7 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
       : db.query('SELECT id,appointment_type,starts_at,ends_at,location,status,note,created_at FROM appointments WHERE case_id=$1 ORDER BY starts_at DESC',[row.id]))
     : empty();
 
-  const [notes,activity,applications,documents,correspondence,fieldVisits,feedback,recovery,appointments]=await Promise.all([
+  const [notes,activity,applications,documents,correspondence,fieldVisits,feedback,recovery,appointments,events,meetings]=await Promise.all([
     db.query(`SELECT n.id,n.note_text,n.created_at,u.display_name author_name FROM case_notes n LEFT JOIN users u ON u.id=n.author_user_id WHERE n.case_id=$1 ORDER BY n.created_at DESC LIMIT 250`,[row.id]),
     db.query(`SELECT a.id,a.occurred_at,a.activity_type,a.description,a.public_visible,u.display_name actor_name FROM case_activity a LEFT JOIN users u ON u.id=a.actor_user_id WHERE a.case_id=$1 ORDER BY a.occurred_at DESC LIMIT 500`,[row.id]),
     appQuery,
@@ -86,12 +87,25 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
     fieldQuery,
     canFeedback?db.query(`SELECT id,feedback_type,theme,rating,clarity_rating,respect_rating,details,follow_up_requested,status,source,created_at,updated_at FROM resident_feedback WHERE case_reference=ANY($1::text[]) ORDER BY updated_at DESC`,[refs]):empty(),
     canFeedback?db.query(`SELECT r.id,r.feedback_id,r.action_text,r.priority,r.due_date,r.status,r.outcome_note,r.created_at,r.updated_at FROM service_recovery_actions r JOIN resident_feedback f ON f.id=r.feedback_id WHERE f.case_reference=ANY($1::text[]) ORDER BY r.updated_at DESC`,[refs]):empty(),
-    appointmentQuery
+    appointmentQuery,
+    canCommunity?db.query(`SELECT id,event_type,title,status,starts_at,venue,linked_type,linked_reference,expected_attendance,actual_attendance,updated_at
+      FROM events
+      WHERE lower(coalesce(linked_type,''))='case' AND linked_reference=ANY($1::text[])
+      ORDER BY COALESCE(starts_at,updated_at) DESC`,[refs]):empty(),
+    canCommunity?db.query(`SELECT m.id,m.reference,m.meeting_type,m.title,m.status,m.meeting_date,m.start_time,m.venue,m.linked_type,m.linked_reference,m.next_follow_up,m.updated_at,
+      COALESCE(x.open_actions,0)::int open_actions
+      FROM meetings m
+      LEFT JOIN LATERAL (
+        SELECT count(*) FILTER (WHERE status NOT IN ('Completed','Cancelled')) open_actions
+        FROM meeting_actions ma WHERE ma.meeting_id=m.id
+      ) x ON true
+      WHERE lower(coalesce(m.linked_type,''))='case' AND m.linked_reference=ANY($1::text[])
+      ORDER BY m.meeting_date DESC,m.start_time DESC NULLS LAST`,[refs]):empty()
   ]);
 
   res.json({
     case:toClient(row),
-    permissions:{applications:canApplications,records:canRecords,correspondence:canCorrespondence,field:canField,feedback:canFeedback,appointments:canAppointments,notes:has(req.user,'cases.write')},
+    permissions:{applications:canApplications,records:canRecords,correspondence:canCorrespondence,field:canField,feedback:canFeedback,appointments:canAppointments,community:canCommunity,notes:has(req.user,'cases.write')},
     notes:notes.rows,
     activity:activity.rows,
     applications:applications.rows,
@@ -101,6 +115,8 @@ router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=
     feedback:feedback.rows,
     recovery:recovery.rows,
     appointments:appointments.rows,
+    events:events.rows,
+    meetings:meetings.rows,
     generatedAt:new Date().toISOString()
   });
 }catch(e){next(e)}});
