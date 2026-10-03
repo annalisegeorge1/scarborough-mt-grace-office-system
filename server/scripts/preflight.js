@@ -21,6 +21,7 @@ add('Staff login exists',fs.existsSync(path.join(cfg.staticRoot,'staff','login.h
 add('Staff Home exists',fs.existsSync(path.join(cfg.staticRoot,'staff','home.html')),'staff/home.html');
 add('Resident directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','residents.html')),'staff/residents.html');
 add('Resident profile workspace exists',fs.existsSync(path.join(cfg.staticRoot,'staff','resident.html')),'staff/resident.html');
+add('New Case workflow exists',fs.existsSync(path.join(cfg.staticRoot,'staff','new-case.html')),'staff/new-case.html');
 add('Resident profile API route exists',fs.existsSync(path.join(__dirname,'..','src','routes','residents.js')),'src/routes/residents.js');
 add('Role-aware Today route exists',fs.existsSync(path.join(__dirname,'..','src','routes','today.js')),'src/routes/today.js');
 add('Shared staff shell styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.css')),'staff/staff-shell.css');
