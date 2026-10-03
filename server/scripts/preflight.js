@@ -38,6 +38,7 @@ add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sec
 add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
 add('Community Operations exists',fs.existsSync(path.join(cfg.staticRoot,'staff','community.html')),'staff/community.html');
 add('Events and Volunteers exists',fs.existsSync(path.join(cfg.staticRoot,'staff','events.html')),'staff/events.html');
+add('Meetings workspace exists',fs.existsSync(path.join(cfg.staticRoot,'staff','meetings.html')),'staff/meetings.html');
 add('Website CMS exists',fs.existsSync(path.join(cfg.staticRoot,'staff','cms.html')),'staff/cms.html');
 add('Roster and Coverage exists',fs.existsSync(path.join(cfg.staticRoot,'staff','roster.html')),'staff/roster.html');
 add('Access Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','access.html')),'staff/access.html');
@@ -51,6 +52,7 @@ add('Go-Live Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','go-
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
 add('Resident profile migration exists',fs.existsSync(path.join(__dirname,'..','migrations','007_resident_profiles.sql')),'migrations/007_resident_profiles.sql');
 add('Operational hardening migration exists',fs.existsSync(path.join(__dirname,'..','migrations','008_operational_indexes_and_function_hardening.sql')),'migrations/008_operational_indexes_and_function_hardening.sql');
+add('Meeting operations migration exists',fs.existsSync(path.join(__dirname,'..','migrations','009_meeting_operations.sql')),'migrations/009_meeting_operations.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
 const failed=results.filter(r=>r.required&&!r.ok);
