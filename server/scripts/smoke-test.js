@@ -114,8 +114,12 @@ if(email&&password){
       const first=casesD.cases?.[0];
       const hasCase=!!first?.id;
       console.log(`${casesR.ok?'PASS':'FAIL'} — Cases API for integrated workspace: ${casesR.status}`);if(!casesR.ok)failures++;
-      if(hasCase)await check('Integrated case workspace API','/api/cases/'+encodeURIComponent(first.id)+'/workspace');
-      else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
+      if(hasCase){
+        const wsR=await req('/api/cases/'+encodeURIComponent(first.id)+'/workspace'),wsD=wsR.ok?await wsR.json():{};
+        const wsOk=wsR.ok&&Array.isArray(wsD.events)&&Array.isArray(wsD.meetings)&&Array.isArray(wsD.applications)&&Array.isArray(wsD.documents);
+        console.log(`${wsOk?'PASS':'FAIL'} — Integrated case workspace + related work: ${wsR.status}`);
+        if(!wsOk)failures++;
+      }else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
     }catch(e){console.log('FAIL — Integrated case workspace API discovery: '+e.message);failures++;}
 
     const me=await req('/api/auth/me');let med={};try{med=await me.json()}catch{}const meOk=me.ok&&Array.isArray(med.permissions);console.log(`${meOk?'PASS':'FAIL'} — Authenticated /me + permissions: ${me.status}`);if(!meOk)failures++;
