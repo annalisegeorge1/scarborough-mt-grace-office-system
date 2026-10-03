@@ -1,0 +1,32 @@
+Scarborough / Mt. Grace District Office — V261
+
+ADMINISTRATION COHESION PASS
+
+1. Added shared admin-cohesion-v261.css.
+2. System Administration:
+- removed duplicate in-page auth line
+- removed duplicate internal navigation
+- compact header, metrics, panels and tablet spacing
+- live logic unchanged
+
+3. Production Control:
+- removed duplicate in-page auth line
+- removed duplicate hero navigation
+- compact header, metrics, readiness rows, release path and route cards
+- production/release logic unchanged
+- no go-live switch added
+
+4. Administration visual model is now consistent across:
+- Roster & Coverage
+- Access Control
+- Audit Review
+- System Administration
+- Production Control
+
+5. Verification:
+- both page scripts parse
+- preflight checks shared cohesion asset
+- authenticated smoke checks shared cohesion asset
+
+6. Release identity:
+- backend version 261.0.0
