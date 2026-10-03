@@ -1,99 +1,90 @@
-# Scarborough / Mt. Grace District Office Service System — V260
+# Scarborough / Mt. Grace District Office Service System — V261
 
 **Current status: controlled pre-launch / staging candidate**
 
-V260 continues the Administration-area cleanup by rebuilding **Access Control** and **Audit Review** as live, tablet-friendly administrative workspaces.
+V261 completes the first Administration-area visual cohesion pass by bringing **System Administration** and **Production Control** into the same compact visual language introduced for Roster & Coverage, Access Control and Audit Review.
 
-## Access Control
+## Shared Administration cohesion asset
 
-`/staff/access.html` no longer uses the older desktop-first account table and duplicated navigation.
+New shared stylesheet:
 
-The page now provides:
-- account totals
-- active/disabled account counts
-- MFA-required count
-- search and account-state filters
-- responsive account cards
-- account creation
-- account detail/editing
-- role changes
-- active/disabled status changes
-- MFA-required setting
-- optional password reset
-- active-session review
-- session revocation
+- `/staff/admin-cohesion-v261.css`
 
-All changes continue to use the existing server-enforced Access Administration API and are audited by the backend.
+It centralizes the presentation used by System Administration and Production Control so future spacing, typography and tablet refinements do not need to be maintained separately.
 
-No shared-login workflow was added.
+## System Administration
 
-## Audit Review
+`/staff/system.html` keeps its existing live logic and endpoints.
 
-`/staff/audit.html` no longer contains the old browser-only training audit list.
+V261 changes presentation only:
+- removes the redundant in-page auth line
+- removes the redundant internal Administration navigation
+- relies on the shared staff shell for navigation
+- converts the oversized full-width hero into a compact Administration header
+- reduces metric-card height
+- reduces panel-heading size
+- tightens live-check rows
+- reduces route-card and toolbar spacing
+- improves tablet/mobile proportions
 
-It now reads the real server audit log from:
+The live system-health, readiness, resident-schema, direct-API-isolation and publishing checks are unchanged.
 
-- `GET /api/audit`
+## Production Control
 
-The page presents:
-- latest event count
-- last-24-hour event count
-- access/authentication event count
-- case/resident event count
-- actor/event/object search
-- event-group filtering
-- outcome filtering
-- responsive audit timeline
-- filtered CSV export
+`/staff/production.html` keeps its release-control logic and production boundary unchanged.
 
-The page is read-only: it does not create, modify or delete audit events.
+V261:
+- removes the redundant in-page auth line
+- removes the redundant hero navigation
+- keeps the shared staff shell as the single navigation layer
+- compacts the Production Control header
+- reduces oversized metrics and panels
+- tightens technical-readiness rows
+- makes the controlled release path more compact
+- reduces operational-route card height
+- improves tablet/mobile density
 
-## Tablet/mobile consistency
+The page still contains no go-live switch.
 
-Access Control and Audit Review now use the same Administration visual language as the V259 Roster & Coverage redesign:
-- shared staff shell only
-- no duplicate legacy navigation
-- compact controls
-- card-based tablet/mobile layouts
-- reduced vertical waste
-- consistent Administration headings, metrics and action patterns
+## Administration area after V261
 
-## Staging verification improvement retained
+The principal Administration pages now follow the same overall pattern:
 
-The smoke suite now retries transient HTTP statuses:
-- 429
-- 502
-- 503
-- 504
-
-up to three attempts.
-
-This addresses one-off Render/proxy cold-start responses while still failing persistent errors.
-
-The V259 staging run proved:
-- Render reached application version 259.0.0
-- liveness passed
-- health passed
-- readiness passed
-- public APIs and resident pages passed
-- all protected staff redirect checks passed
-
-The only V259 smoke failure was a single transient 502 on the first public-homepage request; the retry-capable smoke helper is now in the repository.
+- Roster & Coverage — compact tabbed continuity workspace
+- Access Control — responsive account-management workspace
+- Audit Review — live server audit workspace
+- System Administration — compact live-health workspace
+- Production Control — compact release-control workspace
 
 ## Verification
 
-Preflight checks:
-- Roster & Coverage
-- Access Control
-- Audit Review
-- the previously required staff/release assets
+Source validation confirms:
+- System Administration inline JavaScript parses
+- Production Control inline JavaScript parses
+- neither page contains its old duplicate internal navigation
+- neither page contains the duplicate in-page auth line
 
-Authenticated smoke checks now test Access Control for access-admin roles and Audit Review plus the audit API for roles with audit access.
+Preflight now checks the shared Administration cohesion stylesheet.
+
+Authenticated smoke testing checks the stylesheet when staff smoke credentials are configured.
 
 ## Backend release identity
 
-The server package version is now `260.0.0`.
+The server package version is now `261.0.0`.
+
+## Automated deployment verification
+
+The GitHub verification workflow remains active.
+
+For V261 it will:
+- run source checks
+- run unit tests
+- run production preflight
+- wait for Render staging to report version `261.0.0`
+- run the staging smoke suite
+
+Transient 429/502/503/504 responses are retried before being treated as persistent failures.
 
 ## Production boundary
 
-A technically healthy staging environment and complete audit/access tools do not replace final production authorization, approved account governance, privacy controls or THA IT / management approval.
+V261 is a user-interface cohesion release. It does not alter RBAC, resident data, production authorization, privacy requirements or release-governance boundaries.
