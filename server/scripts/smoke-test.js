@@ -54,6 +54,7 @@ await check('Protected Production Control redirects','/staff/production.html',[3
 await check('Protected Publishing Desk redirects','/staff/publishing.html',[302]);
 await check('Protected Publishing QA redirects','/staff/publishing-qa.html',[302]);
 await check('Protected Release Control redirects','/staff/readiness.html',[302]);
+await check('Protected UAT Centre redirects','/staff/uat.html',[302]);
 await check('Protected Go-Live Control redirects','/staff/go-live.html',[302]);
 if(email&&password){
   const r=await req('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
@@ -108,6 +109,7 @@ if(email&&password){
     await check('Authenticated Publishing Desk','/staff/publishing.html');
     await check('Authenticated Publishing QA','/staff/publishing-qa.html');
     await check('Authenticated Release Control','/staff/readiness.html');
+    await check('Authenticated UAT Centre','/staff/uat.html');
     await check('Authenticated Go-Live Control','/staff/go-live.html');
     await check('Management summary API','/api/reports/summary');
     if(d.permissions.includes('*')||d.permissions.includes('reports.read')){
