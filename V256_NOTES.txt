@@ -1,0 +1,35 @@
+Scarborough / Mt. Grace District Office — V256
+
+QUICK CREATE + CONTROLLED NEW CASE
+
+1. New Case
+- Added /staff/new-case.html.
+- Supports existing Resident Profile selection.
+- Supports transactional creation of a new resident and case together.
+- Captures intake, priority, dates, next action, assignment and ownership.
+- Opens the saved case immediately.
+
+2. Assignment
+- Added GET /api/cases/options.
+- Field Officers auto-own/receive cases they create.
+- Broader case-writing roles may select active case-working staff.
+- Server validates selected staff accounts.
+
+3. Resident Profile
+- Added New case action.
+- Preserves Open latest case action.
+
+4. Quick Create
+Shared staff header now exposes permission-aware + New actions for supported modules.
+
+5. Native form reuse
+Existing module New buttons are reused through query-state handoff where safe.
+No duplicate application/correspondence/field/record/event forms were created.
+
+6. Release identity
+Backend advanced to 256.0.0.
+
+7. Verification
+Preflight and smoke coverage include the New Case page and non-mutating case-options endpoint.
+
+V256 requires migration 007 from V255 before use on the deployed database.
