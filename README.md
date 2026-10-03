@@ -1,89 +1,107 @@
-# Scarborough / Mt. Grace District Office Service System — V252
+# Scarborough / Mt. Grace District Office Service System — V253
 
 **Current status: controlled pre-launch / staging candidate**
 
-V252 responds directly to the remaining visual clutter seen on the deployed Case Management screen. The shared V250/V251 navigation is now treated as the only global staff navigation layer, and Case Management is reduced to a focused resident-case workspace instead of carrying legacy launch, training, website and administration dashboards on the same page.
+V253 completes the next information-architecture step by introducing a true **Staff Home / Today** landing experience. Staff no longer need to enter the system through Case Management or a management-reporting screen.
 
-## Case Management hierarchy
+## Default staff journey
 
-The intended Case Management screen is now:
+The intended staff journey is now:
 
-**Residents → Case Management → Case Queues → Metrics → Filters → Case Register → Case Workspace Tabs**
+**Sign in → Staff Home → Primary Area → Subpage → Record / Workspace**
 
-Opening a case continues into the V251 integrated workspace:
+Normal sign-in now lands on:
 
-- Overview
-- Activity
-- Applications
-- Correspondence
-- Field Visits
-- Documents
-- Feedback
-- Timeline
+- `/staff/home.html`
 
-## V252 cleanup
+Direct protected links still preserve the `next=/staff/...` return behavior.
 
-On Case Management, the shared staff shell now visually replaces older duplicated layers including:
+## Staff Home
 
-- the legacy District Office Staff System module row
-- the internal mailbox banner
-- the old operations-suite notice
-- the old Case Operations hero card
-- repeated pre-launch data-guard banners
-- Production Security Foundation cards
-- Go-Live cards
-- Training / UAT / Pilot cards
-- the old internal portal topbar
-- the old internal module/sidebar navigation
-- embedded Operations Control
-- embedded Attention Centre
-- embedded Website Management
-- embedded Notifications & Appointments hub
+The new Home page is deliberately quiet and operational. It shows:
 
-Those capabilities still exist in their proper staff areas and pages. They are no longer stacked on the Cases page.
+- case follow-ups due today
+- overdue case follow-ups
+- open cases
+- upcoming appointments
+- open applications
+- open field work
+- open resident feedback
+- urgent / high-priority cases
+- prioritized cases needing action
+- upcoming appointments
+- quick routes into authoritative modules
+- recent server-backed case activity
 
-## Case queues
+It does not duplicate production controls, migration controls, website publishing or the full system directory.
 
-V252 adds a compact queue controller above the case register:
+## Role-aware Today API
 
-- All Cases
-- My Cases
-- Overdue
-- Urgent / High
-- Status selector
-- Refresh
-- Today
-- Global Search
+New endpoint:
 
-The controls proxy the existing queue logic, preserving the underlying case-filter behavior and counts.
+- `GET /api/today`
 
-## Mobile / tablet organization
+The endpoint requires authenticated case access and respects existing RBAC.
 
-The shared contextual subpage tabs now use stronger contrast, borders and active-state emphasis on touch-sized screens so inactive tabs do not appear disabled.
+For Field Officers, case, application, field and appointment data is limited to assigned/owned work where the underlying workflow already requires that restriction.
 
-The side-navigation control remains:
-- collapsible rail on desktop
-- slide-out drawer on mobile/tablet
+For broader staff roles, the Home page can show office-wide operational attention.
 
-## V252 assets
+The endpoint returns permission flags so the UI does not present inaccessible operational sections as if they were available.
 
-- `/staff/case-focus-v252.css`
-- `/staff/case-focus-v252.js`
+## Home-area navigation
 
-V250 and V251 assets remain in use:
-- shared staff shell
-- integrated case workspace
-- case-context helpers
+The shared sidebar Home section is now:
+
+- Home
+- Daily Workboard
+- Operations Centre
+- Management Briefing
+- Handover
+- Attention & Reminders
+
+This makes Home the landing page while keeping the deeper operational tools available as subpages.
+
+## Daily Workboard
+
+The Daily Workboard now reads `/api/today` instead of the management-only `/api/reports/summary`.
+
+This removes the unnecessary Reports-permission dependency for operational roles.
+
+Its metrics are now:
+- open cases
+- overdue case follow-ups
+- open applications where permitted
+- open field work where permitted
+- upcoming appointments where permitted
+
+## Earlier organization retained
+
+V250–V252 remain in place:
+- six-area shared staff shell
+- collapsible desktop sidebar and mobile drawer
+- contextual subpage tabs
+- integrated resident/case workspace
+- case-linked Applications, Correspondence, Field, Records and Feedback
+- focused Case Management screen
+- cleaner touch/tablet navigation
 
 ## Backend release identity
 
-The server package version is now `252.0.0`.
+The server package version is now `253.0.0`.
 
 ## Verification
 
-Preflight verifies the V252 focused Case Management assets.
+Preflight now checks:
+- Staff Home exists
+- Today API route exists
+- all previously required navigation/case/release assets
 
-Authenticated smoke testing verifies that the focused-case CSS and JavaScript are served.
+Authenticated smoke testing now verifies:
+- Staff Home loads
+- Today API responds
+- Case Management remains accessible
+- existing integrated case/release controls remain covered
 
 Run from `server/`:
 
@@ -95,4 +113,4 @@ Run from `server/`:
 
 ## Production boundary
 
-V252 is an information-architecture and presentation cleanup. It does not remove backend capabilities, change resident data, weaken RBAC, alter publishing rules, or authorize production use.
+V253 changes navigation, staff landing behavior and operational aggregation. It does not change the production authorization boundary, weaken RBAC, alter resident/public privacy rules, or authorize confidential production data.
