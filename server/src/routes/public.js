@@ -35,6 +35,37 @@ async function matchedCase(reference,contact){
   return ok?row:null;
 }
 
+function currentPublicPayload(row){
+  return {
+    id:row.id,type:row.type,section:row.section,category:row.category,title:row.title,summary:row.summary,body:row.body,
+    publicUrl:row.document_id?`/api/public/documents/${row.document_id}`:row.public_url,
+    publicStatus:row.public_status,statusNote:row.status_note,responsibleAuthority:row.responsible_authority,
+    eventDate:row.event_date,sortOrder:row.sort_order||0,isFeatured:!!row.is_featured,metadata:row.metadata||{},
+    publishOn:row.publish_on,expireOn:row.expire_on,updatedAt:row.updated_at,documentId:row.document_id||null
+  };
+}
+function effectivePublicPayload(row){
+  if(row.workflow==='Published'&&row.verified===true)return currentPublicPayload(row);
+  if(row.published_snapshot_active&&row.published_snapshot&&typeof row.published_snapshot==='object'){
+    const p={...row.published_snapshot};
+    p.id=p.id||row.id;
+    p.publicUrl=p.documentId?`/api/public/documents/${p.documentId}`:(p.publicUrl||null);
+    p.metadata=p.metadata&&typeof p.metadata==='object'&&!Array.isArray(p.metadata)?p.metadata:{};
+    p.sortOrder=Number(p.sortOrder)||0;
+    p.isFeatured=!!p.isFeatured;
+    return p;
+  }
+  return null;
+}
+function publicWindowOpen(p,now=Date.now()){
+  if(!p)return false;
+  const start=p.publishOn?Date.parse(p.publishOn):NaN;
+  const end=p.expireOn?Date.parse(p.expireOn):NaN;
+  if(Number.isFinite(start)&&start>now)return false;
+  if(Number.isFinite(end)&&end<=now)return false;
+  return true;
+}
+
 /* Public-safe website content. Only Published + Verified + in-window records are exposed. */
 router.get('/content',async(req,res,next)=>{
   try{
@@ -43,23 +74,29 @@ router.get('/content',async(req,res,next)=>{
       SELECT pc.id,pc.type,pc.section,pc.category,pc.title,pc.summary,pc.body,pc.public_url,
              pc.public_status,pc.status_note,pc.responsible_authority,pc.event_date,pc.sort_order,
              pc.document_id,pc.is_featured,pc.metadata,pc.publish_on,pc.expire_on,pc.updated_at,
+             pc.workflow,pc.verified,pc.published_snapshot,pc.published_snapshot_active,
              d.original_filename,d.mime_type
       FROM public_content pc
-      LEFT JOIN documents d ON d.id=pc.document_id
-      WHERE pc.workflow='Published'
-        AND pc.verified=true
-        AND (pc.publish_on IS NULL OR pc.publish_on<=now())
-        AND (pc.expire_on IS NULL OR pc.expire_on>now())
-        AND ($1::text IS NULL OR pc.section=$1)
-      ORDER BY pc.sort_order ASC, COALESCE(pc.publish_on,pc.created_at) DESC, pc.updated_at DESC
-    `,[section]);
-    res.json({content:q.rows.map(x=>({
-      id:x.id,type:x.type,section:x.section,category:x.category,title:x.title,summary:x.summary,body:x.body,
-      publicUrl:x.document_id?`/api/public/documents/${x.document_id}`:x.public_url,
-      publicStatus:x.public_status,statusNote:x.status_note,responsibleAuthority:x.responsible_authority,
-      eventDate:x.event_date,sortOrder:x.sort_order,isFeatured:x.is_featured,metadata:x.metadata||{},
-      publishOn:x.publish_on,expireOn:x.expire_on,updatedAt:x.updated_at,originalFilename:x.original_filename||null
-    }))});
+      LEFT JOIN documents d ON d.id=CASE
+        WHEN pc.workflow='Published' AND pc.verified=true THEN pc.document_id
+        ELSE NULLIF(pc.published_snapshot->>'documentId','')::uuid
+      END
+      WHERE (pc.workflow='Published' AND pc.verified=true)
+         OR pc.published_snapshot_active=true
+      ORDER BY pc.updated_at DESC
+      LIMIT 2000
+    `);
+    const now=Date.now();
+    const content=q.rows.map(row=>{
+      const p=effectivePublicPayload(row);
+      if(!p||!publicWindowOpen(p,now))return null;
+      if(section&&p.section!==section)return null;
+      return {...p,originalFilename:row.original_filename||null};
+    }).filter(Boolean).sort((a,b)=>
+      (Number(a.sortOrder)||0)-(Number(b.sortOrder)||0) ||
+      Date.parse(b.publishOn||b.updatedAt||0)-Date.parse(a.publishOn||a.updatedAt||0)
+    );
+    res.json({content});
   }catch(e){next(e)}
 });
 
@@ -69,28 +106,31 @@ router.get('/content',async(req,res,next)=>{
 router.get('/feed.xml',async(req,res,next)=>{
   try{
     const q=await db.query(`
-      SELECT id,type,section,category,title,summary,body,public_status,status_note,
-             publish_on,updated_at,is_featured,metadata
+      SELECT id,type,section,category,title,summary,body,public_url,public_status,status_note,
+             responsible_authority,event_date,sort_order,document_id,is_featured,metadata,
+             publish_on,expire_on,updated_at,workflow,verified,published_snapshot,published_snapshot_active
       FROM public_content
-      WHERE workflow='Published'
-        AND verified=true
-        AND (publish_on IS NULL OR publish_on<=now())
-        AND (expire_on IS NULL OR expire_on>now())
-        AND (
-          section='activity'
-          OR type IN ('notice','important','newsletter')
-        )
-        AND COALESCE(metadata->>'action','show') <> 'hide'
-      ORDER BY is_featured DESC, updated_at DESC, COALESCE(publish_on,updated_at) DESC
-      LIMIT 50
+      WHERE (workflow='Published' AND verified=true)
+         OR published_snapshot_active=true
+      ORDER BY updated_at DESC
+      LIMIT 500
     `);
+    const now=Date.now();
+    const rows=q.rows.map(effectivePublicPayload).filter(p=>
+      p&&publicWindowOpen(p,now)&&
+      (p.section==='activity'||['notice','important','newsletter'].includes(p.type))&&
+      String(p.metadata?.action||'show')!=='hide'
+    ).sort((a,b)=>
+      Number(!!b.isFeatured)-Number(!!a.isFeatured) ||
+      Date.parse(b.updatedAt||b.publishOn||0)-Date.parse(a.updatedAt||a.publishOn||0)
+    ).slice(0,50);
     const origin=String(config.publicOrigin||'').replace(/\/$/,'');
-    const items=q.rows.map(row=>{
+    const items=rows.map(row=>{
       const link=`${origin}/updates/?post=${encodeURIComponent(row.id)}`;
       const history=Array.isArray(row.metadata?.progressHistory)?row.metadata.progressHistory.filter(x=>x&&typeof x==='object'&&x.summary):[];
       const latest=history.sort((a,b)=>Date.parse(b.date||0)-Date.parse(a.date||0))[0];
-      const description=latest?`${latest.status||'Progress update'}: ${latest.summary}`:(row.summary||row.body||row.status_note||row.public_status||'');
-      const published=row.updated_at||row.publish_on;
+      const description=latest?`${latest.status||'Progress update'}: ${latest.summary}`:(row.summary||row.body||row.statusNote||row.publicStatus||'');
+      const published=row.updatedAt||row.publishOn;
       return `<item>
 <title>${xml(row.title)}</title>
 <link>${xml(link)}</link>
@@ -121,16 +161,24 @@ ${items}
    currently Published + Verified content and marked Public in the records table. */
 router.get('/documents/:id',async(req,res,next)=>{
   try{
+    const cq=await db.query(`
+      SELECT id,type,section,category,title,summary,body,public_url,public_status,status_note,
+             responsible_authority,event_date,sort_order,document_id,is_featured,metadata,
+             publish_on,expire_on,updated_at,workflow,verified,published_snapshot,published_snapshot_active
+      FROM public_content
+      WHERE document_id=$1
+         OR NULLIF(published_snapshot->>'documentId','')::uuid=$1
+    `,[req.params.id]);
+    const now=Date.now();
+    const exposed=cq.rows.some(row=>{
+      const p=effectivePublicPayload(row);
+      return p&&String(p.documentId||'')===String(req.params.id)&&publicWindowOpen(p,now);
+    });
+    if(!exposed)return res.status(404).json({detail:'Public document not found.'});
     const q=await db.query(`
-      SELECT d.id,d.storage_key,d.original_filename,d.mime_type
-      FROM documents d
-      JOIN public_content pc ON pc.document_id=d.id
-      WHERE d.id=$1
-        AND d.sensitivity='Public'
-        AND pc.workflow='Published'
-        AND pc.verified=true
-        AND (pc.publish_on IS NULL OR pc.publish_on<=now())
-        AND (pc.expire_on IS NULL OR pc.expire_on>now())
+      SELECT id,storage_key,original_filename,mime_type
+      FROM documents
+      WHERE id=$1 AND sensitivity='Public' AND review_status='Approved'
       LIMIT 1
     `,[req.params.id]);
     if(!q.rowCount||!q.rows[0].storage_key)return res.status(404).json({detail:'Public document not found.'});
