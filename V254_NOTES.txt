@@ -1,0 +1,13 @@
+Scarborough / Mt. Grace District Office — V254
+
+ROLE-AWARE STAFF NAVIGATION
+
+- Authentication now returns the role's permission list.
+- production-client.js retains permissions in shared session state.
+- staff-shell.js filters primary areas and subpages using server RBAC permission names.
+- Assigned variants such as cases.read.assigned and applications.read.assigned satisfy their corresponding read navigation items.
+- Administration is limited to Manager / Administrative roles in the shell.
+- Known inaccessible direct pages redirect to Staff Home.
+- /staff redirects authenticated staff to /staff/home.html.
+- Backend API permissions remain authoritative.
+- Backend release identity advanced to 254.0.0.
