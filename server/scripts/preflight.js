@@ -50,6 +50,9 @@ add('Production Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','
 add('Publishing Desk exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing.html')),'staff/publishing.html');
 add('Publishing QA exists',fs.existsSync(path.join(cfg.staticRoot,'staff','publishing-qa.html')),'staff/publishing-qa.html');
 add('Release Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','readiness.html')),'staff/readiness.html');
+add('UAT Centre exists',fs.existsSync(path.join(cfg.staticRoot,'staff','uat.html')),'staff/uat.html');
+add('Feature freeze document exists',fs.existsSync(path.join(__dirname,'..','..','FEATURE_FREEZE_V269.md')),'FEATURE_FREEZE_V269.md');
+add('Current UAT plan exists',fs.existsSync(path.join(__dirname,'..','..','UAT_TEST_PLAN.md')),'UAT_TEST_PLAN.md');
 add('Go-Live Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','go-live.html')),'staff/go-live.html');
 add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..','migrations','006_content_publishing_workflow.sql')),'migrations/006_content_publishing_workflow.sql');
 add('Resident profile migration exists',fs.existsSync(path.join(__dirname,'..','migrations','007_resident_profiles.sql')),'migrations/007_resident_profiles.sql');
