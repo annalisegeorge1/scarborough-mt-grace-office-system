@@ -1,0 +1,24 @@
+Scarborough / Mt. Grace District Office — V270
+
+FEATURE-FREEZE DEFECT FIX: PUBLIC CIVIC FLOW
+
+Problem observed on tablet/mobile:
+- Civic Flow cards appeared stuck
+- Stage label could remain at Stage 1 of 4
+- horizontal rail and vertical page progression were not synchronized
+
+Shared fix:
+1. Swiping the flow rail updates active stage.
+2. Vertical page progress brings the active card into view.
+3. Dynamic/later-inserted target sections are re-detected.
+4. Current hash state is respected.
+5. Previous/Next tablet-mobile controls added.
+6. Active card visual treatment improved.
+7. Homepage non-stage state wording remains intact.
+8. Reduced-motion preference remains respected.
+
+Smoke now verifies the shared Civic Flow JS/CSS assets.
+
+Release identity: 270.0.0.
+
+No major feature added; this is allowed under the V269 feature freeze as a UAT/responsive defect fix.
