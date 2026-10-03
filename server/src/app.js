@@ -303,7 +303,8 @@ async function sendPublicIndex(req,res,next){
       const darkFormGalleryCssFile=path.join(config.staticRoot,'assets','district-dark-form-gallery-v234.css');
       const residentServiceWorkspaceCssFile=path.join(config.staticRoot,'assets','district-resident-service-workspace-v235.css');
       const residentServiceWorkspaceJsFile=path.join(config.staticRoot,'assets','district-resident-service-workspace-v235.js');
-      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer,formLandscapeCssBuffer,screenshotPolishCssBuffer,darkFormGalleryCssBuffer,residentServiceWorkspaceCssBuffer,residentServiceWorkspaceJsBuffer]=await Promise.all([
+      const focusedRouteCoherenceCssFile=path.join(config.staticRoot,'assets','district-focused-route-coherence-v236.css');
+      const [runtimeBuffer,sidebarCssBuffer,sidebarJsBuffer,focusedCssBuffer,focusedJsBuffer,focusedLayoutCssBuffer,focusedLayoutJsBuffer,routeCssBuffer,routeJsBuffer,visualQaCssBuffer,pageIdentityCssBuffer,pageIdentityJsBuffer,hierarchyCssBuffer,hierarchyJsBuffer,lightHierarchyCssBuffer,lightHierarchyJsBuffer,aestheticCssBuffer,aestheticJsBuffer,homeAestheticCssBuffer,homeAestheticJsBuffer,globalPolishCssBuffer,globalPolishJsBuffer,digitalFeedCssBuffer,digitalFeedJsBuffer,feedPublishingCssBuffer,feedPublishingJsBuffer,progressThreadsCssBuffer,progressThreadsJsBuffer,mobileCorrectionsCssBuffer,mobilePolishCssBuffer,mobileNavigationCssBuffer,mobileNavigationJsBuffer,contrastAccessibilityCssBuffer,contrastAccessibilityJsBuffer,performanceInteractionCssBuffer,performanceInteractionJsBuffer,darkDesktopCssBuffer,darkDesktopJsBuffer,componentCohesionCssBuffer,componentCohesionJsBuffer,publicDiscoveryCssBuffer,commandCenterCssBuffer,commandCenterJsBuffer,residentJourneyCssBuffer,residentJourneyJsBuffer,smartNextStepCssBuffer,smartNextStepJsBuffer,livingPulseCssBuffer,livingPulseJsBuffer,residentReadinessCssBuffer,residentReadinessJsBuffer,pwaCssBuffer,pwaJsBuffer,landscapeCorrectionsCssBuffer,serviceIntelligenceCssBuffer,serviceIntelligenceJsBuffer,formLandscapeCssBuffer,screenshotPolishCssBuffer,darkFormGalleryCssBuffer,residentServiceWorkspaceCssBuffer,residentServiceWorkspaceJsBuffer,focusedRouteCoherenceCssBuffer]=await Promise.all([
         fs.readFile(runtimeFile),
         fs.readFile(sidebarCssFile),
         fs.readFile(sidebarJsFile),
@@ -364,7 +365,8 @@ async function sendPublicIndex(req,res,next){
         fs.readFile(screenshotPolishCssFile),
         fs.readFile(darkFormGalleryCssFile),
         fs.readFile(residentServiceWorkspaceCssFile),
-        fs.readFile(residentServiceWorkspaceJsFile)
+        fs.readFile(residentServiceWorkspaceJsFile),
+        fs.readFile(focusedRouteCoherenceCssFile)
       ]);
       const versionFor=(buffer)=>crypto.createHash('sha256').update(buffer).digest('hex').slice(0,12);
       const runtime=`<script src="/assets/public-content-runtime.js?v=${versionFor(runtimeBuffer)}" defer></script>`;
@@ -428,6 +430,7 @@ async function sendPublicIndex(req,res,next){
       const darkFormGalleryCss=`<link rel="stylesheet" href="/assets/district-dark-form-gallery-v234.css?v=${versionFor(darkFormGalleryCssBuffer)}">`;
       const residentServiceWorkspaceCss=`<link rel="stylesheet" href="/assets/district-resident-service-workspace-v235.css?v=${versionFor(residentServiceWorkspaceCssBuffer)}">`;
       const residentServiceWorkspaceJs=`<script src="/assets/district-resident-service-workspace-v235.js?v=${versionFor(residentServiceWorkspaceJsBuffer)}" defer></script>`;
+      const focusedRouteCoherenceCss=`<link rel="stylesheet" href="/assets/district-focused-route-coherence-v236.css?v=${versionFor(focusedRouteCoherenceCssBuffer)}">`;
       const pwaHead='<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="/assets/district-app-icon-v229.svg"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SMG Office">';
       const rssLink='<link rel="alternate" type="application/rss+xml" title="Scarborough / Mt. Grace District Office Updates" href="/api/public/feed.xml">';
       if(!html.includes('/assets/district-sidebar-v202.css')){
@@ -531,6 +534,9 @@ async function sendPublicIndex(req,res,next){
       }
       if(!html.includes('/assets/district-resident-service-workspace-v235.css')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,residentServiceWorkspaceCss+'</head>'):residentServiceWorkspaceCss+html;
+      }
+      if(!html.includes('/assets/district-focused-route-coherence-v236.css')){
+        html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,focusedRouteCoherenceCss+'</head>'):focusedRouteCoherenceCss+html;
       }
       if(!html.includes('/manifest.webmanifest')){
         html=/<\/head>/i.test(html)?html.replace(/<\/head>/i,pwaHead+'</head>'):pwaHead+html;
