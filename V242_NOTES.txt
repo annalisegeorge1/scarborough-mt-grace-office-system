@@ -1,0 +1,375 @@
+Scarborough / Mt. Grace District Office — V242
+
+STAFF → PREVIEW → VERIFY → PUBLISH BRIDGE
+
+V242 turns the existing public_content CMS backbone into a controlled staff publishing workflow without creating a second CMS or breaking the existing Website & Content Manager.
+
+CORE WORKFLOW
+
+Draft
+→ In Review
+→ Approved
+→ Verified
+→ Published
+→ Start a revision / Archive
+
+Verification remains a separate factual/source gate rather than being treated as the same thing as editorial approval.
+
+1. Existing source of truth preserved
+V242 continues to use:
+- public_content
+- existing content API
+- existing public runtime
+- existing staff authentication
+- existing CSRF protection
+- existing audit_log
+- existing documents/records controls
+
+No second public-content store is introduced.
+
+2. Publishing Desk
+New protected staff page:
+- /staff/publishing.html
+
+The Publishing Desk provides:
+- workflow counts
+- search
+- workflow filter
+- section filter
+- type filter
+- resident-facing preview
+- publication-readiness checks
+- source/reference field
+- verification note
+- staff-only internal notes
+- controlled workflow buttons
+- revision history
+- direct resident-route link
+- link back to the existing Website CMS for editing public fields
+
+3. Resident preview boundary
+GET /api/content/:id/preview returns:
+- explicit resident-facing content fields
+- workflow state
+- verification state
+- version
+- workflow timestamps
+- public-route destination
+- publication-readiness checklist
+- separate authenticated staff-only publishing metadata
+
+The preview deliberately does not expose a raw public_content database row.
+
+4. Controlled workflow API
+POST /api/content/:id/workflow
+Permission:
+- content.publish
+
+Supported actions:
+- submit-review
+- return-draft
+- approve
+- revise
+- verify
+- unverify
+- publish
+- archive
+- restore
+
+Controlled transitions:
+- Draft → In Review
+- In Review → Draft or Approved
+- Approved → Draft or Published
+- Published → In Review through Start a revision
+- Published → Archived
+- Archived → Draft
+
+5. Role boundary
+Manager continues to have full permission.
+
+Administrative staff now receive:
+- content.write
+- content.publish
+
+Other existing staff-role permissions are unchanged.
+
+6. Verification is separate
+Approval alone does not make an item public.
+
+Publication requires:
+- Approved workflow state
+- verified=true
+- publication blockers passing
+
+Verification records:
+- verifier
+- verification timestamp
+- optional verification note
+- optional source/reference
+
+7. Publication-readiness safeguards
+V242 checks resident-facing records before controlled Publish.
+
+Blockers include:
+- missing public title
+- missing factual verification
+- linked document not marked Public
+- linked document not approved in the records system
+- invalid public form availability
+- incomplete employment-notice requirements
+
+Warnings include:
+- missing short public summary
+- missing source/reference
+- missing public activity status
+- missing/current update-date guidance
+- public copy containing an email address
+- public copy containing a phone number
+- public copy containing a long numeric identifier
+
+Privacy-pattern warnings require staff review but do not automatically assume that approved public contact details are unsafe.
+
+8. Stable public version during revisions
+V242 adds a published snapshot boundary.
+
+When staff choose Start a revision on a Published record:
+- editable workflow moves to In Review
+- verification is cleared for the new revision
+- previous Published + Verified public payload stays live
+- staff can edit and review the replacement privately
+- residents continue seeing the last approved public version
+
+When the replacement is verified and Published:
+- the published snapshot advances to the replacement
+- public runtime, RSS and public document exposure use the new version
+
+9. Archive / restore semantics
+Archive:
+- removes the current public version
+- deactivates the published snapshot
+
+Restore:
+- returns the item to Draft
+- leaves the snapshot inactive
+- clears verification
+- requires review/verification/publication again
+
+10. Legacy CMS compatibility
+The existing /staff/cms.html remains fully available.
+
+Its existing:
+- forms editor
+- Activity Hub editor
+- hide/restore overrides
+- progress threads
+- managed content tables
+- archive controls
+
+remain present.
+
+V242 also explicitly preserves legacy archive behavior:
+- if the older CMS moves a currently Published record away from Published through its normal PATCH path, the live snapshot is not accidentally left public
+
+The Publishing Desk is the preferred controlled editorial workflow, but existing CMS operations remain backward-compatible during this transition.
+
+11. Revision history
+New table:
+- public_content_revisions
+
+Each V242 create/update/workflow change records:
+- content ID
+- version
+- action
+- workflow
+- verified state
+- public payload snapshot
+- separate internal publishing payload
+- staff actor
+- timestamp
+
+Existing public content receives a baseline revision during migration.
+
+12. Content versioning
+public_content now includes:
+- version
+- reviewed_by / reviewed_at
+- verified_by / verified_at
+- published_by / published_at
+- archived_by / archived_at
+- internal_notes
+- source_reference
+- verification_note
+- published_snapshot
+- published_snapshot_at
+- published_snapshot_active
+
+13. Public privacy boundary
+GET /api/public/content does NOT select:
+- internal_notes
+- source_reference
+- verification_note
+- reviewer/verifier/publisher/archiver actor IDs
+- revision history
+
+The public runtime only receives the effective public payload.
+
+14. Public content continuity
+GET /api/public/content now resolves an effective public payload:
+- current fields when the record itself is Published + Verified
+- otherwise the last active published snapshot during a controlled revision
+
+Publish/expiry windows remain enforced.
+
+15. RSS continuity
+/api/public/feed.xml uses the same effective public payload logic.
+
+Starting a revision therefore does not make an existing verified public update disappear from RSS while staff edit the replacement.
+
+16. Public documents
+Public document delivery now requires:
+- document sensitivity = Public
+- document review status = Approved
+- an active effective public content record referencing that document
+- an open publish/expiry window
+
+This applies to both current published content and the last published snapshot during revision.
+
+17. Staff navigation
+Publishing Desk links were added to:
+- staff/index.html
+- staff/cms.html
+
+The CMS also includes a direct Open Publishing Desk prompt.
+
+18. Audit trail
+Controlled workflow actions write:
+- content.workflow audit events
+- action
+- resulting workflow
+- verified state
+- version
+
+Existing content create/update audit behavior is preserved.
+
+19. Migration behavior
+New migration:
+- server/migrations/006_content_publishing_workflow.sql
+
+It is additive and idempotent:
+- ADD COLUMN IF NOT EXISTS
+- CREATE TABLE IF NOT EXISTS
+- CREATE INDEX IF NOT EXISTS
+- baseline revision inserts use ON CONFLICT DO NOTHING
+
+Existing Published + Verified records receive an initial published snapshot so they continue to be available after deployment.
+
+20. Render deployment
+The repository’s existing start command already runs:
+- npm run migrate
+- then npm start
+
+Therefore migration 006 is designed to apply through the existing deployment process on the next server deployment/restart.
+
+21. Preservation
+V242 does not remove:
+- staff case management
+- staff applications/referrals
+- correspondence
+- field operations
+- community operations
+- records
+- reports
+- audit
+- existing Website CMS
+- Activity Hub settings
+- public progress threads
+- staff authentication
+- CSRF protection
+- public enquiries
+- resident tracker
+- database-backed public content runtime
+
+22. QA PASSED
+Syntax:
+- server/src/routes/content.js
+- server/src/routes/public.js
+- staff/publishing.html inline JavaScript
+- server/src/rbac.js
+
+Workflow:
+- content.publish permission
+- preview endpoint
+- revisions endpoint
+- controlled workflow endpoint
+- Draft → In Review
+- In Review → Approved
+- Published → Start a revision
+- Approved → Published
+- Archive
+- Restore
+- separate verify/unverify
+- publish readiness gate
+- audit logging
+
+Snapshot continuity:
+- snapshot migration columns
+- existing Published+Verified backfill
+- controlled revision keeps previous public snapshot live
+- Publish advances snapshot
+- Archive/Restore deactivate snapshot
+- legacy CMS archive deactivates public snapshot
+- public content endpoint uses effective payload
+- RSS uses effective payload
+- public documents use effective payload
+
+Privacy:
+- explicit public payload builder
+- separate internal payload builder
+- public route selects no internal notes/source/verification notes
+- public route selects no workflow actor IDs
+- public route never queries revision history
+- privacy-pattern warnings
+- Public + Approved document gate
+
+Migration:
+- additive columns
+- idempotent revision table
+- unique content/version history
+- conflict-safe baseline
+- idempotent indexes
+
+Staff UI:
+- Publishing Desk
+- publishing queue
+- resident preview
+- readiness checks
+- source/reference
+- verification note
+- internal notes
+- revision history
+- previous-public-version-live indicator
+- Start a revision
+- CMS and staff-home links
+
+Legacy:
+- existing content GET/POST/PATCH
+- Activity progress add/remove
+- existing forms editor
+- existing Activity editor
+- existing CMS archive control
+
+Files added:
+- server/migrations/006_content_publishing_workflow.sql
+- staff/publishing.html
+- V242_NOTES.txt
+
+Files updated:
+- server/src/routes/content.js
+- server/src/routes/public.js
+- server/src/rbac.js
+- server/API_CONTRACT.md
+- staff/cms.html
+- staff/index.html
+
+Validation note:
+V242 has passed source-level syntax, privacy-boundary, workflow, snapshot-continuity and backward-compatibility checks. The migration and end-to-end database workflow still require confirmation after the branch is deployed to the Render staging environment.

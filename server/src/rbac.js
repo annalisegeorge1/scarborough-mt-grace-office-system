@@ -1,7 +1,7 @@
 'use strict';
 const ROLE_PERMISSIONS={
   Manager:['*'],
-  Administrative:['search.use','cases.read','cases.write','applications.read','applications.write','records.read','records.write','correspondence.write','community.write','reports.read','feedback.write','audit.read','appointments.write','content.write'],
+  Administrative:['search.use','cases.read','cases.write','applications.read','applications.write','records.read','records.write','correspondence.write','community.write','reports.read','feedback.write','audit.read','appointments.write','content.write','content.publish'],
   'Senior Officer':['search.use','cases.read','cases.write','applications.read','applications.write','community.write','field.write','feedback.write','appointments.write','correspondence.write'],
   'Field Officer':['search.use','cases.read.assigned','cases.write.assigned','field.write','community.write','applications.read.assigned','appointments.write'],
   'Senior Staff':['cases.read','records.read','community.write','reports.read','search.use']
