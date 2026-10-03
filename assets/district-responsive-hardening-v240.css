@@ -1,0 +1,311 @@
+/* Scarborough / Mt. Grace District Office — V240
+   Production Responsive Hardening
+   System-level safeguards for sticky navigation, anchors, safe areas, focus,
+   touch targets, overflow and viewport behavior. */
+
+html{
+  --v240-sticky-offset:88px;
+  --v240-dock-clearance:0px;
+  scroll-padding-top:calc(var(--v240-sticky-offset) + 14px);
+  scroll-behavior:smooth;
+  overflow-x:clip;
+}
+
+body{
+  max-width:100%;
+  overflow-x:clip;
+}
+
+/* ==========================================================================
+   1. ANCHOR / DEEP-LINK SAFETY
+   Every major public target clears the sticky civic shell instead of landing
+   underneath it.
+   ========================================================================== */
+main#main-content [id],
+footer [id],
+.v203-page-header[id],
+.v204-content-card[id]{
+  scroll-margin-top:calc(var(--v240-sticky-offset) + 14px);
+}
+
+body.v203-focused-view .v208-secondary[id],
+body.v203-focused-view .v209-secondary[id]{
+  scroll-margin-top:calc(var(--v240-sticky-offset) + 18px);
+}
+
+/* ==========================================================================
+   2. WIDTH / OVERFLOW GUARDS
+   Protect the page from one oversized child causing viewport-wide horizontal
+   scrolling while preserving intentional swipe rails.
+   ========================================================================== */
+main#main-content,
+main#main-content > *,
+.v204-focus-shell,
+.v204-main-column,
+.v204-main-column > *,
+.v204-content-card,
+.v203-wrap,
+.v207-identity-strip,
+.v235-workspace,
+.v237-flow,
+footer,
+footer > *,
+.v239-footer-deck,
+.v239-footer-deck > *{
+  min-width:0;
+  max-width:100%;
+}
+
+main#main-content :where(img,video,canvas,picture,iframe){
+  max-width:100%;
+}
+
+main#main-content :where(h1,h2,h3,h4,h5,h6,p,li,dt,dd,label,strong,span){
+  overflow-wrap:break-word;
+}
+
+main#main-content :where(
+  .v125-mobile-nav-rail,
+  .v203-page-tabs,
+  .v204-side-nav,
+  .v204-action-deck,
+  .v235-flow,
+  .v237-flow-track,
+  .v203-page-end-actions,
+  .v26-tabs
+){
+  max-width:100%;
+  overscroll-behavior-x:contain;
+}
+
+/* ==========================================================================
+   3. DRAWER / VIEWPORT HARDENING
+   Use dynamic viewport units and safe-area offsets where available.
+   ========================================================================== */
+.v202-drawer{
+  top:max(8px,env(safe-area-inset-top))!important;
+  bottom:max(8px,env(safe-area-inset-bottom))!important;
+  left:max(8px,env(safe-area-inset-left))!important;
+  width:min(
+    336px,
+    calc(100vw - 16px - env(safe-area-inset-left) - env(safe-area-inset-right))
+  )!important;
+  max-height:calc(
+    100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+  )!important;
+}
+
+.v202-nav-scroll{
+  min-height:0!important;
+  overscroll-behavior:contain;
+}
+
+/* ==========================================================================
+   4. FIXED RESIDENT CONTROLS + SAFE AREAS
+   ========================================================================== */
+@media(max-width:900px){
+  html{
+    --v240-dock-clearance:110px;
+    scroll-padding-bottom:calc(var(--v240-dock-clearance) + env(safe-area-inset-bottom));
+  }
+
+  body.v239-civic-shell .v7-mobile-dock,
+  .v7-mobile-dock{
+    left:max(10px,env(safe-area-inset-left))!important;
+    right:max(10px,env(safe-area-inset-right))!important;
+    bottom:max(7px,env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    max-width:none!important;
+  }
+
+  .v202-menu-fab{
+    left:max(14px,env(safe-area-inset-left))!important;
+  }
+
+  .v8-accessibility{
+    right:max(10px,env(safe-area-inset-right))!important;
+  }
+
+  footer{
+    padding-bottom:max(
+      calc(var(--v240-dock-clearance) + 10px),
+      calc(96px + env(safe-area-inset-bottom))
+    )!important;
+  }
+}
+
+/* Landscape gets a smaller clearance because the dock may be compact/hidden. */
+@media(max-width:900px) and (orientation:landscape){
+  html{
+    --v240-dock-clearance:76px;
+  }
+
+  footer{
+    padding-bottom:max(
+      calc(var(--v240-dock-clearance) + 8px),
+      calc(64px + env(safe-area-inset-bottom))
+    )!important;
+  }
+}
+
+/* ==========================================================================
+   5. COARSE-POINTER HIT TARGETS
+   Keep the visual design compact while giving finger targets a more forgiving
+   minimum interaction area.
+   ========================================================================== */
+@media(pointer:coarse){
+  :where(
+    .v203-page-tab,
+    .v204-side-nav a,
+    .v203-page-end a,
+    .v202-sub-link,
+    .v202-utility-link,
+    .v237-flow-foot a,
+    .v239-route-indicator
+  ){
+    min-height:42px!important;
+  }
+
+  .v202-close,
+  .v219-access-trigger,
+  .v8-accessibility #v8-text-toggle,
+  .v8-accessibility #v8-contrast-toggle{
+    min-width:40px!important;
+    min-height:40px!important;
+  }
+
+  .v202-sub-link,
+  .v202-utility-link{
+    display:flex!important;
+    align-items:center!important;
+  }
+}
+
+/* ==========================================================================
+   6. CONSISTENT KEYBOARD FOCUS
+   Existing component-specific states remain; this is the fallback ring.
+   ========================================================================== */
+body.v239-civic-shell :where(
+  a,
+  button,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"])
+):focus-visible{
+  outline:3px solid rgba(var(--v239-accent-rgb),.72)!important;
+  outline-offset:3px!important;
+}
+
+body.v239-civic-shell :where(
+  input,
+  select,
+  textarea
+):focus-visible{
+  outline:2px solid rgba(var(--v239-accent-rgb),.68)!important;
+  outline-offset:2px!important;
+}
+
+/* ==========================================================================
+   7. LONG-COPY / FORM RESILIENCE
+   ========================================================================== */
+#district-enquiry-form,
+#district-enquiry-form .form-grid,
+#district-enquiry-form .form-group,
+#district-enquiry-form :where(input,select,textarea,label){
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+#district-enquiry-form :where(label,.v48-form-help,.v203-document-note,.v238-pref-note){
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+}
+
+.v239-footer-deck :where(h2,h3,h4,p,a,strong,span),
+.v202-drawer :where(strong,span,a,button){
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+/* ==========================================================================
+   8. STICKY SHELL / HASH DESTINATION VISIBILITY
+   ========================================================================== */
+body.v239-civic-shell nav[aria-label="Site navigation"],
+body.v239-civic-shell .v125-mobile-nav-shell{
+  scroll-margin-top:0!important;
+}
+
+:target{
+  scroll-margin-top:calc(var(--v240-sticky-offset) + 16px);
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY PREFERENCES
+   ========================================================================== */
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:auto!important;
+  }
+
+  main#main-content *,
+  .v202-drawer,
+  .v202-backdrop{
+    scroll-behavior:auto!important;
+  }
+}
+
+@media(prefers-contrast:more){
+  body.v239-civic-shell :where(
+    .v203-page-tab,
+    .v204-side-nav a,
+    .v237-flow-step,
+    .v235-step,
+    .v203-page-end a
+  ){
+    border-width:2px!important;
+  }
+
+  body.v239-civic-shell .v7-mobile-dock{
+    border-color:rgba(255,255,255,.48)!important;
+  }
+}
+
+@media(forced-colors:active){
+  .v239-scroll-progress{
+    display:none!important;
+  }
+
+  body.v239-civic-shell :where(a,button,[role="button"]):focus-visible{
+    outline:2px solid Highlight!important;
+  }
+}
+
+/* ==========================================================================
+   10. SMALL-PHONE RESILIENCE
+   ========================================================================== */
+@media(max-width:380px){
+  .v202-drawer{
+    width:calc(
+      100vw - 12px - env(safe-area-inset-left) - env(safe-area-inset-right)
+    )!important;
+    left:max(6px,env(safe-area-inset-left))!important;
+    border-radius:18px!important;
+  }
+
+  body.v239-civic-shell .v7-mobile-dock a,
+  body.v239-civic-shell .v7-mobile-dock button{
+    min-width:0!important;
+    padding-inline:4px!important;
+    font-size:8px!important;
+  }
+
+  .v202-menu-fab{
+    padding-inline:14px!important;
+  }
+}
+
+@media print{
+  html,body{
+    overflow:visible!important;
+    scroll-padding:0!important;
+  }
+}
