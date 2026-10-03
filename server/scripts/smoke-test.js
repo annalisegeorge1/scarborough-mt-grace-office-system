@@ -31,7 +31,16 @@ if(email&&password){
     csrf=d.csrf;
     await check('Authenticated staff shell styles','/staff/staff-shell.css');
     await check('Authenticated staff shell script','/staff/staff-shell.js');
+    await check('Authenticated case workspace styles','/staff/case-workspace-v251.css');
+    await check('Authenticated case workspace script','/staff/case-workspace-v251.js');
+    await check('Authenticated case-context styles','/staff/case-context-v251.css');
+    await check('Authenticated case-context helper','/staff/case-context-v251.js');
     await check('Authenticated staff home','/staff/index.html');
+    await check('Authenticated Applications','/staff/applications.html');
+    await check('Authenticated Correspondence','/staff/correspondence.html');
+    await check('Authenticated Field Operations','/staff/field.html');
+    await check('Authenticated Records Centre','/staff/records.html');
+    await check('Authenticated Resident Feedback','/staff/feedback.html');
     await check('Authenticated staff directory','/staff/sections.html');
     await check('Authenticated Daily Workboard','/staff/workflow.html');
     await check('Authenticated System Administration','/staff/system.html');
@@ -42,6 +51,16 @@ if(email&&password){
     await check('Authenticated Go-Live Control','/staff/go-live.html');
     await check('Management summary API','/api/reports/summary');
     await check('Publishing readiness API','/api/content/publishing-readiness');
+
+    try{
+      const casesR=await req('/api/cases'),casesD=casesR.ok?await casesR.json():{};
+      const first=casesD.cases?.[0];
+      const hasCase=!!first?.id;
+      console.log(`${casesR.ok?'PASS':'FAIL'} — Cases API for integrated workspace: ${casesR.status}`);if(!casesR.ok)failures++;
+      if(hasCase)await check('Integrated case workspace API','/api/cases/'+encodeURIComponent(first.id)+'/workspace');
+      else console.log('SKIP — Integrated case workspace API (no accessible cases in smoke account).');
+    }catch(e){console.log('FAIL — Integrated case workspace API discovery: '+e.message);failures++;}
+
     const me=await req('/api/auth/me');console.log(`${me.ok?'PASS':'FAIL'} — Authenticated /me: ${me.status}`);if(!me.ok)failures++;
   }
 }else console.log('SKIP — Authenticated staff smoke test (set SMOKE_EMAIL and SMOKE_PASSWORD).');
