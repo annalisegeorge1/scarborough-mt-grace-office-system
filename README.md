@@ -1,106 +1,134 @@
-# Scarborough / Mt. Grace District Office Service System — V262
+# Scarborough / Mt. Grace District Office Service System — V263
 
 **Current status: controlled pre-launch / staging candidate**
 
-V262 applies the same tablet-first cleanup used in Administration to the **Community** and **Website / Communications** areas.
+V263 replaces the old browser-only Meetings training page with a responsive, central, audited Meetings workspace.
 
-## Community Operations
+## Why this release was necessary
 
-`/staff/community.html` has been rebuilt around a compact workflow:
+Live tablet screenshots exposed two problems:
 
-**Summary → one active editor → central register**
+1. portrait mode was rendering the old Meetings page like a squeezed desktop canvas, leaving a large unused area and making the form difficult to use;
+2. Meetings was still stored only in browser localStorage, unlike the newer server-backed Community and Events modules.
 
-Instead of showing three long forms at once, staff switch between:
-- Community matter
-- Initiative / project
-- Partner
+V263 fixes both together.
 
-The page now includes:
-- compact community metrics
-- one form at a time
-- stronger required-field checks
-- a card-based central register on tablet/mobile
-- reduced vertical spacing
-- no duplicate legacy header or in-page navigation
+## Central Meetings data model
 
-Quick Create now safely opens the Community Matter editor rather than triggering the old Save button.
+New migration:
 
-## Events & Volunteers
+- `009_meeting_operations.sql`
 
-`/staff/events.html` now separates:
-- Events register
-- Event editor
+It adds:
+
+- `meetings`
+- `meeting_attendance`
+- `meeting_actions`
+- `meeting_timeline`
+
+Meeting references use the format:
+
+- `SMG-MTG-YYYY-00001`
+
+The migration has been applied to the connected Supabase project and recorded in the application's `public.schema_migrations` ledger.
+
+## Meetings API
+
+New authenticated Community Operations endpoints include:
+
+- `GET /api/ops/meetings`
+- `POST /api/ops/meetings`
+- `GET /api/ops/meetings/:id`
+- `PATCH /api/ops/meetings/:id`
+- attendance add/remove
+- action add/update/remove
+- timeline updates
+
+The API uses the existing `community.write` permission.
+
+Changes are recorded through the server audit log.
+
+Meeting records themselves are not given a casual hard-delete control; staff close or cancel records instead.
+
+## Meetings workspace
+
+`/staff/meetings.html` is now organized into:
+
+- Meeting register
+- Meeting editor
 - Attendance & actions
+- Timeline
 
-The default view is the event register rather than a full-page form.
+The register is the default view.
 
-Opening an event can take staff directly to:
-- editing
-- attendance
-- actions arising
+The page preserves the richer meeting fields:
+- meeting type
+- status
+- title
+- area/community
+- date and start time
+- venue
+- lead/chair
+- minute taker
+- linked record type/reference
+- purpose/objective
+- agenda
+- internal minutes
+- decisions/commitments
+- resident-safe public outcome summary
+- next follow-up
 
-The page now includes:
-- event totals
-- planned/confirmed count
-- completed count
-- recorded attendance total
-- responsive event cards
-- compact form controls
-- tablet-friendly attendance/action panels
+## Privacy split
 
-The existing event APIs and database records remain authoritative.
+Attendance names and internal minutes remain staff-only records.
 
-## Website CMS
+The public/resident-safe outcome summary remains a separate field and is not automatically published. Public release still belongs to the Website CMS / publishing workflow.
 
-The CMS publishing/editor logic is intentionally preserved.
+## Responsive behavior
 
-New shared presentation asset:
+The old fixed desktop grid and legacy navigation have been removed.
 
-- `/staff/content-cohesion-v262.css`
+On tablet/mobile:
+- the page uses the full available viewport
+- metrics collapse from 6 to 3 to 2 columns
+- register cards replace the oversized desktop table
+- editor fields collapse from four columns to two and then one
+- attendance/actions become stacked panels
+- the tab bar scrolls horizontally rather than shrinking the content canvas
 
-The CMS now:
-- removes its duplicate in-page auth line/navigation
-- uses the shared staff shell as the navigation layer
-- has a compact header
-- uses smaller editor controls
-- keeps the three content tabs
-- reduces card and textarea height
-- constrains long content tables inside scrollable register panels
-- uses sticky table headers
-- improves tablet/mobile density
+## Quick Create
 
-Publishing, upload, hide/restore, activity-thread and workflow logic are unchanged.
+The shared **+ New** menu now includes:
+
+- New meeting
+
+which opens the Meeting editor directly.
+
+## Readiness
+
+`/api/health/readiness` now includes:
+
+- `meetingOperations`
+
+It passes only when all four central meeting tables are present.
+
+System Administration, Production Control and Release Control display **Central Meetings schema** explicitly.
 
 ## Verification
 
-Source validation confirms:
-- Community inline JavaScript parses
-- Events inline JavaScript parses
-- Website CMS inline JavaScript parses
-- staff-shell JavaScript parses
-- none of the three screenshot-target pages retain the legacy duplicated page header/navigation
-
 Preflight now checks:
-- Community Operations
-- Events & Volunteers
-- Website CMS
-- content-cohesion-v262.css
+- Meetings workspace
+- migration 009
 
-Authenticated smoke testing covers the same pages when the smoke role has the required permissions.
+Smoke testing now checks:
+- unauthenticated Meetings redirect
+- authenticated Meetings page
+- authenticated Meetings API when the smoke role has Community write access
 
 ## Backend release identity
 
-The server package version is now `262.0.0`.
-
-## Automated staging verification
-
-The GitHub deployment workflow will:
-- run source QA
-- run tests
-- run production preflight
-- wait for Render staging to report version `262.0.0`
-- run the staging smoke suite
+The server package version is now `263.0.0`.
 
 ## Production boundary
 
-V262 is a workflow/presentation release. It does not broaden public visibility, bypass publishing controls, weaken RBAC, or authorize production use.
+V263 moves Meetings into durable central storage and improves tablet usability. It does not publish internal minutes or attendance, broaden role access, or constitute production authorization.
