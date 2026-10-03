@@ -1,0 +1,368 @@
+/* Scarborough / Mt. Grace District Office — V235
+   Resident Service Workspace
+   Consolidates the visible resident-intelligence launchers on /services/ without
+   removing or changing their underlying systems. */
+
+:root{
+  --v235-navy:#0b3553;
+  --v235-blue:#174f74;
+  --v235-teal:#2b7569;
+  --v235-brass:#a78f5e;
+  --v235-brass-soft:#d8c7a0;
+  --v235-line:rgba(11,46,72,.10);
+}
+
+body.v235-service-workspace .v225-launcher,
+body.v235-service-workspace .v228-launcher,
+body.v235-service-workspace .v231-launcher,
+body.v235-service-workspace .v226-next-step{
+  display:none!important;
+}
+
+.v235-workspace{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(11,46,72,.11);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 95% 8%,rgba(216,199,160,.09),transparent 13rem),
+    linear-gradient(145deg,#fffdf8,#f4f8fa 70%);
+  box-shadow:0 16px 38px rgba(7,35,55,.07);
+}
+
+.v235-workspace:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(180deg,#a78f5e,#174f74,#2b7569);
+}
+
+.v235-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:16px;
+  align-items:center;
+  padding:18px 20px 14px 23px;
+  border-bottom:1px solid var(--v235-line);
+}
+
+.v235-head small{
+  display:block;
+  color:#8a7448;
+  font:900 6.5px/1 system-ui;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.v235-head h2{
+  margin:6px 0 4px;
+  color:#123f59;
+  font:500 clamp(23px,2vw,31px)/1.08 Georgia,"Times New Roman",serif;
+  letter-spacing:-.02em;
+}
+
+.v235-head p{
+  max-width:740px;
+  margin:0;
+  color:#687f8b;
+  font:650 8.5px/1.48 system-ui;
+}
+
+.v235-all-tools{
+  min-height:40px;
+  padding:0 12px;
+  border:1px solid rgba(11,46,72,.12);
+  border-radius:11px;
+  background:#fff;
+  color:#174f74;
+  cursor:pointer;
+  font:850 7.3px/1 system-ui;
+  white-space:nowrap;
+}
+
+.v235-all-tools:hover,
+.v235-all-tools:focus-visible{
+  border-color:rgba(167,143,94,.34);
+  background:#faf7ef;
+  color:#0b3553;
+  outline:none;
+}
+
+.v235-flow{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:0;
+  padding:16px 20px 14px 23px;
+}
+
+.v235-step{
+  position:relative;
+  min-width:0;
+  min-height:116px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px 14px 13px;
+  border:0;
+  border-left:1px solid rgba(11,46,72,.08);
+  background:transparent;
+  color:#173f58;
+  text-align:left;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.v235-step:first-child{border-left:0}
+
+.v235-step:hover,
+.v235-step:focus-visible{
+  background:rgba(255,255,255,.72);
+  outline:none;
+}
+
+.v235-step-num{
+  width:29px;height:29px;
+  display:grid;place-items:center;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:10px;
+  background:#edf4f7;
+  color:#174f74;
+  font:900 7px/1 system-ui;
+}
+
+.v235-step:nth-child(1) .v235-step-num{background:#eef4f7;color:#174f74}
+.v235-step:nth-child(2) .v235-step-num{background:#f5f0e4;color:#806b3e}
+.v235-step:nth-child(3) .v235-step-num{background:#eef6f3;color:#2b7569}
+.v235-step:nth-child(4) .v235-step-num{background:#f2f4f7;color:#4f6170}
+.v235-step:nth-child(5) .v235-step-num{background:#eef3f6;color:#174f74}
+
+.v235-step-copy strong{
+  display:block;
+  color:#173f58;
+  font:850 9.5px/1.25 system-ui;
+}
+
+.v235-step-copy small{
+  display:block;
+  margin-top:4px;
+  color:#728893;
+  font:650 7.3px/1.35 system-ui;
+}
+
+.v235-step-action{
+  color:#8a7448;
+  font:900 6.4px/1 system-ui;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.v235-context{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  margin:0 20px 18px 23px;
+  padding:10px 12px;
+  border:1px solid rgba(11,46,72,.08);
+  border-radius:13px;
+  background:#f7fafb;
+}
+
+.v235-context-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:#2b7569;
+  box-shadow:0 0 0 4px rgba(43,117,105,.08);
+}
+
+.v235-context-copy{
+  min-width:0;
+}
+
+.v235-context-copy small{
+  display:block;
+  color:#8a7448;
+  font:900 5.9px/1 system-ui;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.v235-context-copy strong{
+  display:block;
+  margin-top:3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#173f58;
+  font:850 8.6px/1.25 system-ui;
+}
+
+.v235-context-copy span{
+  display:block;
+  margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#758b95;
+  font:650 6.9px/1.25 system-ui;
+}
+
+.v235-context-action{
+  min-height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 10px;
+  border:1px solid rgba(11,46,72,.10);
+  border-radius:9px;
+  background:#fff;
+  color:#174f74;
+  text-decoration:none;
+  font:850 6.8px/1 system-ui;
+  white-space:nowrap;
+}
+
+.v235-context-action:hover,
+.v235-context-action:focus-visible{
+  border-color:rgba(167,143,94,.34);
+  background:#faf7ef;
+  color:#0b3553;
+  outline:none;
+}
+
+/* Current service cards should feel like destinations, not like a second tool
+   dashboard. Keep per-card Readiness/Briefing controls, but compact them. */
+body.v235-service-workspace #resident-programmes .v228-card-button,
+body.v235-service-workspace #resident-programmes .v231-service-button,
+body.v235-service-workspace #services .v228-card-button,
+body.v235-service-workspace #services .v231-service-button,
+body.v235-service-workspace #support-areas .v228-card-button,
+body.v235-service-workspace #support-areas .v231-service-button{
+  min-height:32px!important;
+  margin-top:8px!important;
+  padding:0 9px!important;
+  border-radius:9px!important;
+  font-size:6.8px!important;
+}
+
+/* Dark mode */
+body.v112-dark .v235-workspace{
+  border-color:rgba(255,255,255,.09);
+  background:
+    radial-gradient(circle at 95% 8%,rgba(216,199,160,.06),transparent 13rem),
+    linear-gradient(145deg,#0b2a3d,#082438 72%);
+  box-shadow:0 18px 42px rgba(0,0,0,.18);
+}
+
+body.v112-dark .v235-head{
+  border-color:rgba(255,255,255,.08);
+}
+body.v112-dark .v235-head small{color:#dfc98f}
+body.v112-dark .v235-head h2{color:#fff}
+body.v112-dark .v235-head p{color:#abc0ca}
+body.v112-dark .v235-all-tools{
+  border-color:rgba(255,255,255,.08);
+  background:#123247;
+  color:#dce8ed;
+}
+body.v112-dark .v235-all-tools:hover,
+body.v112-dark .v235-all-tools:focus-visible{
+  border-color:rgba(216,199,160,.24);
+  background:#173b50;
+  color:#fff;
+}
+body.v112-dark .v235-step{
+  border-color:rgba(255,255,255,.07);
+  color:#e5eef2;
+}
+body.v112-dark .v235-step:hover,
+body.v112-dark .v235-step:focus-visible{
+  background:rgba(255,255,255,.035);
+}
+body.v112-dark .v235-step-copy strong{color:#f2f7f9}
+body.v112-dark .v235-step-copy small{color:#a9bec8}
+body.v112-dark .v235-step-action{color:#dfc98f}
+body.v112-dark .v235-step-num{
+  border-color:rgba(255,255,255,.07);
+  background:#173a4e!important;
+  color:#e7f0f4!important;
+}
+body.v112-dark .v235-context{
+  border-color:rgba(255,255,255,.08);
+  background:#102f42;
+}
+body.v112-dark .v235-context-copy small{color:#dfc98f}
+body.v112-dark .v235-context-copy strong{color:#fff}
+body.v112-dark .v235-context-copy span{color:#abc0ca}
+body.v112-dark .v235-context-action{
+  border-color:rgba(255,255,255,.08);
+  background:#173a4e;
+  color:#e3edf1;
+}
+
+/* Tablet: keep all stages, but allow them to swipe instead of stacking five
+   large cards vertically. */
+@media(max-width:1050px){
+  .v235-flow{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .v235-flow::-webkit-scrollbar{display:none}
+  .v235-step{
+    flex:0 0 min(220px,72vw);
+    min-height:102px;
+    border:1px solid rgba(11,46,72,.08);
+    border-radius:13px;
+    background:rgba(255,255,255,.48);
+    scroll-snap-align:start;
+  }
+  body.v112-dark .v235-step{
+    border-color:rgba(255,255,255,.07);
+    background:rgba(255,255,255,.025);
+  }
+}
+
+@media(max-width:700px){
+  .v235-head{
+    grid-template-columns:minmax(0,1fr);
+    padding:15px 15px 11px 18px;
+  }
+  .v235-head h2{font-size:22px}
+  .v235-head p{font-size:7.8px}
+  .v235-all-tools{
+    width:100%;
+  }
+  .v235-flow{
+    padding:12px 14px 11px 17px;
+  }
+  .v235-step{
+    flex-basis:min(205px,76vw);
+    min-height:98px;
+    padding:12px;
+  }
+  .v235-context{
+    grid-template-columns:auto minmax(0,1fr);
+    margin:0 14px 14px 17px;
+  }
+  .v235-context-action{
+    grid-column:1/-1;
+    width:100%;
+  }
+  .v235-context-copy span{display:none}
+}
+
+@media print{
+  .v235-workspace{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v235-step{transition:none!important}
+}

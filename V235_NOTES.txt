@@ -1,0 +1,192 @@
+Scarborough / Mt. Grace District Office — V235
+
+RESIDENT SERVICE WORKSPACE
+
+V235 is a coherence release. It does not add another independent resident tool. Instead, it consolidates the visible launchers for the resident-intelligence systems already present on /services/.
+
+CORE GOAL
+Make the site feel like one resident guidance system rather than several separate tools competing for attention.
+
+1. One visible workspace
+On /services/, V235 introduces:
+
+Resident Service Workspace
+“Start → Understand → Prepare → Act → Follow up”
+
+This becomes the primary visible gateway to the resident tools.
+
+2. Start
+START opens the existing V225 Resident Journey.
+
+Purpose:
+- help residents who are unsure where to begin
+- organize a short path using information already on the site
+
+No V225 logic is duplicated.
+
+3. Understand
+UNDERSTAND opens the existing V231 Service Intelligence system.
+
+Where possible, V235 opens the briefing for the service card nearest the resident’s current viewport.
+
+Fallback:
+- generic Service Intelligence directory
+
+No public-content matching logic is duplicated.
+
+4. Prepare
+PREPARE opens the existing V228 Resident Readiness Workspace.
+
+Where possible, V235 opens Readiness for the service card nearest the resident’s current viewport.
+
+Fallback:
+- generic Readiness launcher
+
+No readiness state is duplicated.
+
+5. Act
+ACT links directly to:
+- /forms/#service-forms
+
+The explanatory copy also makes clear that residents can use the enquiry path when needed.
+
+6. Follow up
+FOLLOW UP links directly to:
+- /track/
+
+This keeps the existing resident enquiry tracker authoritative.
+
+7. All resident tools
+A single “Open all resident tools” action opens the existing V224 Resident Command Center.
+
+This preserves access to the broader toolset without displaying every tool as a separate large block on the Services page.
+
+8. Smart context preserved
+V226 Smart Next Step is visually consolidated into V235 on the Services route.
+
+V235 provides its own compact “Now viewing” strip:
+- observes visible V204 content sections
+- shows the current section title
+- shows a short current-section description
+- provides Next section / Back to top navigation
+
+V226 itself remains unchanged and still exists for all other focused routes.
+
+9. Redundant launcher reduction
+On /services/ only, V235 hides the standalone visible launcher blocks for:
+- V225 Resident Journey
+- V228 Resident Readiness
+- V231 Service Intelligence
+- V226 Smart Next Step
+
+Their functionality is not removed.
+
+They remain in the DOM and continue to provide the existing modal/tool behavior that V235 calls.
+
+10. Per-service actions remain
+Individual service/programme cards keep:
+- Review readiness
+- Service briefing
+
+These controls are compacted slightly so they function as contextual card actions rather than competing dashboard sections.
+
+11. Tablet behavior
+On tablets and narrower screens:
+- five pathway stages become a horizontal swipe rail
+- no five-card vertical stack is created
+- each stage remains fully touch-accessible
+
+12. Mobile behavior
+On mobile:
+- workspace header becomes one column
+- “Open all resident tools” becomes full width
+- service pathway is horizontally swipeable
+- current-context action moves below the current-section text
+
+13. Dark mode
+Full dark-mode treatment follows the existing:
+- navy/slate surfaces
+- brass accents
+- light editorial text
+- teal contextual indicator
+
+14. Accessibility
+V235 uses:
+- native buttons and links
+- aria-label on the workspace
+- role=list / role=listitem for the resident pathway
+- aria-live for current-section context
+- existing keyboard-accessible underlying resident tools
+- reduced-motion support
+
+15. Privacy
+V235:
+- performs no fetch/API request
+- uses no localStorage
+- uses no sessionStorage
+- reads no enquiry fields
+- creates no resident profile
+- sends no resident choices
+- performs no POST/PATCH/DELETE
+
+16. Preservation
+V235 changes no:
+- staff CMS
+- authentication
+- publishing / verification
+- public-content endpoint
+- enquiry submission
+- resident tracker
+- database schema
+- V215 progress threads
+- V224 Command Center logic
+- V225 Resident Journey logic
+- V226 Smart Next Step logic
+- V227 District Pulse logic
+- V228 Readiness logic
+- V229 PWA/service worker
+- V231 Service Intelligence logic
+- V232 form-width architecture
+- V233 mobile-dock corrections
+- V234 dark-form/gallery corrections
+
+17. QA
+Passed:
+- V235 JavaScript syntax
+- server JavaScript syntax
+- CSS brace balance
+- CSS/JS injection
+- V235 CSS loads after V234
+- V235 JS loads after V231
+- Services-only guard
+- resident workspace body state
+- legacy launcher consolidation rules
+- five-stage pathway
+- Journey handoff
+- Service Intelligence handoff
+- Readiness handoff
+- Forms action
+- Track action
+- Command Center handoff
+- current-section observer
+- next-section navigation
+- dark mode
+- tablet swipe rail
+- mobile treatment
+- print suppression
+- no fetch
+- no local/session storage
+- no resident-field access
+- no write request
+- existing tool controls reused
+
+Files added:
+- assets/district-resident-service-workspace-v235.css
+- assets/district-resident-service-workspace-v235.js
+- V235_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V235 is a source-level coherence/consolidation pass. It preserves the existing systems while simplifying their visible presentation. A fresh deployed screenshot is still the final visual verification step.
