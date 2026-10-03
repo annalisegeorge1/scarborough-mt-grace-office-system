@@ -32,6 +32,21 @@ router.get('/',requirePermission('cases.read'),async(req,res,next)=>{try{
   res.json({cases:q.rows.map(r=>({...toClient(r),documents:byCase.get(String(r.id))||[]}))});
 }catch(e){next(e)}});
 
+router.get('/options',requirePermission('cases.write'),async(req,res,next)=>{try{
+  let users=[];
+  if(req.user.role==='Field Officer'){
+    const q=await db.query(`SELECT u.id,u.display_name,r.name role FROM users u JOIN roles r ON r.id=u.role_id WHERE u.id=$1 AND u.is_active=true`,[req.user.id]);
+    users=q.rows;
+  }else{
+    const q=await db.query(`SELECT u.id,u.display_name,r.name role FROM users u JOIN roles r ON r.id=u.role_id
+      WHERE u.is_active=true AND r.name=ANY($1::text[])
+      ORDER BY CASE r.name WHEN 'Manager' THEN 1 WHEN 'Administrative' THEN 2 WHEN 'Senior Officer' THEN 3 WHEN 'Field Officer' THEN 4 ELSE 5 END,u.display_name`,
+      [['Manager','Administrative','Senior Officer','Field Officer']]);
+    users=q.rows;
+  }
+  res.json({users,defaults:{assignedUserId:req.user.role==='Field Officer'?req.user.id:null,caseOwnerUserId:req.user.id}});
+}catch(e){next(e)}});
+
 router.get('/:id/workspace',requirePermission('cases.read'),async(req,res,next)=>{try{
   const access=await getCaseForUser(req,req.params.id);
   if(!access.row)return res.status(access.status).json({detail:access.detail});
@@ -121,16 +136,29 @@ router.post('/',requirePermission('cases.write'),async(req,res,next)=>{try{
       x.address=x.address||resident.address;
       x.preferred_contact=x.preferred_contact||resident.preferred_contact;
     }else{
+      if(!String(x.resident_name||'').trim()){const e=new Error('Resident name is required when creating a case without an existing resident profile.');e.statusCode=400;throw e;}
       const rq=await client.query(`INSERT INTO residents(full_name,phone,email,date_of_birth,address,preferred_contact,created_by)
         VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
-        [x.resident_name||'Unnamed resident',x.phone,x.email,x.date_of_birth,x.address,x.preferred_contact,req.user.id]);
+        [x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.preferred_contact,req.user.id]);
       resident=rq.rows[0];residentId=resident.id;
     }
-    const q=await client.query(`INSERT INTO cases(resident_id,status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,next_follow_up,due_date,escalation,next_action,public_status,public_update,public_next_step,resident_visible,created_by)
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING id,reference`,
-      [residentId,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.public_status,x.public_update,x.public_next_step,x.resident_visible,req.user.id]);
+
+    let assignedId=body.assignedUserId||null;
+    let ownerId=body.caseOwnerUserId||req.user.id;
+    if(req.user.role==='Field Officer'){assignedId=req.user.id;ownerId=req.user.id;}
+    const ids=[...new Set([assignedId,ownerId].filter(Boolean).map(String))];
+    if(ids.length){
+      const uq=await client.query(`SELECT u.id FROM users u JOIN roles r ON r.id=u.role_id
+        WHERE u.is_active=true AND u.id=ANY($1::uuid[]) AND r.name=ANY($2::text[])`,
+        [ids,['Manager','Administrative','Senior Officer','Field Officer']]);
+      if(uq.rowCount!==ids.length){const er=new Error('Selected case owner or assigned officer is not an active case-working staff member.');er.statusCode=400;throw er;}
+    }
+
+    const q=await client.query(`INSERT INTO cases(resident_id,status,priority,resident_name,phone,email,date_of_birth,address,category,preferred_contact,enquiry_message,assigned_user_id,case_owner_user_id,next_follow_up,due_date,escalation,next_action,public_status,public_update,public_next_step,resident_visible,created_by)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22) RETURNING id,reference`,
+      [residentId,x.status,x.priority,x.resident_name,x.phone,x.email,x.date_of_birth,x.address,x.category,x.preferred_contact,x.enquiry_message,assignedId,ownerId,x.next_follow_up,x.due_date,x.escalation,x.next_action,x.public_status,x.public_update,x.public_next_step,x.resident_visible,req.user.id]);
     await client.query(`INSERT INTO case_activity(case_id,actor_user_id,activity_type,description,public_visible) VALUES($1,$2,'Case created','Case record created.',false)`,[q.rows[0].id,req.user.id]);
-    await audit(client,{actorUserId:req.user.id,eventType:'case.create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference,residentId}});
+    await audit(client,{actorUserId:req.user.id,eventType:'case.create',objectType:'case',objectId:q.rows[0].id,metadata:{reference:q.rows[0].reference,residentId,assignedUserId:assignedId,caseOwnerUserId:ownerId}});
     const full=await client.query(CASE_SELECT+' WHERE c.id=$1',[q.rows[0].id]);
     return full.rows[0];
   });
