@@ -720,7 +720,7 @@ app.use('/es',express.static(path.join(config.staticRoot,'es'),{...staticOpts,in
 app.use('/portals',express.static(path.join(config.staticRoot,'portals'),{...staticOpts,index:'index.html'}));
 app.use('/resident-guide',express.static(path.join(config.staticRoot,'resident-guide'),{...staticOpts,index:'index.html'}));
 
-app.get('/staff',(req,res)=>res.redirect(req.user?'/staff/index.html':'/staff/login.html'));
+app.get('/staff',(req,res)=>res.redirect(req.user?'/staff/home.html':'/staff/login.html'));
 app.get('/track',(req,res)=>res.redirect('/track/'));
 app.get('/es',(req,res)=>res.redirect('/es/'));
 app.use('/server',(req,res)=>res.status(404).end());
