@@ -53,6 +53,7 @@ add('Publishing workflow migration exists',fs.existsSync(path.join(__dirname,'..
 add('Resident profile migration exists',fs.existsSync(path.join(__dirname,'..','migrations','007_resident_profiles.sql')),'migrations/007_resident_profiles.sql');
 add('Operational hardening migration exists',fs.existsSync(path.join(__dirname,'..','migrations','008_operational_indexes_and_function_hardening.sql')),'migrations/008_operational_indexes_and_function_hardening.sql');
 add('Meeting operations migration exists',fs.existsSync(path.join(__dirname,'..','migrations','009_meeting_operations.sql')),'migrations/009_meeting_operations.sql');
+add('Evidence links migration exists',fs.existsSync(path.join(__dirname,'..','migrations','010_document_evidence_links.sql')),'migrations/010_document_evidence_links.sql');
 add('Tracker exists',fs.existsSync(path.join(cfg.staticRoot,'track','index.html')),'track/index.html');
 
 const failed=results.filter(r=>r.required&&!r.ok);
