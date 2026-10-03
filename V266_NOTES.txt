@@ -1,0 +1,56 @@
+Scarborough / Mt. Grace District Office — V266
+
+REUSABLE EVIDENCE LAYER
+
+1. Added migration 010:
+- document_links table
+- one document can support multiple work records
+- uniqueness/indexes
+- primary-link backfill
+- anon/authenticated grants explicitly revoked
+
+2. Supabase
+- migration applied
+- app migration ledger updated
+- no historical linked documents existed at migration time
+- anon/authenticated direct read/write access remains false
+
+3. Records API
+- GET returns links[]
+- POST /:id/links adds secondary evidence context
+- DELETE /:id/links/:linkId removes only a secondary link
+- primary links stay synchronized through document metadata
+
+4. Secure uploads
+Primary evidence links are registered automatically.
+
+5. Records Centre rebuilt
+- register
+- metadata
+- secure upload
+- evidence-link manager
+- responsive layout
+- old duplicate header/navigation removed
+
+6. Case Workspace
+Evidence rolls up from explicit Case-related work:
+- Case
+- Application
+- Correspondence
+- Field Visit
+- Appointment
+- Feedback
+- Event
+- Meeting
+
+7. Case document cards show evidence contexts.
+
+8. Readiness
+Added evidenceLinks gate.
+Direct API isolation now also protects document_links.
+
+9. Verification
+Preflight + smoke updated.
+
+10. Release identity
+Backend version 266.0.0.
