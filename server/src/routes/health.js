@@ -21,6 +21,7 @@ router.get('/readiness',async(req,res)=>{
     malwareScanner:!config.uploadsEnabled||!config.clamav.required||virusScan.configured(),
     residentProfiles:false,
     meetingOperations:false,
+    evidenceLinks:false,
     directApiIsolation:false
   };
   try{
@@ -35,16 +36,18 @@ router.get('/readiness',async(req,res)=>{
        AND to_regclass('public.meeting_attendance') IS NOT NULL
        AND to_regclass('public.meeting_actions') IS NOT NULL
        AND to_regclass('public.meeting_timeline') IS NOT NULL) meeting_operations,
+      (to_regclass('public.document_links') IS NOT NULL) evidence_links,
       NOT EXISTS(
         SELECT 1
         FROM information_schema.role_table_grants
         WHERE table_schema='public'
-          AND table_name IN ('residents','public_content_revisions')
+          AND table_name IN ('residents','public_content_revisions','document_links')
           AND grantee IN ('anon','authenticated')
           AND privilege_type IN ('SELECT','INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER')
       ) direct_api_isolation`);
     checks.residentProfiles=!!(rp.rows[0]?.residents_table&&rp.rows[0]?.resident_id_column);
     checks.meetingOperations=!!rp.rows[0]?.meeting_operations;
+    checks.evidenceLinks=!!rp.rows[0]?.evidence_links;
     checks.directApiIsolation=!!rp.rows[0]?.direct_api_isolation;
   }catch{}
   const ready=Object.values(checks).every(Boolean);
