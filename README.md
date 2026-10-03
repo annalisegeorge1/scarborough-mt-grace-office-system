@@ -1,112 +1,73 @@
-# Scarborough / Mt. Grace District Office Service System — V257
+# Scarborough / Mt. Grace District Office Service System — V258
 
 **Current status: controlled pre-launch / staging candidate**
 
-V257 hardens the database path used by V253–V256 and makes resident-data isolation visible in release readiness.
+V258 closes the deployment-verification gap by adding GitHub Actions checks that validate source quality and independently verify the Render staging deployment from GitHub's network.
 
-## Database hardening
+## Automated verification
 
-New migration:
+New workflow:
 
-- `008_operational_indexes_and_function_hardening.sql`
+- `.github/workflows/verify-and-smoke.yml`
 
-It has been applied to the connected Supabase project and recorded in both:
-- Supabase migration history
-- the application's `public.schema_migrations` ledger
+It runs on every push to `main` and can also be started manually.
 
-This prevents Render's startup migration runner from reapplying it.
+### Source QA
 
-## Resident-reference function
+The first job:
+- checks out the repository
+- installs Node 20
+- installs server dependencies
+- runs `npm run check`
+- runs `npm test`
+- runs production-structured `npm run preflight`
 
-`public.next_resident_reference()` now has an explicit PostgreSQL search path:
+A failed source/test/preflight check now produces a visible GitHub Actions failure instead of silently relying on Render.
 
-- `public`
-- `pg_temp`
+### Render staging smoke
 
-This clears Supabase's mutable-function-search-path security warning.
+After Source QA passes, GitHub independently calls:
 
-## Operational indexes
+- `https://scarborough-mt-grace-staging.onrender.com/api/health/live`
 
-V257 adds targeted indexes for the workflows introduced in recent releases:
+The workflow reads the expected application version from `server/package.json` and waits until Render reports that exact version.
 
-- resident creator linkage
-- case ownership/status
-- case activity timeline
-- permanent case notes
-- applications by case
-- applications by assigned officer/stage/follow-up
-- appointments by case
-- appointments by assigned officer/start time
-- correspondence by linked case/reference
-- field visits by linked case/reference
-- field visits by lead officer/status/schedule
-- resident feedback by case reference
+This prevents a smoke test from accidentally validating an older deployment.
 
-Supabase's unindexed-foreign-key advisory count dropped from 51 to 42 after this hardening pass.
+Once the expected version is live, the workflow runs:
 
-## Direct Supabase API isolation
+- `npm run smoke`
 
-The application remains server-mediated: resident/case data is accessed through the Node server's PostgreSQL connection, not through browser-side Supabase clients.
+against the Render staging service.
 
-Supabase currently reports RLS disabled on:
-- `public.residents`
-- `public.public_content_revisions`
+The public smoke suite covers:
+- liveness and health
+- public pages/APIs
+- tracker/portal/guide
+- protected staff-page redirects
 
-However, direct role checks confirm that `anon` and `authenticated` do not currently have direct SELECT/INSERT/UPDATE privileges on those sensitive tables.
+If repository secrets `SMOKE_EMAIL` and `SMOKE_PASSWORD` are configured, the existing smoke script also exercises authenticated staff pages and APIs. Without those secrets, authenticated checks are intentionally skipped.
 
-V257 adds a live readiness check:
+## Direct Render inspection
 
-- `directApiIsolation`
+A Render connection for ChatGPT is available separately. Connecting it allows direct inspection of Render services, deploys, logs, metrics and environment variables from this conversation. The GitHub workflow remains valuable even with that connection because it provides persistent commit-level verification.
 
-It fails when `anon` or `authenticated` receive direct DML privileges on either sensitive table.
+## Database status retained from V257
 
-## Resident schema readiness
+The connected Supabase project remains ACTIVE_HEALTHY.
 
-The existing `residentProfiles` readiness gate remains and verifies:
-- `public.residents` exists
-- `public.cases.resident_id` exists
-
-## Staff diagnostics
-
-System Administration, Production Control and Release Control now show both checks explicitly:
-
-- Resident profile schema
-- Direct API isolation
-
-This makes resident-data protection visible rather than hidden behind a generic readiness result.
+Confirmed:
+- resident migration 007 applied
+- hardening migration 008 applied
+- existing case linked to Resident Profile
+- operational indexes present
+- resident reference function search path hardened
+- direct anon/authenticated access to sensitive resident/revision tables not granted
 
 ## Backend release identity
 
-The server package version is now `257.0.0`.
-
-## Deployment
-
-Render is configured to run:
-
-`cd server && npm run migrate && npm start`
-
-on service startup.
-
-Because migration 008 has already been recorded in the app migration ledger, the next Render restart/deploy should skip it cleanly.
-
-## Verification completed
-
-The connected Supabase project is ACTIVE_HEALTHY.
-
-Confirmed:
-- migration 007 is applied
-- migration 008 is applied
-- one existing case is linked to one Resident Profile
-- all V257 indexes exist
-- the mutable-function-search-path warning is resolved
-- direct anon/authenticated resident/revision access is not granted
-
-## Remaining RLS decision
-
-Supabase still advises enabling Row Level Security on `residents` and `public_content_revisions`.
-
-That remediation is intentionally not auto-applied because RLS policy design is an access-policy decision. The current server-only architecture is protected by revoked direct client privileges, which V257 now checks continuously.
+The server package version is now `258.0.0`.
 
 ## Production boundary
 
-Technical hardening and readiness evidence do not constitute final production authorization. Confidential resident data still requires approved hosting, backups, retention, operational procedures, and THA IT / management authorization.
+A green GitHub workflow and healthy staging deployment are technical evidence, not final production authorization. Confidential resident use still requires the approved operational, backup, privacy and THA IT / management controls.
