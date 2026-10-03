@@ -27,6 +27,7 @@ add('Role-aware Today route exists',fs.existsSync(path.join(__dirname,'..','src'
 add('Shared staff shell styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.css')),'staff/staff-shell.css');
 add('Shared staff shell script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','staff-shell.js')),'staff/staff-shell.js');
 add('Administration cohesion styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','admin-cohesion-v261.css')),'staff/admin-cohesion-v261.css');
+add('Content cohesion styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','content-cohesion-v262.css')),'staff/content-cohesion-v262.css');
 add('Integrated case workspace styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.css')),'staff/case-workspace-v251.css');
 add('Integrated case workspace script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-workspace-v251.js')),'staff/case-workspace-v251.js');
 add('Case-context styles exist',fs.existsSync(path.join(cfg.staticRoot,'staff','case-context-v251.css')),'staff/case-context-v251.css');
@@ -35,6 +36,9 @@ add('Focused case page styles exist',fs.existsSync(path.join(cfg.staticRoot,'sta
 add('Focused case page script exists',fs.existsSync(path.join(cfg.staticRoot,'staff','case-focus-v252.js')),'staff/case-focus-v252.js');
 add('Staff directory exists',fs.existsSync(path.join(cfg.staticRoot,'staff','sections.html')),'staff/sections.html');
 add('Daily Workboard exists',fs.existsSync(path.join(cfg.staticRoot,'staff','workflow.html')),'staff/workflow.html');
+add('Community Operations exists',fs.existsSync(path.join(cfg.staticRoot,'staff','community.html')),'staff/community.html');
+add('Events and Volunteers exists',fs.existsSync(path.join(cfg.staticRoot,'staff','events.html')),'staff/events.html');
+add('Website CMS exists',fs.existsSync(path.join(cfg.staticRoot,'staff','cms.html')),'staff/cms.html');
 add('Roster and Coverage exists',fs.existsSync(path.join(cfg.staticRoot,'staff','roster.html')),'staff/roster.html');
 add('Access Control exists',fs.existsSync(path.join(cfg.staticRoot,'staff','access.html')),'staff/access.html');
 add('Audit Review exists',fs.existsSync(path.join(cfg.staticRoot,'staff','audit.html')),'staff/audit.html');
