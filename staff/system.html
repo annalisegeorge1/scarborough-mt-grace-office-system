@@ -84,6 +84,8 @@ async function load(){
     ['Session limits',!!c.sessionIdlePolicy&&!!c.sessionAbsolutePolicy,'Idle and absolute session policies are acceptable.'],
     ['Private storage',!!c.privateStorage,'Storage policy is acceptable for the current upload state.'],
     ['Malware scanner',!!c.malwareScanner,'Upload scanning policy is satisfied.'],
+    ['Resident profile schema',!!c.residentProfiles,'Resident Profiles migration and case linkage are available.'],
+    ['Direct API isolation',!!c.directApiIsolation,'Sensitive resident/revision tables are not granted directly to Supabase anon/authenticated roles.'],
     ['Publishing integrity',publishOk,publishOk?'Publishing checks pass.':(blockers?blockers+' blocker(s) reported.':'Evidence unavailable.')]
   ];
   $('checks').innerHTML=rows.map(x=>row(...x)).join('');
