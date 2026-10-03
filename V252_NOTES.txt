@@ -1,0 +1,20 @@
+Scarborough / Mt. Grace District Office — V252
+
+FOCUSED CASE MANAGEMENT CLEANUP
+
+Reason
+A deployed tablet screenshot showed the new shared Residents navigation above multiple legacy navigation systems and launch-readiness cards. The result was visually chaotic even though the underlying V250/V251 architecture was already present.
+
+Changes
+1. Case Management now treats the V250 shared staff shell as the only global navigation.
+2. Legacy District Office Staff System navigation is visually removed from the Case page.
+3. The old internal case-portal topbar and module sidebar are visually removed.
+4. Production, Go-Live, Training, UAT, Pilot, Website Management, Attention Centre and other embedded dashboards are removed from the Case page's visual flow; their dedicated pages remain intact.
+5. A compact Case Queues bar now exposes All, My Cases, Overdue, Urgent/High and status filtering.
+6. The existing four case metrics, search/filter toolbar and case register become the primary Case Management surface.
+7. V251 case tabs remain the detailed record workspace after a case is opened.
+8. Mobile/tablet contextual tabs now have stronger contrast and clearer active state.
+9. Backend release identity advanced to 252.0.0.
+10. Preflight/smoke coverage includes the new focused-case assets.
+
+No database migration is required.
