@@ -23,19 +23,19 @@ body{background:var(--dw-paper);color:#17394e}.hero{padding:22px 24px 18px;backg
 <body>
 <header class="hero">
   <span class="authline" data-auth>Checking session…</span>
-  <span class="eyebrow">V249 • DAILY OPERATIONS</span>
+  <span class="eyebrow">V253 • DAILY OPERATIONS</span>
   <h1>Daily Workboard</h1>
-  <p>A read-only management view of the live workload, with direct routes into the database-backed workspaces where staff actually complete the work.</p>
+  <p>A role-aware view of today’s operational workload, with direct routes into the authoritative workspaces where staff complete the work.</p>
   <nav class="nav2" aria-label="Daily work navigation"><a href="index.html">Staff Home</a><a href="sections.html">All Sections</a><a class="active" aria-current="page" href="workflow.html">Daily Work</a><a href="applications.html">Applications</a><a href="field.html">Field</a><a href="records.html">Records</a><a href="reports.html">Reports</a></nav>
 </header>
 <main class="shell">
-  <div id="msg" class="notice2">Loading live workload from the management reporting API…</div>
+  <div id="msg" class="notice2">Loading your live operational workload…</div>
   <section class="metrics2">
     <article class="metric2"><small>Open cases</small><strong id="casesOpen">—</strong><span>Current resident case workload.</span></article>
     <article class="metric2"><small>Overdue case follow-ups</small><strong id="casesOverdue">—</strong><span>Case follow-ups requiring attention.</span></article>
     <article class="metric2"><small>Open applications</small><strong id="applicationsOpen">—</strong><span>Applications/referrals still in progress.</span></article>
     <article class="metric2"><small>Open field activity</small><strong id="fieldOpen">—</strong><span>Field work not yet closed.</span></article>
-    <article class="metric2"><small>Records awaiting review</small><strong id="recordsReview">—</strong><span>Records requiring review attention.</span></article>
+    <article class="metric2"><small>Upcoming appointments</small><strong id="recordsReview">—</strong><span>Scheduled work from today forward.</span></article>
   </section>
 
   <section class="panel">
@@ -59,13 +59,13 @@ const $=id=>document.getElementById(id);
 async function load(){
   $('msg').textContent='Refreshing live workload…';
   try{
-    const d=await SMG.api('/api/reports/summary'),s=d.summary||{};
-    $('casesOpen').textContent=s.cases_open??0;
-    $('casesOverdue').textContent=s.cases_overdue??0;
-    $('applicationsOpen').textContent=s.applications_open??0;
-    $('fieldOpen').textContent=s.field_open??0;
-    $('recordsReview').textContent=s.records_review??0;
-    $('msg').textContent='Live workload refreshed at '+new Date().toLocaleString('en-TT')+'. Use the queue cards below to work in the authoritative module.';
+    const d=await SMG.api('/api/today'),s=d.summary||{};
+    $('casesOpen').textContent=s.casesOpen??0;
+    $('casesOverdue').textContent=s.casesOverdue??0;
+    $('applicationsOpen').textContent=d.permissions?.applications?(s.applicationsOpen??0):'—';
+    $('fieldOpen').textContent=d.permissions?.field?(s.fieldOpen??0):'—';
+    $('recordsReview').textContent=d.permissions?.appointments?(s.upcomingAppointments??0):'—';
+    $('msg').textContent='Role-aware workload refreshed at '+new Date().toLocaleString('en-TT')+'. Use the queue cards below to work in the authoritative module.';
   }catch(e){
     $('msg').textContent='Live workload could not be loaded: '+e.message;
   }
