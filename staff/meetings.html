@@ -183,8 +183,12 @@ async function removeAction(id){if(!current||!confirm('Remove this action item?'
 async function addTimeline(){if(!current){$('timelineSelected').textContent='Save or open a meeting first.';return}const note=SMG.val('timelineNote');if(!note){$('timelineSelected').textContent='Timeline note is required.';return}try{await SMG.api('/api/ops/meetings/'+current+'/timeline',{method:'POST',body:{note}});SMG.set('timelineNote','');await fetchDetail(current)}catch(e){$('timelineSelected').textContent=e.message}}
 function exportCsv(){const rows=filtered(),cols=['reference','meeting_type','status','title','area','meeting_date','start_time','venue','lead_text','linked_type','linked_reference','next_follow_up','attendance_count','open_actions','public_summary'];const q=v=>'"'+String(v??'').replaceAll('"','""')+'"';const csv=[cols.map(q).join(','),...rows.map(r=>cols.map(k=>q(r[k])).join(','))].join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='meetings-register-'+today()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));$('q').oninput=render;$('filter').onchange=render;$('refreshBtn').onclick=load;$('newBtn').onclick=()=>{clear();show('editor')};$('cancelEdit').onclick=()=>show('register');$('saveBtn').onclick=save;$('addAttBtn').onclick=addAttendance;$('addActBtn').onclick=addAction;$('timelineBtn').onclick=addTimeline;$('exportBtn').onclick=exportCsv;
-if(new URLSearchParams(location.search).get('new')==='1'){clear();show('editor')}
-load();
+(async()=>{
+  const params=new URLSearchParams(location.search),requestedMeeting=params.get('meeting'),requestedTab=params.get('tab');
+  if(params.get('new')==='1'){clear();show('editor');await load();return}
+  await load();
+  if(requestedMeeting)await openMeeting(requestedMeeting,['editor','manage','timeline'].includes(requestedTab)?requestedTab:'manage');
+})().catch(e=>{$('registerState').textContent=e.message});
 })();
 </script>
 </body>
