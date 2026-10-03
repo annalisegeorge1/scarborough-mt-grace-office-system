@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='v270-3';
+const VERSION='v270-4';
 const SHELL_CACHE='smg-public-shell-'+VERSION;
 const ASSET_CACHE='smg-public-assets-'+VERSION;
 const RUNTIME_CACHE='smg-public-runtime-'+VERSION;
