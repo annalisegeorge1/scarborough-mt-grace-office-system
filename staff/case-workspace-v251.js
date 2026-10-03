@@ -146,7 +146,7 @@ function renderWorkspace(w){
   if(drawer)drawer.classList.add('v251-central');
   if(docsList){
     if(!p.records)docsList.innerHTML='<div class="v251-restricted">Your role does not have Records Centre access.</div>';
-    else docsList.innerHTML=w.documents?.length?w.documents.map(d=>'<article class="v251-item"><div><strong>'+esc(d.record_reference)+' · '+esc(d.title)+'</strong><small>'+esc(d.document_type||'Document')+' · '+esc(d.sensitivity||'Internal')+' · '+esc(d.review_status||'Needs Review')+'</small></div><span class="v251-badge">'+esc(d.original_filename?'FILE':'METADATA')+'</span></article>').join(''):'<div class="v251-empty">No central records are linked to this case.</div>';
+    else docsList.innerHTML=w.documents?.length?w.documents.map(d=>{const ctx=(d.evidence_links||[]).map(x=>x.linkedType+' · '+x.linkedId).join(' | ');return '<article class="v251-item"><div><strong>'+esc(d.record_reference)+' · '+esc(d.title)+'</strong><small>'+esc(d.document_type||'Document')+' · '+esc(d.sensitivity||'Internal')+' · '+esc(d.review_status||'Needs Review')+'</small>'+(ctx?'<p>Evidence links: '+esc(ctx)+'</p>':'')+'</div><span class="v251-badge">'+esc(d.original_filename?'FILE':'METADATA')+'</span></article>'}).join(''):'<div class="v251-empty">No central evidence is linked to this case or its related work.</div>';
   }
 
   const timeline=document.getElementById('v251-timeline')?.querySelector('.v251-list');
