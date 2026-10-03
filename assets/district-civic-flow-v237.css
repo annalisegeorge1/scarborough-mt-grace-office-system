@@ -80,6 +80,39 @@ body:not(.v203-focused-view) .v237-flow{
   font:650 7.6px/1.4 system-ui;
 }
 
+.v237-flow-controls{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+}
+
+.v237-flow-nav{
+  display:none;
+  width:28px;
+  height:28px;
+  place-items:center;
+  border:1px solid color-mix(in srgb,var(--v237-accent) 18%,transparent);
+  border-radius:50%;
+  background:#fff;
+  color:var(--v237-accent);
+  cursor:pointer;
+  font:900 15px/1 system-ui;
+  box-shadow:0 3px 10px rgba(7,35,55,.05);
+}
+
+.v237-flow-nav:disabled{
+  opacity:.34;
+  cursor:default;
+}
+
+.v237-flow-nav:not(:disabled):hover,
+.v237-flow-nav:not(:disabled):focus-visible{
+  border-color:color-mix(in srgb,var(--v237-accent) 38%,transparent);
+  background:var(--v237-accent-soft);
+  outline:none;
+}
+
 .v237-flow-state{
   flex:0 0 auto;
   min-height:27px;
@@ -284,6 +317,16 @@ body.v112-dark .v237-flow-num{
 }
 body.v112-dark .v237-flow-step strong{color:#eef5f7}
 body.v112-dark .v237-flow-step small{color:#a9bec8}
+body.v112-dark .v237-flow-nav{
+  border-color:rgba(255,255,255,.10);
+  background:#123247;
+  color:#e7f0f4;
+}
+body.v112-dark .v237-flow-nav:not(:disabled):hover,
+body.v112-dark .v237-flow-nav:not(:disabled):focus-visible{
+  background:#173b50;
+}
+
 body.v112-dark .v237-flow-step.is-active strong,
 body.v112-dark .v237-flow-step[aria-current="step"] strong{color:#e4d4aa}
 body.v112-dark .v237-flow-step.is-active .v237-flow-num,
@@ -331,6 +374,8 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
     -webkit-overflow-scrolling:touch;
+    scroll-padding-inline:10px;
+    scroll-behavior:smooth;
   }
   .v237-flow-track::-webkit-scrollbar{display:none}
 
@@ -351,6 +396,8 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
     border-radius:12px;
     background:rgba(255,255,255,.48);
     scroll-snap-align:start;
+    scroll-snap-stop:always;
+    transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
   }
 
   .v237-flow-step .v237-flow-num{
@@ -366,6 +413,17 @@ body.v112-dark .v237-flow-foot a{color:#d8c7a0}
   .v237-flow-step small{
     grid-column:2;
     grid-row:2;
+  }
+
+  .v237-flow-step.is-active{
+    border-color:color-mix(in srgb,var(--v237-accent) 32%,rgba(11,46,72,.08));
+    background:var(--v237-accent-soft);
+    box-shadow:0 8px 20px rgba(7,35,55,.08);
+    transform:translateY(-1px);
+  }
+
+  .v237-flow-nav{
+    display:grid;
   }
 
   body.v112-dark .v237-flow-step{
