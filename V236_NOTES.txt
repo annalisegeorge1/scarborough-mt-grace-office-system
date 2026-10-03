@@ -1,0 +1,144 @@
+Scarborough / Mt. Grace District Office — V236
+
+FOCUSED ROUTE COHERENCE
+
+V236 reduces repeated mobile/tablet route chrome across the focused public pages while preserving all content, section navigation and resident actions.
+
+GOAL
+Make Office, Services, Community, Forms, Updates and Contact feel faster and more deliberate on smaller screens.
+
+1. Focused navigator simplification
+On <=900px:
+- removes the large V204 “Focused Page” head
+- removes duplicate V204 Call / WhatsApp / Enquiry / Track actions
+- removes the side note
+
+The underlying section navigation remains.
+
+2. “On this page” swipe rail
+The V204 section navigator becomes a compact horizontal rail.
+
+It includes:
+- “On this page” lead chip
+- numbered section links
+- active-section highlighting
+- horizontal swipe
+- scroll snapping
+- hidden visual scrollbar
+
+3. Quick action deck
+The four route shortcut cards remain available.
+
+On <=900px they become a single horizontally swipeable row instead of a 2x2 vertical block.
+
+No action is removed.
+
+4. Route identity
+The V207 OFF / SRV / COM / FOR / UPD / CON identity system remains intact.
+
+On <=900px:
+- identity card padding is reduced
+- route mark becomes smaller
+- description paragraph is hidden
+- route principles become smaller
+
+On <=620px:
+- principles become a horizontal swipe row
+
+5. Route hero
+The V203 route hero remains the main page introduction.
+
+On <=900px:
+- vertical padding is reduced
+- breadcrumb becomes smaller
+- intro copy becomes more compact
+- the redundant “On this page” summary card is hidden
+- page tabs remain and become more compact
+
+6. Focused shell spacing
+With the duplicate V204 head/actions removed:
+- top shell spacing is reduced
+- main content gap is reduced
+- content begins sooner
+
+7. End-of-page cross-site navigation
+The V203 page-end links remain.
+
+On <=900px:
+- explanatory sentence is hidden
+- Return Home / Forms / Contact remain available
+- links become a compact horizontal swipe rail
+- bottom clearance accounts for the resident dock
+
+8. Dark mode
+Includes dark-mode treatment for:
+- “On this page” chip
+- section navigation pills
+- active section
+- compact page-end links
+
+9. Desktop preservation
+Desktop >900px keeps:
+- sticky V204 side navigator
+- full route identity
+- desktop action deck
+- full page hierarchy
+
+V236 is intentionally focused on mobile/tablet density.
+
+10. Services Workspace compatibility
+V235 remains authoritative on /services/.
+
+V236 does not restore the hidden V225/V226/V228/V231 standalone launchers.
+
+11. Preservation
+V236 is CSS-only.
+
+No changes to:
+- staff CMS
+- authentication
+- staff publishing
+- verification
+- public content
+- enquiry submission
+- tracker
+- database
+- V215 progress threads
+- V224 Command Center
+- V225 Resident Journey
+- V226 Smart Next Step logic
+- V227 District Pulse
+- V228 Readiness
+- V229 PWA/service worker
+- V231 Service Intelligence
+- V232 enquiry form stability
+- V233 screenshot polish
+- V234 dark form/gallery corrections
+- V235 Resident Service Workspace logic
+
+12. QA
+Passed:
+- server JavaScript syntax
+- CSS brace balance
+- V236 stylesheet injection
+- V236 loads after V235
+- mobile V204 side head suppression present
+- duplicate side action suppression present
+- swipeable “On this page” navigation present
+- quick-action swipe deck present
+- compact V207 identity rules present
+- V203 summary-card suppression present
+- compact route hero present
+- compact page-end navigation present
+- dark mode present
+- print suppression present
+
+Files added:
+- assets/district-focused-route-coherence-v236.css
+- V236_NOTES.txt
+
+Files updated:
+- server/src/app.js
+
+Validation note:
+V236 is a source-level visual coherence pass. A fresh tablet/phone screenshot after deployment remains the final visual confirmation.
