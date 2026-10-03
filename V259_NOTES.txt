@@ -1,0 +1,23 @@
+Scarborough / Mt. Grace District Office — V259
+
+ROSTER & COVERAGE TABLET REDESIGN
+
+1. Rebuilt staff/roster.html.
+2. Removed duplicate legacy header/navigation from the page.
+3. Replaced three stacked forms with tabs:
+   - Duty roster
+   - Absence
+   - Temporary coverage
+4. Added continuity metrics:
+   - roster records
+   - active absences
+   - active coverage
+   - staff available
+5. Replaced overflowing tablet tables with continuity cards.
+6. Kept a compact combined table for desktop.
+7. Added client validation for date ranges and self-coverage.
+8. Covering-staff options exclude the selected unavailable staff member.
+9. Coverage checks loaded absences before submission.
+10. Preserved existing database CHECK constraints as the hard safeguard.
+11. Added preflight and smoke coverage for roster.html.
+12. Backend advanced to 259.0.0.
