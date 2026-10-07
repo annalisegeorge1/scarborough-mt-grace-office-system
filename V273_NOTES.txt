@@ -1,0 +1,33 @@
+Scarborough / Mt. Grace District Office — V273
+
+LIGHT CIVIC SHELL BALANCE
+
+Purpose
+- Correct the overly black shell/background visible while the public site is in light mode.
+- Keep the strong navy civic sections, white cards and gold details already working well.
+- Make the gaps between sections read as one calm, polished light-mode canvas rather than dark-mode material leaking into the light theme.
+
+What changed
+- The light-mode body and public main canvas now use a pale blue-grey civic mist instead of black.
+- The surface includes very subtle route-aware blue and brass atmosphere so it still belongs to the District Office visual language.
+- Focused public routes inherit the same light civic material.
+- On large desktop, the homepage gateway pair receives a very quiet shared runway and softer card shadows.
+- Dark mode is not visually redesigned by this release.
+
+Safety
+- No public copy or data changed.
+- No navigation, form, enquiry, resident tracking or staff behavior changed.
+- No JavaScript was added.
+- No mobile navigation behavior was changed.
+
+Files
+- Added assets/district-light-shell-v273.css
+- Updated server/src/app.js so V273 is the final public stylesheet.
+- Advanced server package version to 273.0.0.
+- Added smoke coverage for the V273 light-shell stylesheet.
+
+Validation
+- Homepage light mode at desktop width should no longer show the black outer shell seen in the October 7 screenshot.
+- The dark blue civic sections should remain intentionally dark.
+- Gateway cards should remain white but sit on a pale civic surface.
+- Dark mode should remain visually unchanged.
