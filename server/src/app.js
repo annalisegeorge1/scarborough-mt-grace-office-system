@@ -286,7 +286,8 @@ async function sendPublicIndex(req,res,next){
         'district-dark-form-stabilization-v238.css',
         'district-civic-shell-v239.css',
         'district-responsive-hardening-v240.css',
-        'district-explore-drawer-v241.css'
+        'district-explore-drawer-v241.css',
+        'district-desktop-cohesion-v272.css'
       ];
       const scriptAssets=[
         'public-content-runtime.js',
