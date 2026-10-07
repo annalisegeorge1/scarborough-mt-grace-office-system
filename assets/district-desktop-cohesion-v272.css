@@ -1,0 +1,283 @@
+/* Scarborough / Mt. Grace District Office — V272
+   Desktop Civic Cohesion
+   Large-screen spacing, shell continuity and route composition.
+   Does not alter public data, staff workflows, mobile/tablet navigation,
+   enquiry behavior or resident tracking. */
+
+/* ==========================================================================
+   1. LARGE DESKTOP NAVIGATION
+   Keep the brand, route indicator, primary links and search in one deliberate
+   line without allowing the brand/search to crowd the route buttons.
+   ========================================================================== */
+@media(min-width:1180px){
+  body.v239-civic-shell nav[aria-label="Site navigation"] .nav-inner{
+    width:min(1580px,calc(100% - 92px))!important;
+    max-width:1580px!important;
+    margin-inline:auto!important;
+    padding-inline:18px!important;
+    gap:12px!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark{
+    min-width:0!important;
+    flex:0 1 350px!important;
+    max-width:350px!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark-copy{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark-copy strong{
+    display:block!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .links{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    gap:4px!important;
+    flex-wrap:nowrap!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .links>.v51-nav-btn{
+    flex:0 0 auto!important;
+    padding-inline:9px!important;
+  }
+
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v27-site-search{
+    flex:1 1 290px!important;
+    min-width:220px!important;
+    max-width:370px!important;
+    margin-left:3px!important;
+  }
+
+  .v239-route-indicator{
+    flex:0 0 auto!important;
+    max-width:170px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
+
+/* ==========================================================================
+   2. FOCUSED ROUTE COMPOSITION
+   Reduce the "white islands on black canvas" effect and use the large desktop
+   width more intentionally. The main content becomes one subtle civic runway
+   while the individual cards remain visually distinct.
+   ========================================================================== */
+@media(min-width:1180px){
+  body.v203-focused-view .v203-page-header .v203-wrap,
+  body.v203-focused-view .v203-page-end .v203-wrap{
+    max-width:1580px!important;
+  }
+
+  body.v203-focused-view .v204-focus-shell{
+    width:min(1580px,calc(100% - 40px))!important;
+    max-width:1580px!important;
+    grid-template-columns:minmax(0,1fr) 298px!important;
+    gap:20px!important;
+    padding-top:24px!important;
+    padding-bottom:42px!important;
+  }
+
+  body.v203-focused-view .v204-main-column{
+    position:relative!important;
+    isolation:isolate;
+    gap:18px!important;
+    min-width:0!important;
+  }
+
+  body.v203-focused-view .v204-main-column>*{
+    position:relative;
+    z-index:1;
+  }
+
+  body.v112-dark.v203-focused-view .v204-main-column:before{
+    content:"";
+    position:absolute;
+    z-index:0;
+    inset:-12px -13px -16px;
+    border:1px solid rgba(216,199,160,.055);
+    border-radius:30px;
+    background:
+      radial-gradient(circle at 8% 6%,rgba(var(--v239-accent-rgb),.10),transparent 17rem),
+      radial-gradient(circle at 96% 52%,rgba(216,199,160,.035),transparent 20rem),
+      linear-gradient(180deg,rgba(9,39,57,.46),rgba(5,26,41,.20));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.018);
+    pointer-events:none;
+  }
+
+  body:not(.v112-dark).v203-focused-view .v204-main-column:before{
+    content:"";
+    position:absolute;
+    z-index:0;
+    inset:-10px -12px -14px;
+    border:1px solid rgba(11,46,72,.045);
+    border-radius:30px;
+    background:linear-gradient(180deg,rgba(240,246,248,.72),rgba(255,255,255,.18));
+    pointer-events:none;
+  }
+
+  body.v203-focused-view .v204-action-deck{
+    gap:10px!important;
+  }
+
+  body.v203-focused-view .v204-action-card{
+    min-height:104px!important;
+    padding:15px 16px!important;
+    border-radius:18px!important;
+  }
+
+  body.v203-focused-view .v207-identity-strip{
+    border-radius:22px!important;
+    box-shadow:0 12px 30px rgba(4,29,46,.075)!important;
+  }
+
+  body.v203-focused-view .v204-side-panel{
+    top:78px!important;
+    border-radius:22px!important;
+    overflow:hidden!important;
+  }
+
+  body.v203-focused-view .v204-side-head{
+    padding:17px 16px 15px!important;
+  }
+
+  body.v203-focused-view .v204-side-actions{
+    gap:7px!important;
+    padding:10px!important;
+  }
+
+  body.v203-focused-view .v204-side-actions a{
+    min-height:38px!important;
+  }
+
+  body.v203-focused-view .v204-content-card{
+    border-radius:22px!important;
+    box-shadow:0 13px 32px rgba(3,27,43,.07)!important;
+  }
+
+  body.v112-dark.v203-focused-view .v204-content-card:not(#gallery){
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.16),
+      0 0 0 1px rgba(var(--v239-accent-rgb),.025)!important;
+  }
+}
+
+/* ==========================================================================
+   3. LARGE DESKTOP DENSITY
+   The previous large-screen rules deliberately added breathing room. V272
+   keeps that elegance but removes the excessive blank intervals visible at
+   1600–2000px widths.
+   ========================================================================== */
+@media(min-width:1360px){
+  body.v203-focused-view .v204-focus-shell{
+    grid-template-columns:minmax(0,1fr) 304px!important;
+    gap:22px!important;
+  }
+
+  body.v203-focused-view .v204-main-column{
+    gap:19px!important;
+  }
+
+  body.v203-focused-view .v204-action-deck{
+    gap:11px!important;
+  }
+
+  body.v203-focused-view .v204-content-card>.wrap,
+  body.v203-focused-view .v204-content-card>.v121-wrap{
+    padding-left:clamp(25px,2.2vw,36px)!important;
+    padding-right:clamp(25px,2.2vw,36px)!important;
+  }
+
+  /* Home gateway pair should use the same visual measure as the newer shell. */
+  body.v211-home-aesthetic .v211-home-chapter,
+  body.v211-home-aesthetic .v211-gateway-pair{
+    width:min(1480px,calc(100% - 150px))!important;
+    padding-left:0!important;
+  }
+
+  body.v211-home-aesthetic .v211-gateway-pair{
+    gap:18px!important;
+    margin-top:18px!important;
+    margin-bottom:24px!important;
+  }
+
+  body.v211-home-aesthetic .v211-gateway-card{
+    min-height:144px!important;
+    padding:20px 22px!important;
+  }
+
+  /* The district-profile block previously reserved more vertical space than
+     its actual cards needed at wide desktop sizes. Let content define height. */
+  body:not(.v203-focused-view) #district-profile,
+  body:not(.v203-focused-view) #district-profile>.wrap,
+  body:not(.v203-focused-view) #district-profile>.v121-wrap{
+    min-height:0!important;
+    height:auto!important;
+  }
+
+  body:not(.v203-focused-view) #district-profile{
+    padding-bottom:clamp(30px,2.8vw,48px)!important;
+  }
+
+  body:not(.v203-focused-view) #district-profile :is(
+    [class$="-grid"],
+    [class*="-grid "],
+    .grid
+  ){
+    align-content:start!important;
+  }
+
+  body:not(.v203-focused-view) #contact-us{
+    margin-top:0!important;
+  }
+}
+
+/* ==========================================================================
+   4. HOME + DARK MODE CONTINUITY
+   Give the homepage's major dark gaps the same civic atmosphere used by
+   focused routes, without flattening the existing individual section art.
+   ========================================================================== */
+@media(min-width:1180px){
+  body.v112-dark.v211-home-aesthetic.v239-civic-shell main#main-content{
+    background:
+      radial-gradient(circle at 88% 8%,rgba(var(--v239-accent-rgb),.085),transparent 28rem),
+      radial-gradient(circle at 8% 50%,rgba(216,199,160,.025),transparent 30rem),
+      linear-gradient(180deg,#071c2c 0%,#051823 48%,#071c2b 100%)!important;
+  }
+
+  body.v112-dark.v211-home-aesthetic .v211-gateway-card{
+    border-color:rgba(216,199,160,.10)!important;
+    box-shadow:0 16px 38px rgba(0,0,0,.18)!important;
+  }
+
+  body.v112-dark.v211-home-aesthetic .v211-gateway-pair{
+    position:relative;
+  }
+
+  body.v112-dark.v211-home-aesthetic .v211-gateway-pair:before{
+    content:"";
+    position:absolute;
+    inset:-10px;
+    z-index:-1;
+    border:1px solid rgba(216,199,160,.045);
+    border-radius:30px;
+    background:linear-gradient(180deg,rgba(15,48,66,.22),rgba(7,27,42,.08));
+    pointer-events:none;
+  }
+}
+
+/* ==========================================================================
+   5. ACCESSIBILITY / MOTION
+   No new essential motion; retain existing reduced-motion behavior.
+   ========================================================================== */
+@media(prefers-reduced-motion:reduce){
+  body.v239-civic-shell nav[aria-label="Site navigation"] .v7-brandmark-copy strong{
+    text-overflow:clip!important;
+  }
+}

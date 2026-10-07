@@ -42,6 +42,10 @@ await check('Liveness','/api/health/live');
 await check('Health','/api/health',[200,503]);
 await check('Readiness','/api/health/readiness',[200,503]);
 await check('Public homepage','/');
+await checkAssetText('Public V272 desktop cohesion styles','/assets/district-desktop-cohesion-v272.css',{
+  contains:['Desktop Civic Cohesion','v204-main-column:before','#district-profile','v211-gateway-pair'],
+  excludes:['display:none!important']
+});
 await checkAssetText('Public Civic Flow script','/assets/district-civic-flow-v237.js',{
   excludes:['v237-flow-next','v237-flow-prev','moveActiveCardIntoView','autoTrackUntil']
 });
