@@ -1,0 +1,49 @@
+/* Scarborough / Mt. Grace District Office — V273
+   Light Civic Shell Balance
+   Replaces the overly black light-mode canvas with a calm civic mist surface.
+   Dark mode, content, navigation behavior, resident flows and staff systems
+   remain unchanged. */
+
+body:not(.v112-dark).v239-civic-shell{
+  background:
+    radial-gradient(circle at 88% 10%,rgba(var(--v239-accent-rgb),.045),transparent 31rem),
+    radial-gradient(circle at 8% 58%,rgba(167,143,94,.025),transparent 29rem),
+    linear-gradient(180deg,#eef4f6 0%,#f8fafb 42%,#edf3f5 100%)!important;
+}
+
+body:not(.v112-dark).v239-civic-shell main#main-content{
+  background:
+    radial-gradient(circle at 90% 7%,rgba(var(--v239-accent-rgb),.055),transparent 27rem),
+    radial-gradient(circle at 7% 52%,rgba(167,143,94,.03),transparent 30rem),
+    linear-gradient(180deg,#edf4f6 0%,#f8fafb 43%,#eef3f5 100%)!important;
+}
+
+/* On large desktop, give the two homepage gateway cards a quiet shared
+   surface so they feel connected without recreating the heavy dark shell. */
+@media(min-width:1180px){
+  body:not(.v112-dark).v211-home-aesthetic .v211-gateway-pair{
+    position:relative;
+    isolation:isolate;
+  }
+
+  body:not(.v112-dark).v211-home-aesthetic .v211-gateway-pair:before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:-11px -12px;
+    border:1px solid rgba(11,46,72,.055);
+    border-radius:30px;
+    background:
+      radial-gradient(circle at 14% 20%,rgba(var(--v239-accent-rgb),.05),transparent 18rem),
+      linear-gradient(180deg,rgba(255,255,255,.62),rgba(234,242,245,.52));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.82);
+    pointer-events:none;
+  }
+
+  body:not(.v112-dark).v211-home-aesthetic .v211-gateway-card{
+    border-color:rgba(11,46,72,.09)!important;
+    box-shadow:
+      0 14px 34px rgba(6,38,58,.09),
+      inset 0 1px 0 rgba(255,255,255,.86)!important;
+  }
+}
