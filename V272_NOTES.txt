@@ -1,0 +1,82 @@
+Scarborough / Mt. Grace District Office — V272
+
+DESKTOP CIVIC COHESION
+
+Purpose
+- Improve the large-screen public experience shown on the live Render staging site.
+- Preserve all resident and staff functionality.
+- Reduce oversized empty intervals and visually disconnected white-card islands.
+- Keep the stronger mobile/tablet experience unchanged.
+
+Observed staging issues addressed
+1. Large desktop navigation compressed the brand, route indicator, route buttons and search into an uneven line.
+2. Focused route cards could read as isolated white slabs on a black background rather than one connected civic workspace.
+3. Large desktop spacing inherited generous V221 breathing-room values that became excessive at 1600–2000px widths.
+4. The homepage gateway pair did not use the same large-screen measure as the newer civic shell.
+5. The district-profile area could reserve substantially more vertical space than the content it displayed, producing the large blank area visible before the Contact section.
+
+Implementation
+- Added assets/district-desktop-cohesion-v272.css.
+- Added the stylesheet as the final public CSS asset so it can safely refine earlier responsive/layout layers.
+- Advanced server package version to 272.0.0.
+- Added smoke coverage for the V272 stylesheet.
+
+Large desktop navigation
+- Public navigation now uses a deliberate maximum line length on desktop.
+- Brand area can shrink safely instead of forcing route controls to collide.
+- Brand copy uses overflow protection.
+- Route buttons remain a single controlled row on true desktop.
+- Search receives a bounded responsive width rather than competing unpredictably with the brand.
+- Route indicator is width-limited.
+
+Focused public routes
+- Focus shell uses a consistent large desktop measure.
+- Main route column and right-side focus panel use a tighter 20–22px relationship.
+- Main column gaps reduced from the older 28px large-desktop spacing.
+- Quick-action cards are slightly shorter so they do not waste vertical space.
+- Content cards use a unified 22px radius and stronger compositional alignment.
+- Dark mode adds a subtle route-aware civic runway behind the main column.
+- Light mode gets a much quieter equivalent surface.
+- Side panel remains sticky and unchanged functionally.
+
+Homepage
+- V211 chapter and gateway pair widen to the newer civic-shell measure on large desktop.
+- Gateway cards are slightly denser.
+- Dark-mode homepage gaps receive one continuous civic atmosphere.
+- Existing gateway artwork, links and route behavior remain unchanged.
+
+District profile / blank-space correction
+- On large desktop, #district-profile no longer forces minimum height.
+- Immediate standard wrappers under #district-profile are allowed to size naturally.
+- Grid content aligns to the start instead of stretching into available blank height.
+- Contact section no longer inherits an unnecessary top gap from the profile area.
+
+Safety
+- V272 is primarily scoped to min-width:1180px and min-width:1360px.
+- No mobile/tablet navigation rules were changed.
+- No HTML content was removed.
+- No public data fields were changed.
+- No staff routes, workflow states, permissions, case data, enquiry submission or resident tracking logic were changed.
+- No JavaScript behavior was added.
+
+Files added
+- assets/district-desktop-cohesion-v272.css
+- V272_NOTES.txt
+
+Files updated
+- server/src/app.js
+- server/package.json
+- server/scripts/smoke-test.js
+
+Deployment
+- Render service scarborough-mt-grace-staging-v52j is configured with autoDeploy=yes on branch main.
+- After merge to main, Render should automatically deploy the new commit.
+- No manual deploy should be triggered unless Render fails to auto-deploy.
+
+Validation target after deployment
+- Desktop navigation at approximately 1366, 1600 and 1920px widths.
+- Homepage transition from district-profile/focus-group area into Contact.
+- /office/ dark mode.
+- /services/ dark mode.
+- /contact/ light and dark mode.
+- Confirm tablet/mobile layouts remain unchanged.
