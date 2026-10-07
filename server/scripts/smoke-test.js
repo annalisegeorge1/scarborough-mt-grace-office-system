@@ -42,6 +42,10 @@ await check('Liveness','/api/health/live');
 await check('Health','/api/health',[200,503]);
 await check('Readiness','/api/health/readiness',[200,503]);
 await check('Public homepage','/');
+await checkAssetText('Public V273 light shell styles','/assets/district-light-shell-v273.css',{
+  contains:['Light Civic Shell Balance','body:not(.v112-dark).v239-civic-shell','main#main-content','v211-gateway-pair:before'],
+  excludes:['display:none!important']
+});
 await checkAssetText('Public V272 desktop cohesion styles','/assets/district-desktop-cohesion-v272.css',{
   contains:['Desktop Civic Cohesion','v204-main-column:before','#district-profile','v211-gateway-pair'],
   excludes:['display:none!important']
