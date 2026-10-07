@@ -18,14 +18,6 @@ body:not(.v112-dark).v239-civic-shell main#main-content{
     linear-gradient(180deg,#edf4f6 0%,#f8fafb 43%,#eef3f5 100%)!important;
 }
 
-/* Focused routes now sit on the same light civic material instead of a
-   dark outer field. Existing V272 card/runway styling remains authoritative. */
-body:not(.v112-dark).v203-focused-view.v239-civic-shell .v204-focus-shell{
-  background:
-    radial-gradient(circle at 16% 8%,rgba(var(--v239-accent-rgb),.035),transparent 24rem),
-    transparent!important;
-}
-
 /* On large desktop, give the two homepage gateway cards a quiet shared
    surface so they feel connected without recreating the heavy dark shell. */
 @media(min-width:1180px){
@@ -54,9 +46,4 @@ body:not(.v112-dark).v203-focused-view.v239-civic-shell .v204-focus-shell{
       0 14px 34px rgba(6,38,58,.09),
       inset 0 1px 0 rgba(255,255,255,.86)!important;
   }
-}
-
-/* Keep dark mode explicitly untouched by this release. */
-body.v112-dark.v239-civic-shell{
-  color-scheme:dark;
 }
