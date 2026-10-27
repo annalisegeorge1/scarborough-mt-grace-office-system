@@ -1,0 +1,41 @@
+name: Cloudflare Preview Source QA
+
+on:
+  push:
+    branches: [cloudflare-worker-preview-2026-10-26]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cloudflare-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check Worker and build syntax
+        run: |
+          node --check cloudflare/build.mjs
+          node --check cloudflare/worker.mjs
+      - name: Build Cloudflare public asset bundle
+        run: node cloudflare/build.mjs
+      - name: Verify public-only deployment and asset size
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s .cloudflare-dist/index.html
+          test -s .cloudflare-dist/manifest.webmanifest
+          test -s .cloudflare-dist/track/index.html
+          test -s .cloudflare-dist/portals/index.html
+          test ! -e .cloudflare-dist/server
+          test ! -e .cloudflare-dist/staff
+          test ! -e .cloudflare-dist/render.yaml
+          node --input-type=module -e "import{statSync}from'node:fs';const n=statSync('.cloudflare-dist/index.html').size; console.log('Public HTML bytes:',n); if(n>25*1024*1024)process.exit(1)"
+          if find .cloudflare-dist -type f -size +25M | grep -q .; then
+            echo 'A Cloudflare asset exceeds the 25 MiB limit.'
+            exit 1
+          fi
